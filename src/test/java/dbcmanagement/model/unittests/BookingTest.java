@@ -167,4 +167,42 @@ public class BookingTest {
 		
 	}
 
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test true cases</p>
+	 */
+	@Test
+	public void testEqualsTrue() {
+		assertEquals(b1.equals(b1),true);
+		assertEquals(b2.equals(b2),true);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test false cases</p>
+	 */
+	@Test
+	public void testEqualsFalse() {
+		assertEquals(b1.equals(b2),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test null cases</p>
+	 */
+	@Test
+	public void testEqualsNull() {
+		assertEquals(b1.equals(null),false);
+	}
+	
+	/**
+	 * <h2>toString() method test</h2>
+	 */
+	@Test
+	public void testToString() {
+		String expect = "Booking [id=" + b1.getId() + ", date=" + b1.getDate() + ", time=" + b1.getTime() + ", customer=" + b1.getCustomer() + "]";
+		assertEquals(b1.toString(),expect);
+	}
+	
+	
 }

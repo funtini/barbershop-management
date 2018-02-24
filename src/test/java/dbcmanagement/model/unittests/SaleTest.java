@@ -190,4 +190,45 @@ public class SaleTest {
 		assertEquals(s3.getAmount(),13.1,0.0);
 	}
 
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>teste true cases</p>
+	 */
+	@Test
+	public void testEqualsTrue() {
+		assertEquals(s1.equals(s1),true);
+		assertEquals(s2.equals(s2),true);
+
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>teste false cases</p>
+	 */
+	@Test
+	public void testEqualsFalse() {
+		assertEquals(s1.equals(s2),false);
+		assertEquals(s3.equals(s2),false);
+		assertEquals(s2.equals(s3),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>teste null cases</p>
+	 */
+	@Test
+	public void testEqualsNull() {
+		assertEquals(s1.equals(null),false);
+	}
+	
+	/**
+	 * <h2>toString() method test</h2>
+	 */
+	@Test
+	public void testToString() {
+		String expect = "Sale [id=" + 1 + ", date=" + s1.getDate() + ", customer=" + s1.getCustomer() + ", product=" + s1.getProduct() + ", amount="
+				+ s1.getAmount() + "]";
+		assertEquals(s1.toString(),expect);
+	}
+
 }

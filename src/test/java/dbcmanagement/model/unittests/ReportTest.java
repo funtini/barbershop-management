@@ -301,7 +301,45 @@ public class ReportTest {
 	}
 	
 	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>teste true cases</p>
+	 */
+	@Test
+	public void testEqualsTrue() {
+		Report expect = new Report(YearMonth.of(2017, 12));
+		assertEquals(rep17.equals(expect),true);
+		assertEquals(rep18.equals(rep18),true);
+
+	}
 	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>teste false cases</p>
+	 */
+	@Test
+	public void testEqualsFalse() {
+		assertEquals(rep17.equals(rep18),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>teste null cases</p>
+	 */
+	@Test
+	public void testEqualsNull() {
+		assertEquals(rep17.equals(null),false);
+	}
+	
+	/**
+	 * <h2>toString() method test</h2>
+	 */
+	@Test
+	public void testToString() {
+		String expect = "Report [year=" + rep17.getYearMonth().getYear() + ", month=" + rep17.getYearMonth().getMonth().toString() + ", sales=" + rep17.getSalesList() + ", expenses=" + rep17.getExpensesList() + ", businessDays="
+				+ rep17.getBusinessDays() + "]";
+		assertEquals(rep17.toString(),expect);
+	}
 	
 	
 	

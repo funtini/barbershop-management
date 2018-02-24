@@ -123,19 +123,56 @@ public class ProductTest {
 	 */
 	@Test 
 	public void testGetnSetPrice() {
-		
 		//Given
 		assertEquals(p1.getPrice(),15,0.0);
 		assertEquals(p3.getPrice(),7,0.0);
-		
 		//When
 		p1.setPrice(15.2);
-		p3.setPrice(22.5);
-		
+		p3.setPrice(22.5);	
 		//Then
 		assertEquals(p1.getPrice(),15.2,0.0);
 		assertEquals(p3.getPrice(),22.5,0.0);
-		
+	}
+	
+
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>teste true cases</p>
+	 */
+	@Test
+	public void testEqualsTrue() {
+		assertEquals(p1.equals(p1),true);
+		assertEquals(p2.equals(p2),true);
+
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>teste false cases</p>
+	 */
+	@Test
+	public void testEqualsFalse() {
+		assertEquals(p1.equals(p2),false);
+		assertEquals(p3.equals(p2),false);
+		assertEquals(p2.equals(p4),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>teste null cases</p>
+	 */
+	@Test
+	public void testEqualsNull() {
+		assertEquals(p1.equals(null),false);
+	}
+
+	/**
+	 * <h2>toString() method test</h2>
+	 */
+	@Test
+	public void testToString() {
+		String expect = "Product [id=" + 1 + ", name=CORTE COM LAVAGEM" + ", type=" + p1.getType() + ", price=" + p1.getPrice() + "]";
+		assertEquals(p1.toString(),expect);
 	}
 
 }

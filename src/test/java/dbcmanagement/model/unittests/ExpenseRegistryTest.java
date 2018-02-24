@@ -126,17 +126,44 @@ public class ExpenseRegistryTest {
 	
 	/**
 	 * <h2>getExpenseListByType() method test</h2>
+	 * <p>Test filter FIXED expenses</p>
 	 */
 	@Test 
-	public void testGetExpenseListByType() {
+	public void testFilterExpenseListByTypeFixed() {
 		
 		//Given: empty list's
+		assertEquals(expenseList.getExpenseList(),emptyList);
+		assertEquals(emptyList,expect);
+		//When: add 3 expenses - (2)fixed and (1)oneoff
+		Expense.setStartIdGenerator(1);
+		expenseList.addExpense(expenseList.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseList.addExpense(expenseList.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
+		expenseList.addExpense(expenseList.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
+		//Then: get a list of FIXED expenses 
+		result = expenseList.findExpensesByType(expenseType.FIXED);
+		expect.add(e1);
+		expect.add(e2);
+		assertEquals(result,expect);
+	}
 	
-	
-		//When: add 3 expenses
-		
-		//Then: get a list with that 3 expenses
-		fail("Not yet implemented");
+	/**
+	 * <h2>getExpenseListByType() method test</h2>
+	 * <p>Test filter ONEOFF expenses</p>
+	 */
+	@Test 
+	public void testFilterExpenseListByTypeOneOff() {
+		//Given: empty list's
+		assertEquals(expenseList.getExpenseList(),emptyList);
+		assertEquals(emptyList,expect);
+		//When: add 3 expenses - (2)fixed and (1)oneoff
+		Expense.setStartIdGenerator(1);
+		expenseList.addExpense(expenseList.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseList.addExpense(expenseList.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
+		expenseList.addExpense(expenseList.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
+		//Then: get a list of FIXED expenses 
+		result = expenseList.findExpensesByType(expenseType.ONEOFF);
+		expect.add(e3);
+		assertEquals(result,expect);
 	}
 	
 	/**

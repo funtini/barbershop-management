@@ -121,7 +121,7 @@ public class ExpenseRegistry {
 		List<Expense> listExp = new ArrayList<>();
 		for (Expense e: this.expenseList)
 		{
-			if (e.getType().equals(expenseType.FIXED))
+			if (e.getType().equals(type))
 				listExp.add(e);
 		}
 		

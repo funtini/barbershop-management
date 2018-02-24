@@ -188,4 +188,44 @@ public class ExpenseTest {
 		assertEquals(e3.getDescription(),"teste & teste");
 	}
 	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test true cases</p>
+	 */
+	@Test
+	public void testEqualsTrue() {
+		assertEquals(e1.equals(e1),true);
+		assertEquals(e2.equals(e2),true);
+
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test false cases</p>
+	 */
+	@Test
+	public void testEqualsFalse() {
+		assertEquals(e1.equals(e2),false);
+		assertEquals(e3.equals(e2),false);
+		assertEquals(e2.equals(e3),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test null cases</p>
+	 */
+	@Test
+	public void testEqualsNull() {
+		assertEquals(e1.equals(null),false);
+	}
+	
+	/**
+	 * <h2>toString() method test</h2>
+	 */
+	@Test
+	public void testToString() {
+		String expect = "Expense [id=" + 1 + ", name=" + e1.getName() + ", type=" + e1.getType() + ", value=" + e1.getValue() + "]";
+		assertEquals(e1.toString(),expect);
+	}
+	
 }

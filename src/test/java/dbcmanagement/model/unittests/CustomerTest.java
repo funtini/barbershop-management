@@ -156,4 +156,43 @@ public class CustomerTest {
 	}
 	
 
+
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test true cases</p>
+	 */
+	@Test
+	public void testEqualsTrue() {
+		assertEquals(c1.equals(c1),true);
+		assertEquals(c2.equals(c2),true);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test false cases</p>
+	 */
+	@Test
+	public void testEqualsFalse() {
+		assertEquals(c1.equals(c2),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test null cases</p>
+	 */
+	@Test
+	public void testEqualsNull() {
+		assertEquals(c1.equals(null),false);
+	}
+	
+	/**
+	 * <h2>toString() method test</h2>
+	 */
+	@Test
+	public void testToString() {
+		String expect = "Customer [id=" + 1 + ", name=Joao" + ", phone=914047935]";
+		assertEquals(c1.toString(),expect);
+	}
+	
+
 }
