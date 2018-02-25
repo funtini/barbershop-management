@@ -173,12 +173,25 @@ public class ExpenseRegistryTest {
 	public void testGetExpenseListAboveValue() {
 		
 		//Given: empty list's
-	
+		assertEquals(expenseList.getExpenseList(),emptyList);
+		assertEquals(emptyList,expect);
 	
 		//When: add 3 expenses
-		
-		//Then: get a list with that 3 expenses
-		fail("Not yet implemented");
+		Expense.setStartIdGenerator(1);
+		expenseList.addExpense(expenseList.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseList.addExpense(expenseList.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
+		expenseList.addExpense(expenseList.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
+		//Then: get a list with expenses above 55 value
+		result = expenseList.filterExpensesAboveValue(55);
+		expect.add(e3);
+		assertEquals(result,expect);
+		//		clear test lists, and repeat test with expenses above value 50
+		result.clear();
+		expect.clear();
+		result = expenseList.filterExpensesAboveValue(50);
+		expect.add(e2);
+		expect.add(e3);
+		assertEquals(result,expect);
 	}
 	
 	/**
@@ -188,12 +201,25 @@ public class ExpenseRegistryTest {
 	public void testGetExpenseListUnderBelow() {
 		
 		//Given: empty list's
-	
+		assertEquals(expenseList.getExpenseList(),emptyList);
+		assertEquals(emptyList,expect);
 	
 		//When: add 3 expenses
-		
-		//Then: get a list with that 3 expenses
-		fail("Not yet implemented");
+		Expense.setStartIdGenerator(1);
+		expenseList.addExpense(expenseList.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseList.addExpense(expenseList.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
+		expenseList.addExpense(expenseList.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
+		//Then: get a list with expenses below 40 value
+		result = expenseList.filterExpensesBelowValue(40);
+		expect.add(e1);
+		assertEquals(result,expect);
+		//		clear test lists, and repeat test with expenses below value 50
+		result.clear();
+		expect.clear();
+		result = expenseList.filterExpensesBelowValue(50);
+		expect.add(e1);
+		expect.add(e2);
+		assertEquals(result,expect);		
 	}
 	
 

@@ -129,35 +129,138 @@ public class ExpenseRegistry {
 	}
 	
 	
-	
+	/**
+	 * Method to filter a list of expenses of below certain value
+	 * 
+	 * @param value
+	 * 
+	 * @return list of Expense
+	 */
 	public List<Expense> filterExpensesBelowValue(double value)
 	{
-		return null;
+		List<Expense> listExp = new ArrayList<>();
+		for (Expense e: this.expenseList)
+		{
+			if (e.getValue()<=value)
+				listExp.add(e);
+		}
+		
+		return listExp;
 	}
 	
+	
+	/**
+	 * Method to filter a list of expenses above certain value
+	 * 
+	 * @param value
+	 * 
+	 * @return list of Expense
+	 */
 	public List<Expense> filterExpensesAboveValue(double value)
 	{
-		return null;
+		List<Expense> listExp = new ArrayList<>();
+		for (Expense e: this.expenseList)
+		{
+			if (e.getValue()>=value)
+				listExp.add(e);
+		}
+		
+		return listExp;
 	}
 	
+	
+	/**
+	 * Method to find a expense by his ID
+	 * 
+	 * @param id
+	 * 
+	 * @return Expense
+	 */
 	public Expense findExpenseById(int id)
 	{
+		for (Expense e: this.expenseList)
+		{
+			if (e.getId()==id)
+				return e;
+		}
+		
 		return null;
 	}
 	
+	
+	/**
+	 * Method to search expenses filtering name
+	 * 
+	 * @param name
+	 * 
+	 * @return list of Expense
+	 */
 	public List<Expense> searchExpenseByName(String name)
 	{
-		return null;
+		List<Expense> listExp = new ArrayList<>();
+		for (Expense e: this.expenseList)
+		{
+			if (e.getName().equals(name))
+				listExp.add(e);
+		}
+		
+		return listExp;
 	}
 	
+	
+	/**
+	 * Method to get a list of expenses between two specific dates 
+	 * 
+	 * @param expenseType {FIXED / ONEOFF} 
+	 * 
+	 * @return list of Expense
+	 */
 	public List<Expense> findExpensesBetweenDates(LocalDate startDate,LocalDate endDate)
 	{
-		return null;
+		List<Expense> listExp = new ArrayList<>();
+		for (Expense e: this.expenseList)
+		{
+			if (e.getDate().isAfter(startDate.minusDays(1)) && e.getDate().isBefore(endDate.plusDays(1)))
+				listExp.add(e);
+		}
+		
+		return listExp;
 	}
 	
+	
+	/**
+	 * Method to get a sum of all expense's value
+	 * 
+	 * @return sum
+	 */
 	public double sumAllExpensesValue()
 	{
-		return 0;
+		double sum = 0;
+		for (Expense e: this.expenseList)
+		{
+			sum=sum+e.getValue();
+		}
+		
+		return sum;
+	}
+	
+	
+	/**
+	 * Method to get a sum of all expense's value of certain expenseType
+	 * 
+	 * @param expenseTYpe
+	 * 
+	 * @return sum
+	 */
+	public double sumExpensesValueByType(expenseType type)
+	{
+		double sum = 0;
+		for (Expense e: this.expenseList)
+		{
+			if (e.getType().equals(type))
+				sum=sum+e.getValue();		
+		}	
+		return sum;
 	}
 	
 	
