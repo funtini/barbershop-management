@@ -67,13 +67,18 @@ private List<Booking> listOfBookings;
 	}
 	
 	/**
-	 * Method to get all today's bookings order by time
-	 * 
+	 * Method to get all next bookings order by time
 	 * 
 	 * @return List of bookings - with today's date
 	 */
-	public List<Booking> getTodaySchedule() {
-		return null;
+	public List<Booking> getNextBookings() {
+		List<Booking> bookingList = new ArrayList<>();
+		for (Booking b: this.listOfBookings)
+		{
+			if (b.getDate().isEqual(LocalDate.now()) || b.getDate().isAfter(LocalDate.now()))
+				bookingList.add(b);
+		}
+		return bookingList;
 	}
 	
 	/**
@@ -81,16 +86,27 @@ private List<Booking> listOfBookings;
 	 * 
 	 * @return List of bookings
 	 */
-	public List<Booking> getBookingListOfaDay(LocalDateTime date) {
-		return null;
+	public List<Booking> getBookingListOfaDay(LocalDate date) {
+		List<Booking> bookingList = new ArrayList<>();
+		for (Booking b: this.listOfBookings)
+		{
+			if (b.getDate().isEqual(date))
+				bookingList.add(b);
+		}
+		return bookingList;
 	}
 	
 	/**
-	 * get a booking list of specific customer 
+	 * get next booking of specific customer 
 	 * 
-	 * @return List of bookings
+	 * @return Booking if customer was found, return null if not
 	 */
-	public List<Booking> getNextBookingListOf(Customer customer) {
+	public Booking getNextBookingOf(Customer customer) {
+		for (Booking b: this.getNextBookings())
+		{
+			if (b.getCustomer().equals(customer))
+				return b;
+		}
 		return null;
 	}
 	

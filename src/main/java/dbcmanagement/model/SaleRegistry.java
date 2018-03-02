@@ -1,5 +1,7 @@
 package dbcmanagement.model;
 
+import static org.junit.Assert.assertFalse;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -76,9 +78,11 @@ public class SaleRegistry {
 	 * 
 	 * @param sale - Instance of Sale class
 	 */
-	public void addSale(Sale sale)
+	public boolean addSale(Sale sale)
 	{
-		this.saleList.add(sale);
+		if(this.saleList.contains(sale))
+			return false;
+		return this.saleList.add(sale);
 	}
 	
 

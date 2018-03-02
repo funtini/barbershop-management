@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbcmanagement.model.Customer;
 import dbcmanagement.model.Expense;
 import dbcmanagement.model.Expense.expenseType;
 
@@ -60,19 +61,25 @@ public class ExpenseTest {
 	
 	
 	/**
-	 * <h2>getId() method test</h2>
+	 * <h2>getId() and setId() method test</h2>
 	 * 
 	 * <p>Description
 	 * 
 	 */
 	@Test 
-	public void testGetId() {
-		
-		assertEquals(e1.getId(),1);
-		
+	public void testGetnSetId() {
+		//Given: 3 expenses
+		assertEquals(e1.getId(),1);	
 		assertEquals(e2.getId(),2);
-		
 		assertEquals(e3.getId(),3);
+		//When: we set new Id's
+		e1.setId(10);
+		e2.setId(20);
+		e3.setId(33);
+		//Then:
+		assertEquals(e1.getId(),10);
+		assertEquals(e2.getId(),20);
+		assertEquals(e3.getId(),33);
 		
 	}
 	
@@ -201,7 +208,7 @@ public class ExpenseTest {
 	
 	/**
 	 * <h2>equals() method test</h2>
-	 * <p>test false cases</p>
+	 * <p>test false cases - different instances</p>
 	 */
 	@Test
 	public void testEqualsFalse() {
@@ -217,6 +224,16 @@ public class ExpenseTest {
 	@Test
 	public void testEqualsNull() {
 		assertEquals(e1.equals(null),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test false cases - different classes</p>
+	 */
+	@Test
+	public void testEqualsFalseDifferentClass() {
+		Customer c1 = new Customer("Joao");
+		assertEquals(e1.equals(c1),false);
 	}
 	
 	/**

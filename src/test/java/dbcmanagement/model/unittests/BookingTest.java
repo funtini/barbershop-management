@@ -172,7 +172,7 @@ public class BookingTest {
 	 * <p>test true cases</p>
 	 */
 	@Test
-	public void testEqualsTrue() {
+	public void testEqualsTrueSameInstance() {
 		assertEquals(b1.equals(b1),true);
 		assertEquals(b2.equals(b2),true);
 	}
@@ -193,6 +193,26 @@ public class BookingTest {
 	@Test
 	public void testEqualsNull() {
 		assertEquals(b1.equals(null),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test null cases</p>
+	 */
+	@Test
+	public void testEqualsDifferentInstance() {
+		assertEquals(b1.equals(c1),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test null cases</p>
+	 */
+	@Test
+	public void testEqualsSameID() {
+		
+		b2.setId(1);
+		assertEquals(b1.equals(b2),true);
 	}
 	
 	/**

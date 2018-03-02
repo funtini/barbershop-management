@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import dbcmanagement.model.Product.productType;
+import dbcmanagement.model.Customer;
 import dbcmanagement.model.Product;
 
 
@@ -47,17 +48,25 @@ public class ProductTest {
 	
 	
 	/**
-	 * <h2>getId() method test</h2>
+	 * <h2>getId() and setId() method test</h2>
 	 * 
 	 * <p>Description
 	 * 
 	 */
 	@Test 
-	public void testGetId() {
-		
+	public void testGetnSetId() {
+		//Given:
 		assertEquals(p1.getId(),1);	
 		assertEquals(p2.getId(),2);	
 		assertEquals(p3.getId(),3);
+		//When:
+		p1.setId(12);
+		p2.setId(23);
+		p3.setId(34);
+		//Then:
+		assertEquals(p1.getId(),12);	
+		assertEquals(p2.getId(),23);	
+		assertEquals(p3.getId(),34);
 	}
 	
 	
@@ -137,7 +146,7 @@ public class ProductTest {
 
 	/**
 	 * <h2>equals() method test</h2>
-	 * <p>teste true cases</p>
+	 * <p>test true cases</p>
 	 */
 	@Test
 	public void testEqualsTrue() {
@@ -148,10 +157,10 @@ public class ProductTest {
 	
 	/**
 	 * <h2>equals() method test</h2>
-	 * <p>teste false cases</p>
+	 * <p>test false cases - different instances</p>
 	 */
 	@Test
-	public void testEqualsFalse() {
+	public void testEqualsFalseDifferentInstance() {
 		assertEquals(p1.equals(p2),false);
 		assertEquals(p3.equals(p2),false);
 		assertEquals(p2.equals(p4),false);
@@ -159,11 +168,21 @@ public class ProductTest {
 	
 	/**
 	 * <h2>equals() method test</h2>
-	 * <p>teste null cases</p>
+	 * <p>test null cases</p>
 	 */
 	@Test
 	public void testEqualsNull() {
 		assertEquals(p1.equals(null),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test false cases - different classes</p>
+	 */
+	@Test
+	public void testEqualsFalseDifferentClasses() {
+		Customer c1 = new Customer("Joao");
+		assertEquals(p1.equals(c1),false);
 	}
 
 	/**

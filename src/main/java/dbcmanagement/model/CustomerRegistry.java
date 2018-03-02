@@ -32,7 +32,7 @@ private List<Customer> listOfCustomers;
 	/**
 	 * @return the listOfCustomers
 	 */
-	public List<Customer> getCustomerRegistry() {
+	public List<Customer> getCustomerList() {
 		return listOfCustomers;
 	}
 
@@ -41,35 +41,46 @@ private List<Customer> listOfCustomers;
 	 * 
 	 * @param listOfCustomers
 	 */
-	public void setCustomerRegistry(List<Customer> listOfCustomers) {
+	public void setCustomerList(List<Customer> listOfCustomers) {
 		this.listOfCustomers = listOfCustomers;
 	}
 	
 	/**
 	 * Add Customer to CustomerRegistry
 	 * 
-	 * @param listOfCustomers
+	 * @return true if customer was successfully added, false if customer is already on list
 	 */
 	public boolean addCustomer(Customer customer) {
-		return true;
+		if (this.listOfCustomers.contains(customer))
+			return false;
+		return this.listOfCustomers.add(customer);
 	}
 	
 	/**
 	 * Create an Instance of Customer
 	 * 
-	 * @param listOfCustomers
+	 * @param name - Name of Customer
+	 * @param birth - Birthdate of Customer
+	 * @param address - Address or location of customer 
+	 * @param phone - Phone number of Customer 
+	 *  
+	 * @return The Instance of Customer Created
 	 */
 	public Customer createCustomer(String name, LocalDate birth, String address, String phone) {
-		return null;
+		Customer c = new Customer(name,birth,address,phone);
+		return c;
 	}
 	
 	/**
 	 * Create an Instance of Customer
 	 * 
-	 * @param listOfCustomers
+	 * @param name
+	 * 
+	 * @return The Instance of Customer Created
 	 */
 	public Customer createCustomer(String name) {
-		return null;
+		Customer c = new Customer(name);
+		return c;
 	}
 
 

@@ -81,7 +81,7 @@ public class SaleTest {
 	}
 	
 	/**
-	 * <h2>getId() method test</h2>
+	 * <h2>getId() and setID() method test</h2>
 	 * 
 	 * <p>Description
 	 * 
@@ -94,6 +94,16 @@ public class SaleTest {
 		assertEquals(s2.getId(),2);
 		
 		assertEquals(s3.getId(),3);
+		//When: we set new ID's
+		s1.setId(5);
+		s2.setId(10);
+		s3.setId(22);
+		//Then: they are changed
+		assertEquals(s1.getId(),5);
+		
+		assertEquals(s2.getId(),10);
+		
+		assertEquals(s3.getId(),22);
 	}
 	
 	
@@ -192,7 +202,7 @@ public class SaleTest {
 
 	/**
 	 * <h2>equals() method test</h2>
-	 * <p>teste true cases</p>
+	 * <p>test true cases - same instance</p>
 	 */
 	@Test
 	public void testEqualsTrue() {
@@ -203,7 +213,7 @@ public class SaleTest {
 	
 	/**
 	 * <h2>equals() method test</h2>
-	 * <p>teste false cases</p>
+	 * <p>test false cases - different instances</p>
 	 */
 	@Test
 	public void testEqualsFalse() {
@@ -214,11 +224,20 @@ public class SaleTest {
 	
 	/**
 	 * <h2>equals() method test</h2>
-	 * <p>teste null cases</p>
+	 * <p>test null cases</p>
 	 */
 	@Test
 	public void testEqualsNull() {
 		assertEquals(s1.equals(null),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test false cases - different class</p>
+	 */
+	@Test
+	public void testEqualsFalseDifferentClass() {
+		assertEquals(s1.equals(c1),false);
 	}
 	
 	/**
