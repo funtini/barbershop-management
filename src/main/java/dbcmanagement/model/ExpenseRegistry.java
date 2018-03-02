@@ -30,7 +30,7 @@ public class ExpenseRegistry {
 	 * Constructor of list of expenses
 	 */
 	public ExpenseRegistry() {
-		expenseList = new ArrayList<>();
+		expenseList = new ArrayList<Expense>();
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class ExpenseRegistry {
 	 * @return list of Expense
 	 */
 	public List<Expense> findExpensesOf(YearMonth yearMonth) {
-		List<Expense> listExp = new ArrayList<>();
+		List<Expense> listExp = new ArrayList<Expense>();
 		for (Expense e: this.expenseList)
 		{
 			if (e.getDate().getYear()==yearMonth.getYear() && e.getDate().getMonth().equals(yearMonth.getMonth()))
@@ -118,7 +118,7 @@ public class ExpenseRegistry {
 	 */
 	public List<Expense> findExpensesByType(expenseType type)
 	{
-		List<Expense> listExp = new ArrayList<>();
+		List<Expense> listExp = new ArrayList<Expense>();
 		for (Expense e: this.expenseList)
 		{
 			if (e.getType().equals(type))
@@ -138,7 +138,7 @@ public class ExpenseRegistry {
 	 */
 	public List<Expense> filterExpensesBelowValue(double value)
 	{
-		List<Expense> listExp = new ArrayList<>();
+		List<Expense> listExp = new ArrayList<Expense>();
 		for (Expense e: this.expenseList)
 		{
 			if (e.getValue()<=value)
@@ -158,7 +158,7 @@ public class ExpenseRegistry {
 	 */
 	public List<Expense> filterExpensesAboveValue(double value)
 	{
-		List<Expense> listExp = new ArrayList<>();
+		List<Expense> listExp = new ArrayList<Expense>();
 		for (Expense e: this.expenseList)
 		{
 			if (e.getValue()>=value)
@@ -197,7 +197,7 @@ public class ExpenseRegistry {
 	 */
 	public List<Expense> searchExpenseByName(String name)
 	{
-		List<Expense> listExp = new ArrayList<>();
+		List<Expense> listExp = new ArrayList<Expense>();
 		for (Expense e: this.expenseList)
 		{
 			if (e.getName().equals(name))
@@ -217,7 +217,7 @@ public class ExpenseRegistry {
 	 */
 	public List<Expense> findExpensesBetweenDates(LocalDate startDate,LocalDate endDate)
 	{
-		List<Expense> listExp = new ArrayList<>();
+		List<Expense> listExp = new ArrayList<Expense>();
 		for (Expense e: this.expenseList)
 		{
 			if (e.getDate().isAfter(startDate.minusDays(1)) && e.getDate().isBefore(endDate.plusDays(1)))

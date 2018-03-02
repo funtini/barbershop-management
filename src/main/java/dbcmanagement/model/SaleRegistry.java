@@ -29,7 +29,7 @@ public class SaleRegistry {
 	 * Constructor of list of sales
 	 */
 	public SaleRegistry() {
-		saleList = new ArrayList<>();
+		saleList = new ArrayList<Sale>();
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class SaleRegistry {
 	 */
 	public List<Sale> findSalesOf(YearMonth yearMonth) {
 		
-		List<Sale> listSale = new ArrayList<>();
+		List<Sale> listSale = new ArrayList<Sale>();
 		for (Sale s: saleList)
 		{
 			if (s.getDate().getYear()== yearMonth.getYear() && s.getDate().getMonth().equals(yearMonth.getMonth()))
@@ -109,7 +109,7 @@ public class SaleRegistry {
 	 */
 	public List<Sale> findSalesByCustomer(Customer customer)
 	{
-		List<Sale> listSale = new ArrayList<>();
+		List<Sale> listSale = new ArrayList<Sale>();
 		for (Sale s: saleList)
 		{
 			if (s.getCustomer().equals(customer)) 
@@ -160,7 +160,7 @@ public class SaleRegistry {
 	 */
 	public List<Sale> findSalesBetweenDates(LocalDate startDate,LocalDate endDate)
 	{
-		List<Sale> listSale = new ArrayList<>();
+		List<Sale> listSale = new ArrayList<Sale>();
 		LocalDate saleDate;
 		for (Sale s: saleList)
 		{

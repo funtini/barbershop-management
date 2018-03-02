@@ -27,7 +27,7 @@ private List<Product> listOfProducts;
 	 * Constructor of list of products
 	 */
 	public ProductList() {
-		listOfProducts = new ArrayList<>();
+		listOfProducts = new ArrayList<Product>();
 	}
 
 	/**

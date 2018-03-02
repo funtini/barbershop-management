@@ -54,7 +54,7 @@ public class ProductListTest {
 		p4 = new Product("SHAMPOO MEN",productType.EXTRA,12);
 		
 		pList = new ProductList();
-		expect = new ArrayList<>();
+		expect = new ArrayList<Product>();
 		
 	}
 

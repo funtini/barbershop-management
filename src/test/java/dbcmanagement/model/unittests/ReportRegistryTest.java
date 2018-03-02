@@ -84,7 +84,7 @@ public class ReportRegistryTest {
 		expenseList = new ExpenseRegistry();
 		saleList = new SaleRegistry();
 		reportRegistry = new ReportRegistry();
-		expect = new ArrayList<>();
+		expect = new ArrayList<Report>();
 		
 		ym17 = YearMonth.of(2017, 12);
 		ym18= YearMonth.of(2018, 1);

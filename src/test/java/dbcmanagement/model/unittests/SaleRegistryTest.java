@@ -71,9 +71,9 @@ public class SaleRegistryTest {
 	 */
 	@Before
 	public void setUp(){
-		expect = new ArrayList<>();
-		result = new ArrayList<>();
-		emptyList = new ArrayList<>();
+		expect = new ArrayList<Sale>();
+		result = new ArrayList<Sale>();
+		emptyList = new ArrayList<Sale>();
 		saleList = new SaleRegistry();
 		saleList.getSaleList().clear();
 		expect.clear();

@@ -32,7 +32,7 @@ public class ReportRegistry {
 	 * Constructor of report registry
 	 */
 	public ReportRegistry() {
-		reportList = new ArrayList<>();
+		reportList = new ArrayList<Report>();
 		saleList = new SaleRegistry();
 		expenseList = new ExpenseRegistry();
 	}

@@ -197,7 +197,7 @@ public class ReportTest {
 	@Test 
 	public void testGetnSetSalesList() {
 		//Given
-		List<Sale> expect = new ArrayList<>();
+		List<Sale> expect = new ArrayList<Sale>();
 		List<Sale> result = rep18.getSalesList().getSaleList();
 		assertEquals(result,expect);
 		//When
@@ -215,7 +215,7 @@ public class ReportTest {
 	@Test 
 	public void testGetnSetExpensesList() {
 		//Given
-		List<Expense> expect = new ArrayList<>();
+		List<Expense> expect = new ArrayList<Expense>();
 		List<Expense> result = rep18.getExpensesList().getExpenseList();
 		assertEquals(result,expect);
 		//When
@@ -237,8 +237,8 @@ public class ReportTest {
 		/* Given: 
 		 * 		- 2 empty reports (rep17 and rep18)
 		 */
-		List<Sale> expectedSales18 = new ArrayList<>();
-		List<Sale> expectedSales17 = new ArrayList<>();
+		List<Sale> expectedSales18 = new ArrayList<Sale>();
+		List<Sale> expectedSales17 = new ArrayList<Sale>();
 		assertEquals(rep18.getSalesList().getSaleList().isEmpty(),true);
 		assertEquals(rep17.getSalesList().getSaleList().isEmpty(),true);
 		
@@ -275,8 +275,8 @@ public class ReportTest {
 		/* Given: 
 		 * 		- 2 empty reports (rep17 and rep18)
 		 */
-		List<Expense> expectedExpenses18 = new ArrayList<>();
-		List<Expense> expectedExpenses17 = new ArrayList<>();
+		List<Expense> expectedExpenses18 = new ArrayList<Expense>();
+		List<Expense> expectedExpenses17 = new ArrayList<Expense>();
 		assertEquals(rep18.getSalesList().getSaleList().isEmpty(),true);
 		assertEquals(rep17.getSalesList().getSaleList().isEmpty(),true);
 		

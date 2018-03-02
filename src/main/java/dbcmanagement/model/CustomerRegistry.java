@@ -26,7 +26,7 @@ private List<Customer> listOfCustomers;
 	 * Constructor of list of customers
 	 */
 	public CustomerRegistry() {
-		listOfCustomers = new ArrayList<>();
+		listOfCustomers = new ArrayList<Customer>();
 	}
 
 	/**

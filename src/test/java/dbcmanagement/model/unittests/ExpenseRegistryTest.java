@@ -59,9 +59,9 @@ public class ExpenseRegistryTest {
 	@Before
 	public void setUp(){
 		
-		expect = new ArrayList<>();
-		result = new ArrayList<>();
-		emptyList = new ArrayList<>();
+		expect = new ArrayList<Expense>();
+		result = new ArrayList<Expense>();
+		emptyList = new ArrayList<Expense>();
 		expenseList = new ExpenseRegistry();
 		expenseList.getExpenseList().clear();
 		expect.clear();
