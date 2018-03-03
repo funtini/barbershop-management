@@ -159,21 +159,71 @@ public class CustomerTest {
 
 	/**
 	 * <h2>equals() method test</h2>
-	 * <p>test true cases</p>
+	 * <p>test true cases - Same Instance</p>
 	 */
 	@Test
-	public void testEqualsTrue() {
+	public void testEqualsTrueSameInstance() {
 		assertEquals(c1.equals(c1),true);
 		assertEquals(c2.equals(c2),true);
 	}
 	
 	/**
 	 * <h2>equals() method test</h2>
-	 * <p>test false cases</p>
+	 * <p>test False cases - Same Instance</p>
 	 */
 	@Test
-	public void testEqualsFalse() {
+	public void testEqualsFalseSameName() {
+		Customer test = new Customer("Joao");
+		assertEquals(c1.equals(test),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test true cases - Same Instance</p>
+	 */
+	@Test
+	public void testEqualsTrueDifferentCity() {
+		Customer test = new Customer("Joao",d1,"Porto","914047935");
+		assertEquals(c1.equals(test),true);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test false cases - different instances</p>
+	 */
+	@Test
+	public void testEqualsFalseDifferentInstance() {
 		assertEquals(c1.equals(c2),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test false cases - null name</p>
+	 */
+	@Test
+	public void testEqualsFalseNullName() {
+		Customer test = new Customer(null,d1,"Porto","914047935");
+		assertEquals(test.equals(c2),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test false cases - null name</p>
+	 */
+	@Test
+	public void testEqualsFalseNullPhone() {
+		Customer test = new Customer("Joao",d1,"Porto",null);
+		assertEquals(test.equals(c1),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test false cases - different class</p>
+	 */
+	@Test
+	public void testEqualsFalseDifferentClass() {
+		LocalDate d1 = LocalDate.now();
+		assertEquals(c1.equals(d1),false);
 	}
 	
 	/**
