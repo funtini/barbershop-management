@@ -172,24 +172,51 @@ public class Report {
 		return true;
 	}
 	
+	
+	/**
+	 * Calculate Current Profit/Loss of Report
+	 * 
+	 * @return double value
+	 */
 	public double calculateProfit()
 	{
-		return 0;
+		return calculateTotalSalesAmount()-calculateTotalExpensesValue();
+
 	}
 	
+	/**
+	 * Calculate Current Return On Investment(ROI) of Report
+	 * 
+	 * @return double value (%)
+	 */
 	public double calculateRoi()
 	{
-		return 0;
+		double income = calculateTotalSalesAmount();
+		double expense = calculateTotalExpensesValue();
+		if (expense == 0)
+			return 0;
+		return (((income-expense)/expense)*100);
 	}
 	
-	public double calculateTotalExpenseValue()
+	/**
+	 * Calculate Total Expenses of Report
+	 * 
+	 * @return double value
+	 */
+	public double calculateTotalExpensesValue()
 	{
-		return 0;
+		return this.expensesList.sumAllExpensesValue();
 	}
 	
+	
+	/**
+	 * Calculate Total Sales of Report
+	 * 
+	 * @return double value
+	 */
 	public double calculateTotalSalesAmount()
 	{
-		return 0;
+		return this.salesList.sumAllAmounts();
 	}
 
 

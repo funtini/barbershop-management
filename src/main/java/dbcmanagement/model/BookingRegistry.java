@@ -49,21 +49,32 @@ private List<Booking> listOfBookings;
 	
 	
 	/**
-	 * Method to add a new booking
+	 * Method to create a new Instance of Booking
 	 * 
 	 * @param date - Date of Booking
 	 * @param time - Time of booking
 	 * @param customer - Instance of Customer
 	 * 
-	 * @return boolean - true if booking was sucessfull added, false otherwise
+	 * @return Booking - instance
 	 */
-	public boolean addBooking(LocalDate date, LocalTime time, Customer customer) {
-		if (date.isBefore(LocalDate.now()))
-			return false;
-		if (time.isBefore(LocalTime.now()))
-			return false;
+	public Booking createBooking(LocalDate date, LocalTime time, Customer customer) {
 		Booking book = new Booking(date,time,customer);
-		return listOfBookings.add(book);
+		return book;
+	}
+	
+	/**
+	 * Method to add a new booking
+	 * 
+	 * @param Booking - Instance of Booking
+	 * 
+	 * @return boolean - true if booking was successfully added, false otherwise
+	 */
+	public boolean addBooking(Booking booking) {
+		if (booking.getDate().isBefore(LocalDate.now()))
+			return false;
+		if (booking.getDate().isEqual(LocalDate.now()) && booking.getTime().isBefore(LocalTime.now()))
+			return false;
+		return listOfBookings.add(booking);
 	}
 	
 	/**

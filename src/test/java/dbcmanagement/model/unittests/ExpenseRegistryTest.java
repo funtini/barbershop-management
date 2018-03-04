@@ -168,7 +168,7 @@ public class ExpenseRegistryTest {
 	}
 	
 	/**
-	 * <h2>getExpenseListOf() method test</h2>
+	 * <h2>getExpenseListAboveValue() method test</h2>
 	 */
 	@Test 
 	public void testGetExpenseListAboveValue() {
@@ -196,7 +196,7 @@ public class ExpenseRegistryTest {
 	}
 	
 	/**
-	 * <h2>getExpenseListByMaxValue() method test</h2>
+	 * <h2>getExpenseListUnderBelow() method test</h2>
 	 */
 	@Test 
 	public void testGetExpenseListUnderBelow() {
@@ -224,7 +224,7 @@ public class ExpenseRegistryTest {
 	}
 	
 	/**
-	 * <h2>getExpenseListByMaxValue() method test</h2>
+	 * <h2>findExpensesOfYearMonth() method test</h2>
 	 */
 	@Test 
 	public void testFindExpensesOfYearMonth() {
@@ -254,7 +254,7 @@ public class ExpenseRegistryTest {
 	
 	
 	/**
-	 * <h2>getExpenseListByMaxValue() method test</h2>
+	 * <h2>findExpenseById() method test</h2>
 	 */
 	@Test 
 	public void testFindExpenseById() {
@@ -270,13 +270,15 @@ public class ExpenseRegistryTest {
 		//When: get a expense by ID
 		
 		Expense result = expenseList.findExpenseById(1);
+		Expense resultNull = expenseList.findExpenseById(33);
 		Expense expect = e1;
 		//Then: get a expense by ID
-		assertEquals(result,expect);			
+		assertEquals(result,expect);
+		assertEquals(resultNull,null);
 	}
 	
 	/**
-	 * <h2>getExpenseListByMaxValue() method test</h2>
+	 * <h2>searchExpenseByName() method test</h2>
 	 */
 	@Test 
 	public void testSearchExpenseByName() {
@@ -298,7 +300,7 @@ public class ExpenseRegistryTest {
 	}
 
 	/**
-	 * <h2>getExpenseListByMaxValue() method test</h2>
+	 * <h2>findExpenseBetweenDates() method test</h2>
 	 */
 	@Test 
 	public void testFindExpenseBetweenDates() {
@@ -328,7 +330,7 @@ public class ExpenseRegistryTest {
 	}
 	
 	/**
-	 * <h2>getExpenseListByMaxValue() method test</h2>
+	 * <h2>findExpenseBetweenDates() method test</h2>
 	 * 
 	 * - Invalid Date's Difference
 	 */
@@ -352,7 +354,7 @@ public class ExpenseRegistryTest {
 	}
 	
 	/**
-	 * <h2>getExpenseListByMaxValue() method test</h2>
+	 * <h2>sumAllExpensesValue() method test</h2>
 	 */
 	@Test 
 	public void testSumAllExpensesValue() {
@@ -367,8 +369,31 @@ public class ExpenseRegistryTest {
 		//When: get the sum of all expenses value
 		double result = expenseList.sumAllExpensesValue();
 		double expect = 175;
-		//Then: get empty list
+		//Then: 
 		assertEquals(result,expect,0.0);				
+	}
+	
+	/**
+	 * <h2>sumExpensesValueByType() method test</h2>
+	 */
+	@Test 
+	public void testSumExpensesValueByType() {
+		
+		//Given: 3 expenses
+		assertEquals(expenseList.getExpenseList(),emptyList);
+		assertEquals(emptyList,expect);
+		Expense.setStartIdGenerator(1);
+		expenseList.addExpense(expenseList.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseList.addExpense(expenseList.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
+		expenseList.addExpense(expenseList.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
+		//When: get the sum of all expenses value of a specific Type
+		double result = expenseList.sumExpensesValueByType(expenseType.FIXED);
+		double result2 = expenseList.sumExpensesValueByType(expenseType.ONEOFF);
+		double expect = 85;
+		double expect2 = 90;
+		//Then:
+		assertEquals(result,expect,0.0);		
+		assertEquals(result2,expect2,0.0);
 	}
 
 }

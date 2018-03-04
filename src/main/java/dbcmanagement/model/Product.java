@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 
  * @author JOAO GOMES
  */
-public class Product {
+public class Product implements Comparable<Product>{
 
 	
 	
@@ -181,7 +181,15 @@ public class Product {
 		return "Product [id=" + id + ", name=" + name + ", type=" + type + ", price=" + price + "]";
 	}
 	
-	
+	@Override
+	public int compareTo(Product p)
+	{
+		if (this.getPrice()>p.getPrice())
+			return -1;
+		else if(this.getPrice()<p.getPrice())
+			return 1;
+		return 0;
+	}
 	
 	
 }

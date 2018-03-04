@@ -116,14 +116,14 @@ public class SaleRegistry {
 		List<Sale> listSale = new ArrayList<Sale>();
 		for (Sale s: saleList)
 		{
-			if (s.getCustomer().equals(customer)) 
+			if (customer.equals(s.getCustomer())) 
 				listSale.add(s);
 		}
 		return listSale;
 	}
 	
 	/**
-	 * Method that sum all amouts of all sales
+	 * Method that sum all amounts of all sales
 	 * 
 	 * @return sum
 	 */
@@ -157,6 +157,8 @@ public class SaleRegistry {
 	/**
 	 * Method to find a list of sales between two specific Dates
 	 * 
+	 * <p>ATTENTION</p> if startDate is older than endDate, the return value is an emptyList
+	 * 
 	 * @param startDate
 	 * @param endDate
 	 * 
@@ -165,11 +167,13 @@ public class SaleRegistry {
 	public List<Sale> findSalesBetweenDates(LocalDate startDate,LocalDate endDate)
 	{
 		List<Sale> listSale = new ArrayList<Sale>();
+		if (startDate.isAfter(endDate))
+			return listSale;
 		LocalDate saleDate;
 		for (Sale s: saleList)
 		{
 			saleDate=s.getDate().toLocalDate();
-			if (saleDate.isBefore(startDate) || saleDate.isAfter(endDate)) 
+			if (!(saleDate.isBefore(startDate) || saleDate.isAfter(endDate))) 
 				listSale.add(s);
 		}
 		return listSale;

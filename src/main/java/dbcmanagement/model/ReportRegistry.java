@@ -251,22 +251,74 @@ public class ReportRegistry {
 	
 	public double calculateAvgMonthlyRoi()
 	{
-		return 0;
+		if (this.reportList.isEmpty())
+			return 0;
+		if (this.reportList.get(0).getYearMonth().equals(YearMonth.now()))
+			return 0;
+		double sum = 0;
+		double count = 0;
+		for (Report r: this.reportList)
+			if (!r.getYearMonth().equals(YearMonth.now()))
+			{
+				sum=sum+r.calculateRoi();
+				count++;
+			}
+			
+		return (sum/count);
 	}
 	
 	public double calculateAvgMonthlyProfit()
 	{
-		return 0;
+		if (this.reportList.isEmpty())
+			return 0;
+		if (this.reportList.get(0).getYearMonth().equals(YearMonth.now()))
+			return 0;
+		double sum = 0;
+		double count = 0;
+		for (Report r: this.reportList)
+			if (!r.getYearMonth().equals(YearMonth.now()))
+			{
+				sum=sum+r.calculateProfit();
+				count++;
+			}
+			
+		return (sum/count);
 	}
 	
 	public double calculateAvgMonthlySalesAmount()
 	{
-		return 0;
+		if (this.reportList.isEmpty())
+			return 0;
+		if (this.reportList.get(0).getYearMonth().equals(YearMonth.now()))
+			return 0;
+		double sum = 0;
+		double count = 0;
+		for (Report r: this.reportList)
+			if (!r.getYearMonth().equals(YearMonth.now()))
+			{
+				sum=sum+r.calculateTotalSalesAmount();
+				count++;
+			}
+			
+		return (sum/count);
 	}
 	
 	public double calculateAvgMonthlyExpensesValue()
 	{
-		return 0;
+		if (this.reportList.isEmpty())
+			return 0;
+		if (this.reportList.get(0).getYearMonth().equals(YearMonth.now()))
+			return 0;
+		double sum = 0;
+		double count = 0;
+		for (Report r: this.reportList)
+			if (!r.getYearMonth().equals(YearMonth.now()))
+			{
+				sum=sum+r.calculateTotalExpensesValue();
+				count++;
+			}
+			
+		return (sum/count);
 	}
 	
 	

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,16 +135,183 @@ public class SaleRegistryTest {
 		assertEquals(saleList.getSaleList(),emptyList);
 		assertEquals(emptyList,expect);
 	
-		//When: add 3 sales
+		//When: add 3 sales (first one is added 2 times - "saleTest" - to verify the false result)
 		Sale.setStartIdGenerator(1);
-		saleList.addSale(saleList.createSale(d1,c1,p1));
-		saleList.addSale(saleList.createSale(d2,c2,p2));
-		saleList.addSale(saleList.createSale(d3,p1));
+		Sale saleTest = saleList.createSale(d1,c1,p1);
+		assertEquals(saleList.addSale(saleTest),true);
+		assertEquals(saleList.addSale(saleTest),false); //already added this sale - false
+		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d3,p1)),true);
 		expect.add(s1);
 		expect.add(s2);
 		expect.add(s3);
 		//Then: get a list with that 3 sales
 		result = saleList.getSaleList();
+		assertEquals(result,expect);
+	}
+	
+	/**
+	 * <h2>findSaleOf() method test</h2>
+	 */
+	@Test 
+	public void testFindSaleOf() {
+		
+		//Given: saleList with 4 sales (3 of March/2018 and 1 of February/2017)
+		assertEquals(saleList.getSaleList(),emptyList);
+		assertEquals(emptyList,expect);
+		
+		Sale.setStartIdGenerator(1);
+		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d3,p1)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d4,p1)),true);
+	
+		//When: find sales of March/2018
+		result = saleList.findSalesOf(YearMonth.of(2018, 3));
+		expect.add(s1);
+		expect.add(s2);
+		expect.add(s3);
+		//Then: get a list with that 3 sales
+		
+		assertEquals(result,expect);
+	}
+	
+	/**
+	 * <h2>findSaleOf() method test</h2>
+	 */
+	@Test 
+	public void testFindSaleByCustomer() {
+		
+		//Given: saleList with 4 sales (2 of Customer (c1), 1 of Customer (c2) and other with no customer)
+		assertEquals(saleList.getSaleList(),emptyList);
+		assertEquals(emptyList,expect);
+		
+		Sale.setStartIdGenerator(1);
+		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d3,p1)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d4,c1,p2)),true);
+	
+		//When: find sales of Customer c1
+		result = saleList.findSalesByCustomer(c1);
+		
+		//Then: get a list of 2 sales
+		expect.add(s1);
+		expect.add(s4);
+		assertEquals(result,expect);
+	}
+	
+	/**
+	 * <h2>sumAllAmounts() method test</h2>
+	 */
+	@Test 
+	public void testSumAllAmounts() {
+		
+		//Given: saleList with 4 sales (2 of Customer (c1), 1 of Customer (c2) and other with no customer)
+		assertEquals(saleList.getSaleList(),emptyList);
+		assertEquals(emptyList,expect);
+		
+		Sale.setStartIdGenerator(1);
+		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d3,p1)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d4,c1,p2)),true);
+	
+		//When: get the sum of all sales amounts
+		double sumResult = saleList.sumAllAmounts();
+		//Then: get a result of 50 euros
+		double sumExpect = 50;
+		assertEquals(sumResult,sumExpect,0.0);
+	}
+	
+	/**
+	 * <h2>findSaleById() method test</h2>
+	 */
+	@Test 
+	public void testFindSaleById() {
+		
+		//Given: saleList with 2 sales
+		assertEquals(saleList.getSaleList(),emptyList);
+		assertEquals(emptyList,expect);
+		
+		Sale.setStartIdGenerator(1);
+		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2)),true);
+		//When: find sales by ID
+		Sale res = saleList.findSaleById(2);
+		Sale res2 = saleList.findSaleById(1);
+		//Then: get the expected sales
+		
+		assertEquals(res,s2);
+		assertEquals(res2,s1);
+	}
+	
+	/**
+	 * <h2>findSaleById()  method test</h2>
+	 * 
+	 * Null case - no sale found
+	 */
+	@Test 
+	public void testFindSaleByIdNullCase() {
+		
+		//Given: saleList with 2 sales
+		assertEquals(saleList.getSaleList(),emptyList); //check empty saleList
+		assertEquals(emptyList,expect);					//check empty test lists
+		Sale.setStartIdGenerator(1);		
+		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2)),true);
+		
+		
+		//When: find sales by ID
+		Sale res = saleList.findSaleById(20);
+		//Then: get the expected sales
+		
+		assertEquals(res,null);
+	}
+	
+	/**
+	 * <h2>findSaleBetweenDates() method test</h2>
+	 */
+	@Test 
+	public void testFindSaleBetweenDates() {
+		
+		//Given: saleList with 4 sales
+		assertEquals(saleList.getSaleList(),emptyList);	//check empty saleList
+		assertEquals(emptyList,expect);					//check empty test lists
+		
+		Sale.setStartIdGenerator(1);
+		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d3,p1)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d4,c1,p2)),true);
+		//When: find sales between dates
+		result = saleList.findSalesBetweenDates(LocalDate.of(2017, 2, 1), LocalDate.of(2018, 3, 11));
+		expect.add(s1);
+		expect.add(s4);
+		//Then: get the expected sales
+		assertEquals(result,expect);
+	}
+	
+	/**
+	 * <h2>findSaleBetweenDates() method test</h2>
+	 * 
+	 * Invalid input date - give emptyList
+	 */
+	@Test 
+	public void testFindSaleBetweenDatesInvalidDates() {
+		
+		//Given: saleList with 4 sales
+		assertEquals(saleList.getSaleList(),emptyList);	//check empty saleList
+		assertEquals(emptyList,expect);					//check empty test lists
+		
+		Sale.setStartIdGenerator(1);
+		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d3,p1)),true);
+		assertEquals(saleList.addSale(saleList.createSale(d4,c1,p2)),true);
+		//When: find sales between invalid dates
+		result = saleList.findSalesBetweenDates(LocalDate.of(2019, 2, 1), LocalDate.of(2017, 3, 11));
+		//Then: get an empty List
 		assertEquals(result,expect);
 	}
 	

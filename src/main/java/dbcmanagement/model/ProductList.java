@@ -1,6 +1,7 @@
 package dbcmanagement.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import dbcmanagement.model.Product.productType;
@@ -135,26 +136,37 @@ private List<Product> listOfProducts;
 	/**
 	 * Method to get a List of Products ordered By Price
 	 * 
-	 * @param Name
-	 * 
 	 * @return List of Products
 	 */
 	public List<Product> getProductListOrderByPrice()
 	{
-		return null;	
+		List<Product> productList = new ArrayList<Product>();
+		for (Product p: this.listOfProducts)
+		{ 
+				productList.add(p);
+		}
+		Collections.sort(productList);
+		return productList;		
 	}
 	
 	
 	/**
-	 * Method to get a List of Products ordered By Price
+	 * Method to get a List of Products ordered By Price of Specific type
 	 * 
-	 * @param Name
+	 * @param Type
 	 * 
 	 * @return List of Products
 	 */
-	public List<Product> getProductListByMinPrice(productType type)
+	public List<Product> getProductListOrderByPriceOfType(productType type)
 	{
-		return null;	
+		List<Product> productList = new ArrayList<Product>();
+		for (Product p: this.listOfProducts)
+		{
+			if (p.getType().equals(type)) 
+				productList.add(p);
+		}
+		Collections.sort(productList);
+		return productList;		
 	}
 
 	

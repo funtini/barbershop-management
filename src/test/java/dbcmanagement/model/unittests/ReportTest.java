@@ -155,11 +155,13 @@ public class ReportTest {
 		 */
 		assertEquals(rep18.updateBusinessDays(),true);
 		assertEquals(rep17.updateBusinessDays(),true);
+		assertEquals(rep17.updateBusinessDays(),false); //already updated - false
 		/* Then: 
 		 * 		- Both reports has your businessDays updated
 		 */
 		assertEquals(rep18.getBusinessDays(),2);
 		assertEquals(rep17.getBusinessDays(),1);
+		
 	}
 	
 	/**
@@ -271,7 +273,7 @@ public class ReportTest {
 	 * <p>This test verify if addExpense() method add only expenses that has the same date as YearMonth of Report
 	 */
 	@Test 
-	public void testAddExpense() {
+	public void testAddExpenseSuccessCases() {
 		/* Given: 
 		 * 		- 2 empty reports (rep17 and rep18)
 		 */
@@ -285,9 +287,9 @@ public class ReportTest {
 		 * 		- Try to Add fixed expense: e2 to rep17
 		 * 		- Try to add oneoff expense: e3 to rep17 
 		 */	
-		rep18.addExpense(e1);
-		rep17.addExpense(e2);		
-		rep17.addExpense(e3);
+		assertEquals(rep18.addExpense(e1),true);
+		assertEquals(rep17.addExpense(e2),true);	
+		assertEquals(rep17.addExpense(e3),true);
 		expectedExpenses18.add(e1);
 		expectedExpenses17.add(e2);
 		expectedExpenses17.add(e3);
@@ -300,10 +302,177 @@ public class ReportTest {
 		assertEquals(rep17.getExpensesList().getExpenseList(),expectedExpenses17);
 	}
 	
+	/**
+	 * <h2>addExpense() method test</h2>
+	 * 
+	 * <p>This test verify if addExpense() method add only expenses that has the same date as YearMonth of Report
+	 */
+	@Test 
+	public void testAddExpenseInvalidDateTypeOneOff() {
+		/* Given: 
+		 * 		- 1 empty reports of 2018/01 (rep18)
+		 */
+		assertEquals(rep18.getSalesList().getSaleList().isEmpty(),true);
+
+		/* When: 
+		 * 		- Try to add oneoff expense of 2017/12 and 2018/02: e3 to rep18
+		 */	
+		assertEquals(rep18.addExpense(e3),false);
+		e3.setDate(e3.getDate().plusYears(1));
+		assertEquals(rep18.addExpense(e3),false);
+		
+		/* Then: 
+		 * 		- Report18 still have a empty list of expenses
+		 */
+		assertEquals(rep18.getSalesList().getSaleList().isEmpty(),true);
+
+	}
+	
+	
+	/**
+	 * <h2>calculateTotalSalesAmount() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testCalculateTotalSalesAmount() {
+		/* Given: 
+		 * 		- Report of 2018/01, with 3 sales (rep18)
+		 */
+		assertEquals(rep18.getSalesList().getSaleList().isEmpty(),true);
+		assertEquals(rep18.getExpensesList().getExpenseList().isEmpty(),true);
+		assertEquals(rep18.addExpense(e1),true);
+		assertEquals(rep18.addSale(s1),true);
+		assertEquals(rep18.addSale(s2),true);	
+		assertEquals(rep18.addSale(s3),true);
+
+		/* When: 
+		 * 		- calculate total sales amout of rep18 (Sales: 2*15+10)
+		 */	
+		double expectProfit = rep18.calculateTotalSalesAmount();
+		
+		/* Then: 
+		 * 		- Report18 has 40 euros of total sales amout
+		 */
+		assertEquals(expectProfit,40,0.0);
+
+	}
+	
+	/**
+	 * <h2>calculateTotalSalesAmount() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testCalculateTotalExpensesAmount() {
+		/* Given: 
+		 * 		- Report of 2018/01, with 1 expense (rep17)
+		 */
+		assertEquals(rep17.getExpensesList().getExpenseList().isEmpty(),true);
+		assertEquals(rep17.addExpense(e2),true);	
+		assertEquals(rep17.addExpense(e3),true);
+		
+		/* When: 
+		 * 		- calculate value of all expenses in rep17 (Expense: 90+50)
+		 */	
+		double expectProfit = rep17.calculateTotalExpensesValue();
+		
+		/* Then: 
+		 * 		- Report17 has 140 euros of expenses
+		 */
+		assertEquals(expectProfit,140,0.0);
+
+	}
+	
+	
+	/**
+	 * <h2>calculateProfit() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testCalculateProfit() {
+		/* Given: 
+		 * 		- Report of 2018/01, with  (rep18)
+		 */
+		assertEquals(rep18.getSalesList().getSaleList().isEmpty(),true);
+		assertEquals(rep18.getExpensesList().getExpenseList().isEmpty(),true);
+		assertEquals(rep18.addExpense(e1),true);
+		assertEquals(rep18.addSale(s1),true);
+		assertEquals(rep18.addSale(s2),true);	
+		assertEquals(rep18.addSale(s3),true);
+
+		/* When: 
+		 * 		- calculate profit of rep18 (Sales: 2*15+10 // Expenses: 35)
+		 */	
+		double expectProfit = rep18.calculateProfit();
+		
+		/* Then: 
+		 * 		- Report18 has 5 euros of profit
+		 */
+		assertEquals(expectProfit,5,0.0);
+
+	}
+	
+	/**
+	 * <h2>calculateRoi() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testCalculateRoi() {
+		/* Given: 
+		 * 		- Report of 2018/01, with  (rep18)
+		 */
+		assertEquals(rep18.getSalesList().getSaleList().isEmpty(),true);
+		assertEquals(rep18.getExpensesList().getExpenseList().isEmpty(),true);
+		assertEquals(rep18.addExpense(e1),true);
+		assertEquals(rep18.addSale(s1),true);
+		assertEquals(rep18.addSale(s2),true);	
+		assertEquals(rep18.addSale(s3),true);
+
+		/* When: 
+		 * 		- calculate ROI of rep18 (Sales: 2*15+10 // Expenses: 35)
+		 */	
+		double expectRoi = rep18.calculateRoi();
+		double result = (((40.0-35.0)/35.0)*100.0);
+		
+		/* Then: 
+		 * 		- Report18 has a ROI of 14,28% 
+		 */
+		assertEquals(expectRoi,result,0.0);
+
+	}
+	
+	/**
+	 * <h2>calculateRoi() method test</h2>
+	 * 
+	 * <p>This test verify null expenses cases
+	 */
+	@Test 
+	public void testCalculateRoiNullExpenses() {
+		/* Given: 
+		 * 		- Report of 2018/01, with 3 sales and 0 expenses (rep18)
+		 */
+		assertEquals(rep18.getSalesList().getSaleList().isEmpty(),true);
+		assertEquals(rep18.getExpensesList().getExpenseList().isEmpty(),true);
+		assertEquals(rep18.addSale(s1),true);
+		assertEquals(rep18.addSale(s2),true);	
+		assertEquals(rep18.addSale(s3),true);
+
+		/* When: 
+		 * 		- calculate ROI of rep18
+		 */	
+		double expectRoi = rep18.calculateRoi();
+		double result = 0.0;
+		
+		/* Then: 
+		 * 		- Report18 has a ROI of 0% because has no expenses
+		 */
+		assertEquals(expectRoi,result,0.0);
+
+	}
+	
 	
 	/**
 	 * <h2>equals() method test</h2>
-	 * <p>teste true cases</p>
+	 * <p>test true cases</p>
 	 */
 	@Test
 	public void testEqualsTrue() {
@@ -315,21 +484,43 @@ public class ReportTest {
 	
 	/**
 	 * <h2>equals() method test</h2>
-	 * <p>teste false cases</p>
+	 * <p>test false cases - Different Instances</p>
 	 */
 	@Test
-	public void testEqualsFalse() {
+	public void testEqualsFalseDifferentInstances() {
 		assertEquals(rep17.equals(rep18),false);
 	}
 	
 	/**
 	 * <h2>equals() method test</h2>
-	 * <p>teste null cases</p>
+	 * <p>test false cases - Different Classes</p>
+	 */
+	@Test
+	public void testEqualsFalseDifferentClasses() {
+		assertEquals(rep17.equals(e1),false);
+	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test null cases</p>
 	 */
 	@Test
 	public void testEqualsNull() {
 		assertEquals(rep17.equals(null),false);
+
 	}
+	
+	/**
+	 * <h2>equals() method test</h2>
+	 * <p>test null yearMonth</p>
+	 */
+	@Test
+	public void testEqualsNullDate() {
+		rep17.setYearMonth(null);
+		assertEquals(rep17.equals(rep18),false);
+
+	}
+	
 	
 	/**
 	 * <h2>toString() method test</h2>
