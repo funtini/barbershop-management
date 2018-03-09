@@ -68,35 +68,23 @@ public class ReportRegistry {
 	
 	
 	/**
-	 * Method to update all reports
-	 * 
-	 * <p>For each report: Sales,Expenses and BusinessDays are updated</p>
-	 */
-	public void updateReportList()
-	{
-		for(Report rep: reportList)
-		{
-			rep.setSales(saleList.findSalesOf(rep.getYearMonth()));
-			rep.setExpenses(expenseList.findExpensesOf(rep.getYearMonth()));
-			rep.updateBusinessDays();
-		}
-	}
-	
-	
-	/**
 	 * Method to add a new sale with unknown customer
+	 * 
+	 * Sale is added to report associated to sale's date.
+	 * If there is no report with this sale's date, a new report is created with YearMonth associated to this sale's date.
 	 * 
 	 * @param date - DateTime of sale
 	 * @param product - Product sold
 	 * 
-	 * @return false if year/month dont match with this report, true if sale is sucessfuly added to this report
+	 * @return true if new Report has been created, false if already exist a report associated with this date.
 	 */
-	public void addSale(LocalDateTime date, Product product)
+	public boolean addSale(LocalDateTime date, Product product)
 	{
 		Sale s = saleList.createSale(date, product);
 		saleList.addSale(s);
 		YearMonth ym = YearMonth.of(date.getYear(), date.getMonth());
 		boolean occurence = false;
+		boolean newReportAdded = false;
 		for(Report rep: reportList)
 		{
 			if (rep.addSale(s))
@@ -109,7 +97,10 @@ public class ReportRegistry {
 		{
 			this.addReport(ym);
 			this.getReport(ym).addSale(s);
+			newReportAdded = true;
 		}
+		
+		return newReportAdded;
 	}
 	
 	
@@ -133,18 +124,22 @@ public class ReportRegistry {
 	/**
 	 * Method to add a new sale with customer
 	 * 
+	 * Sale is added to report associated to sale's date.
+	 * If there is no report with this sale's date, a new report is created with YearMonth associated to this sale's date.
+	 * 
 	 * @param date - DateTime of sale
 	 * @param customer - Customer that bought the product
 	 * @param product - Product sold
 	 * 
-	 * @return false if year/month dont match with this report, true if sale is sucessfuly added to this report
+	 * @return true if new Report has been created, false if already exist a report associated with this date.
 	 */
-	public void addSale(LocalDateTime date,Customer customer, Product product)
+	public boolean addSale(LocalDateTime date,Customer customer, Product product)
 	{
 		Sale s = saleList.createSale(date,customer,product);
 		saleList.addSale(s);
 		YearMonth ym = YearMonth.of(date.getYear(), date.getMonth());
 		boolean occurence = false;
+		boolean newReportAdded = false;
 		for(Report rep: reportList)
 		{
 			if (rep.addSale(s))
@@ -155,9 +150,12 @@ public class ReportRegistry {
 		
 		if (!occurence)
 		{
+			newReportAdded = true;
 			this.addReport(ym);
 			this.getReport(ym).addSale(s);
 		}
+		
+		return newReportAdded;
 	}
 	
 	
@@ -248,7 +246,27 @@ public class ReportRegistry {
 	}
 	
 	
+	/**
+	 * Method to update all reports
+	 * 
+	 * <p>For each report: Sales,Expenses and BusinessDays are updated</p>
+	 */
+	public void updateReportList()
+	{
+		for(Report rep: reportList)
+		{
+			rep.setSales(saleList.findSalesOf(rep.getYearMonth()));
+			rep.setExpenses(expenseList.findExpensesOf(rep.getYearMonth()));
+			rep.updateBusinessDays();
+		}
+	}
 	
+	
+	/**
+	 * Method to calculate the average ROI of all reports, expect current monthly report
+	 * 
+	 * @return ROI AVEGARAGE (%) - double
+	 */
 	public double calculateAvgMonthlyRoi()
 	{
 		if (this.reportList.isEmpty())
@@ -267,6 +285,14 @@ public class ReportRegistry {
 		return (sum/count);
 	}
 	
+	
+	/**
+	 * Method to calculate the average PROFIT of all reports, expect current monthly report
+	 * 
+	 * <p>Profit: All Sales - All Expenses of all closed reports</p>
+	 * 
+	 * @return PROFIT AVEGARAGE (%) - double
+	 */
 	public double calculateAvgMonthlyProfit()
 	{
 		if (this.reportList.isEmpty())
@@ -285,6 +311,14 @@ public class ReportRegistry {
 		return (sum/count);
 	}
 	
+	
+	/**
+	 * Method to calculate the average Income of all reports, expect current monthly report
+	 * 
+	 * <p>Income: Sum of all sales amount </p>
+	 * 
+	 * @return INCOME AVEGARAGE (%) - double
+	 */
 	public double calculateAvgMonthlySalesAmount()
 	{
 		if (this.reportList.isEmpty())
@@ -303,6 +337,14 @@ public class ReportRegistry {
 		return (sum/count);
 	}
 	
+	
+	/**
+	 * Method to calculate the average Expenses Value of all reports, expect current monthly report
+	 * 
+	 * <p>Expenses: Sum of all expenses value </p>
+	 * 
+	 * @return EXPENSES AVEGARAGE (%) - double
+	 */
 	public double calculateAvgMonthlyExpensesValue()
 	{
 		if (this.reportList.isEmpty())

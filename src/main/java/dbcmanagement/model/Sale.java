@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author JOAO GOMES
  *
  */
-public class Sale {
+public class Sale implements Comparable<Sale>{
 	
 	private static AtomicInteger idGenerator=new AtomicInteger();
 	
@@ -192,7 +192,15 @@ public class Sale {
 				+ amount + "]";
 	}
 
-
+	@Override
+	public int compareTo(Sale sale)
+	{
+		if (this.date.isAfter(sale.getDate()))
+			return -1;
+		if (this.date.isBefore(sale.getDate()))
+			return 1;
+		return 0;
+	}
 	
 	
 	

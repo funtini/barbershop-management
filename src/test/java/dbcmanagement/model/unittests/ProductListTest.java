@@ -213,11 +213,14 @@ public class ProductListTest {
 		pList.addProduct(p1);
 		pList.addProduct(p3);
 		pList.addProduct(p2);
-		assertEquals(pList.getListOfProducts().size(),3);		
+		p4.setPrice(10);
+		pList.addProduct(p4);
+		assertEquals(pList.getListOfProducts().size(),4);		
 		//When: find products by name
 		List<Product> expect = new ArrayList<>();
 		expect.add(p1);
 		expect.add(p2);
+		expect.add(p4);
 		expect.add(p3);
 		List<Product> result = pList.getProductListOrderByPrice();
 		

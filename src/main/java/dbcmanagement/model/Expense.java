@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 
  * @author JOAO GOMES
  */
-public class Expense {
+public class Expense implements Comparable<Expense>{
 	
 	
 	/**
@@ -245,6 +245,15 @@ public class Expense {
 		return "Expense [id=" + id + ", name=" + name + ", type=" + type + ", value=" + valueOfPayment + "]";
 	}
 
+	@Override
+	public int compareTo(Expense expense)
+	{
+		if (this.dateOfPayment.isAfter(expense.getDate()))
+			return -1;
+		if (this.dateOfPayment.isBefore(expense.getDate()))
+			return 1;
+		return 0;
+	}
 	
 	
 	

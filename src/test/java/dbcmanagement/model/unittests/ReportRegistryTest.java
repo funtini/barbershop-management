@@ -123,16 +123,42 @@ public class ReportRegistryTest {
 	public void testGetReportList() {
 		
 		//Given: empty list's
-		assertEquals(reportRegistry.getReportList().isEmpty(),true);
-	
-		//When: set a list with 3 sales
-		
+		assertEquals(reportRegistry.getReportList().isEmpty(),true);	
+		//When: set a list with 3 sales		
 		assertEquals(reportRegistry.addReport(ym17),true);	
 		assertEquals(reportRegistry.addReport(ym18),true);	
 		//Then: get a list with that 3 sales
 		expect.add(new Report(ym17));
 		expect.add(new Report(ym18));
 		assertEquals(expect.equals(reportRegistry.getReportList()),true);
+	}
+	
+	/**
+	 * <h2>getSaleList() method test</h2>
+	 */
+	@Test 
+	public void testGetSaleList() {
+		
+		//Given: empty list's
+		assertEquals(reportRegistry.getSaleList().getSaleList().isEmpty(),true);	
+		//When: add 1 sale		
+		reportRegistry.addSale(dt1, p1);
+		//Then: get size of list with 1 sale
+		assertEquals(reportRegistry.getSaleList().getSaleList().size(),1);
+	}
+	
+	/**
+	 * <h2>getExpenseList() method test</h2>
+	 */
+	@Test 
+	public void testGetexpenseList() {
+		
+		//Given: empty list's
+		assertEquals(reportRegistry.getExpenseList().getExpenseList().isEmpty(),true);	
+		//When: add 1 sale
+		reportRegistry.addExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato");
+		//Then: get size of list with 1 sale
+		assertEquals(reportRegistry.getExpenseList().getExpenseList().size(),1);
 	}
 	
 	/**
