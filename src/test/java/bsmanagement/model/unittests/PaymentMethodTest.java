@@ -111,4 +111,20 @@ public class PaymentMethodTest {
 		assertEquals(expected,creditCard.toString());
 	}
 
+	
+	@Test
+	public void testIsValidNullName() {		
+		assertEquals(creditCard.isValid(),true);
+		creditCard.setType("");
+		assertEquals(creditCard.isValid(),false);
+		
+	}
+	
+	@Test
+	public void testIsValidEmptyName() {	
+		assertEquals(creditCard.isValid(),true);
+		creditCard.setType("");
+		assertEquals(creditCard.isValid(),false);
+		
+	}
 }

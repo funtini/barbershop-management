@@ -60,15 +60,38 @@ public class SaleRegistry {
 	/**
 	 * Add new payment method
 	 * 
+	 * @param PaymentMethod
+	 * 
+	 * @return true if NameType of payment doesnt existe, false if name already exist or if name is empty/null
+	 */
+	public boolean addPaymentMethod(PaymentMethod payment)
+	{
+		if (payment.isValid() && !getAvailablePaymentMethods().contains(payment)) {
+			availablePaymentMethods.add(payment);
+			return true;
+		}
+			
+		return false;
+	}
+
+	
+	/**
+	 * Method to create a new payment method
+	 * 
 	 * @param name
 	 * @param fee
 	 * @param minFeeValue
+	 * 
+	 * @return PaymentMethod instance
 	 */
-	public void addPaymentMethod(String name, double fee, double minFeeValue)
+	public PaymentMethod createPaymentMethod(String name, double fee, double minFeeValue)
 	{
-		availablePaymentMethods.add(new PaymentMethod(name,fee,minFeeValue));
+		PaymentMethod p = new PaymentMethod(name,fee,minFeeValue);
+		
+		return p;
 	}
-
+	
+	
 	/**
 	 * Method to create a new instance of sale with known customer
 	 * 

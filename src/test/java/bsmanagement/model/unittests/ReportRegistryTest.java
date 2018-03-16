@@ -624,7 +624,7 @@ public class ReportRegistryTest {
 	@Test 
 	public void testCalculateMethodsOnlyOneMonth() {
 		/* Given: 
-		 * 		- reportRegistry with 2 report (2017/12 & 2018/01)
+		 * 		- reportRegistry with 1 report (2050/03)
 		 * 		- report of today month : has 150 sales (loop) and 2 expenses
 		 * 
 		 */
@@ -679,6 +679,64 @@ public class ReportRegistryTest {
 		assertEquals(Math.round(resultProfit*100.0)/100.0,expectedProfit,0.0);
 	
 	}
+	
+	
+	
+	/**
+	 * <h2>calculate methods test</h2>
+	 * 
+	 * - tests for situations when we got only 1 month
+	 */
+	@Test 
+	public void testCalculateMethodsAtCurrentMonth() {
+		/* Given: 
+		 * 		- reportRegistry with 1 report (2050/03)
+		 * 		- report of today month : has 150 sales (loop) and 2 expenses
+		 * 
+		 */
+		YearMonth today = YearMonth.now();
+		LocalDateTime dateSale = LocalDateTime.now();
+		assertEquals(reportRegistry.getReportS().isEmpty(),true);			//check that report list is empty before adding reports
+		assertEquals(reportRegistry.addReport(today),true);						//add report of today's YearMonth
+		
+		int monthLen =today.getMonth().length(Year.isLeap(today.getYear()));	// save month length of today
+			
+		assertEquals(reportRegistry.getReport(today).getSalesList().getSales().size(),0);		//verify that saleList is empty
+		
+		for (int i=dateSale.getDayOfMonth();i<monthLen;i++)					//Loop to put 105 sales into report of this month
+		{
+			reportRegistry.addSale(dateSale, p1,cash);
+			reportRegistry.addSale(dateSale.plusMinutes(1), c1, p2,card);
+			reportRegistry.addSale(dateSale.plusMinutes(3), p1,cash);
+			reportRegistry.addSale(dateSale.plusMinutes(4), p2,card);
+			reportRegistry.addSale(dateSale.plusMinutes(5), p1,cash);
+			
+		}		
+
+		reportRegistry.addExpense("Agua",expenseType.FIXED,35,LocalDate.now());		
+		reportRegistry.addExpense("Secadores",expenseType.ONEOFF,90,LocalDate.now(),"3 unidades");
+		
+		/* When: 
+		 * 		- calculate any average statistic
+		 */
+			double resultIncome = reportRegistry.calculateAvgMonthlySalesAmount();
+			double resultExpense = reportRegistry.calculateAvgMonthlyExpensesValue();
+			double resultRoi = reportRegistry.calculateAvgMonthlyRoi();
+			double resultProfit = reportRegistry.calculateAvgMonthlyProfit();
+
+
+		/* When: 
+		 * 		- the value's of calculate has to be 0! Calculates average methods only works in past months
+		 */
+		double expected = 0.0;
+
+		assertEquals(Math.round(resultIncome*100.0)/100.0,expected,0.0);	
+		assertEquals(Math.round(resultExpense*100.0)/100.0,expected,0.0);
+		assertEquals(Math.round(resultRoi*100.0)/100.0,expected,0.0);
+		assertEquals(Math.round(resultProfit*100.0)/100.0,expected,0.0);
+	
+	}
+	
 	
 	
 	/**

@@ -411,5 +411,62 @@ public class SaleRegistryTest {
 		
 		assertEquals(creditSales,expected,0.0);
 	}
+	
+	/**
+	 * <h2>getAvailabePaymentMethods() method test</h2>
+	 */
+	@Test 
+	public void testGetAvailabePaymentMethods() {
+		//Given: saleList with 2 available payment methods (cash and card)
+		PaymentMethod p1 = saleList.createPaymentMethod("CASH",0.0,0.0);
+		PaymentMethod p2 = saleList.createPaymentMethod("CREDIT CARD",2.0,0.55);
+		saleList.addPaymentMethod(p1);
+		saleList.addPaymentMethod(p2);
+		
+	
+		//When: get available payment methods
+		List<PaymentMethod> payments = saleList.getAvailablePaymentMethods();
+		List<PaymentMethod> expected = new ArrayList<>();
+		expected.add(cash);
+		expected.add(new PaymentMethod("CREDIT CARD",2.0,0.55));
+		
+		//Then: compare list
+		
+		assertEquals(payments,expected);
+	}
+	
+	/**
+	 * <h2>getAvailabePaymentMethods() method test</h2>
+	 */
+	@Test 
+	public void testAddPaymentMethods() {
+		//Given: create 5  payment methods (cash, card, sameName, emptyName and nullName)
+		PaymentMethod p1 = saleList.createPaymentMethod("CASH",0.0,0.0);
+		PaymentMethod p2 = saleList.createPaymentMethod("CREDIT CARD",2.0,0.55);
+		PaymentMethod sameName = saleList.createPaymentMethod("CREDIT CARD",0,0);
+		PaymentMethod emptyName = saleList.createPaymentMethod("",0,0);
+		PaymentMethod nullName = saleList.createPaymentMethod(null,0,0);
+		
+		//When:add all this payment methods
+		
+		assertEquals(saleList.addPaymentMethod(p1),true);
+		assertEquals(saleList.addPaymentMethod(p1),false);
+		assertEquals(saleList.addPaymentMethod(p2),true);
+		assertEquals(saleList.addPaymentMethod(sameName),false);
+		assertEquals(saleList.addPaymentMethod(emptyName),false);
+		assertEquals(saleList.addPaymentMethod(nullName),false);
+		
+		List<PaymentMethod> payments = saleList.getAvailablePaymentMethods();
+		List<PaymentMethod> expected = new ArrayList<>();
+		expected.add(p1);
+		expected.add(p2);
+		
+		//Then: compare list
+		
+		assertEquals(payments,expected);
+	}
+	
+	
+	
 
 }

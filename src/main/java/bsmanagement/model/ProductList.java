@@ -77,6 +77,18 @@ private List<Product> products;
 		return this.products.add(product);
 	}
 	
+	/**
+	 * Method to remove Product to Inventory
+	 * 
+	 * @param product
+	 * 
+	 * @return true if product is successfully removed, false otherwise
+	 */
+	public boolean removeProduct(Product product)
+	{
+		return this.products.remove(product);
+	}
+	
 	
 	/**
 	 * Method to find Product in Inventory By ID

@@ -221,6 +221,15 @@ public class AddressTest {
 		add.setId(1);
 		assertEquals(add.equals(a1),true);
 	}
+	
+	/**
+	 * Test method for {@link bsmanagement.model.Address#equals(java.lang.Object)}.
+	 */
+	@Test
+	public void testEqualsObjectSameObejct() {
+	
+		assertEquals(a1.equals(a1),true);
+	}
 
 	/**
 	 * Test method for {@link bsmanagement.model.Address#toString()}.

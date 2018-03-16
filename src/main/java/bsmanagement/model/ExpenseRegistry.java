@@ -90,6 +90,17 @@ public class ExpenseRegistry {
 	public void addExpense(Expense expense) {
 		this.expenses.add(expense);
 	}
+	
+	/**
+	 * Method to add a Expense to expenseList 
+	 * 
+	 * @param expense - Instance of Expense class
+	 * 
+	 * @return true if expense is successful removed, false otherwise
+	 */
+	public boolean removeExpense(Expense expense) {
+		return this.expenses.remove(expense);
+	}
 
 	/**
 	 * Method to get a list of expenses in that YearMonth

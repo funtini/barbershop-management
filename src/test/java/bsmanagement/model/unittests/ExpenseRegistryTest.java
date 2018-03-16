@@ -125,6 +125,31 @@ public class ExpenseRegistryTest {
 		assertEquals(result,expect);
 	}
 	
+	
+	
+	/**
+	 * <h2>addExpense() method test</h2>
+	 */
+	@Test 
+	public void testRemoveExpense() {
+		
+		//Given: list with 3 expenses
+		assertEquals(expenseList.getExpenses(),emptyList);
+		assertEquals(emptyList,expect);
+		Expense.setStartIdGenerator(1);
+		expenseList.addExpense(expenseList.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseList.addExpense(expenseList.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
+		expenseList.addExpense(expenseList.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
+	
+		//When: remove 1 expense
+		expenseList.removeExpense(e1);
+		expect.add(e2);
+		expect.add(e3);
+		//Then: get a list with  2 expenses
+		result = expenseList.getExpenses();
+		assertEquals(result,expect);
+	}
+	
 	/**
 	 * <h2>getExpenseListByType() method test</h2>
 	 * <p>Test filter FIXED expenses</p>

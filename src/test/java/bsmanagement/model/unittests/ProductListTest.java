@@ -109,6 +109,26 @@ public class ProductListTest {
 	}
 	
 	/**
+	 * <h2>removeProduct() method test</h2>
+	 * 
+	 */
+	@Test
+	public void testRemoveProduct() {
+		//Given: list with 2 products
+		assertEquals(pList.getProducts().isEmpty(),true);
+		assertEquals(pList.addProduct(p1),true);
+		assertEquals(pList.addProduct(p2),true);
+		//When: remove 1 product (2 times to get a false result)
+		expect.add(p1);
+
+		assertEquals(pList.removeProduct(p2),true);
+		assertEquals(pList.removeProduct(p2),false);//already removed
+		
+		//Then: 1 products still in list
+		assertEquals(pList.getProducts(),expect);		
+	}
+	
+	/**
 	 * <h2>findProductById() method test</h2>
 	 * 
 	 */
