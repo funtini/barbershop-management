@@ -92,6 +92,10 @@ public class ReportRegistryTest {
 		saleList = new SaleRegistry();
 		reportRegistry = new ReportRegistry();
 		expect = new ArrayList<Report>();
+		Expense.setStartIdGenerator(0);
+		Sale.setStartIdGenerator(0);
+		Product.setStartIdGenerator(0);
+		Customer.setStartIdGenerator(0);
 		
 		ym17 = YearMonth.of(2017, 12);
 		ym18= YearMonth.of(2018, 1);
@@ -133,14 +137,14 @@ public class ReportRegistryTest {
 	public void testGetReportList() {
 		
 		//Given: empty list's
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);	
+		assertEquals(reportRegistry.getReports().isEmpty(),true);	
 		//When: set a list with 3 sales		
 		assertEquals(reportRegistry.addReport(ym17),true);	
 		assertEquals(reportRegistry.addReport(ym18),true);	
 		//Then: get a list with that 3 sales
 		expect.add(new Report(ym17));
 		expect.add(new Report(ym18));
-		assertEquals(expect.equals(reportRegistry.getReportS()),true);
+		assertEquals(expect.equals(reportRegistry.getReports()),true);
 	}
 	
 	/**
@@ -181,7 +185,7 @@ public class ReportRegistryTest {
 		/* Given: 
 		 * 		- empty reportRegistry
 		 */
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);
+		assertEquals(reportRegistry.getReports().isEmpty(),true);
 		/* When: 
 		 * 		- add a report
 		 */	
@@ -190,7 +194,7 @@ public class ReportRegistryTest {
 		 * 		- Report is added with YearMonth ym17
 		 */
 		Report expect = new Report(ym17);
-		Report result = reportRegistry.getReportS().get(0);
+		Report result = reportRegistry.getReports().get(0);
 		
 		assertEquals(result,expect);
 	}
@@ -205,7 +209,7 @@ public class ReportRegistryTest {
 		/* Given: 
 		 * 		- empty reportRegistry
 		 */
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);
+		assertEquals(reportRegistry.getReports().isEmpty(),true);
 		/* When: 
 		 * 		- try add 2x same report
 		 */	
@@ -217,7 +221,7 @@ public class ReportRegistryTest {
 		 * 		- Reports are added with same YearMonth ym17
 		 */
 		int expect = 2;
-		int result = reportRegistry.getReportS().size();
+		int result = reportRegistry.getReports().size();
 		
 		assertEquals(result,expect);
 	}
@@ -233,7 +237,7 @@ public class ReportRegistryTest {
 		/* Given: 
 		 * 		- empty reportRegistry
 		 */
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);
+		assertEquals(reportRegistry.getReports().isEmpty(),true);
 		/* When: 
 		 * 		- add a report
 		 */	
@@ -258,12 +262,12 @@ public class ReportRegistryTest {
 		 * 		- reportRegistry with 2 report (2017/12 & 2018/01)
 		 */
 		Report rep1802 = new Report(YearMonth.of(2018, 2));
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);			//check that report list is empty before adding reports
+		assertEquals(reportRegistry.getReports().isEmpty(),true);			//check that report list is empty before adding reports
 		assertEquals(reportRegistry.addReport(ym17),true);						//add report 2017/12
 		assertEquals(reportRegistry.addReport(ym18),true);						//add report 2018/12
-		assertEquals(reportRegistry.getReportS().contains(rep1802),false);		//check that list dont containst rep1802
+		assertEquals(reportRegistry.getReports().contains(rep1802),false);		//check that list dont containst rep1802
 		assertEquals(reportRegistry.getReport(YearMonth.of(2018, 2)),null);			//check that cant find a report of 2018/02
-		assertEquals(reportRegistry.getReportS().size(),2);					//check there is only 2 report on list
+		assertEquals(reportRegistry.getReports().size(),2);					//check there is only 2 report on list
 		/* When: 
 		 * 		- addSale in 12/2017(dt3), 01/2018(dt1 e dt2) and 02/2018 (dt4)
 		 */	
@@ -275,8 +279,8 @@ public class ReportRegistryTest {
 		 * 		- Reports are added with same YearMonth ym17
 		 */
 		assertEquals(reportRegistry.getReport(YearMonth.of(2018, 2)),rep1802);		//check that can fin a report of 2018/02
-		assertEquals(reportRegistry.getReportS().contains(rep1802),true);	//check that report list cointains report of 2018/02
-		assertEquals(reportRegistry.getReportS().size(),3);					//check that number of reports have increased to 3
+		assertEquals(reportRegistry.getReports().contains(rep1802),true);	//check that report list cointains report of 2018/02
+		assertEquals(reportRegistry.getReports().size(),3);					//check that number of reports have increased to 3
 	}
 	
 	
@@ -293,7 +297,7 @@ public class ReportRegistryTest {
 		 */
 		Report rep1802 = new Report(YearMonth.of(2018, 2));
 		Report rep1801 = new Report(YearMonth.of(2018, 1));
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);			//check that report list is empty before adding reports
+		assertEquals(reportRegistry.getReports().isEmpty(),true);			//check that report list is empty before adding reports
 	
 		/* When: 
 		 * 		- addSale in 12/2017(dt3), 01/2018(dt1 e dt2) and 02/2018 (dt4)
@@ -303,8 +307,8 @@ public class ReportRegistryTest {
 		/* Then: 
 		 * 		- Reports are created for YearMonths associated to this sales
 		 */
-		assertEquals(reportRegistry.getReportS().isEmpty(),false);
-		assertEquals(reportRegistry.getReportS().size(),2);				//check that number of reports have increased to 1
+		assertEquals(reportRegistry.getReports().isEmpty(),false);
+		assertEquals(reportRegistry.getReports().size(),2);				//check that number of reports have increased to 1
 		assertEquals(reportRegistry.getReport(YearMonth.of(2018, 2)),rep1802);		//check that can fin a report of 2018/02
 		assertEquals(reportRegistry.getReport(YearMonth.of(2018, 1)),rep1801);	
 	
@@ -314,19 +318,17 @@ public class ReportRegistryTest {
 	 * <h2>addExpense()  method test</h2>
 	 */
 	@Test 
-	public void testgetAddExpense() {
-		//TODO: TUDO
-		
+	public void testgetAddExpense() {	
 		/* Given: 
 		 * 		- reportRegistry with 2 report (2017/12 & 2018/01)
 		 */
 		Report rep1802 = new Report(YearMonth.of(2018, 2));
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);			//check that report list is empty before adding reports
+		assertEquals(reportRegistry.getReports().isEmpty(),true);			//check that report list is empty before adding reports
 		assertEquals(reportRegistry.addReport(ym17),true);						//add report 2017/12
 		assertEquals(reportRegistry.addReport(ym18),true);						//add report 2018/12
-		assertEquals(reportRegistry.getReportS().contains(rep1802),false);		//check that list dont containst rep1802
+		assertEquals(reportRegistry.getReports().contains(rep1802),false);		//check that list dont containst rep1802
 		assertEquals(reportRegistry.getReport(YearMonth.of(2018, 2)),null);			//check that cant find a report of 2018/02
-		assertEquals(reportRegistry.getReportS().size(),2);							//check there is only 2 report on list
+		assertEquals(reportRegistry.getReports().size(),2);							//check there is only 2 report on list
 		assertEquals(reportRegistry.getReport(ym17).getExpensesList().getExpenses().isEmpty(),true);		//check if expenseList are empty
 		assertEquals(reportRegistry.getReport(ym18).getExpensesList().getExpenses().isEmpty(),true);	
 		/* When: 
@@ -341,20 +343,20 @@ public class ReportRegistryTest {
 		reportRegistry.addExpense("Internet",expenseType.FIXED,50,d3,"6 meses de contrato");
 		assertEquals(reportRegistry.getReport(ym17).getExpensesList().getExpenses().size(),1);		
 		assertEquals(reportRegistry.getReport(ym18).getExpensesList().getExpenses().size(),2);
-		assertEquals(reportRegistry.getReportS().size(),2);
+		assertEquals(reportRegistry.getReports().size(),2);
 		reportRegistry.addExpense("Agua",expenseType.FIXED,35,d1);
-		assertEquals(reportRegistry.getReportS().size(),3);	
+		assertEquals(reportRegistry.getReports().size(),3);	
 		reportRegistry.addExpense("Tesouras",expenseType.ONEOFF,70,d2,"5 unidades");
 		
 		/* Then: 
 		 * 		- Reports are added with same YearMonth ym17
 		 */
 		assertEquals(reportRegistry.getReport(YearMonth.of(2018, 2)),rep1802);		//check that can fin a report of 2018/02
-		assertEquals(reportRegistry.getReportS().contains(rep1802),true);	//check that report list cointains report of 2018/02
-		assertEquals(reportRegistry.getReportS().size(),3);					//check that number of reports have increased to 3
+		assertEquals(reportRegistry.getReports().contains(rep1802),true);	//check that report list cointains report of 2018/02
+		assertEquals(reportRegistry.getReports().size(),3);					//check that number of reports have increased to 3
 		
 		reportRegistry.addExpense("MILHA",expenseType.FIXED,70,d4);
-		assertEquals(reportRegistry.getReportS().size(),4);	
+		assertEquals(reportRegistry.getReports().size(),4);	
 		assertEquals(reportRegistry.getReport(ym17).getExpensesList().getExpenses().size(),2);		
 		assertEquals(reportRegistry.getReport(ym18).getExpensesList().getExpenses().size(),3);
 		
@@ -373,7 +375,7 @@ public class ReportRegistryTest {
 		 * 		- report 2017/12 : has 45 sales (loop)
 		 * 		- report 2018/12 : has 105 sales (loop)
 		 */
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);			//check that report list is empty before adding reports
+		assertEquals(reportRegistry.getReports().isEmpty(),true);			//check that report list is empty before adding reports
 		assertEquals(reportRegistry.addReport(ym17),true);						//add report 2017/12
 		assertEquals(reportRegistry.addReport(ym18),true);					//add report 2018/12
 		
@@ -430,7 +432,7 @@ public class ReportRegistryTest {
 		 * 		- report 2017/12 : has 45 sales (loop) and 3
 		 * 		- report 2018/12 : has 105 sales (loop)
 		 */
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);			//check that report list is empty before adding reports
+		assertEquals(reportRegistry.getReports().isEmpty(),true);			//check that report list is empty before adding reports
 		assertEquals(reportRegistry.addReport(ym17),true);						//add report 2017/12
 		assertEquals(reportRegistry.addReport(ym18),true);					//add report 2018/12
 		
@@ -495,7 +497,7 @@ public class ReportRegistryTest {
 		 * 		- report 2017/12 : has 45 sales (loop) and 3
 		 * 		- report 2018/12 : has 105 sales (loop)
 		 */
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);			//check that report list is empty before adding reports
+		assertEquals(reportRegistry.getReports().isEmpty(),true);			//check that report list is empty before adding reports
 		assertEquals(reportRegistry.addReport(ym17),true);						//add report 2017/12
 		assertEquals(reportRegistry.addReport(ym18),true);					//add report 2018/12
 		
@@ -560,7 +562,7 @@ public class ReportRegistryTest {
 		 * 		- report 2017/12 : has 45 sales (loop) and 3
 		 * 		- report 2018/12 : has 105 sales (loop)
 		 */
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);			//check that report list is empty before adding reports
+		assertEquals(reportRegistry.getReports().isEmpty(),true);			//check that report list is empty before adding reports
 		assertEquals(reportRegistry.addReport(ym17),true);						//add report 2017/12
 		assertEquals(reportRegistry.addReport(ym18),true);					//add report 2018/12
 		
@@ -630,7 +632,7 @@ public class ReportRegistryTest {
 		 */
 		YearMonth today = YearMonth.of(2050, 3);
 		LocalDateTime dateSale = LocalDateTime.of(2050, 3, 9, 10, 50);
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);			//check that report list is empty before adding reports
+		assertEquals(reportRegistry.getReports().isEmpty(),true);			//check that report list is empty before adding reports
 		assertEquals(reportRegistry.addReport(today),true);						//add report of today's YearMonth
 		
 		int monthLen =today.getMonth().length(Year.isLeap(today.getYear()));	// save month length of today
@@ -651,8 +653,9 @@ public class ReportRegistryTest {
 		
 			
 		reportRegistry.addExpense("Agua",expenseType.FIXED,35,LocalDate.now());		
-//		reportRegistry.addExpense("LUZ",expenseType.FIXED,55,LocalDate.now());		
-//		Expense e = reportRegistry.getExpenseRegistry().searchExpenseByName("LUZ").get(0);//TODO: REMOVE THIS expense -- make remove methods
+		reportRegistry.addExpense("LUZ",expenseType.FIXED,55,LocalDate.now());		// add expense
+		Expense e = reportRegistry.getExpenseRegistry().searchExpenseByName("LUZ").get(0);//remove expense
+		reportRegistry.removeExpense(e);
 		reportRegistry.addExpense("Secadores",expenseType.ONEOFF,90,LocalDate.of(2050, 3, 1),"3 unidades");
 		
 		assertEquals(reportRegistry.getReport(today).getExpensesList().getExpenses().size(),2);		//add 2 expenses
@@ -696,7 +699,7 @@ public class ReportRegistryTest {
 		 */
 		YearMonth today = YearMonth.now();
 		LocalDateTime dateSale = LocalDateTime.now();
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);			//check that report list is empty before adding reports
+		assertEquals(reportRegistry.getReports().isEmpty(),true);			//check that report list is empty before adding reports
 		assertEquals(reportRegistry.addReport(today),true);						//add report of today's YearMonth
 		
 		int monthLen =today.getMonth().length(Year.isLeap(today.getYear()));	// save month length of today
@@ -751,7 +754,7 @@ public class ReportRegistryTest {
 		 * 		- report 2017/12 : has 45 sales (loop) and 3
 		 * 		- report 2018/12 : has 105 sales (loop)
 		 */
-		assertEquals(reportRegistry.getReportS().isEmpty(),true);			//check that report list is empty before adding reports
+		assertEquals(reportRegistry.getReports().isEmpty(),true);			//check that report list is empty before adding reports
 					
 		
 		/* When: 
@@ -773,6 +776,55 @@ public class ReportRegistryTest {
 		assertEquals(Math.round(resultRoi*100.0)/100.0,expected,0.0);
 		assertEquals(Math.round(resultProfit*100.0)/100.0,expected,0.0);
 	
+	}
+	
+	
+	/**
+	 * <h2>addExpense()  method test</h2>
+	 */
+	@Test 
+	public void testAddReport() {	
+		/* Given: 
+		 * 		- reportRegistry with 2 report (2017/12 & 2018/01)
+		 */
+		Report rep1802 = new Report(YearMonth.of(2018, 2));
+		assertEquals(reportRegistry.getReports().isEmpty(),true);			//check that report list is empty before adding reports
+		assertEquals(reportRegistry.addReport(ym17),true);						//add report 2017/12
+		assertEquals(reportRegistry.addReport(ym18),true);						//add report 2018/12
+		assertEquals(reportRegistry.getReports().contains(rep1802),false);		//check that list dont containst rep1802
+		assertEquals(reportRegistry.getReport(YearMonth.of(2018, 2)),null);			//check that cant find a report of 2018/02
+		assertEquals(reportRegistry.getReports().size(),2);							//check there is only 2 report on list
+		assertEquals(reportRegistry.getReport(ym17).getExpensesList().getExpenses().isEmpty(),true);		//check if expenseList are empty
+		assertEquals(reportRegistry.getReport(ym18).getExpensesList().getExpenses().isEmpty(),true);	
+		/* When: 
+		 * 		- add FIXED expenses at d1(2018/2/10), d3(2017/12/21) and d4(2017/10/21) and ONEOFF at  d2(2018/2/15) and d5(2018/1/10)
+		 * 		
+		 * 		- d3 should add to rep of ym17 and ym18
+		 * 		- d5 should add to rep of ym18
+		 * 		- d1 and d2 should create a new report
+		 * 		- d4 should create a new report and add to ym17 and ym18
+		 */	
+		reportRegistry.addExpense("Secadores",expenseType.ONEOFF,90,d5,"3 unidades");
+		reportRegistry.addExpense("Internet",expenseType.FIXED,50,d3,"6 meses de contrato");
+		assertEquals(reportRegistry.getReport(ym17).getExpensesList().getExpenses().size(),1);		
+		assertEquals(reportRegistry.getReport(ym18).getExpensesList().getExpenses().size(),2);
+		assertEquals(reportRegistry.getReports().size(),2);
+		reportRegistry.addExpense("Agua",expenseType.FIXED,35,d1);
+		assertEquals(reportRegistry.getReports().size(),3);
+		reportRegistry.addExpense("Tesouras",expenseType.ONEOFF,70,d2,"5 unidades");
+		
+		/* Then: 
+		 * 		- Reports are added with same YearMonth ym17
+		 */
+		assertEquals(reportRegistry.getReport(YearMonth.of(2018, 2)),rep1802);		//check that can fin a report of 2018/02
+		assertEquals(reportRegistry.getReports().contains(rep1802),true);	//check that report list cointains report of 2018/02
+		assertEquals(reportRegistry.getReports().size(),3);					//check that number of reports have increased to 3
+		
+		reportRegistry.addExpense("MILHA",expenseType.FIXED,70,d4);
+		assertEquals(reportRegistry.getReports().size(),4);	
+		assertEquals(reportRegistry.getReport(ym17).getExpensesList().getExpenses().size(),2);		
+		assertEquals(reportRegistry.getReport(ym18).getExpensesList().getExpenses().size(),3);
+		
 	}
 	
 	

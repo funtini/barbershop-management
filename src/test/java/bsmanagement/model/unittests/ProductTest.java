@@ -143,6 +143,19 @@ public class ProductTest {
 		assertEquals(p3.getPrice(),22.5,0.0);
 	}
 	
+	/**
+	 * <h2>getPrice() and setPrice method test</h2>
+	 */
+	@Test 
+	public void testActivateDeactivate() {
+		assertEquals(p1.isActive(),true);
+		p1.deactivate();
+		assertEquals(p1.isActive(),false);
+		p1.activate();
+		assertEquals(p1.isActive(),true);
+		
+	}
+	
 
 	/**
 	 * <h2>equals() method test</h2>

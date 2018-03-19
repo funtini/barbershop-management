@@ -91,6 +91,10 @@ public class ReportTest {
 		
 		expenseList = new ExpenseRegistry();
 		saleList = new SaleRegistry();
+		Expense.setStartIdGenerator(0);
+		Sale.setStartIdGenerator(0);
+		Product.setStartIdGenerator(0);
+		Customer.setStartIdGenerator(0);
 
 		ym1 = YearMonth.of(2017, 12);
 		ym2 = YearMonth.of(2018, 1);

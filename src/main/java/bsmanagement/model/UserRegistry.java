@@ -147,10 +147,10 @@ public class UserRegistry {
 	 *            user to set inactive
 	 * @return True if assignment is successful, false otherwise.
 	 */
-	public boolean setUserInactive(User user) {
+	public boolean deactivateUser(User user) {
 		for (User u : getUsersList())
 			if (user.getId() == u.getId() && user.isActive()) {
-				user.setInactive();
+				user.deactivate();
 				return true;
 			}
 		

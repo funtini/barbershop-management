@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import system.dto.UserLoginDTO;
 
@@ -97,12 +99,27 @@ public class User {
 	 * @return boolean (true if address is correct, false if it isn't).
 	 */
 	public boolean isValid() {
-		if (getAddressList().isEmpty())
+		if(!hasValidEmail())
 			return false;
-		if (!(addressList.get(0).isValid()))
-			return false;
-		//TODO: if email.isValid(): return false;
 		return !(name == null || name.isEmpty() || phone == null || phone.isEmpty());
+	}
+	
+	
+	/**
+	 * Method to validate emailaddress
+	 *
+	 * @param email
+	 * 
+	 * @return true if is valid, false if dont
+	 */
+	public boolean hasValidEmail() {
+	    boolean stricterFilter = true; 
+	    String stricterFilterString = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+	    String laxString = ".+@.+\\.[A-Za-z]{2}[A-Za-z]*";
+	    String emailRegex = stricterFilter ? stricterFilterString : laxString;
+	    Pattern p = Pattern.compile(emailRegex);
+	    Matcher m = p.matcher(this.email);
+	    return m.matches();
 	}
 	
 	/**
@@ -253,15 +270,6 @@ public class User {
 		return profile;
 	}
 
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-
-
 	/**
 	 * @param name the name to set
 	 */
@@ -321,7 +329,7 @@ public class User {
 	/**
 	 * Method to deactivate user
 	 */
-	public void setInactive() {
+	public void deactivate() {
 		this.activationStatus = false;
 	}
 

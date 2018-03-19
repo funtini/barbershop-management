@@ -56,6 +56,7 @@ public class Product implements Comparable<Product>{
 	private String name;
 	private productType type;
 	private double price;
+	private boolean active;
 	
 
 	/**
@@ -70,6 +71,7 @@ public class Product implements Comparable<Product>{
 		this.name = name;
 		this.type = type;
 		this.price = price;
+		this.active = true;
 	}
 
 	/**
@@ -81,6 +83,32 @@ public class Product implements Comparable<Product>{
 	{
 		idGenerator.set(num-1);
 	}
+	
+	/**
+	 * 
+	 * @return true if active, false if inactive
+	 */
+	public boolean isActive()
+	{
+		return active;
+	}
+	
+	/**
+	 * Set product active
+	 */
+	public void activate()
+	{
+		this.active=true;
+	}
+	
+	/**
+	 * Set product inactive
+	 */
+	public void deactivate()
+	{
+		this.active=false;
+	}
+	
 	
 	
 	/**

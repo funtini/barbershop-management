@@ -33,7 +33,7 @@ public class CompanyTest {
 	public void testGetCustomerRegistry() {
 		company = Company.getTheInstance();
 		ReportRegistry expect = company.getReportRegistry();
-		assertEquals(expect.getReportS().isEmpty(),true);
+		assertEquals(expect.getReports().isEmpty(),true);
 	}
 
 	@Test

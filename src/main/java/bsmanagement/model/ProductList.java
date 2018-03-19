@@ -34,8 +34,23 @@ private List<Product> products;
 	/**
 	 * @return the listOfProducts
 	 */
-	public List<Product> getProducts() {
-		return products;
+	public List<Product> getActiveProducts() {
+		List<Product> activeProducts = new ArrayList<>();
+		for (Product p : products)
+			if (p.isActive())
+				activeProducts.add(p);
+		return activeProducts;
+	}
+	
+	/**
+	 * @return the listOfProducts
+	 */
+	public List<Product> getRemovedProducts() {
+		List<Product> activeProducts = new ArrayList<>();
+		for (Product p : products)
+			if (!p.isActive())
+				activeProducts.add(p);
+		return activeProducts;
 	}
 
 	/**
@@ -86,7 +101,13 @@ private List<Product> products;
 	 */
 	public boolean removeProduct(Product product)
 	{
-		return this.products.remove(product);
+		if (products.contains(product))
+		{
+			product.deactivate();
+			return true;
+		}
+		
+		return false;
 	}
 	
 	

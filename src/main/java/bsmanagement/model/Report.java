@@ -124,6 +124,8 @@ public class Report {
 	 * @return false if year/month dont match with report, true if expense is sucessfuly added to report
 	 */
 	public boolean addExpense(Expense expense) {
+		if (expensesList.getExpenses().contains(expense))
+			return false;
 		if (expense.getType().equals(expenseType.FIXED))
 		{
 			this.expensesList.addExpense(expense);
@@ -136,6 +138,17 @@ public class Report {
 		this.expensesList.addExpense(expense);
 		return true;	
 	}
+	
+	/**
+	 * Method to remove an expense 
+	 * 
+	 * @param expense 
+	 * 
+	 */
+	public void removeExpense(Expense expense) {
+		expensesList.removeExpense(expense);
+	}
+
 	
 	/**
 	 * Set business days 
@@ -266,4 +279,5 @@ public class Report {
 				+ businessDays + "]";
 	}
 
+	
 }
