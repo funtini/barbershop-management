@@ -13,6 +13,8 @@ import org.junit.Test;
 import bsmanagement.model.Address;
 import bsmanagement.model.Sale;
 import bsmanagement.model.User;
+import bsmanagement.model.User.UserProfile;
+import system.dto.UserLoginDTO;
 
 
 /**
@@ -109,6 +111,10 @@ public class UserTest {
 	public void testHasValidEmail() {
 		assertEquals(u1.hasValidEmail(),true);
 		assertEquals(u3.hasValidEmail(),false);
+		u2.setEmail("dsada");
+		assertEquals(u2.hasValidEmail(),false);
+		u1.setEmail("d@d.c");
+		assertEquals(u1.hasValidEmail(),false);
 	}
 
 	@Test
@@ -127,6 +133,8 @@ public class UserTest {
 		u1.addAddress(a1);
 		u1.addAddress(a2);
 		u2.addAddress(a3);
+		Address invalidAddress  = new Address("","","4425-651","PORTO","PORTUGAL");
+		u2.addAddress(invalidAddress);
 		expect.add(a1);
 		expect.add(a2);
 		expect2.add(a3);
@@ -207,82 +215,118 @@ public class UserTest {
 
 	@Test
 	public void testGetAddressList() {
-		fail("Not yet implemented");
+		u1.addAddress(a1);
+		u1.addAddress(a1); // repeated address -> no add
+		u1.addAddress(a2);
+		List<Address> expect = new ArrayList<>();
+		expect.add(a1);
+		expect.add(a2);
+		assertEquals(u1.getAddressList(),expect);
+
 	}
 
 	@Test
 	public void testIsActive() {
-		fail("Not yet implemented");
+		assertEquals(u1.isActive(),true);
+		assertEquals(u2.isActive(),true);
+
 	}
 
 	@Test
 	public void testGetProfile() {
-		fail("Not yet implemented");
+		assertEquals(u1.getProfile(),UserProfile.EMPLPOYER);
+		u2.setProfileAdmin();
+		assertEquals(u2.getProfile(),UserProfile.ADMINISTRATOR);
 	}
 
 	@Test
 	public void testSetName() {
-		fail("Not yet implemented");
+		u1.setName("ROGERIO");
+		assertEquals(u1.getName(),"ROGERIO");
 	}
 
 	@Test
 	public void testSetBirth() {
-		fail("Not yet implemented");
+		u1.setBirth(birth3);
+		assertEquals(u1.getBirthDate(),birth3);
 	}
 
 	@Test
 	public void testSetEmail() {
-		fail("Not yet implemented");
+		u1.setEmail("jo@uk.com");
+		assertEquals(u1.getEmailAddress(),"jo@uk.com");
+		u2.setEmail("jdsa.com");
+		assertEquals(u2.getEmailAddress(),"jdsa.com");
 	}
 
 	@Test
 	public void testSetPhone() {
-		fail("Not yet implemented");
+		u1.setPhone("867764634532");
+		assertEquals(u1.getPhone(),"867764634532");
 	}
 
 	@Test
 	public void testSetTaxPayerId() {
-		fail("Not yet implemented");
+		u1.setTaxPayerId("23213213131");
+		assertEquals(u1.getTaxPayerId(),"23213213131");
 	}
 
 	@Test
-	public void testSetPassword() {
-		fail("Not yet implemented");
+	public void testSetActiveAndDeactivate() {
+		assertEquals(u1.isActive(),true);
+		u1.deactivate();
+		
+		assertEquals(u1.isActive(),false);
+		u1.setActive();
+		assertEquals(u1.isActive(),true);
 	}
 
-	@Test
-	public void testSetActive() {
-		fail("Not yet implemented");
-	}
 
-	@Test
-	public void testDeactivate() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testSetProfileEmployer() {
-		fail("Not yet implemented");
+		
+		u2.setProfileAdmin();
+		assertEquals(u2.getProfile(),UserProfile.ADMINISTRATOR);
+		u2.setProfileEmployer();
+		assertEquals(u2.getProfile(),UserProfile.EMPLPOYER);
 	}
 
 	@Test
 	public void testSetProfileAdmin() {
-		fail("Not yet implemented");
+		assertEquals(u2.getProfile(),UserProfile.EMPLPOYER);
+		u2.setProfileAdmin();
+		assertEquals(u2.getProfile(),UserProfile.ADMINISTRATOR);
 	}
 
 	@Test
 	public void testValidatePassword() {
-		fail("Not yet implemented");
+		u1.setPassword("qwerty");
+		UserLoginDTO dto = new UserLoginDTO(u1.getName(), u1.getEmailAddress(), u1.getProfile().toString(),"\n" + u1.getProfile().toString().toString() + " " + u1.getName() + " Successfully Logged\n");
+		UserLoginDTO wrongPass = new UserLoginDTO("Invalid Email or Password\n");
+		assertEquals(u1.validatePassword("qwerty").getMessage(),dto.getMessage());
+		assertEquals(u1.validatePassword("dsa2").getMessage(),wrongPass.getMessage());
 	}
 
 	@Test
 	public void testToString() {
-		fail("Not yet implemented");
+		assertEquals(u1.toString(),"User [" + u1.getId() + "]-[name: " + u1.getName() + ", birth: " + u1.getBirthDate() + ", email: " + u1.getEmailAddress() + ", phone: " + u1.getPhone()
+				+ ", taxPayerId: " + u1.getTaxPayerId() + ", ActivationStatus: " + u1.isActive() + ", profile: " + u1.getProfile() + "]");
 	}
 
 	@Test
 	public void testEqualsObject() {
-		fail("Not yet implemented");
+		assertEquals(u1.equals(u1),true);
+		assertEquals(u1.equals(u2),false);
+		u2.setName(null);
+		assertEquals(u1.equals(u2),false);
+		u3.setPhone(null);
+		assertEquals(u1.equals(u3),false);
+		assertEquals(u1.equals(a1),false);
+		User.setStartIdGenerator(1);
+		User u4 = new User("JOAO",birth1,"joao@domain.com","914047935","324666433");
+		assertEquals(u1.equals(u4),true);
+		assertEquals(u1.equals(null),false);
 	}
 
 }
