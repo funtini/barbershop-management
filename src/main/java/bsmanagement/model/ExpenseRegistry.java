@@ -5,7 +5,11 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import bsmanagement.model.Expense.expenseType;
+import bsmanagement.model.jparepositories.ExpenseRepository;
 
 
 /**
@@ -22,31 +26,27 @@ import bsmanagement.model.Expense.expenseType;
  * @author JOAO GOMES
  *
  */
+@Service
 public class ExpenseRegistry {
 	
-	private List<Expense> expenses;
+	@Autowired
+	private ExpenseRepository expRepo;
 	
 	/**
 	 * Constructor of list of expenses
 	 */
-	public ExpenseRegistry() {
-		expenses = new ArrayList<Expense>();
+	protected ExpenseRegistry() {
+		
 	}
 
 	/**
 	 * @return the listOfExpenses
 	 */
 	public List<Expense> getExpenses() {
+		List<Expense> expenses = new ArrayList<>();
+		for (Expense e: expRepo.findAll())
+			expenses.add(e);
 		return expenses;
-	}
-
-	/**
-	 * Set a List of Expenses
-	 * 
-	 * @param expenses
-	 */
-	public void setExpenses(List<Expense> expenses) {
-		this.expenses = expenses;
 	}
 	
 	/**
@@ -88,7 +88,7 @@ public class ExpenseRegistry {
 	 * @param expense - Instance of Expense class
 	 */
 	public void addExpense(Expense expense) {
-		this.expenses.add(expense);
+		expRepo.save(expense);
 	}
 	
 	/**
@@ -98,8 +98,9 @@ public class ExpenseRegistry {
 	 * 
 	 * @return true if expense is successful removed, false otherwise
 	 */
-	public boolean removeExpense(Expense expense) {
-		return this.expenses.remove(expense);
+	public boolean removeExpense(Expense expense) { //TODO: substituir boolean por VOID
+		expRepo.delete(expense);
+		return true;
 	}
 
 	/**
@@ -111,7 +112,7 @@ public class ExpenseRegistry {
 	 */
 	public List<Expense> findExpensesOf(YearMonth yearMonth) {
 		List<Expense> listExp = new ArrayList<Expense>();
-		for (Expense e: this.expenses)
+		for (Expense e: getExpenses())
 		{
 			if (e.getDate().getYear()==yearMonth.getYear() && e.getDate().getMonth().equals(yearMonth.getMonth()))
 				listExp.add(e);
@@ -130,7 +131,7 @@ public class ExpenseRegistry {
 	public List<Expense> findExpensesByType(expenseType type)
 	{
 		List<Expense> listExp = new ArrayList<Expense>();
-		for (Expense e: this.expenses)
+		for (Expense e: getExpenses())
 		{
 			if (e.getType().equals(type))
 				listExp.add(e);
@@ -150,7 +151,7 @@ public class ExpenseRegistry {
 	public List<Expense> filterExpensesBelowValue(double value)
 	{
 		List<Expense> listExp = new ArrayList<Expense>();
-		for (Expense e: this.expenses)
+		for (Expense e: getExpenses())
 		{
 			if (e.getValue()<=value)
 				listExp.add(e);
@@ -170,7 +171,7 @@ public class ExpenseRegistry {
 	public List<Expense> filterExpensesAboveValue(double value)
 	{
 		List<Expense> listExp = new ArrayList<Expense>();
-		for (Expense e: this.expenses)
+		for (Expense e: getExpenses())
 		{
 			if (e.getValue()>=value)
 				listExp.add(e);
@@ -189,7 +190,7 @@ public class ExpenseRegistry {
 	 */
 	public Expense findExpenseById(int id)
 	{
-		for (Expense e: this.expenses)
+		for (Expense e: getExpenses())
 		{
 			if (e.getId()==id)
 				return e;
@@ -209,7 +210,7 @@ public class ExpenseRegistry {
 	public List<Expense> searchExpenseByName(String name)
 	{
 		List<Expense> listExp = new ArrayList<Expense>();
-		for (Expense e: this.expenses)
+		for (Expense e: getExpenses())
 		{
 			if (e.getName().equals(name))
 				listExp.add(e);
@@ -229,7 +230,7 @@ public class ExpenseRegistry {
 	public List<Expense> findExpensesBetweenDates(LocalDate startDate,LocalDate endDate)
 	{
 		List<Expense> listExp = new ArrayList<Expense>();
-		for (Expense e: this.expenses)
+		for (Expense e: getExpenses())
 		{
 			if (e.getDate().isAfter(startDate.minusDays(1)) && e.getDate().isBefore(endDate.plusDays(1)))
 				listExp.add(e);
@@ -247,7 +248,7 @@ public class ExpenseRegistry {
 	public double sumAllExpensesValue()
 	{
 		double sum = 0;
-		for (Expense e: this.expenses)
+		for (Expense e: getExpenses())
 		{
 			sum=sum+e.getValue();
 		}
@@ -266,7 +267,7 @@ public class ExpenseRegistry {
 	public double sumExpensesValueByType(expenseType type)
 	{
 		double sum = 0;
-		for (Expense e: this.expenses)
+		for (Expense e: getExpenses())
 		{
 			if (e.getType().equals(type))
 				sum=sum+e.getValue();		

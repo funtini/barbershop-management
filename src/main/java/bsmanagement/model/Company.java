@@ -1,6 +1,6 @@
 package bsmanagement.model;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * <h1> Company </h1>
@@ -20,9 +20,11 @@ package bsmanagement.model;
  */
 public class Company {
 	
+	
 	private BookingRegistry bookingRegistry;
 	private CustomerRegistry customerRegistry;
 	private ReportRegistry reportRegistry;
+	@Autowired
 	private UserRegistry userRegistry;
 	
 	static Company theInstance;

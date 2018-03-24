@@ -1,7 +1,11 @@
 package bsmanagement.model;
 
 import java.time.LocalDate;
-import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
@@ -23,10 +27,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author JOAO GOMES
  *
  */
+@Entity
 public class Customer {
 	
-	private static AtomicInteger idGenerator=new AtomicInteger();
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
 	private LocalDate birth;
@@ -47,8 +52,7 @@ public class Customer {
 	 * @param phone - Phone number of Customer 
 	 */
 	public Customer(String name, LocalDate birth, String address, String phone) {
-	
-		id=idGenerator.incrementAndGet();
+
 		this.name = name;
 		this.birth = birth;
 		this.address = address;
@@ -73,18 +77,6 @@ public class Customer {
 	public int getId() {
 		return id;
 	}
-	
-	/**
-	 * Static method to set new start id generator
-	 * 
-	 * @param num
-	 */
-	public static void setStartIdGenerator(int num)
-	{
-		idGenerator.set(num-1);
-	}
-	
-
 
 	/**
 	 * Set Customer's Id

@@ -1,7 +1,12 @@
 package bsmanagement.model;
 
 import java.time.LocalDateTime;
-import java.util.concurrent.atomic.AtomicInteger;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  * 
@@ -25,16 +30,23 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author JOAO GOMES
  *
  */
+@Entity
 public class Sale implements Comparable<Sale>{
 	
-	private static AtomicInteger idGenerator=new AtomicInteger();
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private LocalDateTime date;
+	@OneToOne(cascade = CascadeType.ALL)
 	private Customer customer;
+	@OneToOne(cascade = CascadeType.ALL)
 	private Product product;
 	private double amount;
+	@OneToOne(cascade = CascadeType.ALL)
 	private PaymentMethod payment;
+	
+
 	
 
 	
@@ -48,7 +60,6 @@ public class Sale implements Comparable<Sale>{
 	 * @param payment - type of payment
 	 */
 	public Sale(LocalDateTime date, Customer customer, Product product, PaymentMethod payment) {
-		id=idGenerator.incrementAndGet();
 		this.date = date;
 		this.customer = customer;
 		this.product = product;
@@ -64,26 +75,18 @@ public class Sale implements Comparable<Sale>{
 	 * @param product - Product sold
 	 */
 	public Sale(LocalDateTime date, Product product, PaymentMethod payment) {
-		id=idGenerator.incrementAndGet();
 		this.date = date;
 		this.product = product;
 		this.customer = null;
 		this.amount = product.getPrice();
 		this.payment = payment;
 	}
-
 	
-	/**
-	 * Static method to set new start id generator
-	 * 
-	 * @param num
-	 */
-	public static void setStartIdGenerator(int num)
+	protected Sale()
 	{
-		idGenerator.set(num-1);
+		
 	}
-	
-	
+
 	/**
 	 * @return the amount of sale
 	 */

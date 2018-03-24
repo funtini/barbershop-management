@@ -1,6 +1,15 @@
 package bsmanagement.model;
 
-import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import org.hibernate.annotations.Type;
 
 /**
  * <h1> Product </h1>
@@ -18,6 +27,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 
  * @author JOAO GOMES
  */
+@Entity
 public class Product implements Comparable<Product>{
 
 	
@@ -50,12 +60,16 @@ public class Product implements Comparable<Product>{
 		EXTRA
 	}
 	
-	private static AtomicInteger idGenerator=new AtomicInteger();
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
+	@Enumerated(EnumType.STRING)
 	private productType type;
 	private double price;
+	@Column(nullable = false)
+	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean active;
 	
 
@@ -67,21 +81,15 @@ public class Product implements Comparable<Product>{
 	 * @param price - Price value in Euros
 	 */
 	public Product(String name, productType type, double price) {
-		id=idGenerator.incrementAndGet();
 		this.name = name;
 		this.type = type;
 		this.price = price;
 		this.active = true;
 	}
-
-	/**
-	 * Static method to set new start id generator
-	 * 
-	 * @param num
-	 */
-	public static void setStartIdGenerator(int num)
+	
+	protected Product()
 	{
-		idGenerator.set(num-1);
+		
 	}
 	
 	/**

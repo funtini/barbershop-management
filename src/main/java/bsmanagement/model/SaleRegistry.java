@@ -6,6 +6,11 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import bsmanagement.model.jparepositories.SaleRepository;
+
 /**
  * <h1> SaleRegistry </h1>
  * <p>
@@ -20,9 +25,11 @@ import java.util.List;
  * @author JOAO GOMES
  *
  */
+@Service
 public class SaleRegistry {
 	
-	private List<Sale> sales;
+	@Autowired
+	private SaleRepository saleRepo;
 	private List<PaymentMethod> availablePaymentMethods;
 
 
@@ -30,7 +37,6 @@ public class SaleRegistry {
 	 * Constructor of SaleRegistry
 	 */
 	public SaleRegistry() {
-		sales = new ArrayList<>();
 		availablePaymentMethods = new ArrayList<>();
 	}
 
@@ -38,17 +44,11 @@ public class SaleRegistry {
 	 * @return list of sales
 	 */
 	public List<Sale> getSales() {
-		return sales;
+		List<Sale> saleList = new ArrayList<>();
+		for (Sale s : saleRepo.findAll())
+			saleList.add(s);
+		return saleList;
 	}
-
-	/**
-	 * @param list of sales
-	 */
-	public void setSales(List<Sale> sales) {
-		this.sales = sales;
-	}
-	
-	
 	
 	/**
 	 * @return List of available payment methods
@@ -126,9 +126,10 @@ public class SaleRegistry {
 	 */
 	public boolean addSale(Sale sale)
 	{
-		if(this.sales.contains(sale))
+		if(saleRepo.exists(sale.getId()))
 			return false;
-		return this.sales.add(sale);
+		saleRepo.save(sale);
+		return true;
 	}
 	
 
@@ -142,7 +143,7 @@ public class SaleRegistry {
 	public List<Sale> findSalesOf(YearMonth yearMonth) {
 		
 		List<Sale> listSale = new ArrayList<Sale>();
-		for (Sale s: sales)
+		for (Sale s: getSales())
 		{
 			if (s.getDate().getYear()== yearMonth.getYear() && s.getDate().getMonth().equals(yearMonth.getMonth()))
 				listSale.add(s);
@@ -160,7 +161,7 @@ public class SaleRegistry {
 	public List<Sale> findSalesByCustomer(Customer customer)
 	{
 		List<Sale> listSale = new ArrayList<Sale>();
-		for (Sale s: sales)
+		for (Sale s: getSales())
 		{
 			if (customer.equals(s.getCustomer())) 
 				listSale.add(s);
@@ -176,7 +177,7 @@ public class SaleRegistry {
 	public double sumAllAmounts()
 	{
 		double sum = 0;
-		for (Sale s: sales)
+		for (Sale s: getSales())
 		{
 			sum=sum+s.getAmount();
 		}
@@ -192,7 +193,7 @@ public class SaleRegistry {
 	 */
 	public Sale findSaleById(int id)
 	{
-		for (Sale s: sales)
+		for (Sale s: getSales())
 		{
 			if (s.getId()==id)
 				return s;
@@ -210,7 +211,7 @@ public class SaleRegistry {
 	public List<Sale> findSalesPayedBy(PaymentMethod payment)
 	{
 		List<Sale> salesList = new ArrayList<Sale>();
-		for (Sale s: sales)
+		for (Sale s: getSales())
 		{
 			if (s.getPayment().equals(payment))
 				salesList.add(s);
@@ -230,7 +231,7 @@ public class SaleRegistry {
 	public double sumAllAmountsPayedBy(PaymentMethod payment)
 	{
 		double sum = 0;
-		for (Sale s: sales)
+		for (Sale s: getSales())
 		{
 			if (s.getPayment().equals(payment))
 				sum=sum+s.getAmount();
@@ -248,7 +249,7 @@ public class SaleRegistry {
 	public double calculateTotalFeeAmount()
 	{
 		double sum = 0;
-		for (Sale s: sales)
+		for (Sale s: getSales())
 		{
 			sum=sum+s.calculateFeeValue();
 		}
@@ -274,7 +275,7 @@ public class SaleRegistry {
 		if (startDate.isAfter(endDate))
 			return listSale;
 		LocalDate saleDate;
-		for (Sale s: sales)
+		for (Sale s: getSales())
 		{
 			saleDate=s.getDate().toLocalDate();
 			if (!(saleDate.isBefore(startDate) || saleDate.isAfter(endDate))) 

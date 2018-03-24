@@ -2,7 +2,13 @@ package bsmanagement.model;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  * 
@@ -20,12 +26,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author JOAO GOMES
  *
  */
+@Entity
 public class Booking {
 	
-	private static AtomicInteger idGenerator=new AtomicInteger();
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private LocalDateTime date;
+	@OneToOne(cascade = CascadeType.ALL)
 	private Customer customer;
 	
 	
@@ -41,20 +49,9 @@ public class Booking {
 	 */
 	public Booking(LocalDateTime date, Customer customer) {
 		
-		id=idGenerator.incrementAndGet();
 		this.date = date;
 		this.customer = customer;
 		
-	}
-	
-	/**
-	 * Static method to set new start id generator
-	 * 
-	 * @param num
-	 */
-	public static void setStartIdGenerator(int num)
-	{
-		idGenerator.set(num-1);
 	}
 	
 	/**

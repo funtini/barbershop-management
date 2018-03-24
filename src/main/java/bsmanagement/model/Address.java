@@ -2,6 +2,8 @@ package bsmanagement.model;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.persistence.Embeddable;
+
 /**
  * 
  * <h1> Address </h1>
@@ -21,6 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author JOAO GOMES
  *
  */
+@Embeddable
 public class Address {
 	
 	private static AtomicInteger idGenerator=new AtomicInteger();

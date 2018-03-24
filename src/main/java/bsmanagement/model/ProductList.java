@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import bsmanagement.model.Product.productType;
+import bsmanagement.model.jparepositories.ProductRepository;
 
 /**
  * <h1> ProductList </h1>
@@ -20,23 +24,35 @@ import bsmanagement.model.Product.productType;
  * @author JOAO GOMES
  *
  */
+@Service
 public class ProductList {
-	
-private List<Product> products;
+
+	@Autowired
+	private ProductRepository productRepo;
 	
 	/**
 	 * Constructor of list of products
 	 */
 	public ProductList() {
-		products = new ArrayList<Product>();
 	}
 
+	
+	/**
+	 * @return the listOfProducts
+	 */
+	public List<Product> getAllProducts() {
+		List<Product> allProducts = new ArrayList<>();
+		for (Product p : productRepo.findAll())
+			allProducts.add(p);		
+		return allProducts;
+	}
+	
 	/**
 	 * @return the listOfProducts
 	 */
 	public List<Product> getActiveProducts() {
 		List<Product> activeProducts = new ArrayList<>();
-		for (Product p : products)
+		for (Product p : getAllProducts())
 			if (p.isActive())
 				activeProducts.add(p);
 		return activeProducts;
@@ -47,19 +63,10 @@ private List<Product> products;
 	 */
 	public List<Product> getRemovedProducts() {
 		List<Product> activeProducts = new ArrayList<>();
-		for (Product p : products)
+		for (Product p : getAllProducts())
 			if (!p.isActive())
 				activeProducts.add(p);
 		return activeProducts;
-	}
-
-	/**
-	 * Set a List of Products
-	 * 
-	 * @param products
-	 */
-	public void setProducts(List<Product> products) {
-		this.products = products;
 	}
 	
 	/**
@@ -87,9 +94,10 @@ private List<Product> products;
 	 */
 	public boolean addProduct(Product product)
 	{
-		if (this.products.contains(product))
+		if (productRepo.exists(product.getId()))
 			return false;
-		return this.products.add(product);
+		productRepo.save(product);
+		return true;
 	}
 	
 	/**
@@ -101,7 +109,7 @@ private List<Product> products;
 	 */
 	public boolean removeProduct(Product product)
 	{
-		if (products.contains(product))
+		if (productRepo.exists(product.getId()))
 		{
 			product.deactivate();
 			return true;
@@ -120,7 +128,7 @@ private List<Product> products;
 	 */
 	public Product findProductById(int id)
 	{
-		for (Product p: this.products)
+		for (Product p: getAllProducts())
 		{
 			if (p.getId()==id) 
 				return p;
@@ -139,7 +147,7 @@ private List<Product> products;
 	public List<Product> searchProductByName(String name)
 	{
 		List<Product> productList = new ArrayList<Product>();
-		for (Product p: this.products)
+		for (Product p: getAllProducts())
 		{
 			if (p.getName().equals(name)) 
 				productList.add(p);
@@ -158,7 +166,7 @@ private List<Product> products;
 	public List<Product> getProductsByType(productType type)
 	{
 		List<Product> productList = new ArrayList<Product>();
-		for (Product p: this.products)
+		for (Product p: getAllProducts())
 		{
 			if (p.getType().equals(type)) 
 				productList.add(p);
@@ -174,7 +182,7 @@ private List<Product> products;
 	public List<Product> getProductsOrderByPrice()
 	{
 		List<Product> productList = new ArrayList<Product>();
-		for (Product p: this.products)
+		for (Product p: getAllProducts())
 		{ 
 				productList.add(p);
 		}
@@ -193,7 +201,7 @@ private List<Product> products;
 	public List<Product> getProductsOrderByPriceOfType(productType type)
 	{
 		List<Product> productList = new ArrayList<Product>();
-		for (Product p: this.products)
+		for (Product p: getAllProducts())
 		{
 			if (p.getType().equals(type)) 
 				productList.add(p);

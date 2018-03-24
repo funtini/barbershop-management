@@ -1,5 +1,8 @@
 package bsmanagement.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * <h1> PaymentMethod </h1>
  * <p>
@@ -15,8 +18,10 @@ package bsmanagement.model;
  * 
  * @author JOAO GOMES
  */
+@Entity
 public class PaymentMethod {
 	
+	@Id
 	private String name;
 	private double fee;
 	private double minFeeValue;
@@ -33,6 +38,11 @@ public class PaymentMethod {
 		this.name = type;
 		this.fee = fee;
 		this.minFeeValue = minFeeValue;
+	}
+	
+	protected PaymentMethod()
+	{
+		
 	}
 	
 	/**

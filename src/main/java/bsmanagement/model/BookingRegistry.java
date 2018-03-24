@@ -5,6 +5,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import bsmanagement.model.jparepositories.BookingRepository;
+
 /**
  * <h1> BookingRegistry </h1>
  * <p>
@@ -19,33 +24,29 @@ import java.util.List;
  * @author JOAO GOMES
  *
  */
+@Service
 public class BookingRegistry {
-	
-private List<Booking> bookings;
+
+	@Autowired
+	private BookingRepository bookRepo;
 	
 	/**
 	 * Constructor of BookingRegistry
 	 */
-	public BookingRegistry() {
-		bookings = new ArrayList<>();
+	protected BookingRegistry() {
+		
 	}
 
 	/**
 	 * @return the listOfBookings
 	 */
 	public List<Booking> getBookings() {
+		List<Booking> bookings = new ArrayList<>();
+		for (Booking b : bookRepo.findAll())
+			bookings.add(b);
 		return bookings;
 	}
 
-	/**
-	 * Set a List of Bookings
-	 * 
-	 * @param listOfBookings
-	 */
-	public void setBookings(List<Booking> listOfBookings) {
-		this.bookings= listOfBookings;
-	}
-	
 	
 	/**
 	 * Method to create a new Instance of Booking
@@ -71,7 +72,8 @@ private List<Booking> bookings;
 	public boolean addBooking(Booking booking) {
 		if (booking.getDate().isBefore(LocalDateTime.now()))
 			return false;
-		return bookings.add(booking);
+		bookRepo.save(booking);
+		return true;
 	}
 	
 	/**
@@ -81,7 +83,7 @@ private List<Booking> bookings;
 	 */
 	public List<Booking> getNextBookings() {
 		List<Booking> bookingList = new ArrayList<>();
-		for (Booking b: this.bookings)
+		for (Booking b: getBookings())
 		{
 			if (b.getDate().isEqual(LocalDateTime.now()) || b.getDate().isAfter(LocalDateTime.now()))
 				bookingList.add(b);
@@ -96,7 +98,7 @@ private List<Booking> bookings;
 	 */
 	public List<Booking> getBookingsOf(LocalDate date) {
 		List<Booking> bookingList = new ArrayList<>();
-		for (Booking b: this.bookings)
+		for (Booking b: getBookings())
 		{
 			if (b.getDate().toLocalDate().isEqual(date))
 				bookingList.add(b);

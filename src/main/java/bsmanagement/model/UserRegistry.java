@@ -4,7 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import bsmanagement.model.User.UserProfile;
+import bsmanagement.model.jparepositories.UserRepository;
 import system.dto.UserLoginDTO;
 
 
@@ -24,18 +28,34 @@ import system.dto.UserLoginDTO;
  * @author JOAO GOMES
  *
  */
+@Service
 public class UserRegistry {
 
-	private List<User> usersList;
+	@Autowired
+	private UserRepository userRepo;
 
 	
 	/**
 	 * Constructor of userRegistry
 	 */
 	public UserRegistry() {
-		usersList = new ArrayList<>();
+		
 	}
 
+	
+	public void clearData()
+	{
+		userRepo.deleteAll();
+	}
+	
+	public boolean updateUser(User user)
+	{
+		if (userRepo.exists(user.getEmailAddress()) && user.isValid()) {
+            userRepo.save(user);
+            return true;
+        }
+        return false;
+	}
 
 	/**
 	 * Method to get a list of registered users
@@ -43,7 +63,19 @@ public class UserRegistry {
 	 * @return the usersList
 	 */
 	public List<User> getUsersList() {
+		List<User> usersList = new ArrayList<>();
+		for(User u : userRepo.findAll())
+			usersList.add(u);
 		return usersList;
+	}
+	
+	/**
+	 * Method to get a list of registered users
+	 * 
+	 * @return the usersList
+	 */
+	public UserRepository getUserRepository() {
+		return userRepo;
 	}
 
 	
@@ -74,16 +106,12 @@ public class UserRegistry {
 	 */
 	public boolean addUser(User user) {
 
-		if (usersList.contains(user)) {
+		if (userRepo.exists(user.getEmailAddress())) {
 			return false;
 		}
-		
-		for(User u : usersList)
-			if (u.getEmailAddress().equals(user.getEmailAddress()))
-				return false;
 
 		if (user.isValid()) {
-			usersList.add(user);
+			userRepo.save(user);
 			return true;
 		}
 		return false;
@@ -97,7 +125,7 @@ public class UserRegistry {
 	 * @return User that matches search parameter or null if no user is found.
 	 */
 	public User getUserByEmail(String email) {
-		for (User u : usersList)
+		for (User u : getUsersList())
 			if (u.getEmailAddress().equals(email))
 				return u;
 		return null;
@@ -132,7 +160,7 @@ public class UserRegistry {
 	public boolean setUserActive(User user) {
 
 		for (User u : getUsersList())
-			if (user.getId() == u.getId() && !user.isActive()) {
+			if (user.getEmailAddress() == u.getEmailAddress() && !user.isActive()) {
 				user.setActive();
 				return true;
 			}
@@ -149,7 +177,7 @@ public class UserRegistry {
 	 */
 	public boolean deactivateUser(User user) {
 		for (User u : getUsersList())
-			if (user.getId() == u.getId() && user.isActive()) {
+			if (user.getEmailAddress() == u.getEmailAddress() && user.isActive()) {
 				user.deactivate();
 				return true;
 			}

@@ -1,7 +1,12 @@
 package bsmanagement.model;
 
 import java.time.LocalDate;
-import java.util.concurrent.atomic.AtomicInteger;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * <h1> Expense </h1>
@@ -24,6 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 
  * @author JOAO GOMES
  */
+@Entity
 public class Expense implements Comparable<Expense>{
 	
 	
@@ -55,26 +61,16 @@ public class Expense implements Comparable<Expense>{
 		ONEOFF
 	}
 	
-	private static AtomicInteger idGenerator=new AtomicInteger();
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
+	@Enumerated(EnumType.STRING)
 	private expenseType type;
 	private double valueOfPayment;
 	private LocalDate dateOfPayment;
 	private String description;
 	
-	
-	
-	/**
-	 * Static method to set new start id generator
-	 * 
-	 * @param num
-	 */
-	public static void setStartIdGenerator(int num)
-	{
-		idGenerator.set(num-1);
-	}
 	
 	
 	/**
@@ -86,7 +82,6 @@ public class Expense implements Comparable<Expense>{
 	 * @param date - Date of Expense's Payment
 	 */
 	public Expense(String name, expenseType type, double value, LocalDate date) {
-		id=idGenerator.incrementAndGet();
 		this.name = name;
 		this.type = type;
 		this.valueOfPayment = value;
@@ -105,7 +100,6 @@ public class Expense implements Comparable<Expense>{
 	 * @param description - Description of Expense
 	 */
 	public Expense(String name, expenseType type, double value, LocalDate date, String description) {
-		id=idGenerator.incrementAndGet();
 		this.name = name;
 		this.type = type;
 		this.valueOfPayment = value;

@@ -3,9 +3,20 @@ package bsmanagement.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Type;
 
 import system.dto.UserLoginDTO;
 
@@ -31,23 +42,28 @@ import system.dto.UserLoginDTO;
  * @author JOAO GOMES
  *
  */
+@Entity
 public class User {
 	
 	public enum UserProfile {
 		ADMINISTRATOR, EMPLPOYER
 	}
-	
-	private static AtomicInteger idGenerator=new AtomicInteger();
-	
-	private int id;
+		
+	@Id
+	private String email;
 	private String name;
 	private LocalDate birth;
-	private String email;
 	private String phone;
 	private String taxPayerId;
+	@Embedded
+	@ElementCollection
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Address> addressList;
 	private String password;
+	@Column(nullable = false)
+	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean activationStatus;
+	@Enumerated(EnumType.STRING)
 	private UserProfile profile;
 	
 	
@@ -68,10 +84,8 @@ public class User {
 	 * @param profile
 	 */
 	public User(String name, LocalDate birth, String email, String phone, String taxPayerId) {
-		this.id=idGenerator.incrementAndGet();
 		this.name = name;
 		this.birth = birth;
-		//TODO: email.getEmailAddress().validate();
 		this.email = email;
 		this.phone = phone;
 		this.taxPayerId = taxPayerId;
@@ -171,26 +185,6 @@ public class User {
 		return addressList.remove(address);
 	}
 	
-	/**
-	 * Static method to set new start id generator
-	 * 
-	 * @param num
-	 */
-	public static void setStartIdGenerator(int num)
-	{
-		idGenerator.set(num-1);
-	}
-
-
-	/**
-	 * Method to get Id
-	 * 
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-
 
 	/**
 	 * Method to get name
@@ -379,11 +373,9 @@ public class User {
 	 */
 	@Override
 	public String toString() {
-		return "User [" + id + "]-[name: " + name + ", birth: " + birth + ", email: " + email + ", phone: " + phone
+		return "User [" + email + "]-[name: " + name + ", birth: " + birth + ", phone: " + phone
 				+ ", taxPayerId: " + taxPayerId + ", ActivationStatus: " + activationStatus + ", profile: " + profile + "]";
 	}
-
-
 
 	/** 
 	 * get class hash code for this User
@@ -394,10 +386,9 @@ public class User {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		return result;
 	}
-
 
 	/** 
 	 * Compares this User Instance to the specified object. 
@@ -416,7 +407,10 @@ public class User {
 		if (!(obj instanceof User))
 			return false;
 		User other = (User) obj;
-		if (id != other.id)
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
 			return false;
 		return true;
 	}

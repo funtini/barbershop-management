@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import bsmanagement.model.jparepositories.CustomerRepository;
+
 /**
  * <h1> CustomerRegistry </h1>
  * <p>
@@ -18,31 +23,27 @@ import java.util.List;
  * @author JOAO GOMES
  *
  */
+@Service
 public class CustomerRegistry {
-	
-private List<Customer> customers;
+
+@Autowired
+private CustomerRepository customersRepo;
 	
 	/**
 	 * Constructor of list of customers
 	 */
 	public CustomerRegistry() {
-		customers = new ArrayList<Customer>();
+		
 	}
 
 	/**
 	 * @return the listOfCustomers
 	 */
 	public List<Customer> getCustomers() {
-		return customers;
-	}
-
-	/**
-	 * Set CustomerRegistry method
-	 * 
-	 * @param customers
-	 */
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
+		List<Customer> customersList = new ArrayList<>();
+		for (Customer c : customersRepo.findAll())
+			customersList.add(c);
+		return customersList;
 	}
 	
 	/**
@@ -51,9 +52,10 @@ private List<Customer> customers;
 	 * @return true if customer was successfully added, false if customer is already on list
 	 */
 	public boolean addCustomer(Customer customer) {
-		if (this.customers.contains(customer))
+		if (customersRepo.exists(customer.getId()))
 			return false;
-		return this.customers.add(customer);
+		customersRepo.save(customer);
+		return true;
 	}
 	
 	/**

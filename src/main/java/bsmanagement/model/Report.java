@@ -2,7 +2,15 @@ package bsmanagement.model;
 
 import java.time.Year;
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import bsmanagement.model.Expense.expenseType;
 
@@ -26,12 +34,21 @@ import bsmanagement.model.Expense.expenseType;
  * @author JOAO GOMES
  *
  */
+@Entity
 public class Report {
 	
 
+	@Id
+	private String id;
+	@Transient
 	private YearMonth yearMonth;
-	private SaleRegistry salesList;
-	private ExpenseRegistry expensesList;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "report_id")
+	private List<Sale> sales;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "report_id")
+	private List<Expense> expensesList;
 	private int businessDays;
 	
 	
@@ -44,10 +61,24 @@ public class Report {
 	 */
 	public Report(YearMonth yearMonth) {
 		this.yearMonth = yearMonth;
-		this.salesList = new SaleRegistry();
-		this.expensesList = new ExpenseRegistry();
+		this.id = yearMonth.toString();
+		this.sales = new ArrayList<>();
+		this.expensesList = new ArrayList<>();
 		this.businessDays = 0;
 	}
+	
+	protected Report ()
+	{
+		
+	}
+	
+	/**
+	 * @return the yearMonth
+	 */
+	public String getId() {
+		return id;
+	}
+	
 	
 	/**
 	 * @return the yearMonth
@@ -59,14 +90,14 @@ public class Report {
 	/**
 	 * @return the list of sales
 	 */
-	public SaleRegistry getSalesList() {
-		return salesList;
+	public List<Sale> getSalesList() {
+		return sales;
 	}
 	
 	/**
 	 * @return the list of expenses
 	 */
-	public ExpenseRegistry getExpensesList() {
+	public List<Expense> getExpensesList() {
 		return expensesList;
 	}
 	
@@ -77,19 +108,19 @@ public class Report {
 		return businessDays;
 	}
 
-	/**
-	 * @param sales the sales to set
-	 */
-	public void setSales(List<Sale> salesList) {
-		this.salesList.setSales(salesList);
-	}
+//	/**
+//	 * @param sales the sales to set
+//	 */
+//	public void setSales(List<Sale> salesList) {
+//		this.salesList.setSales(salesList);
+//	}
 
-	/**
-	 * @param expenses the expenses to set
-	 */
-	public void setExpenses(List<Expense> expensesList) {
-		this.expensesList.setExpenses(expensesList);
-	}
+//	/**
+//	 * @param expenses the expenses to set
+//	 */
+//	public void setExpenses(List<Expense> expensesList) {
+//		this.expensesList.setExpenses(expensesList);
+//	}
 
 	/**
 	 * Set report's YearMonth
@@ -108,11 +139,13 @@ public class Report {
 	 * @return false if year/month dont match with this report, true if sale is sucessfuly added to this report
 	 */
 	public boolean addSale(Sale sale) {
-		if (sale.getDate().getYear()!=this.yearMonth.getYear())
+		YearMonth reportId = YearMonth.parse(id);
+		if (sale.getDate().getYear()!=reportId.getYear())
 			return false;
-		if (sale.getDate().getMonthValue()!=this.yearMonth.getMonthValue())
+		if (sale.getDate().getMonthValue()!=reportId.getMonthValue())
 			return false;
-		this.salesList.addSale(sale);
+		this.sales.add(sale);
+		updateBusinessDays();
 		return true;
 	}
 	
@@ -124,18 +157,19 @@ public class Report {
 	 * @return false if year/month dont match with report, true if expense is sucessfuly added to report
 	 */
 	public boolean addExpense(Expense expense) {
-		if (expensesList.getExpenses().contains(expense))
+		YearMonth reportId = YearMonth.parse(id);
+		if (expensesList.contains(expense))
 			return false;
 		if (expense.getType().equals(expenseType.FIXED))
 		{
-			this.expensesList.addExpense(expense);
+			this.expensesList.add(expense);
 			return true;
 		}
-		if (expense.getDate().getYear()!=this.yearMonth.getYear())
+		if (expense.getDate().getYear()!=reportId.getYear())
 			return false;
-		if (expense.getDate().getMonthValue()!=this.yearMonth.getMonthValue())
+		if (expense.getDate().getMonthValue()!=reportId.getMonthValue())
 			return false;
-		this.expensesList.addExpense(expense);
+		this.expensesList.add(expense);
 		return true;	
 	}
 	
@@ -146,7 +180,7 @@ public class Report {
 	 * 
 	 */
 	public void removeExpense(Expense expense) {
-		expensesList.removeExpense(expense);
+		expensesList.remove(expense);
 	}
 
 	
@@ -167,10 +201,11 @@ public class Report {
 	 */
 	public boolean updateBusinessDays()
 	{
+		YearMonth repDate = YearMonth.parse(id);
 		int count = 0;
-		for (int i=1; i<=this.yearMonth.getMonth().length(Year.of(this.yearMonth.getYear()).isLeap());i++)
+		for (int i=1; i<=repDate.getMonth().length(Year.of(repDate.getYear()).isLeap());i++)
 		{
-			for (Sale s: salesList.getSales())
+			for (Sale s: getSalesList())
 			{
 				if (s.getDate().getDayOfMonth()==i)
 				{
@@ -218,7 +253,11 @@ public class Report {
 	 */
 	public double calculateTotalExpensesValue()
 	{
-		return this.expensesList.sumAllExpensesValue();
+//		return this.expensesList.sumAllExpensesValue();
+		double sum = 0;
+		for (Expense e: getExpensesList())
+			sum=sum+e.getValue();
+		return sum;
 	}
 	
 	
@@ -229,7 +268,11 @@ public class Report {
 	 */
 	public double calculateTotalSalesAmount()
 	{
-		return this.salesList.sumAllAmounts();
+		//return this.sales.sumAllAmounts();
+		double sum = 0;
+		for (Sale s: getSalesList())
+			sum=sum+s.getAmount();
+		return sum;
 	}
 	
 	
@@ -275,7 +318,7 @@ public class Report {
 	 */
 	@Override
 	public String toString() {
-		return "Report [year=" + yearMonth.getYear() + ", month=" + yearMonth.getMonth().toString() + ", sales=" + salesList + ", expenses=" + expensesList + ", businessDays="
+		return "Report [year=" + yearMonth.getYear() + ", month=" + yearMonth.getMonth().toString() + ", sales=" + sales + ", expenses=" + expensesList + ", businessDays="
 				+ businessDays + "]";
 	}
 
