@@ -108,20 +108,6 @@ public class Report {
 		return businessDays;
 	}
 
-//	/**
-//	 * @param sales the sales to set
-//	 */
-//	public void setSales(List<Sale> salesList) {
-//		this.salesList.setSales(salesList);
-//	}
-
-//	/**
-//	 * @param expenses the expenses to set
-//	 */
-//	public void setExpenses(List<Expense> expensesList) {
-//		this.expensesList.setExpenses(expensesList);
-//	}
-
 	/**
 	 * Set report's YearMonth
 	 * 
@@ -243,6 +229,7 @@ public class Report {
 		double expense = calculateTotalExpensesValue();
 		if (expense == 0)
 			return 0;
+		
 		return (((income-expense)/expense)*100);
 	}
 	
@@ -253,7 +240,6 @@ public class Report {
 	 */
 	public double calculateTotalExpensesValue()
 	{
-//		return this.expensesList.sumAllExpensesValue();
 		double sum = 0;
 		for (Expense e: getExpensesList())
 			sum=sum+e.getValue();
@@ -268,7 +254,6 @@ public class Report {
 	 */
 	public double calculateTotalSalesAmount()
 	{
-		//return this.sales.sumAllAmounts();
 		double sum = 0;
 		for (Sale s: getSalesList())
 			sum=sum+s.getAmount();

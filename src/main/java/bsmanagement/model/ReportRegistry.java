@@ -1,7 +1,7 @@
 package bsmanagement.model;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +31,6 @@ public class ReportRegistry {
 	
 	@Autowired
 	private ReportRepository reportRepo;
-//	@Autowired
-//	private SaleRegistry saleRegistry;
-//	@Autowired
-//	private ExpenseRegistry expenseRegistry;
 
 	/**
 	 * Constructor of report registry
@@ -61,47 +57,6 @@ public class ReportRegistry {
 		return reportList;
 	}
 	
-	
-//	/**
-//	 * Get List of Sales Registry
-//	 * 
-//	 * @return the saleRegistry
-//	 */
-//	public SaleRegistry getSaleRegistry() {
-//		return saleRegistry;
-//	}
-
-
-//	/**
-//	 * Get the ExpenseRegistry
-//	 * 
-//	 * @return the expenseRegistry
-//	 */
-//	public ExpenseRegistry getExpenseRegistry() {
-//		return expenseRegistry;
-//	}
-	
-	
-//	/**
-//	 * Method to add a new sale with unknown customer
-//	 * 
-//	 * Sale is added to report associated to sale's date.
-//	 * If there is no report with this sale's date, a new report is created with YearMonth associated to this sale's date.
-//	 * 
-//	 * @param date - DateTime of sale
-//	 * @param product - Product sold
-//	 * @param payment - Payment type
-//	 * 
-//	 * @return true if new Report has been created, false if already exist a report associated with this date.
-//	 */
-//	public boolean addSale(LocalDateTime date, Product product, PaymentMethod payment)
-//	{
-//		Sale s = saleRegistry.createSale(date, product, payment);
-//		saleRegistry.addSale(s);
-//		
-//		return loadSale(s);
-//	}
-//	
 	
 	/**
 	 * Method to Add new Report
@@ -202,12 +157,11 @@ public class ReportRegistry {
 			{
 				occurence = true ;
 			}
-			if (repDate.isAfter(expDate))
+			if (repDate.isAfter(expDate) && e.getType().equals(expenseType.FIXED))
 			{
 				int year = repDate.getYear();
 				int month = repDate.getMonthValue();	
 				Expense newExp = new Expense(e.getName(), e.getType(), e.getValue(), e.getDate().withYear(year).withMonth(month));
-//				expenseRegistry.addExpense(newExp);
 				rep.addExpense(newExp);
 			}
 				
@@ -224,35 +178,6 @@ public class ReportRegistry {
 	}
 	
 	
-	
-//	public boolean loadExpense(Expense e)
-//	{
-//		YearMonth expDate = YearMonth.of(e.getDate().getYear(), e.getDate().getMonth());
-//		YearMonth repDate;
-//		boolean occurence = false;
-//		boolean newReportAdded = false;
-//		for(Report rep: getReports())
-//		{
-//			repDate = YearMonth.parse(rep.getId());
-//			if ((repDate.equals(expDate) && rep.addExpense(e)))
-//			{
-//				occurence = true;
-//			}
-//			if (repDate.isAfter(expDate))
-//				rep.addExpense(e);
-//		}
-//		
-//		if (!occurence)
-//		{
-//			newReportAdded = true;
-//			this.addReport(expDate);
-//			this.getReport(expDate).addExpense(e);
-//		}
-//		
-//		return newReportAdded;
-//	}
-	
-	
 	/**
 	 * Method to load fixed expenses to report
 	 * 	
@@ -263,13 +188,22 @@ public class ReportRegistry {
 	 */
 	public void loadFixedExpenses(Report report)
 	{
+		
 		String idPreviousMonth = report.getYearMonth().minusMonths(1).toString();
+		YearMonth reportDate = YearMonth.parse(report.getId());
 		if (reportRepo.findOne(idPreviousMonth)!=null)
 		{
 			for(Expense exp: reportRepo.findOne(idPreviousMonth).getExpensesList())
 			{
 				if(exp.getType().equals(expenseType.FIXED))
-					report.addExpense(exp);
+				{
+					int year = reportDate.getYear();
+					int month = reportDate.getMonthValue();
+					Expense newExp = new Expense(exp.getName(), exp.getType(), exp.getValue(), exp.getDate().withYear(year).withMonth(month));
+					report.addExpense(newExp);
+					updateReport(report);
+				}
+					
 			}
 		}
 		
@@ -310,47 +244,6 @@ public class ReportRegistry {
 		return loadExpense(e);
 	}
 	
-//	/**
-//	 * Method to remove an expense
-//	 * 
-//	 * @param Expense
-//	 * 
-//	 * @return True if expense was successful removed, false otherwise
-//	 */
-//	public boolean removeExpense(Expense expense) {
-//		
-//		YearMonth ym = YearMonth.of(LocalDate.now().getYear(), LocalDate.now().getMonth());
-//		for(Report rep: getReports())
-//		{
-//	
-//			if (rep.getYearMonth().isAfter(ym))
-//				rep.removeExpense(expense);
-//		}
-//		
-//		return expenseRegistry.removeExpense(expense);
-//	}
-	
-	
-//	/**
-//	 * Method to get a report of a specific YearMonth
-//	 * 
-//	 * @param yearMonth
-//	 * 
-//	 * @return Report
-//	 */
-//	public Report getReport(YearMonth ym) {
-//		int index=-1;
-//		for (Report rep: getReports())
-//		{
-//			if (rep.getId().equals(ym.toString()))
-//				index=getReports().indexOf(rep);
-//		}
-//		if (index==-1)
-//			return null; 
-//		
-//		return getReports().get(index);
-//	}
-	
 	/**
 	 * Method to get a report of a specific YearMonth
 	 * 
@@ -368,6 +261,33 @@ public class ReportRegistry {
 	}
 	
 	
+	
+	/**
+	 * Method to calculate the total ROI of all reports, expect current monthly report
+	 * 
+	 * @return ROI AVEGARAGE (%) - double
+	 */
+	public double calculateRoiAllTime()
+	{
+	
+		if (this.getReports().isEmpty())
+			return 0;
+		if (this.getReports().get(0).getId().equals(YearMonth.now().toString()))
+			return 0;
+		double sumExpenses = 0;
+		double sumIncome = 0;
+		for (Report r: getReports())
+			if (!r.getId().equals(YearMonth.now().toString()))
+			{
+				sumExpenses= sumExpenses+r.calculateTotalExpensesValue();
+				sumIncome= sumIncome+r.calculateTotalSalesAmount();
+			}
+			
+		return (((sumIncome-sumExpenses)/sumExpenses)*100);
+	}
+	
+	
+	
 	/**
 	 * Method to calculate the average ROI of all reports, expect current monthly report
 	 * 
@@ -377,12 +297,12 @@ public class ReportRegistry {
 	{
 		if (this.getReports().isEmpty())
 			return 0;
-		if (this.getReports().get(0).getYearMonth().equals(YearMonth.now()))
+		if (this.getReports().get(0).getId().equals(YearMonth.now().toString()))
 			return 0;
 		double sum = 0;
 		double count = 0;
 		for (Report r: getReports())
-			if (!r.getYearMonth().equals(YearMonth.now()))
+			if (!r.getId().equals(YearMonth.now().toString()))
 			{
 				sum=sum+r.calculateRoi();
 				count++;
@@ -403,12 +323,12 @@ public class ReportRegistry {
 	{
 		if (getReports().isEmpty())
 			return 0;
-		if (getReports().get(0).getYearMonth().equals(YearMonth.now()))
+		if (getReports().get(0).getId().equals(YearMonth.now().toString()))
 			return 0;
 		double sum = 0;
 		double count = 0;
 		for (Report r: getReports())
-			if (!r.getYearMonth().equals(YearMonth.now()))
+			if (!r.getId().equals(YearMonth.now().toString()))
 			{
 				sum=sum+r.calculateProfit();
 				count++;
@@ -429,12 +349,12 @@ public class ReportRegistry {
 	{
 		if (getReports().isEmpty())
 			return 0;
-		if (getReports().get(0).getYearMonth().equals(YearMonth.now()))
+		if (getReports().get(0).getId().equals(YearMonth.now().toString()))
 			return 0;
 		double sum = 0;
 		double count = 0;
 		for (Report r: getReports())
-			if (!r.getYearMonth().equals(YearMonth.now()))
+			if (!r.getId().equals(YearMonth.now().toString()))
 			{
 				sum=sum+r.calculateTotalSalesAmount();
 				count++;
@@ -455,12 +375,12 @@ public class ReportRegistry {
 	{
 		if (getReports().isEmpty())
 			return 0;
-		if (getReports().get(0).getYearMonth().equals(YearMonth.now()))
+		if (getReports().get(0).getId().equals(YearMonth.now().toString()))
 			return 0;
 		double sum = 0;
 		double count = 0;
 		for (Report r: getReports())
-			if (!r.getYearMonth().equals(YearMonth.now()))
+			if (!r.getId().equals(YearMonth.now().toString()))
 			{
 				sum=sum+r.calculateTotalExpensesValue();
 				count++;

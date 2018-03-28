@@ -107,6 +107,11 @@ public class Expense implements Comparable<Expense>{
 		this.dateOfPayment = date;	
 	}
 	
+	protected Expense()
+	{
+		
+	}
+	
 	/**
 	 * @return the id of Expense
 	 */
