@@ -24,7 +24,7 @@ import bsmanagement.model.jparepositories.CustomerRepository;
  *
  */
 @Service
-public class CustomerRegistry {
+public class CustomerService {
 
 @Autowired
 private CustomerRepository customersRepo;
@@ -32,7 +32,7 @@ private CustomerRepository customersRepo;
 	/**
 	 * Constructor of list of customers
 	 */
-	public CustomerRegistry() {
+	public CustomerService() {
 		
 	}
 

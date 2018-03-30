@@ -27,7 +27,7 @@ import bsmanagement.model.jparepositories.ExpenseRepository;
  *
  */
 @Service
-public class ExpenseRegistry {
+public class ExpenseService {
 	
 	@Autowired
 	private ExpenseRepository expRepo;
@@ -35,7 +35,7 @@ public class ExpenseRegistry {
 	/**
 	 * Constructor of list of expenses
 	 */
-	protected ExpenseRegistry() {
+	protected ExpenseService() {
 		
 	}
 

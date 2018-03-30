@@ -1,6 +1,5 @@
 package bsmanagement.model;
 
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ import bsmanagement.model.jparepositories.ReportRepository;
  *
  */
 @Service
-public class ReportRegistry {
+public class ReportService {
 	
 	@Autowired
 	private ReportRepository reportRepo;
@@ -35,7 +34,7 @@ public class ReportRegistry {
 	/**
 	 * Constructor of report registry
 	 */
-	public ReportRegistry() {
+	public ReportService() {
 	
 	}
 
@@ -191,7 +190,8 @@ public class ReportRegistry {
 		
 		String idPreviousMonth = report.getYearMonth().minusMonths(1).toString();
 		YearMonth reportDate = YearMonth.parse(report.getId());
-		if (reportRepo.findOne(idPreviousMonth)!=null)
+
+		if (reportRepo.findById(idPreviousMonth)!=null)
 		{
 			for(Expense exp: reportRepo.findOne(idPreviousMonth).getExpensesList())
 			{

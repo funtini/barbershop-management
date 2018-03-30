@@ -48,7 +48,7 @@ public class Report {
 	private List<Sale> sales;
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "report_id")
-	private List<Expense> expensesList;
+	private List<Expense> expenses;
 	private int businessDays;
 	
 	
@@ -63,7 +63,7 @@ public class Report {
 		this.yearMonth = yearMonth;
 		this.id = yearMonth.toString();
 		this.sales = new ArrayList<>();
-		this.expensesList = new ArrayList<>();
+		this.expenses = new ArrayList<>();
 		this.businessDays = 0;
 	}
 	
@@ -98,7 +98,7 @@ public class Report {
 	 * @return the list of expenses
 	 */
 	public List<Expense> getExpensesList() {
-		return expensesList;
+		return expenses;
 	}
 	
 	/**
@@ -144,18 +144,18 @@ public class Report {
 	 */
 	public boolean addExpense(Expense expense) {
 		YearMonth reportId = YearMonth.parse(id);
-		if (expensesList.contains(expense))
+		if (expenses.contains(expense))
 			return false;
 		if (expense.getType().equals(expenseType.FIXED))
 		{
-			this.expensesList.add(expense);
+			this.expenses.add(expense);
 			return true;
 		}
 		if (expense.getDate().getYear()!=reportId.getYear())
 			return false;
 		if (expense.getDate().getMonthValue()!=reportId.getMonthValue())
 			return false;
-		this.expensesList.add(expense);
+		this.expenses.add(expense);
 		return true;	
 	}
 	
@@ -166,7 +166,7 @@ public class Report {
 	 * 
 	 */
 	public void removeExpense(Expense expense) {
-		expensesList.remove(expense);
+		expenses.remove(expense);
 	}
 
 	
@@ -303,7 +303,7 @@ public class Report {
 	 */
 	@Override
 	public String toString() {
-		return "Report [year=" + yearMonth.getYear() + ", month=" + yearMonth.getMonth().toString() + ", sales=" + sales + ", expenses=" + expensesList + ", businessDays="
+		return "Report [year=" + yearMonth.getYear() + ", month=" + yearMonth.getMonth().toString() + ", sales=" + sales + ", expenses=" + expenses + ", businessDays="
 				+ businessDays + "]";
 	}
 

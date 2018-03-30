@@ -12,7 +12,7 @@ import org.junit.Test;
 import bsmanagement.model.Address;
 import bsmanagement.model.User;
 import bsmanagement.model.User.UserProfile;
-import bsmanagement.model.UserRegistry;
+import bsmanagement.model.UserService;
 import system.dto.UserLoginDTO;
 
 
@@ -26,7 +26,7 @@ import system.dto.UserLoginDTO;
  */
 public class UserRegistryTest {
 	
-	UserRegistry uReg;
+	UserService uReg;
 
 	Address a1;
 	Address a2;
@@ -59,7 +59,7 @@ public class UserRegistryTest {
 	 */
 	@Before
 	public void setUp() {
-		uReg = new UserRegistry();
+		uReg = new UserService();
 		User.setStartIdGenerator(1);
 		Address.setStartIdGenerator(1);
 		a1 = new Address("CASA","RUA DO AMARO","3550-444","VISEU","PORTUGAL");

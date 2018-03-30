@@ -14,15 +14,15 @@ import org.junit.Test;
 
 import bsmanagement.model.Customer;
 import bsmanagement.model.Expense;
-import bsmanagement.model.ExpenseRegistry;
+import bsmanagement.model.ExpenseService;
 import bsmanagement.model.PaymentMethod;
 import bsmanagement.model.Product;
 import bsmanagement.model.Sale;
-import bsmanagement.model.SaleRegistry;
+import bsmanagement.model.SaleService;
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.Product.productType;
 import bsmanagement.model.Report;
-import bsmanagement.model.ReportRegistry;
+import bsmanagement.model.ReportService;
 
 
 
@@ -62,9 +62,9 @@ public class ReportRegistryTest {
 	Sale s3;
 	Sale s4;
 
-	SaleRegistry saleList;
-	ExpenseRegistry expenseList;
-	ReportRegistry reportRegistry;
+	SaleService saleList;
+	ExpenseService expenseList;
+	ReportService reportRegistry;
 	List<Report> expect;
 	/**
 	 * <h2>Setup for all unit tests: </h2>
@@ -88,9 +88,9 @@ public class ReportRegistryTest {
 	@Before
 	public void setUp(){
 		
-		expenseList = new ExpenseRegistry();
-		saleList = new SaleRegistry();
-		reportRegistry = new ReportRegistry();
+		expenseList = new ExpenseService();
+		saleList = new SaleService();
+		reportRegistry = new ReportService();
 		expect = new ArrayList<Report>();
 		Expense.setStartIdGenerator(0);
 		Sale.setStartIdGenerator(0);

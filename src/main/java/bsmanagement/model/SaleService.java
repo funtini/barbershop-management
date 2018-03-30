@@ -26,7 +26,7 @@ import bsmanagement.model.jparepositories.SaleRepository;
  *
  */
 @Service
-public class SaleRegistry {
+public class SaleService {
 	
 	@Autowired
 	private SaleRepository saleRepo;
@@ -36,7 +36,7 @@ public class SaleRegistry {
 	/**
 	 * Constructor of SaleRegistry
 	 */
-	public SaleRegistry() {
+	public SaleService() {
 		availablePaymentMethods = new ArrayList<>();
 	}
 

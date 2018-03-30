@@ -16,11 +16,11 @@ import bsmanagement.model.Expense;
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.Product.productType;
 import bsmanagement.model.Report;
-import bsmanagement.model.ExpenseRegistry;
+import bsmanagement.model.ExpenseService;
 import bsmanagement.model.PaymentMethod;
 import bsmanagement.model.Product;
 import bsmanagement.model.Sale;
-import bsmanagement.model.SaleRegistry;
+import bsmanagement.model.SaleService;
 
 
 
@@ -58,8 +58,8 @@ public class ReportTest {
 	PaymentMethod cash;
 	PaymentMethod card;
 	
-	SaleRegistry saleList;
-	ExpenseRegistry expenseList;
+	SaleService saleList;
+	ExpenseService expenseList;
 
 	
 	Report rep17;
@@ -89,8 +89,8 @@ public class ReportTest {
 	@Before
 	public void setUp() {
 		
-		expenseList = new ExpenseRegistry();
-		saleList = new SaleRegistry();
+		expenseList = new ExpenseService();
+		saleList = new SaleService();
 		Expense.setStartIdGenerator(0);
 		Sale.setStartIdGenerator(0);
 		Product.setStartIdGenerator(0);

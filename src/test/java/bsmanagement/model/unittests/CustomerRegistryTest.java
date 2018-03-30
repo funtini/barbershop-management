@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bsmanagement.model.Customer;
-import bsmanagement.model.CustomerRegistry;
+import bsmanagement.model.CustomerService;
 
 /**
  * 
@@ -30,7 +30,7 @@ public class CustomerRegistryTest {
 	Customer c1;
 	Customer c2;
 	Customer c3;
-	CustomerRegistry cReg;
+	CustomerService cReg;
 	List<Customer> expect;
 
 	/**
@@ -50,7 +50,7 @@ public class CustomerRegistryTest {
 	 */
 	@Before
 	public void setUp(){
-		cReg = new CustomerRegistry();
+		cReg = new CustomerService();
 		
 		bd1=LocalDate.of(1989, 11, 30);
 		bd2=LocalDate.of(1984, 02, 15);

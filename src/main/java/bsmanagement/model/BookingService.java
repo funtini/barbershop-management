@@ -25,7 +25,7 @@ import bsmanagement.model.jparepositories.BookingRepository;
  *
  */
 @Service
-public class BookingRegistry {
+public class BookingService {
 
 	@Autowired
 	private BookingRepository bookRepo;
@@ -33,7 +33,7 @@ public class BookingRegistry {
 	/**
 	 * Constructor of BookingRegistry
 	 */
-	protected BookingRegistry() {
+	protected BookingService() {
 		
 	}
 

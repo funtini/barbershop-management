@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import bsmanagement.model.Product;
 import bsmanagement.model.Product.productType;
-import bsmanagement.model.ProductList;
+import bsmanagement.model.ProductService;
 
 
 /**
@@ -27,7 +27,7 @@ public class ProductListTest {
 	Product p3;
 	Product p4;
 	
-	ProductList pList;
+	ProductService pList;
 	List<Product> expect;
 	List<Product> result;
 	
@@ -53,7 +53,7 @@ public class ProductListTest {
 		p3 = new Product("BARBA",productType.SHAVE,7);
 		p4 = new Product("SHAMPOO MEN",productType.EXTRA,12);
 		
-		pList = new ProductList();
+		pList = new ProductService();
 		expect = new ArrayList<Product>();
 		
 	}

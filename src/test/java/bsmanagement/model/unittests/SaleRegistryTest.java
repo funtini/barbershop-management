@@ -15,7 +15,7 @@ import bsmanagement.model.Customer;
 import bsmanagement.model.PaymentMethod;
 import bsmanagement.model.Product;
 import bsmanagement.model.Sale;
-import bsmanagement.model.SaleRegistry;
+import bsmanagement.model.SaleService;
 import bsmanagement.model.Product.productType;
 
 
@@ -52,7 +52,7 @@ public class SaleRegistryTest {
 	List<Sale> expect;
 	List<Sale> result;
 	List<Sale> emptyList;
-	SaleRegistry saleList;
+	SaleService saleList;
 
 	/**
 	 * <h2>Setup for all unit tests: </h2>
@@ -80,7 +80,7 @@ public class SaleRegistryTest {
 		expect = new ArrayList<Sale>();
 		result = new ArrayList<Sale>();
 		emptyList = new ArrayList<Sale>();
-		saleList = new SaleRegistry();
+		saleList = new SaleService();
 		saleList.getSales().clear();
 		expect.clear();
 		result.clear();

@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bsmanagement.model.Booking;
-import bsmanagement.model.BookingRegistry;
+import bsmanagement.model.BookingService;
 import bsmanagement.model.Customer;
 
 
@@ -40,7 +40,7 @@ public class BookingRegistryTest {
 	Booking b2;
 	Booking b3;
 	
-	BookingRegistry bookReg;
+	BookingService bookReg;
 	List<Booking> expect;
 	List<Booking> result;
 	
@@ -67,7 +67,7 @@ public class BookingRegistryTest {
 	@Before
 	public void setUp(){
 		
-		bookReg = new BookingRegistry();
+		bookReg = new BookingService();
 		expect = new ArrayList<>();
 		result = new ArrayList<>();
 		

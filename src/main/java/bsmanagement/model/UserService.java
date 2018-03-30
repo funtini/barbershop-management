@@ -29,16 +29,18 @@ import system.dto.UserLoginDTO;
  *
  */
 @Service
-public class UserRegistry {
+public class UserService {
 
 	@Autowired
 	private UserRepository userRepo;
 
+	@Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	/**
 	 * Constructor of userRegistry
 	 */
-	public UserRegistry() {
+	public UserService() {
 		
 	}
 

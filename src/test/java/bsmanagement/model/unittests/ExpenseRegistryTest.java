@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bsmanagement.model.Expense;
-import bsmanagement.model.ExpenseRegistry;
+import bsmanagement.model.ExpenseService;
 import bsmanagement.model.Expense.expenseType;
 
 
@@ -37,7 +37,7 @@ public class ExpenseRegistryTest {
 	List<Expense> expect;
 	List<Expense> result;
 	List<Expense> emptyList;
-	ExpenseRegistry expenseList;
+	ExpenseService expenseList;
 
 	
 	/**
@@ -63,7 +63,7 @@ public class ExpenseRegistryTest {
 		expect = new ArrayList<Expense>();
 		result = new ArrayList<Expense>();
 		emptyList = new ArrayList<Expense>();
-		expenseList = new ExpenseRegistry();
+		expenseList = new ExpenseService();
 		expenseList.getExpenses().clear();
 		expect.clear();
 		result.clear();

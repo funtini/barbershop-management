@@ -25,7 +25,7 @@ import bsmanagement.model.jparepositories.ProductRepository;
  *
  */
 @Service
-public class ProductList {
+public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepo;
@@ -33,7 +33,7 @@ public class ProductList {
 	/**
 	 * Constructor of list of products
 	 */
-	public ProductList() {
+	public ProductService() {
 	}
 
 	
