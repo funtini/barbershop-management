@@ -94,7 +94,7 @@ public class ProductService {
 	 */
 	public boolean addProduct(Product product)
 	{
-		if (productRepo.exists(product.getId()))
+		if (productRepo.existsById(product.getId()))
 			return false;
 		productRepo.save(product);
 		return true;
@@ -109,7 +109,7 @@ public class ProductService {
 	 */
 	public boolean removeProduct(Product product)
 	{
-		if (productRepo.exists(product.getId()))
+		if (productRepo.existsById(product.getId()))
 		{
 			product.deactivate();
 			return true;

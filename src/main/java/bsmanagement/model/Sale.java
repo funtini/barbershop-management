@@ -35,7 +35,7 @@ public class Sale implements Comparable<Sale>{
 	
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private LocalDateTime date;
 	@OneToOne(cascade = CascadeType.ALL)

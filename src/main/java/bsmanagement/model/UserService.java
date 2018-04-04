@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import bsmanagement.model.User.UserProfile;
@@ -34,8 +35,8 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepo;
 
-	@Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+//	@Autowired
+//    private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	/**
 	 * Constructor of userRegistry
@@ -52,7 +53,7 @@ public class UserService {
 	
 	public boolean updateUser(User user)
 	{
-		if (userRepo.exists(user.getEmailAddress()) && user.isValid()) {
+		if (userRepo.existsById(user.getEmailAddress()) && user.isValid()) {
             userRepo.save(user);
             return true;
         }
@@ -108,7 +109,7 @@ public class UserService {
 	 */
 	public boolean addUser(User user) {
 
-		if (userRepo.exists(user.getEmailAddress())) {
+		if (userRepo.existsById(user.getEmailAddress())) {
 			return false;
 		}
 

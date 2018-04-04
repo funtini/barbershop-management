@@ -65,7 +65,7 @@ public class ReportService {
 	public boolean addReport(YearMonth yearMonth)
 	{
 		Report rep = new Report(yearMonth);
-		if (!reportRepo.exists(rep.getYearMonth().toString()))
+		if (!reportRepo.existsById(rep.getYearMonth().toString()))
 		{
 			reportRepo.save(rep);
 			loadFixedExpenses(rep);
@@ -191,9 +191,9 @@ public class ReportService {
 		String idPreviousMonth = report.getYearMonth().minusMonths(1).toString();
 		YearMonth reportDate = YearMonth.parse(report.getId());
 
-		if (reportRepo.findById(idPreviousMonth)!=null)
+		if (reportRepo.existsById(idPreviousMonth))
 		{
-			for(Expense exp: reportRepo.findOne(idPreviousMonth).getExpensesList())
+			for(Expense exp: reportRepo.findById(idPreviousMonth).get().getExpensesList())
 			{
 				if(exp.getType().equals(expenseType.FIXED))
 				{

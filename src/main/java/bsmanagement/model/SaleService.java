@@ -126,7 +126,7 @@ public class SaleService {
 	 */
 	public boolean addSale(Sale sale)
 	{
-		if(saleRepo.exists(sale.getId()))
+		if(saleRepo.existsById(sale.getId()))
 			return false;
 		saleRepo.save(sale);
 		return true;

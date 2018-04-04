@@ -52,7 +52,7 @@ private CustomerRepository customersRepo;
 	 * @return true if customer was successfully added, false if customer is already on list
 	 */
 	public boolean addCustomer(Customer customer) {
-		if (customersRepo.exists(customer.getId()))
+		if (customersRepo.existsById(customer.getId()))
 			return false;
 		customersRepo.save(customer);
 		return true;

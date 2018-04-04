@@ -164,7 +164,7 @@ public class Application implements CommandLineRunner{
 		productService.addProduct(p3);
 		productService.addProduct(p4);
 		
-		//Register expenses
+//		//Register expenses
 		repService.addExpense("Internet",expenseType.FIXED,40,LocalDate.now().minusMonths(3),"6 meses de contrato");
 		repService.addExpense("Maquina Barbear",expenseType.ONEOFF,60,LocalDate.now().minusMonths(3),"2 unidades");
 		/*
@@ -366,10 +366,10 @@ public class Application implements CommandLineRunner{
 		repService.addExpense("Shampoos",expenseType.ONEOFF,60,LocalDate.now(),"10 unidades");
 		repService.addExpense("Agua",expenseType.FIXED,35,LocalDate.now());
 		
-		Report r0 = repService.getReport(YearMonth.of(2017, 12));
-		Report r1 = repService.getReport(YearMonth.of(2018, 01));
-		Report r2 = repService.getReport(YearMonth.of(2018, 02));
-		Report r3 = repService.getReport(YearMonth.of(2018, 03));
+		Report r0 = repService.getReport(YearMonth.of(2018, 01));
+		Report r1 = repService.getReport(YearMonth.of(2018, 02));
+		Report r2 = repService.getReport(YearMonth.of(2018, 03));
+		Report r3 = repService.getReport(YearMonth.of(2018, 04));
 		
 		
 		System.out.println(r0.calculateTotalExpensesValue()+" --- "+r0.calculateTotalSalesAmount()+" --- "+r0.calculateRoi());
@@ -393,27 +393,7 @@ public class Application implements CommandLineRunner{
 		/**
 		 * Verificar BusinessDays.. Esta a 0 na base de dados...
 		 */	
-		
-//        authorA.setBooks(bl);
-//
-//        Author authorB = new Author("Bauer","Blabla");
-//		List<Book> bll = new ArrayList<>();
-//        bll.add(new Book("Cristo Rei",authorB));
-//        bll.add(new Book("Paixao Fatal",authorB));
-//        authorB.setBooks(bll);
-//
-//        List<Author> aul = new ArrayList<>();
-//        aul.add(authorA);
-//        aul.add(authorB);
-//        authorRepository.save(aul);
-//
-//        // fetch all categories
-//        log.info("Authors found with findAll():");
-//		log.info("-------------------------------");
-//		for (Author author : authorRepository.findAll()) {
-//			log.info(author.toString());
-//		}
-//		log.info("");
+
     }
 	
 	
