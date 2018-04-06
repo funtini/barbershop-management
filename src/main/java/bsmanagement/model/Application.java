@@ -3,6 +3,7 @@ package bsmanagement.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
+import java.util.Scanner;
 
 import javax.transaction.Transactional;
 
@@ -13,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import bsmanagement.model.Expense.expenseType;
@@ -20,9 +22,7 @@ import bsmanagement.model.Product.productType;
 
 @EntityScan(basePackageClasses = {Application.class, Jsr310JpaConverters.class})
 @SpringBootApplication
-public class Application implements CommandLineRunner{
-	
-	private static final Logger log = LoggerFactory.getLogger(Application.class);
+public class Application{
 	
 	@Autowired
     private UserService userService;
@@ -45,17 +45,25 @@ public class Application implements CommandLineRunner{
 	@Autowired
     private CustomerService customerService;
 
+	private Scanner scan = new Scanner(System.in);
+	
 	public static void main(String[] args) {
 
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(Application.class);
 		
 		
 
 	}
 	
-	@Override
-	@Transactional
-    public void run(String... strings) throws Exception {
+	@Bean
+	public CommandLineRunner demo() {
+		return (String... args) -> {
+
+			// populateXmlUi.populateDatabaseFromXMLFile();
+			populateDB();
+			};
+	}
+    public void populateDB() {
 		
 		
         /**
@@ -386,6 +394,8 @@ public class Application implements CommandLineRunner{
 		System.out.println("/n************************/n"+saleService.getSales().size()+"/n************************/n");
 		System.out.println("/n************************/n"+saleService.getAvailablePaymentMethods()+"/n************************/n");
 		System.out.println("/n************************/n"+expService.getExpenses().size()+"/n************************/n");
+		System.out.println("/n************************/n"+customerService.getCustomers()+"/n************************/n");
+		String choice = scan.nextLine();
 //		System.out.println("/n************************/n"+r1.getExpensesList()+"/n************************/n");
 //		System.out.println("/n************************/n"+r2.getExpensesList()+"/n************************/n");
 //		System.out.println("/n************************/n"+r3.getExpensesList()+"/n************************/n");
