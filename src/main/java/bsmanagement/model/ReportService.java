@@ -118,6 +118,7 @@ public class ReportService {
 			if (rep.addSale(s))
 			{
 				occurence = true;
+				updateReport(rep);
 			}
 		}
 		
@@ -125,7 +126,9 @@ public class ReportService {
 		{
 			newReportAdded = true;
 			this.addReport(saleDate);
-			this.getReport(saleDate).addSale(s);
+			Report newReport = this.getReport(saleDate);
+			newReport.addSale(s);
+			updateReport(newReport);
 		}
 		
 		return newReportAdded;
@@ -155,6 +158,7 @@ public class ReportService {
 			if ((repDate.equals(expDate) && rep.addExpense(e)))
 			{
 				occurence = true ;
+				updateReport(rep);
 			}
 			if (repDate.isAfter(expDate) && e.getType().equals(expenseType.FIXED))
 			{
@@ -162,6 +166,7 @@ public class ReportService {
 				int month = repDate.getMonthValue();	
 				Expense newExp = new Expense(e.getName(), e.getType(), e.getValue(), e.getDate().withYear(year).withMonth(month));
 				rep.addExpense(newExp);
+				updateReport(rep);
 			}
 				
 		}
@@ -170,7 +175,9 @@ public class ReportService {
 		{
 			newReportAdded = true;
 			this.addReport(expDate);
-			this.getReport(expDate).addExpense(e);
+			Report newReport = this.getReport(expDate);
+			newReport.addExpense(e);
+			updateReport(newReport);
 		}
 		
 		return newReportAdded;

@@ -70,6 +70,10 @@ public class Customer {
 		this.name = name;
 	}
 
+	protected Customer() {
+
+	}
+	
 
 	/**
 	 * @return the id of Customer

@@ -5,21 +5,19 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.Scanner;
 
-import javax.transaction.Transactional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.Product.productType;
 
+@ComponentScan({ "bsmanagement", "system" })
 @EntityScan(basePackageClasses = {Application.class, Jsr310JpaConverters.class})
 @SpringBootApplication
 public class Application{
@@ -59,10 +57,12 @@ public class Application{
 	public CommandLineRunner demo() {
 		return (String... args) -> {
 
-			// populateXmlUi.populateDatabaseFromXMLFile();
 			populateDB();
 			};
 	}
+	
+	
+	
     public void populateDB() {
 		
 		
@@ -165,6 +165,7 @@ public class Application{
 		Product p2 = new Product("CORTE SIMPLES",productType.HAIRCUT,10);
 		Product p3 = new Product("BARBA",productType.SHAVE,7);
 		Product p4 = new Product("SHAMPOO MEN",productType.EXTRA,12);
+		
 		PaymentMethod cash = new PaymentMethod("CASH",0,0);
 		
 		productService.addProduct(p1);
@@ -175,6 +176,12 @@ public class Application{
 //		//Register expenses
 		repService.addExpense("Internet",expenseType.FIXED,40,LocalDate.now().minusMonths(3),"6 meses de contrato");
 		repService.addExpense("Maquina Barbear",expenseType.ONEOFF,60,LocalDate.now().minusMonths(3),"2 unidades");
+		
+		
+		
+		
+		
+		
 		/*
 		 * First month sales:
 		 */
@@ -191,7 +198,7 @@ public class Application{
 				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),p2, cash);
 				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c7,p1, cash);
 				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c9,p3, cash);
-				
+	
 				repService.loadSale(s1);
 				repService.loadSale(s2);
 				repService.loadSale(s3);
@@ -199,6 +206,8 @@ public class Application{
 				repService.loadSale(s5);
 				repService.loadSale(s6);
 				repService.loadSale(s7);
+
+				
 			}
 			
 			dayCount++;
@@ -215,6 +224,15 @@ public class Application{
 				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),p2, cash);
 				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c11,p1, cash);
 				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c10,p2, cash);
+				
+				
+				saleService.addSale(s1);
+				saleService.addSale(s2);
+				saleService.addSale(s3);
+				saleService.addSale(s4);
+				saleService.addSale(s5);
+				saleService.addSale(s6);
+				saleService.addSale(s7);
 				
 				repService.loadSale(s1);
 				repService.loadSale(s2);
@@ -245,6 +263,14 @@ public class Application{
 				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c15,p1, cash);
 				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c4,p1, cash);
 				
+				saleService.addSale(s1);
+				saleService.addSale(s2);
+				saleService.addSale(s3);
+				saleService.addSale(s4);
+				saleService.addSale(s5);
+				saleService.addSale(s6);
+				saleService.addSale(s7);
+				
 				repService.loadSale(s1);
 				repService.loadSale(s2);
 				repService.loadSale(s3);
@@ -268,6 +294,14 @@ public class Application{
 				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),p2, cash);
 				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c10,p1, cash);
 				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c9,p2, cash);
+				
+				saleService.addSale(s1);
+				saleService.addSale(s2);
+				saleService.addSale(s3);
+				saleService.addSale(s4);
+				saleService.addSale(s5);
+				saleService.addSale(s6);
+				saleService.addSale(s7);
 				
 				repService.loadSale(s1);
 				repService.loadSale(s2);
@@ -297,6 +331,14 @@ public class Application{
 				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c5,p2, cash);
 				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c4,p3, cash);
 				
+				saleService.addSale(s1);
+				saleService.addSale(s2);
+				saleService.addSale(s3);
+				saleService.addSale(s4);
+				saleService.addSale(s5);
+				saleService.addSale(s6);
+				saleService.addSale(s7);
+				
 				repService.loadSale(s1);
 				repService.loadSale(s2);
 				repService.loadSale(s3);
@@ -320,6 +362,14 @@ public class Application{
 				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),p2, cash);
 				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c15,p1, cash);
 				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c7,p2, cash);
+				
+				saleService.addSale(s1);
+				saleService.addSale(s2);
+				saleService.addSale(s3);
+				saleService.addSale(s4);
+				saleService.addSale(s5);
+				saleService.addSale(s6);
+				saleService.addSale(s7);
 				
 				repService.loadSale(s1);
 				repService.loadSale(s2);
@@ -351,6 +401,14 @@ public class Application{
 				Sale s6 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),p2, cash);
 				Sale s7 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),p1, cash);
 				
+				saleService.addSale(s1);
+				saleService.addSale(s2);
+				saleService.addSale(s3);
+				saleService.addSale(s4);
+				saleService.addSale(s5);
+				saleService.addSale(s6);
+				saleService.addSale(s7);
+				
 				repService.loadSale(s1);
 				repService.loadSale(s2);
 				repService.loadSale(s3);
@@ -362,11 +420,6 @@ public class Application{
 			
 			dayCount++;
 		}
-		
-
-		
-				
-		
 		
 		
 		repService.addExpense("Luz",expenseType.FIXED,30,LocalDate.now().minusMonths(2),"6 meses de contrato");
@@ -392,13 +445,13 @@ public class Application{
 		System.out.println("/n************************/n"+"ROI AVG: "+repService.calculateAvgMonthlyRoi()+"/n************************/n");
 		System.out.println("/n************************/n"+"INCOME AVG: "+repService.calculateAvgMonthlySalesAmount()+"/n************************/n");
 		System.out.println("/n************************/n"+saleService.getSales().size()+"/n************************/n");
-		System.out.println("/n************************/n"+saleService.getAvailablePaymentMethods()+"/n************************/n");
+//		System.out.println("/n************************/n"+paymentMethodService.listAvailablePaymentMethods()+"/n************************/n");
 		System.out.println("/n************************/n"+expService.getExpenses().size()+"/n************************/n");
 		System.out.println("/n************************/n"+customerService.getCustomers()+"/n************************/n");
 		String choice = scan.nextLine();
-//		System.out.println("/n************************/n"+r1.getExpensesList()+"/n************************/n");
-//		System.out.println("/n************************/n"+r2.getExpensesList()+"/n************************/n");
-//		System.out.println("/n************************/n"+r3.getExpensesList()+"/n************************/n");
+		System.out.println("/n************************/n"+r1.getExpensesList()+"/n************************/n");
+		System.out.println("/n************************/n"+r2.getExpensesList()+"/n************************/n");
+		System.out.println("/n************************/n"+r3.getExpensesList()+"/n************************/n");
 
 		/**
 		 * Verificar BusinessDays.. Esta a 0 na base de dados...

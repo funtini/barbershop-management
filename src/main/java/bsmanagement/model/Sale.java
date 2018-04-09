@@ -3,10 +3,16 @@ package bsmanagement.model;
 import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  * 
@@ -38,12 +44,12 @@ public class Sale implements Comparable<Sale>{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private LocalDateTime date;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
 	private Customer customer;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
 	private Product product;
 	private double amount;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
 	private PaymentMethod payment;
 	
 
@@ -126,9 +132,13 @@ public class Sale implements Comparable<Sale>{
 	 * Set the payment method
 	 * 
 	 * @param payment the payment to set
+	 * 
+	 * @return Sale 
 	 */
-	public void payedBy(PaymentMethod payment) {
+	public Sale payedBy(PaymentMethod payment) {
 		this.payment = payment;
+		
+		return this;
 	}
 
 

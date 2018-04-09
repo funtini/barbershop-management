@@ -7,10 +7,15 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Proxy;
 
 import bsmanagement.model.Expense.expenseType;
 
@@ -44,9 +49,11 @@ public class Report {
 	private YearMonth yearMonth;
 
 	@OneToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "report_id")
 	private List<Sale> sales;
 	@OneToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "report_id")
 	private List<Expense> expenses;
 	private int businessDays;

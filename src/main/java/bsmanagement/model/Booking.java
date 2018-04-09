@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 /**
  * 
  * <h1> Booking </h1>
@@ -33,7 +36,7 @@ public class Booking {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private LocalDateTime date;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	private Customer customer;
 	
 	
@@ -52,6 +55,10 @@ public class Booking {
 		this.date = date;
 		this.customer = customer;
 		
+	}
+	
+	protected Booking() {
+
 	}
 	
 	/**
