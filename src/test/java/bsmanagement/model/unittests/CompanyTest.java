@@ -24,7 +24,7 @@ public class CompanyTest {
 	@Test
 	public void testGetBookingRegistry() {
 		company = Company.getTheInstance();
-		BookingService expect = company.getBookingRegistry();
+		BookingService expect = company.getBookingCustomerService();
 		assertEquals(expect.getBookings().isEmpty(),true);
 		
 	}
@@ -32,7 +32,7 @@ public class CompanyTest {
 	@Test
 	public void testGetCustomerRegistry() {
 		company = Company.getTheInstance();
-		ReportService expect = company.getReportRegistry();
+		ReportService expect = company.getReportService();
 		assertEquals(expect.getReports().isEmpty(),true);
 	}
 
@@ -40,13 +40,13 @@ public class CompanyTest {
 	public void testGetReportRegistry() {
 		company = Company.getTheInstance();
 		CustomerService expect = company.getCustomerRegistry();
-		assertEquals(expect.getCustomers().isEmpty(),true);
+		assertEquals(expect.getAllCustomers().isEmpty(),true);
 	}
 	
 	@Test
 	public void testGetUserRegistry() {
 		company = Company.getTheInstance();
-		UserService expect = company.getUserRegistry();
+		UserService expect = company.getUserService();
 		assertEquals(expect.getUsersList().isEmpty(),true);
 	}
 

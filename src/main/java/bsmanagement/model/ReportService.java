@@ -52,7 +52,11 @@ public class ReportService {
 	public List<Report> getReports() {
 		List<Report> reportList = new ArrayList<>();
 		for (Report r : reportRepo.findAll())
+		{
+			r.setYearMonth(YearMonth.parse(r.getId()));
 			reportList.add(r);
+		}
+			
 		return reportList;
 	}
 	

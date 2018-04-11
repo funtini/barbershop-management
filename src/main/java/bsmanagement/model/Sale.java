@@ -14,6 +14,8 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * 
  * <h1> Sale </h1>
@@ -37,6 +39,7 @@ import org.hibernate.annotations.LazyCollectionOption;
  *
  */
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Sale implements Comparable<Sale>{
 	
 
@@ -44,12 +47,12 @@ public class Sale implements Comparable<Sale>{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private LocalDateTime date;
-	@OneToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
 	private Customer customer;
-	@OneToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
 	private Product product;
 	private double amount;
-	@OneToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
 	private PaymentMethod payment;
 	
 

@@ -38,19 +38,13 @@ public class Application{
     private ExpenseService expService;
 	
 	@Autowired
-    private BookingService bookingService;
-	
-	@Autowired
-    private CustomerService customerService;
+    private BookingCustomerService bookingCustomerService;
 
 	private Scanner scan = new Scanner(System.in);
 	
 	public static void main(String[] args) {
 
 		SpringApplication.run(Application.class);
-		
-		
-
 	}
 	
 	@Bean
@@ -101,64 +95,64 @@ public class Application{
 		userService.updateUser(u3);
 		
 		//Register Customers
-		Customer c1 = customerService.createCustomer("LUIS CARLOS");
-		Customer c2 = customerService.createCustomer("ANA",LocalDate.of(1985, 5, 12),"Porto","966677722");
-		Customer c3 = customerService.createCustomer("JOAO GOMES",LocalDate.of(1989, 11, 30),"Mangualde","914047935");
-		Customer c4 = customerService.createCustomer("JOAO SANTOS",LocalDate.of(1990, 12, 5),"Mangualde","912314875");
-		Customer c5 = customerService.createCustomer("IVO CANELAS",LocalDate.of(1988, 4, 1),"Mangualde","961117922");
-		Customer c6 = customerService.createCustomer("FILIPE PEREIRA",LocalDate.of(1988, 5, 4),"Mangualde","916553422");
-		Customer c7 = customerService.createCustomer("JOAO PEREIRA",LocalDate.of(1992, 11, 22),"Mangualde","964144411");
-		Customer c8 = customerService.createCustomer("PEDRO MARTINS",LocalDate.of(1985, 11, 22),"Nelas","916217930");
-		Customer c9 = customerService.createCustomer("RICARDO TEXUGO",LocalDate.of(1988, 11, 22),"Vila Ruiva","917017932");
-		Customer c10 = customerService.createCustomer("LEONARDO",LocalDate.of(1992, 4, 2),"Viseu","918767912");
-		Customer c11 = customerService.createCustomer("VITOR HUGO",LocalDate.of(1989, 5, 21),"Mangualde","963232222");
-		Customer c12 = customerService.createCustomer("ROGERIO ALVES",LocalDate.of(1969, 5, 13),"Mangualde","963336651");
-		Customer c13 = customerService.createCustomer("ANTONIO PEDRO");
-		Customer c14 = customerService.createCustomer("RUBEN DIAS");
-		Customer c15 = customerService.createCustomer("CARLOS MIGUEL",LocalDate.of(1977, 10, 15),"Nelas","962216651");
+		Customer c1 = bookingCustomerService.createCustomer("LUIS CARLOS");
+		Customer c2 = bookingCustomerService.createCustomer("ANA",LocalDate.of(1985, 5, 12),"Porto","966677722");
+		Customer c3 = bookingCustomerService.createCustomer("JOAO GOMES",LocalDate.of(1989, 11, 30),"Mangualde","914047935");
+		Customer c4 = bookingCustomerService.createCustomer("JOAO SANTOS",LocalDate.of(1990, 12, 5),"Mangualde","912314875");
+		Customer c5 = bookingCustomerService.createCustomer("IVO CANELAS",LocalDate.of(1988, 4, 1),"Mangualde","961117922");
+		Customer c6 = bookingCustomerService.createCustomer("FILIPE PEREIRA",LocalDate.of(1988, 5, 4),"Mangualde","916553422");
+		Customer c7 = bookingCustomerService.createCustomer("JOAO PEREIRA",LocalDate.of(1992, 11, 22),"Mangualde","964144411");
+		Customer c8 = bookingCustomerService.createCustomer("PEDRO MARTINS",LocalDate.of(1985, 11, 22),"Nelas","916217930");
+		Customer c9 = bookingCustomerService.createCustomer("RICARDO TEXUGO",LocalDate.of(1988, 11, 22),"Vila Ruiva","917017932");
+		Customer c10 = bookingCustomerService.createCustomer("LEONARDO",LocalDate.of(1992, 4, 2),"Viseu","918767912");
+		Customer c11 = bookingCustomerService.createCustomer("VITOR HUGO",LocalDate.of(1989, 5, 21),"Mangualde","963232222");
+		Customer c12 = bookingCustomerService.createCustomer("ROGERIO ALVES",LocalDate.of(1969, 5, 13),"Mangualde","963336651");
+		Customer c13 = bookingCustomerService.createCustomer("ANTONIO PEDRO");
+		Customer c14 = bookingCustomerService.createCustomer("RUBEN DIAS");
+		Customer c15 = bookingCustomerService.createCustomer("CARLOS MIGUEL",LocalDate.of(1977, 10, 15),"Nelas","962216651");
 		
-		customerService.addCustomer(c1);
-		customerService.addCustomer(c2);
-		customerService.addCustomer(c3);
-		customerService.addCustomer(c4);
-		customerService.addCustomer(c5);
-		customerService.addCustomer(c6);
-		customerService.addCustomer(c7);
-		customerService.addCustomer(c8);
-		customerService.addCustomer(c9);
-		customerService.addCustomer(c10);
-		customerService.addCustomer(c11);
-		customerService.addCustomer(c12);
-		customerService.addCustomer(c13);
-		customerService.addCustomer(c14);
-		customerService.addCustomer(c15);
+		bookingCustomerService.addCustomer(c1);
+		bookingCustomerService.addCustomer(c2);
+		bookingCustomerService.addCustomer(c3);
+		bookingCustomerService.addCustomer(c4);
+		bookingCustomerService.addCustomer(c5);
+		bookingCustomerService.addCustomer(c6);
+		bookingCustomerService.addCustomer(c7);
+		bookingCustomerService.addCustomer(c8);
+		bookingCustomerService.addCustomer(c9);
+		bookingCustomerService.addCustomer(c10);
+		bookingCustomerService.addCustomer(c11);
+		bookingCustomerService.addCustomer(c12);
+		bookingCustomerService.addCustomer(c13);
+		bookingCustomerService.addCustomer(c14);
+		bookingCustomerService.addCustomer(c15);
 		
 		//Register Bookings
-		Booking b1 = bookingService.createBooking(LocalDateTime.now().plusDays(1).withHour(9), c1);
-		Booking b2 = bookingService.createBooking(LocalDateTime.now().plusDays(1).withHour(10), c2);
-		Booking b3 = bookingService.createBooking(LocalDateTime.now().plusDays(1).withHour(11), c3);
-		Booking b4 = bookingService.createBooking(LocalDateTime.now().plusDays(1).withHour(13).withMinute(30), c4);
-		Booking b5 = bookingService.createBooking(LocalDateTime.now().plusDays(1).withHour(14).withMinute(30), c5);
-		Booking b6 = bookingService.createBooking(LocalDateTime.now().plusDays(1).withHour(16), c6);
-		Booking b7 = bookingService.createBooking(LocalDateTime.now().plusDays(2).withHour(10), c12);
-		Booking b8 = bookingService.createBooking(LocalDateTime.now().plusDays(1).withHour(17), c7);
-		Booking b9 = bookingService.createBooking(LocalDateTime.now().plusDays(2).withHour(11).withMinute(30), c11);
-		Booking b10 = bookingService.createBooking(LocalDateTime.now().plusDays(1).withHour(18), c8);
-		Booking b11 = bookingService.createBooking(LocalDateTime.now().plusDays(2).withHour(14), c9);
-		Booking b12 = bookingService.createBooking(LocalDateTime.now().plusDays(2).withHour(16).withMinute(30), c10);
+		Booking b1 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(9), c1);
+		Booking b2 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(10), c2);
+		Booking b3 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(11), c3);
+		Booking b4 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(13).withMinute(30), c4);
+		Booking b5 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(14).withMinute(30), c5);
+		Booking b6 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(16), c6);
+		Booking b7 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(2).withHour(10), c12);
+		Booking b8 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(17), c7);
+		Booking b9 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(2).withHour(11).withMinute(30), c11);
+		Booking b10 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(18), c8);
+		Booking b11 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(2).withHour(14), c9);
+		Booking b12 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(2).withHour(16).withMinute(30), c10);
 		
-		bookingService.addBooking(b1);
-		bookingService.addBooking(b2);
-		bookingService.addBooking(b3);
-		bookingService.addBooking(b4);
-		bookingService.addBooking(b5);
-		bookingService.addBooking(b6);
-		bookingService.addBooking(b7);
-		bookingService.addBooking(b8);
-		bookingService.addBooking(b9);
-		bookingService.addBooking(b10);
-		bookingService.addBooking(b11);
-		bookingService.addBooking(b12);
+		bookingCustomerService.addBooking(b1);
+		bookingCustomerService.addBooking(b2);
+		bookingCustomerService.addBooking(b3);
+		bookingCustomerService.addBooking(b4);
+		bookingCustomerService.addBooking(b5);
+		bookingCustomerService.addBooking(b6);
+		bookingCustomerService.addBooking(b7);
+		bookingCustomerService.addBooking(b8);
+		bookingCustomerService.addBooking(b9);
+		bookingCustomerService.addBooking(b10);
+		bookingCustomerService.addBooking(b11);
+		bookingCustomerService.addBooking(b12);
 		
 		//Register Products to sell
 		Product p1 = new Product("CORTE COM LAVAGEM",productType.HAIRCUT,15);
@@ -447,7 +441,7 @@ public class Application{
 		System.out.println("/n************************/n"+saleService.getSales().size()+"/n************************/n");
 //		System.out.println("/n************************/n"+paymentMethodService.listAvailablePaymentMethods()+"/n************************/n");
 		System.out.println("/n************************/n"+expService.getExpenses().size()+"/n************************/n");
-		System.out.println("/n************************/n"+customerService.getCustomers()+"/n************************/n");
+		System.out.println("/n************************/n"+bookingCustomerService.getAllCustomers()+"/n************************/n");
 		String choice = scan.nextLine();
 		System.out.println("/n************************/n"+r1.getExpensesList()+"/n************************/n");
 		System.out.println("/n************************/n"+r2.getExpensesList()+"/n************************/n");

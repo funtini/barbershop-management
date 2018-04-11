@@ -17,6 +17,9 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Proxy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import bsmanagement.model.Expense.expenseType;
 
 
@@ -46,6 +49,7 @@ public class Report {
 	@Id
 	private String id;
 	@Transient
+	@JsonIgnore
 	private YearMonth yearMonth;
 
 	@OneToMany(cascade = CascadeType.ALL)

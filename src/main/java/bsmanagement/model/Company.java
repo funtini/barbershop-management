@@ -21,11 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class Company {
 	
 	
-	private BookingService bookingRegistry;
-	private CustomerService customerRegistry;
-	private ReportService reportRegistry;
+	private BookingCustomerService bookingCustomerService;
+	private ReportService reportService;
 	@Autowired
-	private UserService userRegistry;
+	private UserService userService;
 	
 	static Company theInstance;
 	
@@ -33,10 +32,9 @@ public class Company {
 	 * Constructor for Company. Instantiates UserRegistry and ProjectRegistry.
 	 */
 	private Company() {
-		bookingRegistry = new BookingService();
-		customerRegistry = new CustomerService();
-		reportRegistry = new ReportService();
-		userRegistry = new UserService();
+		bookingCustomerService = new BookingCustomerService();
+		reportService = new ReportService();
+		userService = new UserService();
 	}
 	
 	
@@ -54,22 +52,12 @@ public class Company {
 
 
 	/**
-	 * Get the Booking Registry
+	 * Get the BookingCustomerService
 	 * 
-	 * @return the bookingRegistry
+	 * @return the bookingCustomerService
 	 */
-	public BookingService getBookingRegistry() {
-		return bookingRegistry;
-	}
-
-
-	/**
-	 * Get the Customer Registry
-	 * 
-	 * @return the customerRegistry
-	 */
-	public CustomerService getCustomerRegistry() {
-		return customerRegistry;
+	public BookingCustomerService getBookingCustomerService() {
+		return bookingCustomerService;
 	}
 
 
@@ -78,8 +66,8 @@ public class Company {
 	 * 
 	 * @return the reportRegistry
 	 */
-	public ReportService getReportRegistry() {
-		return reportRegistry;
+	public ReportService getReportService() {
+		return reportService;
 	}
 	
 	/**
@@ -87,8 +75,8 @@ public class Company {
 	 * 
 	 * @return the userRegistry
 	 */
-	public UserService getUserRegistry() {
-		return userRegistry;
+	public UserService getUserService() {
+		return userService;
 	}
 
 

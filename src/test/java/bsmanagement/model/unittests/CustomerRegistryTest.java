@@ -71,12 +71,12 @@ public class CustomerRegistryTest {
 	@Test
 	public void testGetCustomerList() {
 		//Given: empty list
-		assertEquals(cReg.getCustomers().isEmpty(),true);
+		assertEquals(cReg.getAllCustomers().isEmpty(),true);
 		//When: add customer
-		cReg.getCustomers().add(c1);
+		cReg.getAllCustomers().add(c1);
 		expect.add(c1);
 		//Then: get that customer
-		assertEquals(expect,cReg.getCustomers());
+		assertEquals(expect,cReg.getAllCustomers());
 		
 	}
 
@@ -87,14 +87,14 @@ public class CustomerRegistryTest {
 	@Test
 	public void testSetCustomerList() {
 		//Given: empty list
-		assertEquals(cReg.getCustomers().isEmpty(),true);
+		assertEquals(cReg.getAllCustomers().isEmpty(),true);
 		//When: add customer
 		expect.add(c1);
 		expect.add(c2);
 		cReg.setCustomers(expect);
 		
 		//Then: get that customer
-		assertEquals(expect,cReg.getCustomers());		
+		assertEquals(expect,cReg.getAllCustomers());		
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class CustomerRegistryTest {
 	@Test
 	public void testAddCustomer() {
 		//Given: empty list
-		assertEquals(cReg.getCustomers().isEmpty(),true);
+		assertEquals(cReg.getAllCustomers().isEmpty(),true);
 		//When: add 3 customer
 		assertEquals(cReg.addCustomer(c1),true);
 		assertEquals(cReg.addCustomer(c2),true);
