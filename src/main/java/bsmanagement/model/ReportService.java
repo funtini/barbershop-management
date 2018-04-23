@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import bsmanagement.jparepositories.classtests.ReportRepositoryClass;
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.jparepositories.ReportRepository;
 
@@ -95,12 +96,13 @@ public class ReportService {
 //	 */
 //	public boolean addSale(LocalDateTime date,Customer customer, Product product, PaymentMethod payment)
 //	{
-//		Sale s = saleRegistry.createSale(date,customer,product, payment);
+//	
+//		Sale s = saleService.createSale(date,customer,product, payment);
 //		saleRegistry.addSale(s);
 //		
 //		return loadSale(s);
 //	}
-	
+//	
 	
 	/**
 	 * Method to load a sale to report list
@@ -122,6 +124,7 @@ public class ReportService {
 			if (rep.addSale(s))
 			{
 				occurence = true;
+				rep.updateBusinessDays();
 				updateReport(rep);
 			}
 		}
@@ -132,6 +135,7 @@ public class ReportService {
 			this.addReport(saleDate);
 			Report newReport = this.getReport(saleDate);
 			newReport.addSale(s);
+			newReport.updateBusinessDays();
 			updateReport(newReport);
 		}
 		
@@ -398,6 +402,11 @@ public class ReportService {
 			}
 			
 		return (sum/count);
+	}
+
+
+	public void setRepository(ReportRepository reportRepository) {
+		this.reportRepo = reportRepository;	
 	}
 	
 	

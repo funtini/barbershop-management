@@ -276,7 +276,7 @@ public class ExpenseService {
 		return sum;
 	}
 
-	public void setRepository(ExpenseRepositoryClass expenseRepository) {
+	public void setRepository(ExpenseRepository expenseRepository) {
 		this.expRepo = expenseRepository;
 		
 	}

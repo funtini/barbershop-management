@@ -285,7 +285,7 @@ public class SaleService {
 		return listSale;
 	}
 
-	public void setRepository(SaleRepositoryClass saleRepository) {
+	public void setRepository(SaleRepository saleRepository) {
 		this.saleRepo = saleRepository;
 	}
 	

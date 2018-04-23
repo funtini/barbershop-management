@@ -142,7 +142,7 @@ public class Report {
 		if (sale.getDate().getMonthValue()!=reportId.getMonthValue())
 			return false;
 		this.sales.add(sale);
-		updateBusinessDays();
+//		updateBusinessDays();
 		return true;
 	}
 	
