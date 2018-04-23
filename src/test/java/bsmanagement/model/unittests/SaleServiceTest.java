@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import bsmanagement.jparepositories.classtests.SaleRepositoryClass;
 import bsmanagement.model.Customer;
 import bsmanagement.model.PaymentMethod;
 import bsmanagement.model.Product;
@@ -21,12 +22,12 @@ import bsmanagement.model.Product.productType;
 
 /**
  * 
- * Unit tests for SaleList Class methods
+ * Unit tests for Sale Service Class methods
  * 
  * @author JOAO GOMES
  *
  */
-public class SaleRegistryTest {
+public class SaleServiceTest {
 	
 	Customer c1;
 	Customer c2;
@@ -52,7 +53,8 @@ public class SaleRegistryTest {
 	List<Sale> expect;
 	List<Sale> result;
 	List<Sale> emptyList;
-	SaleService saleList;
+	SaleService saleService;
+	SaleRepositoryClass saleRepository;
 
 	/**
 	 * <h2>Setup for all unit tests: </h2>
@@ -80,8 +82,10 @@ public class SaleRegistryTest {
 		expect = new ArrayList<Sale>();
 		result = new ArrayList<Sale>();
 		emptyList = new ArrayList<Sale>();
-		saleList = new SaleService();
-		saleList.getSales().clear();
+		saleService = new SaleService();
+		saleRepository = new SaleRepositoryClass();
+		saleService.setRepository(saleRepository);
+		saleService.getSales().clear();
 		expect.clear();
 		result.clear();
 		
@@ -112,24 +116,26 @@ public class SaleRegistryTest {
 	}
 
 	/**
-	 * <h2>getSaleList() and setSaleList method test</h2>
+	 * <h2>setRepository() method test</h2>
 	 */
 	@Test 
-	public void testGetnSetSaleList() {
+	public void testSetRepository() {
 		
-		//Given: empty list's
-		assertEquals(saleList.getSales(),emptyList);
-		assertEquals(emptyList,expect);
-	
-		//When: set a list with 3 sales
+		//Given: empty service, and a repository with 3 products
+		assertEquals(saleService.getSales().isEmpty(),true);
+		SaleRepositoryClass saleRepoTest = new SaleRepositoryClass();
+		saleRepoTest.save(s1);
+		saleRepoTest.save(s2);
+		saleRepoTest.save(s3);
+		
+		//When: set repository to service
 		expect.add(s1);
 		expect.add(s2);
 		expect.add(s3);
-		saleList.setSales(expect);
-		//Then: get a list with that 3 sales
-		result = saleList.getSales();
-		assertEquals(result,expect);
-		assertEquals(expect.equals(emptyList),false);
+		saleService.setRepository(saleRepoTest);
+		//Then: service has 3 products
+		result = saleService.getSales();
+		assertEquals(result,expect);				
 	}
 	
 	/**
@@ -139,21 +145,21 @@ public class SaleRegistryTest {
 	public void testAddSale() {
 		
 		//Given: empty list's
-		assertEquals(saleList.getSales(),emptyList);
+		assertEquals(saleService.getSales(),emptyList);
 		assertEquals(emptyList,expect);
 	
 		//When: add 3 sales (first one is added 2 times - "saleTest" - to verify the false result)
 		Sale.setStartIdGenerator(1);
-		Sale saleTest = saleList.createSale(d1,c1,p1,cash);
-		assertEquals(saleList.addSale(saleTest),true);
-		assertEquals(saleList.addSale(saleTest),false); //already added this sale - false
-		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d3,p1,cash)),true);
+		Sale saleTest = saleService.createSale(d1,c1,p1,cash);
+		assertEquals(saleService.addSale(saleTest),true);
+		assertEquals(saleService.addSale(saleTest),false); //already added this sale - false
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
 		expect.add(s1);
 		expect.add(s2);
 		expect.add(s3);
 		//Then: get a list with that 3 sales
-		result = saleList.getSales();
+		result = saleService.getSales();
 		assertEquals(result,expect);
 	}
 	
@@ -164,17 +170,17 @@ public class SaleRegistryTest {
 	public void testFindSaleOf() {
 		
 		//Given: saleList with 4 sales (3 of March/2018 and 1 of February/2017)
-		assertEquals(saleList.getSales(),emptyList);
+		assertEquals(saleService.getSales(),emptyList);
 		assertEquals(emptyList,expect);
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d3,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,p1,cash)),true);
 	
 		//When: find sales of March/2018
-		result = saleList.findSalesOf(YearMonth.of(2018, 3));
+		result = saleService.findSalesOf(YearMonth.of(2018, 3));
 		expect.add(s1);
 		expect.add(s2);
 		expect.add(s3);
@@ -190,17 +196,17 @@ public class SaleRegistryTest {
 	public void testFindSaleByCustomer() {
 		
 		//Given: saleList with 4 sales (2 of Customer (c1), 1 of Customer (c2) and other with no customer)
-		assertEquals(saleList.getSales(),emptyList);
+		assertEquals(saleService.getSales(),emptyList);
 		assertEquals(emptyList,expect);
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d3,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4,c1,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,cash)),true);
 	
 		//When: find sales of Customer c1
-		result = saleList.findSalesByCustomer(c1);
+		result = saleService.findSalesByCustomer(c1);
 		
 		//Then: get a list of 2 sales
 		expect.add(s1);
@@ -215,17 +221,17 @@ public class SaleRegistryTest {
 	public void testSumAllAmounts() {
 		
 		//Given: saleList with 4 sales (2 of Customer (c1), 1 of Customer (c2) and other with no customer)
-		assertEquals(saleList.getSales(),emptyList);
+		assertEquals(saleService.getSales(),emptyList);
 		assertEquals(emptyList,expect);
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d3,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4,c1,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,cash)),true);
 	
 		//When: get the sum of all sales amounts
-		double sumResult = saleList.sumAllAmounts();
+		double sumResult = saleService.sumAllAmounts();
 		//Then: get a result of 50 euros
 		double sumExpect = 50;
 		assertEquals(sumResult,sumExpect,0.0);
@@ -238,15 +244,15 @@ public class SaleRegistryTest {
 	public void testFindSaleById() {
 		
 		//Given: saleList with 2 sales
-		assertEquals(saleList.getSales(),emptyList);
+		assertEquals(saleService.getSales(),emptyList);
 		assertEquals(emptyList,expect);
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
 		//When: find sales by ID
-		Sale res = saleList.findSaleById(2);
-		Sale res2 = saleList.findSaleById(1);
+		Sale res = saleService.findSaleById(2);
+		Sale res2 = saleService.findSaleById(1);
 		//Then: get the expected sales
 		
 		assertEquals(res,s2);
@@ -262,15 +268,15 @@ public class SaleRegistryTest {
 	public void testFindSaleByIdNullCase() {
 		
 		//Given: saleList with 2 sales
-		assertEquals(saleList.getSales(),emptyList); //check empty saleList
+		assertEquals(saleService.getSales(),emptyList); //check empty saleList
 		assertEquals(emptyList,expect);					//check empty test lists
 		Sale.setStartIdGenerator(1);		
-		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
 		
 		
 		//When: find sales by ID
-		Sale res = saleList.findSaleById(20);
+		Sale res = saleService.findSaleById(20);
 		//Then: get the expected sales
 		
 		assertEquals(res,null);
@@ -283,16 +289,16 @@ public class SaleRegistryTest {
 	public void testFindSaleBetweenDates() {
 		
 		//Given: saleList with 4 sales
-		assertEquals(saleList.getSales(),emptyList);	//check empty saleList
+		assertEquals(saleService.getSales(),emptyList);	//check empty saleList
 		assertEquals(emptyList,expect);					//check empty test lists
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d3,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4,c1,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,cash)),true);
 		//When: find sales between dates
-		result = saleList.findSalesBetweenDates(LocalDate.of(2017, 2, 1), LocalDate.of(2018, 3, 11));
+		result = saleService.findSalesBetweenDates(LocalDate.of(2017, 2, 1), LocalDate.of(2018, 3, 11));
 		expect.add(s1);
 		expect.add(s4);
 		//Then: get the expected sales
@@ -308,16 +314,16 @@ public class SaleRegistryTest {
 	public void testFindSaleBetweenDatesInvalidDates() {
 		
 		//Given: saleList with 4 sales
-		assertEquals(saleList.getSales(),emptyList);	//check empty saleList
+		assertEquals(saleService.getSales(),emptyList);	//check empty saleList
 		assertEquals(emptyList,expect);					//check empty test lists
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d3,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4,c1,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,cash)),true);
 		//When: find sales between invalid dates
-		result = saleList.findSalesBetweenDates(LocalDate.of(2019, 2, 1), LocalDate.of(2017, 3, 11));
+		result = saleService.findSalesBetweenDates(LocalDate.of(2019, 2, 1), LocalDate.of(2017, 3, 11));
 		//Then: get an empty List
 		assertEquals(result,expect);
 	}
@@ -330,20 +336,20 @@ public class SaleRegistryTest {
 	public void testCalculateTotalFeeAmounts() {
 		
 		//Given: saleList with 6 sales (5 payed by creditcard, 1 payed by cash)
-		assertEquals(saleList.getSales(),emptyList);
+		assertEquals(saleService.getSales(),emptyList);
 		assertEquals(emptyList,expect);
 		PaymentMethod card = new PaymentMethod("CREDIT CARD",2.0,0.55);
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1,card)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2,card)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d3,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4,c1,p2,card)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4.plusDays(5),c1,p2,card)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4.plusDays(10),c1,p2,card)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,card)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,card)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,card)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(5),c1,p2,card)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(10),c1,p2,card)),true);
 	
 		//When: get the sum of all Fee amounts
-		double sumResult = saleList.calculateTotalFeeAmount();
+		double sumResult = saleService.calculateTotalFeeAmount();
 		//Then: get a total fee amount of 2.75 euros
 		double sumExpect = 2.75;
 		assertEquals(sumResult,sumExpect,0.0);
@@ -358,26 +364,26 @@ public class SaleRegistryTest {
 		List<Sale> creditSales = new ArrayList<>();
 		List<Sale> expectSales = new ArrayList<>();
 		//Given: saleList with 6 sales (5 payed by creditcard, 1 payed by cash)
-		assertEquals(saleList.getSales(),emptyList);
+		assertEquals(saleService.getSales(),emptyList);
 		assertEquals(emptyList,expect);
 		PaymentMethod creditCard = new PaymentMethod("CREDIT CARD",2.0,0.55);
 		
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1,creditCard)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2,creditCard)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d3,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4,c1,p2,creditCard)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4.plusDays(5),c1,p2,creditCard)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4.plusDays(10),c1,p2,creditCard)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,creditCard)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,creditCard)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,creditCard)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(5),c1,p2,creditCard)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(10),c1,p2,creditCard)),true);
 	
 		//When: find all sales payed by credit
-		creditSales = saleList.findSalesPayedBy(creditCard);
-		expectSales.add(saleList.getSales().get(0));
-		expectSales.add(saleList.getSales().get(1));
-		expectSales.add(saleList.getSales().get(3));
-		expectSales.add(saleList.getSales().get(4));
-		expectSales.add(saleList.getSales().get(5));
+		creditSales = saleService.findSalesPayedBy(creditCard);
+		expectSales.add(saleService.getSales().get(0));
+		expectSales.add(saleService.getSales().get(1));
+		expectSales.add(saleService.getSales().get(3));
+		expectSales.add(saleService.getSales().get(4));
+		expectSales.add(saleService.getSales().get(5));
 		//Then: get a list of sales payed by credit card
 		
 		assertEquals(creditSales,expectSales);
@@ -390,21 +396,21 @@ public class SaleRegistryTest {
 	@Test 
 	public void testSumAmountsPayedBy() {
 		//Given: saleList with 6 sales (5 payed by creditcard, 1 payed by cash)
-		assertEquals(saleList.getSales(),emptyList);
+		assertEquals(saleService.getSales(),emptyList);
 		assertEquals(emptyList,expect);
 		PaymentMethod creditCard = new PaymentMethod("CREDIT CARD",2.0,0.55);
 		
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleList.addSale(saleList.createSale(d1,c1,p1,creditCard)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d2,c2,p2,creditCard)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d3,p1,cash)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4,c1,p2,creditCard)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4.plusDays(5),c1,p2,creditCard)),true);
-		assertEquals(saleList.addSale(saleList.createSale(d4.plusDays(10),c1,p2,creditCard)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,creditCard)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,creditCard)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,creditCard)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(5),c1,p2,creditCard)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(10),c1,p2,creditCard)),true);
 	
 		//When: summ all sale's amounts payed by credit
-		double creditSales = saleList.sumAllAmountsPayedBy(creditCard);
+		double creditSales = saleService.sumAllAmountsPayedBy(creditCard);
 		double expected = 55;
 		
 		//Then: get a total amount of 55 euros
@@ -418,14 +424,14 @@ public class SaleRegistryTest {
 	@Test 
 	public void testGetAvailabePaymentMethods() {
 		//Given: saleList with 2 available payment methods (cash and card)
-		PaymentMethod p1 = saleList.createPaymentMethod("CASH",0.0,0.0);
-		PaymentMethod p2 = saleList.createPaymentMethod("CREDIT CARD",2.0,0.55);
-		saleList.addPaymentMethod(p1);
-		saleList.addPaymentMethod(p2);
+		PaymentMethod p1 = saleService.createPaymentMethod("CASH",0.0,0.0);
+		PaymentMethod p2 = saleService.createPaymentMethod("CREDIT CARD",2.0,0.55);
+		saleService.addPaymentMethod(p1);
+		saleService.addPaymentMethod(p2);
 		
 	
 		//When: get available payment methods
-		List<PaymentMethod> payments = saleList.getAvailablePaymentMethods();
+		List<PaymentMethod> payments = saleService.getAvailablePaymentMethods();
 		List<PaymentMethod> expected = new ArrayList<>();
 		expected.add(cash);
 		expected.add(new PaymentMethod("CREDIT CARD",2.0,0.55));
@@ -441,22 +447,22 @@ public class SaleRegistryTest {
 	@Test 
 	public void testAddPaymentMethods() {
 		//Given: create 5  payment methods (cash, card, sameName, emptyName and nullName)
-		PaymentMethod p1 = saleList.createPaymentMethod("CASH",0.0,0.0);
-		PaymentMethod p2 = saleList.createPaymentMethod("CREDIT CARD",2.0,0.55);
-		PaymentMethod sameName = saleList.createPaymentMethod("CREDIT CARD",0,0);
-		PaymentMethod emptyName = saleList.createPaymentMethod("",0,0);
-		PaymentMethod nullName = saleList.createPaymentMethod(null,0,0);
+		PaymentMethod p1 = saleService.createPaymentMethod("CASH",0.0,0.0);
+		PaymentMethod p2 = saleService.createPaymentMethod("CREDIT CARD",2.0,0.55);
+		PaymentMethod sameName = saleService.createPaymentMethod("CREDIT CARD",0,0);
+		PaymentMethod emptyName = saleService.createPaymentMethod("",0,0);
+		PaymentMethod nullName = saleService.createPaymentMethod(null,0,0);
 		
 		//When:add all this payment methods
 		
-		assertEquals(saleList.addPaymentMethod(p1),true);
-		assertEquals(saleList.addPaymentMethod(p1),false);
-		assertEquals(saleList.addPaymentMethod(p2),true);
-		assertEquals(saleList.addPaymentMethod(sameName),false);
-		assertEquals(saleList.addPaymentMethod(emptyName),false);
-		assertEquals(saleList.addPaymentMethod(nullName),false);
+		assertEquals(saleService.addPaymentMethod(p1),true);
+		assertEquals(saleService.addPaymentMethod(p1),false);
+		assertEquals(saleService.addPaymentMethod(p2),true);
+		assertEquals(saleService.addPaymentMethod(sameName),false);
+		assertEquals(saleService.addPaymentMethod(emptyName),false);
+		assertEquals(saleService.addPaymentMethod(nullName),false);
 		
-		List<PaymentMethod> payments = saleList.getAvailablePaymentMethods();
+		List<PaymentMethod> payments = saleService.getAvailablePaymentMethods();
 		List<PaymentMethod> expected = new ArrayList<>();
 		expected.add(p1);
 		expected.add(p2);

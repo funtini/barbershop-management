@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import bsmanagement.jparepositories.classtests.ProductRepositoryClass;
 import bsmanagement.model.Product;
 import bsmanagement.model.Product.productType;
 import bsmanagement.model.ProductService;
@@ -20,14 +21,15 @@ import bsmanagement.model.ProductService;
  * @author JOAO GOMES
  *
  */
-public class ProductListTest {
+public class ProductServiceTest {
 	
 	Product p1;
 	Product p2;
 	Product p3;
 	Product p4;
 	
-	ProductService pList;
+	ProductService productService;
+	ProductRepositoryClass productRepository;
 	List<Product> expect;
 	List<Product> result;
 	
@@ -53,26 +55,35 @@ public class ProductListTest {
 		p3 = new Product("BARBA",productType.SHAVE,7);
 		p4 = new Product("SHAMPOO MEN",productType.EXTRA,12);
 		
-		pList = new ProductService();
+		productService = new ProductService();
+		productRepository = new ProductRepositoryClass();
+		productService.setRepository(productRepository);
 		expect = new ArrayList<Product>();
 		
 	}
 
 
 	/**
-	 * <h2>setListOfProducts() and getListOfProducts method test</h2>
+	 * <h2>setRepository()  method test</h2>
 	 * 
 	 */
 	@Test
-	public void testGetandSetListOfProducts() {
-		//Given
-		assertEquals(pList.getActiveProducts().isEmpty(),true);
-		//When
+	public void testSetRepository() {
+		//Given: empty service, and a repository with 3 products
+		assertEquals(productService.getAllProducts().isEmpty(),true);
+		ProductRepositoryClass productRepoTest = new ProductRepositoryClass();
+		productRepoTest.save(p1);
+		productRepoTest.save(p2);
+		productRepoTest.save(p3);
+		
+		//When: set repository to service
 		expect.add(p1);
 		expect.add(p2);
-		pList.setProducts(expect);
-		//Then
-		assertEquals(pList.getActiveProducts(),expect);		
+		expect.add(p3);
+		productService.setRepository(productRepoTest);
+		//Then: service has 3 products
+		result = productService.getAllProducts();
+		assertEquals(result,expect);			
 	}
 	
 	/**
@@ -82,7 +93,7 @@ public class ProductListTest {
 	@Test
 	public void testCreateProduct() {
 		//Given: 
-		Product pp = pList.createProduct("test", productType.EXTRA, 10);
+		Product pp = productService.createProduct("test", productType.EXTRA, 10);
 		//When
 		Product expect = new Product("test",productType.EXTRA,10);
 		expect.setId(pp.getId());
@@ -97,15 +108,15 @@ public class ProductListTest {
 	@Test
 	public void testAddProduct() {
 		//Given: empty list
-		assertEquals(pList.getActiveProducts().isEmpty(),true);
+		assertEquals(productService.getActiveProducts().isEmpty(),true);
 		//When: add 2 products (one of them is added 2 times to get a false result)
 		expect.add(p1);
 		expect.add(p2);
-		assertEquals(pList.addProduct(p1),true);
-		assertEquals(pList.addProduct(p1),false);//already in inventory
-		assertEquals(pList.addProduct(p2),true);
+		assertEquals(productService.addProduct(p1),true);
+		assertEquals(productService.addProduct(p1),false);//already in inventory
+		assertEquals(productService.addProduct(p2),true);
 		//Then: 2 products are added to listofproducts
-		assertEquals(pList.getActiveProducts(),expect);		
+		assertEquals(productService.getActiveProducts(),expect);		
 	}
 	
 	/**
@@ -115,19 +126,19 @@ public class ProductListTest {
 	@Test
 	public void testRemoveProduct() {
 		//Given: list with 2 products
-		assertEquals(pList.getActiveProducts().isEmpty(),true);
-		assertEquals(pList.addProduct(p1),true);
-		assertEquals(pList.addProduct(p2),true);
+		assertEquals(productService.getActiveProducts().isEmpty(),true);
+		assertEquals(productService.addProduct(p1),true);
+		assertEquals(productService.addProduct(p2),true);
 		//When: remove 1 product (2 times to get a false result)
 		expect.add(p1);
 
-		assertEquals(pList.removeProduct(p2),true);
+		assertEquals(productService.removeProduct(p2),true);
 		
 		//Then: 1 products still in list
-		assertEquals(pList.getActiveProducts(),expect);
+		assertEquals(productService.getActiveProducts(),expect);
 		expect.remove(p1);
 		expect.add(p2);
-		assertEquals(pList.getRemovedProducts(),expect);
+		assertEquals(productService.getRemovedProducts(),expect);
 	}
 	
 	/**
@@ -137,15 +148,15 @@ public class ProductListTest {
 	@Test
 	public void testFindProductById() {
 		//Given: list with 3 Products
-		assertEquals(pList.getActiveProducts().isEmpty(),true);
-		pList.addProduct(p1);
-		pList.addProduct(p2);
-		pList.addProduct(p3);
-		assertEquals(pList.getActiveProducts().size(),3);
+		assertEquals(productService.getActiveProducts().isEmpty(),true);
+		productService.addProduct(p1);
+		productService.addProduct(p2);
+		productService.addProduct(p3);
+		assertEquals(productService.getActiveProducts().size(),3);
 		
 		//When: find products by ID
-		Product expect1 = pList.findProductById(1);
-		Product expect3 = pList.findProductById(3);
+		Product expect1 = productService.findProductById(1);
+		Product expect3 = productService.findProductById(3);
 		
 		//Then: get correct products 
 		assertEquals(p1,expect1);	
@@ -160,14 +171,14 @@ public class ProductListTest {
 	@Test
 	public void testFindProductByIdNoProductFound() {
 		//Given: list with 3 Products
-		assertEquals(pList.getActiveProducts().isEmpty(),true);
-		pList.addProduct(p1);
-		pList.addProduct(p2);
-		pList.addProduct(p3);
-		assertEquals(pList.getActiveProducts().size(),3);
+		assertEquals(productService.getActiveProducts().isEmpty(),true);
+		productService.addProduct(p1);
+		productService.addProduct(p2);
+		productService.addProduct(p3);
+		assertEquals(productService.getActiveProducts().size(),3);
 		
 		//When: find products by ID
-		Product expect = pList.findProductById(13);
+		Product expect = productService.findProductById(13);
 		
 		//Then: no product found = null result 
 		assertEquals(null,expect);			
@@ -180,18 +191,18 @@ public class ProductListTest {
 	@Test
 	public void testSearchProductByName() {
 		//Given: list with 3 Products
-		assertEquals(pList.getActiveProducts().isEmpty(),true);
-		pList.addProduct(p1);
-		pList.addProduct(p2);
-		pList.addProduct(p3);
-		assertEquals(pList.getActiveProducts().size(),3);		
+		assertEquals(productService.getActiveProducts().isEmpty(),true);
+		productService.addProduct(p1);
+		productService.addProduct(p2);
+		productService.addProduct(p3);
+		assertEquals(productService.getActiveProducts().size(),3);		
 		//When: find products by name
 		List<Product> expect1 = new ArrayList<>();
 		List<Product> expect2 = new ArrayList<>();
 		expect1.add(p1);
 		expect2.add(p2);
-		List<Product> result = pList.searchProductByName("CORTE COM LAVAGEM");
-		List<Product> result2 = pList.searchProductByName("CORTE SIMPLES");
+		List<Product> result = productService.searchProductByName("CORTE COM LAVAGEM");
+		List<Product> result2 = productService.searchProductByName("CORTE SIMPLES");
 		
 		//Then: get correct products 
 		assertEquals(result,expect1);	
@@ -205,19 +216,19 @@ public class ProductListTest {
 	@Test
 	public void testGetProductListByType() {
 		//Given: list with 3 Products
-		assertEquals(pList.getActiveProducts().isEmpty(),true);
-		pList.addProduct(p1);
-		pList.addProduct(p2);
-		pList.addProduct(p3);
-		assertEquals(pList.getActiveProducts().size(),3);		
+		assertEquals(productService.getActiveProducts().isEmpty(),true);
+		productService.addProduct(p1);
+		productService.addProduct(p2);
+		productService.addProduct(p3);
+		assertEquals(productService.getActiveProducts().size(),3);		
 		//When: find products by name
 		List<Product> expect1 = new ArrayList<>();
 		List<Product> expect2 = new ArrayList<>();
 		expect1.add(p1);
 		expect1.add(p2);
 		expect2.add(p3);
-		List<Product> result = pList.getProductsByType(productType.HAIRCUT);
-		List<Product> result2 = pList.getProductsByType(productType.SHAVE);
+		List<Product> result = productService.getProductsByType(productType.HAIRCUT);
+		List<Product> result2 = productService.getProductsByType(productType.SHAVE);
 		
 		//Then: get correct products 
 		assertEquals(result,expect1);	
@@ -231,20 +242,20 @@ public class ProductListTest {
 	@Test
 	public void testGetProductListOrderByPrice() {
 		//Given: list with 3 Products
-		assertEquals(pList.getActiveProducts().isEmpty(),true);
-		pList.addProduct(p1);
-		pList.addProduct(p3);
-		pList.addProduct(p2);
+		assertEquals(productService.getActiveProducts().isEmpty(),true);
+		productService.addProduct(p1);
+		productService.addProduct(p3);
+		productService.addProduct(p2);
 		p4.setPrice(10);
-		pList.addProduct(p4);
-		assertEquals(pList.getActiveProducts().size(),4);		
+		productService.addProduct(p4);
+		assertEquals(productService.getActiveProducts().size(),4);		
 		//When: find products by name
 		List<Product> expect = new ArrayList<>();
 		expect.add(p1);
 		expect.add(p2);
 		expect.add(p4);
 		expect.add(p3);
-		List<Product> result = pList.getProductsOrderByPrice();
+		List<Product> result = productService.getProductsOrderByPrice();
 		
 		//Then: get correct products 
 		assertEquals(result,expect);	
@@ -258,16 +269,16 @@ public class ProductListTest {
 	@Test
 	public void testGetProductListOrderByPriceOfType() {
 		//Given: list with 3 Products
-		assertEquals(pList.getActiveProducts().isEmpty(),true);
-		pList.addProduct(p1);
-		pList.addProduct(p3);
-		pList.addProduct(p2);
-		assertEquals(pList.getActiveProducts().size(),3);		
+		assertEquals(productService.getActiveProducts().isEmpty(),true);
+		productService.addProduct(p1);
+		productService.addProduct(p3);
+		productService.addProduct(p2);
+		assertEquals(productService.getActiveProducts().size(),3);		
 		//When: find products by name
 		List<Product> expect = new ArrayList<>();
 		expect.add(p1);
 		expect.add(p2);
-		List<Product> result = pList.getProductsOrderByPriceOfType(productType.HAIRCUT);
+		List<Product> result = productService.getProductsOrderByPriceOfType(productType.HAIRCUT);
 		//Then: get correct products 
 		assertEquals(result,expect);	
 					

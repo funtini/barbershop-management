@@ -5,45 +5,59 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
+
+import bsmanagement.jparepositories.classtests.BookingRepositoryClass;
+import bsmanagement.jparepositories.classtests.CustomerRepositoryClass;
 import bsmanagement.model.Booking;
-import bsmanagement.model.BookingService;
+import bsmanagement.model.BookingCustomerService;
 import bsmanagement.model.Customer;
 
 
 /**
  * 
- * Unit tests for BookingRegistry Class methods
+ * Unit tests for BookingCustomer Service Class methods
  * 
  * @author JOAO GOMES
  *
  */
-public class BookingRegistryTest {
+public class BookingCustomerServiceTest {
 
 	
 	
 	LocalDate birthdate1;
 	LocalDate birthdate2;
 	Customer c1;
-	Customer c2;	
+	Customer c2;
+	Customer c3;
+	
 	LocalDateTime dt1;
 	LocalDateTime dt2;
 	LocalDateTime dt3;
+	
+	LocalDate bd1;
+	LocalDate bd2;
+	LocalDate bd3;
+	
 	
 	
 	Booking b1;
 	Booking b2;
 	Booking b3;
 	
-	BookingService bookReg;
-	List<Booking> expect;
-	List<Booking> result;
-	
+	BookingCustomerService bcService;
+	CustomerRepositoryClass customerRepository;
+	BookingRepositoryClass bookingRepository;
+	List<Booking> expectBookings;
+	List<Booking> resultBookings;
+	List<Customer> expect;
+
 	/**
 	 * <h2>Setup for all unit tests: </h2>
 	 * 
@@ -52,9 +66,10 @@ public class BookingRegistryTest {
 	 * 
 	 * <p>Customer [c1] -> ["Joao",'30/11/1989',"Mangualde",914047935] </p>
 	 * <p>Customer [c2] -> ["Ana",'15/02/1984',"Porto",966677722] </p>
+	 * <p>Customer [c3] -> ["Pedro",'25/05/1992',"Mangualde",932444333] </p>
 	 * 
 	 * <p>DateTime [dt1] : Today's Date + 10 days</p>
-	 * <p>DateTime [dt2] : Today's Date + 10 days + 30 seconds</p>
+	 * <p>DateTime [dt2] : Today's Date + 30 mins</p>
 	 * <p>DateTime [dt3] : Today's Date + 1 month</p>
 	 * 
 	 * <p>Booking [b1] ->  [dt1,"Joao"] </p>
@@ -63,31 +78,40 @@ public class BookingRegistryTest {
 	 * 
 	 * 
 	 * 
+	 * 
 	 */
 	@Before
 	public void setUp(){
 		
-		bookReg = new BookingService();
-		expect = new ArrayList<>();
-		result = new ArrayList<>();
+		bcService = new BookingCustomerService();
+		customerRepository = new CustomerRepositoryClass();
+		bookingRepository = new BookingRepositoryClass();
+		bcService.setBookRepository(bookingRepository);
+		bcService.setCustomersRepository(customerRepository);
+		expectBookings = new ArrayList<>();
+		resultBookings = new ArrayList<>();
 		
-		Booking.setStartIdGenerator(1);
 		
 		birthdate1 = LocalDate.of(1989, 11, 30);
 		birthdate2 = LocalDate.of(1984, 02, 15);
 		
+		bd1=LocalDate.of(1989, 11, 30);
+		bd2=LocalDate.of(1984, 02, 15);
+		bd3=LocalDate.of(1992, 05, 25);
+		
 		c1 = new Customer("Joao",birthdate1,"Mangualde","914047935");
 		c2 = new Customer("Ana",birthdate2,"Porto","966677722");
+		c3 = new Customer("Pedro",bd3,"Mangualde","932444333");
 		
-		
-		
-		dt1 = LocalDateTime.now().plusDays(10);
-		dt2 = LocalDateTime.now().plusDays(10).plusSeconds(30);
-		dt3 = LocalDateTime.now().plusMonths(1);
+		dt1 = LocalDateTime.of(LocalDate.now(),LocalTime.of(10, 10)).plusDays(10);
+		dt2 = LocalDateTime.now().plusMinutes(30);
+		dt3 = LocalDateTime.of(LocalDate.now(),LocalTime.of(10, 10)).plusMonths(1);
 		
 		b1 = new Booking(dt1,c1);
 		b2 = new Booking(dt2,c2);
 		b3 = new Booking(dt3,c1);
+
+		expect = new ArrayList<>();
 	}
 
 	
@@ -95,20 +119,20 @@ public class BookingRegistryTest {
 	 * <h2>getBookingRegistry() method test</h2>
 	 */
 	@Test
-	public void testGetBookingRegistry() {
+	public void testGetBookings() {
 		//Given: empty list's
-		assertEquals(bookReg.getBookings().isEmpty(),true);
+		assertEquals(bcService.getBookings().isEmpty(),true);
 	
 		//When: add bookings to list
-		bookReg.getBookings().add(b1);
-		bookReg.getBookings().add(b2);
-		bookReg.getBookings().add(b3);
-		expect.add(b1);
-		expect.add(b2);
-		expect.add(b3);
+		bcService.addBooking(b1);
+		bcService.addBooking(b2);
+		bcService.addBooking(b3);
+		expectBookings.add(b1);
+		expectBookings.add(b2);
+		expectBookings.add(b3);
 		//Then: get a list with that 3 bookings
-		result = bookReg.getBookings();
-		assertEquals(result,expect);
+		resultBookings = bcService.getBookings();
+		assertEquals(resultBookings,expectBookings);
 			
 	}
 
@@ -117,18 +141,22 @@ public class BookingRegistryTest {
 	 * <h2>setBookingRegistry() method test</h2>
 	 */
 	@Test
-	public void testSetBookingRegistry() {
-		//Given: empty list's
-		assertEquals(bookReg.getBookings().isEmpty(),true);
+	public void testSetBookingRepository() {
+		//Given: empty service;
+		assertEquals(bcService.getBookings().isEmpty(),true);
+		BookingRepositoryClass bookRepoTest = new BookingRepositoryClass();
+		bookRepoTest.save(b1);
+		bookRepoTest.save(b2);
+		bookRepoTest.save(b3);
 		
-		//When: add list of bookings to bookingRegistry
-		expect.add(b1);
-		expect.add(b2);
-		expect.add(b3);
-		bookReg.setBookings(expect);
+		//When: set new bookingRepo with 3 bookings
+		expectBookings.add(b1);
+		expectBookings.add(b2);
+		expectBookings.add(b3);
+		bcService.setBookRepository(bookRepoTest);
 		//Then: get a list with that 3 bookings
-		result = bookReg.getBookings();
-		assertEquals(result,expect);		
+		resultBookings = bcService.getBookings();
+		assertEquals(resultBookings,expectBookings);		
 	}
 
 
@@ -138,15 +166,14 @@ public class BookingRegistryTest {
 	@Test
 	public void testCreateBooking() {
 		//Given: empty list's
-		assertEquals(bookReg.getBookings().isEmpty(),true);
+		assertEquals(bcService.getBookings().isEmpty(),true);
 		
 		//When: create instances of bookings by bookingRegistry
-		Booking.setStartIdGenerator(1);
-		Booking result1 = bookReg.createBooking(dt1, c1);
-		Booking result2 = bookReg.createBooking(dt2, c2);
+		Booking result1 = bcService.createBooking(dt1, c1);
+		Booking result2 = bcService.createBooking(dt2, c2);
 		//Then:
-		assertEquals(result1,b1);
-		assertEquals(result2,b2);	
+		assertEquals(result1.getDate(),b1.getDate());
+		assertEquals(result2.getDate(),b2.getDate());	
 	}
 	
 	/**
@@ -157,18 +184,18 @@ public class BookingRegistryTest {
 	@Test
 	public void testAddBookingTrue() {
 		//Given: empty list on bookingRegistry
-		assertEquals(bookReg.getBookings().isEmpty(),true);
+		assertEquals(bcService.getBookings().isEmpty(),true);
 		
 		//When: add 3 instances of bookings in bookingRegistry
-		assertEquals(bookReg.addBooking(b1),true);
-		assertEquals(bookReg.addBooking(b2),true);
-		assertEquals(bookReg.addBooking(b3),true);
-		expect.add(b1);
-		expect.add(b2);
-		expect.add(b3);
-		result = bookReg.getBookings();
+		assertEquals(bcService.addBooking(b1),true);
+		assertEquals(bcService.addBooking(b2),true);
+		assertEquals(bcService.addBooking(b3),true);
+		expectBookings.add(b1);
+		expectBookings.add(b2);
+		expectBookings.add(b3);
+		resultBookings = bcService.getBookings();
 		//Then:
-		assertEquals(result,expect);		
+		assertEquals(resultBookings,expectBookings);		
 	}
 	
 	/**
@@ -179,17 +206,17 @@ public class BookingRegistryTest {
 	@Test
 	public void testAddBookingFalseInvalidDate() {
 		//Given: empty list on bookingRegistry and bookings out of date
-		assertEquals(bookReg.getBookings().isEmpty(),true);
-		b1.setDate(dt1.minusMonths(2));
-		b2.setDate(dt2.minusMonths(1));
-		//When: add 3 instances of bookings in bookingRegistry
-		assertEquals(bookReg.addBooking(b1),false);
-		assertEquals(bookReg.addBooking(b2),false);
-		assertEquals(bookReg.addBooking(b3),true);
-		expect.add(b3);
-		result = bookReg.getBookings();
+		assertEquals(bcService.getBookings().isEmpty(),true);
+		b1.setDate(LocalDateTime.now().minusDays(11));
+		b2.setDate(LocalDateTime.now().minusDays(1));
+		//When: add 3 instances of bookings 
+		assertEquals(bcService.addBooking(b1),false);
+		assertEquals(bcService.addBooking(b2),false);
+		assertEquals(bcService.addBooking(b3),true);
+		expectBookings.add(b3);
+		resultBookings = bcService.getBookings();
 		//Then:
-		assertEquals(result,expect);			
+		assertEquals(resultBookings,expectBookings);			
 	}
 	
 	/**
@@ -200,16 +227,15 @@ public class BookingRegistryTest {
 	@Test
 	public void testAddBookingFalseInvalidTime() {
 		//Given: empty list on bookingRegistry and bookings of today
-		assertEquals(bookReg.getBookings().isEmpty(),true);
-		b1.setDate(LocalDateTime.now().minusMinutes(1));
-		b2.setDate(LocalDateTime.now().plusMinutes(1));
+		assertEquals(bcService.getBookings().isEmpty(),true);
+		b1.setDate(LocalDateTime.now().minusDays(11));
 		//When: add 2 instances of booking with 1 hour before and one hour after in bookingRegistry
-		assertEquals(bookReg.addBooking(b1),false);
-		assertEquals(bookReg.addBooking(b2),true);
-		expect.add(b2);
-		result = bookReg.getBookings();
+		assertEquals(bcService.addBooking(b1),false);
+		assertEquals(bcService.addBooking(b2),true);
+		expectBookings.add(b2);
+		resultBookings = bcService.getBookings();
 		//Then:
-		assertEquals(result,expect);				
+		assertEquals(resultBookings,expectBookings);				
 	}
 
 
@@ -218,19 +244,19 @@ public class BookingRegistryTest {
 	 */
 	@Test
 	public void testGetNextBookings() {
-		//Given: empty list on bookingRegistry and bookings 
-		assertEquals(bookReg.getBookings().isEmpty(),true);
-		assertEquals(bookReg.addBooking(b1),true);
-		assertEquals(bookReg.addBooking(b2),true);
-		assertEquals(bookReg.addBooking(b3),true);
-		assertEquals(bookReg.getBookings().size(),3);
-		bookReg.getBookings().get(0).setDate(dt1.minusMonths(1));
+		//Given: empty list of bookings
+		assertEquals(bcService.getBookings().isEmpty(),true);
+		assertEquals(bcService.addBooking(b1),true);
+		assertEquals(bcService.addBooking(b2),true);
+		assertEquals(bcService.addBooking(b3),true);
+		assertEquals(bcService.getBookings().size(),3);
+		bcService.getBookings().get(0).setDate(LocalDateTime.now().minusDays(11));
 		//When: get next bookings in bookingRegistry
-		expect.add(b2);
-		expect.add(b3);
-		result = bookReg.getNextBookings();
+		expectBookings.add(b2);
+		expectBookings.add(b3);
+		resultBookings = bcService.getNextBookings();
 		//Then:
-		assertEquals(result,expect);			
+		assertEquals(resultBookings,expectBookings);			
 	}
 
 
@@ -240,18 +266,18 @@ public class BookingRegistryTest {
 	@Test
 	public void testGetBookingListOfaDay() {
 		//Given: empty list on bookingRegistry and bookings 
-		assertEquals(bookReg.getBookings().isEmpty(),true);
-		assertEquals(bookReg.addBooking(b1),true);
-		assertEquals(bookReg.addBooking(b2),true);
-		assertEquals(bookReg.addBooking(b3),true);
-		assertEquals(bookReg.getBookings().size(),3);
-		bookReg.getBookings().get(1).setDate(dt1);
+		assertEquals(bcService.getBookings().isEmpty(),true);
+		assertEquals(bcService.addBooking(b1),true);
+		assertEquals(bcService.addBooking(b2),true);
+		assertEquals(bcService.addBooking(b3),true);
+		assertEquals(bcService.getBookings().size(),3);
+		bcService.getBookings().get(1).setDate(dt1);
 		//When: get bookings of day 11 in bookingRegistry
-		expect.add(b1);
-		expect.add(b2);
-		result = bookReg.getBookingsOf(dt1.toLocalDate());
+		expectBookings.add(b1);
+		expectBookings.add(b2);
+		resultBookings = bcService.getBookingsOf(dt1.toLocalDate());
 		//Then:
-		assertEquals(result,expect);		
+		assertEquals(resultBookings,expectBookings);		
 	}
 
 
@@ -261,16 +287,16 @@ public class BookingRegistryTest {
 	@Test
 	public void testGetNextBookingOf() {
 		//Given: empty list on bookingRegistry and bookings 
-		assertEquals(bookReg.getBookings().isEmpty(),true);
-		assertEquals(bookReg.addBooking(b1),true);
-		assertEquals(bookReg.addBooking(b2),true);
-		assertEquals(bookReg.addBooking(b3),true);
-		assertEquals(bookReg.getBookings().size(),3);
-		bookReg.getBookings().get(1).setDate(dt1);
+		assertEquals(bcService.getBookings().isEmpty(),true);
+		assertEquals(bcService.addBooking(b1),true);
+		assertEquals(bcService.addBooking(b2),true);
+		assertEquals(bcService.addBooking(b3),true);
+		assertEquals(bcService.getBookings().size(),3);
+		bcService.getBookings().get(1).setDate(dt1);
 		//When: get bookings of day 11 in bookingRegistry
 		
-		Booking result = bookReg.getNextBookingOf(c1);
-		Booking result2 = bookReg.getNextBookingOf(c2);
+		Booking result = bcService.getNextBookingOf(c1);
+		Booking result2 = bcService.getNextBookingOf(c2);
 		//Then:
 		assertEquals(result,b1);	
 		assertEquals(result2,b2);
@@ -285,13 +311,105 @@ public class BookingRegistryTest {
 	@Test
 	public void testGetNextBookingOfNoBookingFound() {
 		//Given: empty list on bookingRegistry and bookings 
-		assertEquals(bookReg.getBookings().isEmpty(),true);
+		assertEquals(bcService.getBookings().isEmpty(),true);
 		//When: get bookings of day 11 in bookingRegistry
 		
-		Booking result = bookReg.getNextBookingOf(c1);
+		Booking result = bcService.getNextBookingOf(c1);
 		//Then:
 		assertEquals(result,null);	
 		
+	}
+	
+	/**
+	 * <h2>getCustomerList() method test</h2>
+	 * 
+	 */
+	@Test
+	public void testGetCustomerList() {
+		//Given: empty list
+		assertEquals(bcService.getAllCustomers().isEmpty(),true);
+		//When: add customer
+		bcService.addCustomer(c1);
+		expect.add(c1);
+		//Then: get that customer
+		assertEquals(expect,bcService.getAllCustomers());
+		
+	}
+
+	/**
+	 * <h2>setCustomerList() method test</h2>
+	 * 
+	 */
+	@Test
+	public void testSetCustomerList() {
+		//Given: empty list
+		assertEquals(bcService.getAllCustomers().isEmpty(),true);
+		//When: add customer
+		CustomerRepositoryClass cRepo =  new CustomerRepositoryClass();
+		cRepo.save(c1);
+		cRepo.save(c2);
+		expect.add(c1);
+		expect.add(c2);
+		bcService.setCustomersRepository(cRepo);
+		
+		//Then: get that customer
+		assertEquals(expect,bcService.getAllCustomers());		
+	}
+
+	/**
+	 * <h2>addCustomer() method test</h2>
+	 * 
+	 */
+	@Test
+	public void testAddCustomer() {
+		//Given: empty list
+		assertEquals(bcService.getAllCustomers().isEmpty(),true);
+		//When: add 3 customer
+		assertEquals(bcService.addCustomer(c1),true);
+		assertEquals(bcService.addCustomer(c2),true);
+		assertEquals(bcService.addCustomer(c3),true);
+		
+		//Then: cant add the customers twice to the list
+		assertEquals(bcService.addCustomer(c1),false);
+		assertEquals(bcService.addCustomer(c2),false);
+		assertEquals(bcService.addCustomer(c3),false);		
+	}
+
+	/**
+	 * <h2>createCustomer() method test</h2>
+	 * 
+	 * full data
+	 */
+	@Test
+	public void testCreateCustomerFullData() {
+		//Given: instance of Customer (Ana) - c2
+		Customer expect = c2;
+		//When: we create by cReg a customer (Joao) and set the same ID
+		Customer result = bcService.createCustomer("Ana",bd2,"Porto","966677722");
+		
+		expect.setId(result.getId());
+		
+		//Then: they are equals
+		assertEquals(result,expect);			
+				
+	}
+
+	/**
+	 * <h2>createCustomer() method test</h2>
+	 * 
+	 * only name as input data
+	 */
+	@Test
+	public void testCreateCustomerOnlyName() {
+		//Given: instance of Customer (Joao)
+		Customer expect = new Customer("Joao");
+		//When: we create by cReg a customer (Joao) and set the same ID
+		Customer result = bcService.createCustomer("Joao");
+		
+		expect.setId(result.getId());
+		
+		//Then: they are equals
+		assertEquals(result,expect);		
 	}
 
 }

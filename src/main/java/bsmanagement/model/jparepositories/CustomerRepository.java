@@ -7,5 +7,7 @@ import bsmanagement.model.Customer;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer>{
+	
+	boolean existsByName(String name);
 
 }

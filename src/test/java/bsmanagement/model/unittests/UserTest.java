@@ -57,7 +57,6 @@ public class UserTest {
 	@Before
 	public void setUp(){
 		
-		User.setStartIdGenerator(1);
 		Address.setStartIdGenerator(1);
 		a1 = new Address("CASA","RUA DO AMARO","3550-444","VISEU","PORTUGAL");
 		a2 = new Address("TRABALHO","RUA DO PASSAL","3530-194","MANGUALDE","PORTUGAL");
@@ -75,9 +74,8 @@ public class UserTest {
 
 	@Test
 	public void testHashCode() {
-		User.setStartIdGenerator(1);
 		User userTest = new User("PEDRO",birth2,"pedro@gmail.uk","915557911","123555433");
-		assertEquals(userTest.hashCode(),u1.hashCode());
+		assertEquals(userTest.hashCode(),u2.hashCode());
 	}
 
 	@Test
@@ -159,19 +157,6 @@ public class UserTest {
 		//Then they added to address list of user
 		assertEquals(u1.getAddressList(),expect);
 		assertEquals(u2.getAddressList(),expect2);		
-	}
-
-	@Test
-	public void testSetStartIdGeneratorAndGetID() {
-		//Given
-		assertEquals(u1.getId(),1);
-		assertEquals(u2.getId(),2);
-		assertEquals(u3.getId(),3);
-		//When
-		User.setStartIdGenerator(10);
-		User u4 = new User("PEDRO",birth2,"pedro@gmail.uk","915557911","123555433");
-		//Then
-		assertEquals(u4.getId(),10);		
 	}
 
 	@Test
@@ -279,8 +264,6 @@ public class UserTest {
 		assertEquals(u1.isActive(),true);
 	}
 
-
-
 	@Test
 	public void testSetProfileEmployer() {
 		
@@ -288,6 +271,13 @@ public class UserTest {
 		assertEquals(u2.getProfile(),UserProfile.ADMINISTRATOR);
 		u2.setProfileEmployer();
 		assertEquals(u2.getProfile(),UserProfile.EMPLPOYER);
+	}
+	
+	@Test
+	public void testSetProfileStoreManager() {
+		
+		u2.setProfileStoreManager();
+		assertEquals(u2.getProfile(),UserProfile.STOREMANAGER);
 	}
 
 	@Test
@@ -308,8 +298,9 @@ public class UserTest {
 
 	@Test
 	public void testToString() {
-		assertEquals(u1.toString(),"User [" + u1.getId() + "]-[name: " + u1.getName() + ", birth: " + u1.getBirthDate() + ", email: " + u1.getEmailAddress() + ", phone: " + u1.getPhone()
+		assertEquals(u1.toString(),"User [" + u1.getEmailAddress() + "]-[name: " + u1.getName() + ", birth: " + u1.getBirthDate() + ", phone: " + u1.getPhone()
 				+ ", taxPayerId: " + u1.getTaxPayerId() + ", ActivationStatus: " + u1.isActive() + ", profile: " + u1.getProfile() + "]");
+
 	}
 
 	@Test
@@ -321,10 +312,11 @@ public class UserTest {
 		u3.setPhone(null);
 		assertEquals(u1.equals(u3),false);
 		assertEquals(u1.equals(a1),false);
-		User.setStartIdGenerator(1);
 		User u4 = new User("JOAO",birth1,"joao@domain.com","914047935","324666433");
 		assertEquals(u1.equals(u4),true);
 		assertEquals(u1.equals(null),false);
+		u1.setEmail(null);
+		assertEquals(u1.equals(u3),false);
 	}
 
 }

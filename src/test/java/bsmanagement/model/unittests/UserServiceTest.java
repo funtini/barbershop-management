@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import bsmanagement.jparepositories.classtests.UserRepositoryClass;
 import bsmanagement.model.Address;
 import bsmanagement.model.User;
 import bsmanagement.model.User.UserProfile;
@@ -19,14 +20,15 @@ import system.dto.UserLoginDTO;
 
 /**
  * 
- * Unit tests for UserRegistry Class methods
+ * Unit tests for User Service Class methods
  * 
  * @author JOAO GOMES
  *
  */
-public class UserRegistryTest {
+public class UserServiceTest {
 	
-	UserService uReg;
+	UserService userService;
+	UserRepositoryClass userRepositoryClass;
 
 	Address a1;
 	Address a2;
@@ -59,8 +61,9 @@ public class UserRegistryTest {
 	 */
 	@Before
 	public void setUp() {
-		uReg = new UserService();
-		User.setStartIdGenerator(1);
+		userService = new UserService();
+		userRepositoryClass = new UserRepositoryClass();
+		userService.setUserRepository(userRepositoryClass);
 		Address.setStartIdGenerator(1);
 		a1 = new Address("CASA","RUA DO AMARO","3550-444","VISEU","PORTUGAL");
 		a2 = new Address("TRABALHO","RUA DO PASSAL","3530-194","MANGUALDE","PORTUGAL");
@@ -70,51 +73,51 @@ public class UserRegistryTest {
 		birth2 = LocalDate.of(1988, 7, 21);
 		birth3 = LocalDate.of(1968, 9, 25);
 		
-		u1 = uReg.createUser("JOAO",birth1,"joao@domain.com","914047935","324666433");
-		u2 = uReg.createUser("PEDRO",birth2,"pedro@gmail.uk","915557911","123555433");
-		u3 = uReg.createUser("ANTONIO",birth3,"antonio@domain","962337135","367876433");
+		u1 = userService.createUser("JOAO",birth1,"joao@domain.com","914047935","324666433");
+		u2 = userService.createUser("PEDRO",birth2,"pedro@gmail.uk","915557911","123555433");
+		u3 = userService.createUser("ANTONIO",birth3,"antonio@domain","962337135","367876433");
 		
 	}
 
 	@Test
-	public void testGetUsersList() {
+	public void testListAllUsers() {
 		//Given: 2 users added
-		assertEquals(uReg.addUser(u1),true);
-		assertEquals(uReg.addUser(u2),true);
+		assertEquals(userService.addUser(u1),true);
+		assertEquals(userService.addUser(u2),true);
 		//When: get users list
 		List<User> expect = new ArrayList<>();
 		expect.add(u1);
 		expect.add(u2);
-		List<User> result = uReg.getUsersList();
+		List<User> result = userService.listAllUsers();
 		//Then: expect and result are same
 		assertEquals(expect,result);
 	}
 
 	@Test
 	public void testAddUser() {
-		assertEquals(uReg.addUser(u1),true);
-		assertEquals(uReg.addUser(u1),false);
-		assertEquals(uReg.addUser(u2),true);
-		assertEquals(uReg.addUser(u3),false);
+		assertEquals(userService.addUser(u1),true);
+		assertEquals(userService.addUser(u1),false);
+		assertEquals(userService.addUser(u2),true);
+		assertEquals(userService.addUser(u3),false);
 	}
 	
 	@Test
 	public void testAddUserAlreadyExistMail() {
-		assertEquals(uReg.addUser(u1),true);
-		User sameEmail =  uReg.createUser("ROGERIO",birth2,"joao@domain.com","93127935","3321321433");
-		assertEquals(uReg.addUser(sameEmail),false);
+		assertEquals(userService.addUser(u1),true);
+		User sameEmail =  userService.createUser("ROGERIO",birth2,"joao@domain.com","93127935","3321321433");
+		assertEquals(userService.addUser(sameEmail),false);
 		
 	}
 
 	@Test
-	public void testGetUserByEmail() {
+	public void testFindUserByEmail() {
 		
 		//Given: 2 users added
-		assertEquals(uReg.addUser(u1),true);
-		assertEquals(uReg.addUser(u2),true);
+		assertEquals(userService.addUser(u1),true);
+		assertEquals(userService.addUser(u2),true);
 		//When: get user by email
-		User expect = uReg.getUserByEmail("joao@domain.com");
-		User nullUser = uReg.getUserByEmail("joao@dsin.com");
+		User expect = userService.findUserByEmail("joao@domain.com");
+		User nullUser = userService.findUserByEmail("joao@dsin.com");
 		//Then users are the same
 		assertEquals(expect,u1);
 		assertEquals(nullUser,null);
@@ -123,37 +126,37 @@ public class UserRegistryTest {
 	@Test
 	public void testSearchUserByProfile() {
 		//Given: 2 users employer added and 1 user admin added
-		assertEquals(uReg.addUser(u1),true);
-		assertEquals(uReg.addUser(u2),true);
+		assertEquals(userService.addUser(u1),true);
+		assertEquals(userService.addUser(u2),true);
 		u3.setEmail("antonio@gmail.com");
-		assertEquals(uReg.addUser(u3),true);
-		uReg.setUserProfileAdmin(u3);
+		assertEquals(userService.addUser(u3),true);
+		userService.setUserProfileAdmin(u3);
 		//When: get users list
 		List<User> expectEmployer = new ArrayList<>();
 		List<User> expectAdmin = new ArrayList<>();
 		expectEmployer.add(u1);
 		expectEmployer.add(u2);
 		expectAdmin.add(u3);
-		List<User> resultEmployer = uReg.searchUserByProfile(UserProfile.EMPLPOYER);
-		List<User> resultAdmin = uReg.searchUserByProfile(UserProfile.ADMINISTRATOR);
+		List<User> resultEmployer = userService.searchUserByProfile(UserProfile.EMPLPOYER);
+		List<User> resultAdmin = userService.searchUserByProfile(UserProfile.ADMINISTRATOR);
 		//Then: expect and result are same
 		assertEquals(expectEmployer,resultEmployer);	
 		assertEquals(expectAdmin,resultAdmin);
-		uReg.setUserProfileEmployer(u3);
+		userService.setUserProfileEmployer(u3);
 		assertEquals(u3.getProfile(),UserProfile.EMPLPOYER);
 	}
 
 	@Test
 	public void testSetUserActiveAndDeactivate() {
 		//Given: 1 user added and deactivated
-		assertEquals(uReg.addUser(u1),true);
-		assertEquals(uReg.deactivateUser(u1),true);
-		assertEquals(uReg.deactivateUser(u1),false);
+		assertEquals(userService.addUser(u1),true);
+		assertEquals(userService.deactivateUser(u1),true);
+		assertEquals(userService.deactivateUser(u1),false);
 		assertEquals(u1.isActive(),false);
 		//When: active user again
 
-		assertEquals(uReg.setUserActive(u1),true);
-		assertEquals(uReg.setUserActive(u1),false);
+		assertEquals(userService.setUserActive(u1),true);
+		assertEquals(userService.setUserActive(u1),false);
 		
 		//Then user is active
 		assertEquals(u1.isActive(),true);	
@@ -163,10 +166,10 @@ public class UserRegistryTest {
 	@Test
 	public void testValidateDataValidLogin() {
 		//Given: 1 user added and deactivated
-		assertEquals(uReg.addUser(u1),true);
+		assertEquals(userService.addUser(u1),true);
 		u1.setPassword("qwerty");
 		//When: validate user
-		UserLoginDTO validLogin = uReg.validateData("joao@domain.com", "qwerty");
+		UserLoginDTO validLogin = userService.validateData("joao@domain.com", "qwerty");
 		UserLoginDTO expectValid = new UserLoginDTO(u1.getName(), u1.getEmailAddress(), u1.getProfile().toString(),
 				"\n" + u1.getProfile().toString() + " " + u1.getName() + " Successfully Logged\n");
 
@@ -177,10 +180,10 @@ public class UserRegistryTest {
 	@Test
 	public void testValidateDataInvalidMail() {
 		//Given: 1 user added and deactivated
-		assertEquals(uReg.addUser(u1),true);
+		assertEquals(userService.addUser(u1),true);
 		u1.setPassword("qwerty");
 		//When: validate user
-		UserLoginDTO invalidLogin = uReg.validateData("joao@main.com", "qwerty");
+		UserLoginDTO invalidLogin = userService.validateData("joao@main.com", "qwerty");
 		
 		UserLoginDTO expectInvalid = new UserLoginDTO("Invalid Email or Password\n");
 		
@@ -191,15 +194,55 @@ public class UserRegistryTest {
 	@Test
 	public void testValidateDataInvalidPassword() {
 		//Given: 1 user added and deactivated
-		assertEquals(uReg.addUser(u1),true);
+		assertEquals(userService.addUser(u1),true);
 		u1.setPassword("qwerty");
 		//When: validate user
 		
-		UserLoginDTO invalidLogin = uReg.validateData("joao@domain.com", "qdsrty");
+		UserLoginDTO invalidLogin = userService.validateData("joao@domain.com", "qdsrty");
 		UserLoginDTO expectInvalid = new UserLoginDTO("Invalid Email or Password\n");
 		
 		//Then: user got invalid email or password
 		assertEquals(invalidLogin.getMessage(),expectInvalid.getMessage());			
 	}
+	
+	@Test
+	public void testListActiveUsers() {
+		//Given: 2 users added
+		assertEquals(userService.addUser(u1),true);
+		assertEquals(userService.addUser(u2),true);
+		assertEquals(userService.deactivateUser(u2),true);
+		//When: get users list
+		List<User> expect = new ArrayList<>();
+		expect.add(u1);
+		List<User> result = userService.listActiveUsers();
+		//Then: expect and result are same
+		assertEquals(expect,result);
+	}
+	
+	@Test
+	public void testListInactiveUsers() {
+		//Given: 2 users added
+		assertEquals(userService.addUser(u1),true);
+		assertEquals(userService.addUser(u2),true);
+		assertEquals(userService.deactivateUser(u2),true);
+		//When: get users list
+		List<User> expect = new ArrayList<>();
+		expect.add(u2);
+		List<User> result = userService.listInactiveUsers();
+		//Then: expect and result are same
+		assertEquals(expect,result);
+	}
+	
+	@Test
+	public void testSetProfileStoreManager() {
+		//Given: 1 employer added 
+		assertEquals(userService.addUser(u1),true);
+		assertEquals(userService.findUserByEmail("joao@domain.com").getProfile(),UserProfile.EMPLPOYER);
+		//When: set profile to Store Manager
+		assertEquals(userService.setUserProfileStoreManager(u1),true);
+		//Then: expect and result are same
+		assertEquals(userService.findUserByEmail("joao@domain.com").getProfile(),UserProfile.STOREMANAGER);
+	}
+	
 
 }

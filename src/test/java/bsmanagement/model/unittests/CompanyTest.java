@@ -47,7 +47,7 @@ public class CompanyTest {
 	public void testGetUserRegistry() {
 		company = Company.getTheInstance();
 		UserService expect = company.getUserService();
-		assertEquals(expect.getUsersList().isEmpty(),true);
+		assertEquals(expect.listAllUsers().isEmpty(),true);
 	}
 
 }
