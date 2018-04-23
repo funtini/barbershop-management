@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import bsmanagement.dto.rest.BookingRestDTO;
+import bsmanagement.dto.rest.CustomerRestDTO;
 import bsmanagement.model.jparepositories.BookingRepository;
 import bsmanagement.model.jparepositories.CustomerRepository;
 
@@ -22,7 +23,7 @@ import bsmanagement.model.jparepositories.CustomerRepository;
  * <li>customerRepository - JpaRepository of all customers
  * </ul>
  * <p>
- * Both repositories have annotation autowired of springframework, so the constructor of this service is empty and protected
+ * Both repositories have annotation autowired of springframework framework.
  * 
  * @author JOAO GOMES
  *
@@ -36,8 +37,18 @@ public class BookingCustomerService {
 	@Autowired
 	private CustomerRepository customersRepository;
 
-	protected BookingCustomerService() {
+	public BookingCustomerService() {
 		
+	}
+	
+	public void setBookRepository(BookingRepository bookRepository) {
+		this.bookRepository = bookRepository;
+	}
+
+
+
+	public void setCustomersRepository(CustomerRepository customersRepository) {
+		this.customersRepository = customersRepository;
 	}
 	
 	/*
@@ -45,8 +56,9 @@ public class BookingCustomerService {
 	 * CUSTOMER SERVICE
 	 * -----------------
 	 */
-	
-	
+
+
+
 	/**
 	 * @return the listOfCustomers
 	 */
@@ -64,6 +76,8 @@ public class BookingCustomerService {
 	 */
 	public boolean addCustomer(Customer customer) {
 		if (customersRepository.existsById(customer.getId()))
+			return false;
+		if (customersRepository.existsByName(customer.getName()))
 			return false;
 		customersRepository.save(customer);
 		return true;
@@ -233,6 +247,22 @@ public class BookingCustomerService {
 		Booking booking = createBooking(bookingDTO.getDate(),customer);
 		bookRepository.save(booking);
 		return true;
+	}
+
+	public boolean addCustomer(CustomerRestDTO customerDTO) {
+		if (customerDTO.getName()==null)
+		{
+			customerDTO.setSuccessMessage("Customer not added : INVALID NAME");
+			return false;
+		}
+		Customer customer = createCustomer(customerDTO.getName(), customerDTO.getBirth(), customerDTO.getAddress(), customerDTO.getPhone());
+		if (addCustomer(customer))
+		{
+			customerDTO.setSuccessMessage("Customer Sucessfully Added!");
+			return true;
+		}
+		customerDTO.setSuccessMessage("Customer not added : Customer's Name Already Exist");
+		return false;
 	}
 
 }

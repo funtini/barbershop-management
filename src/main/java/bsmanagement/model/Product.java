@@ -1,6 +1,8 @@
 package bsmanagement.model;
 
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -62,8 +64,7 @@ public class Product implements Comparable<Product>{
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id=idGenerator.incrementAndGet();
 	private String name;
 	@Enumerated(EnumType.STRING)
 	private productType type;
@@ -71,6 +72,8 @@ public class Product implements Comparable<Product>{
 	@Column(nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean active;
+	
+	private static AtomicInteger idGenerator=new AtomicInteger();
 	
 
 	/**
@@ -225,6 +228,11 @@ public class Product implements Comparable<Product>{
 		else if(this.getPrice()<p.getPrice())
 			return 1;
 		return 0;
+	}
+
+	public static void setStartIdGenerator(int i) {
+		idGenerator.set(i-1);
+		
 	}
 	
 	

@@ -1,6 +1,8 @@
 package bsmanagement.model;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,8 +46,7 @@ public class Sale implements Comparable<Sale>{
 	
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id=idGenerator.incrementAndGet();
 	private LocalDateTime date;
 	@ManyToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
 	private Customer customer;
@@ -55,6 +56,7 @@ public class Sale implements Comparable<Sale>{
 	@ManyToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
 	private PaymentMethod payment;
 	
+	private static AtomicInteger idGenerator=new AtomicInteger();
 
 	
 
@@ -271,6 +273,12 @@ public class Sale implements Comparable<Sale>{
 		if (this.date.isBefore(sale.getDate()))
 			return 1;
 		return 0;
+	}
+
+
+	public static void setStartIdGenerator(int i) {
+		idGenerator.set(i-1);
+		
 	}
 	
 	

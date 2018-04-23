@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import bsmanagement.jparepositories.classtests.ExpenseRepositoryClass;
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.jparepositories.ExpenseRepository;
 
@@ -33,9 +34,9 @@ public class ExpenseService {
 	private ExpenseRepository expRepo;
 	
 	/**
-	 * Constructor of list of expenses
+	 * Default Constructor of Expense Service
 	 */
-	protected ExpenseService() {
+	public ExpenseService() {
 		
 	}
 
@@ -273,6 +274,11 @@ public class ExpenseService {
 				sum=sum+e.getValue();		
 		}	
 		return sum;
+	}
+
+	public void setRepository(ExpenseRepositoryClass expenseRepository) {
+		this.expRepo = expenseRepository;
+		
 	}
 	
 	

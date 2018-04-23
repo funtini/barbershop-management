@@ -2,6 +2,7 @@ package bsmanagement.model;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -29,12 +30,12 @@ import javax.persistence.OneToOne;
 public class Booking {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id=idGenerator.incrementAndGet();
 	private LocalDateTime date;
 	@OneToOne(cascade = CascadeType.MERGE)
 	private Customer customer;
 	
+	private static AtomicInteger idGenerator=new AtomicInteger();
 	
 	/**
 	 * Constructor of a new booking with date, time and customer
@@ -133,6 +134,10 @@ public class Booking {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	public static void setStartIdGenerator(int i) {
+		idGenerator.set(i-1);
 	}
 
 

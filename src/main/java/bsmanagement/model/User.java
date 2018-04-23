@@ -46,7 +46,7 @@ import system.dto.UserLoginDTO;
 public class User {
 	
 	public enum UserProfile {
-		ADMINISTRATOR, EMPLPOYER
+		ADMINISTRATOR, STOREMANAGER, EMPLPOYER
 	}
 		
 	@Id
@@ -329,12 +329,21 @@ public class User {
 
 
 	/**
-	 * Method to set profile employer
+	 * Method to set profile Employer
 	 * 
 	 * @param profile 
 	 */
 	public void setProfileEmployer() {
 		this.profile = UserProfile.EMPLPOYER;
+	}
+	
+	/**
+	 * Method to set profile Store Manager
+	 * 
+	 * @param profile 
+	 */
+	public void setProfileStoreManager() {
+		this.profile = UserProfile.STOREMANAGER;
 	}
 	
 	/**

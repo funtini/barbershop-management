@@ -1,6 +1,7 @@
 package bsmanagement.model;
 
 import java.time.LocalDate;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,12 +32,13 @@ import javax.persistence.Id;
 public class Customer {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id=idGenerator.incrementAndGet();
 	private String name;
 	private LocalDate birth;
 	private String address;
 	private String phone;
+	
+	private static AtomicInteger idGenerator=new AtomicInteger();
 	
 	
 	
@@ -199,6 +201,10 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", name=" + name + ", phone=" + phone + "]";
+	}
+
+	public static void setStartIdGenerator(int i) {
+		idGenerator.set(i-1);
 	}
 
 }

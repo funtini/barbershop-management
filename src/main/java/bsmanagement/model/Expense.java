@@ -1,6 +1,8 @@
 package bsmanagement.model;
 
 import java.time.LocalDate;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -62,8 +64,7 @@ public class Expense implements Comparable<Expense>{
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id=idGenerator.incrementAndGet();
 	private String name;
 	@Enumerated(EnumType.STRING)
 	private expenseType type;
@@ -71,7 +72,7 @@ public class Expense implements Comparable<Expense>{
 	private LocalDate dateOfPayment;
 	private String description;
 	
-	
+	private static AtomicInteger idGenerator=new AtomicInteger();
 	
 	/**
 	 * Constructor of Expense with name, type, value, and date
@@ -257,6 +258,11 @@ public class Expense implements Comparable<Expense>{
 			return -1;
 		
 		return 0;
+	}
+
+	public static void setStartIdGenerator(int i) {
+		idGenerator.set(i-1);
+		
 	}
 	
 	

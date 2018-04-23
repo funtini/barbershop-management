@@ -442,7 +442,7 @@ public class Application{
 //		System.out.println("/n************************/n"+paymentMethodService.listAvailablePaymentMethods()+"/n************************/n");
 		System.out.println("/n************************/n"+expService.getExpenses().size()+"/n************************/n");
 		System.out.println("/n************************/n"+bookingCustomerService.getAllCustomers()+"/n************************/n");
-		String choice = scan.nextLine();
+//		String choice = scan.nextLine();
 		System.out.println("/n************************/n"+r1.getExpensesList()+"/n************************/n");
 		System.out.println("/n************************/n"+r2.getExpensesList()+"/n************************/n");
 		System.out.println("/n************************/n"+r3.getExpensesList()+"/n************************/n");

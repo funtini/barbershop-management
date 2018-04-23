@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import bsmanagement.model.User.UserProfile;
@@ -16,15 +15,15 @@ import system.dto.UserLoginDTO;
 
 
 /**
- * <h1> UserRegistry </h1>
+ * <h1> UserService </h1>
  * <p>
- * UserRegistry is the abstract base class for manage all users registered in application.
+ * UserService is a service class that manage all users registered in application.
  * This class contains information like:
  * <ul>
- * <li>userList - List of Users
+ * <li>userRepository - Repository of users 
  * </ul>
  * <p>
- * To create an instance of UserRegistry you just need to invoke the empty constructor
+ * UserService has annotation 'Autowired' from springboot framework, so this class doesn't need to be constructed in Spring Boot Applications.
  * 
  * @author JOAO GOMES
  *
@@ -35,52 +34,12 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepo;
 
-//	@Autowired
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
 	/**
-	 * Constructor of userRegistry
+	 * Default Constructor of userService
 	 */
 	public UserService() {
 		
 	}
-
-	
-	public void clearData()
-	{
-		userRepo.deleteAll();
-	}
-	
-	public boolean updateUser(User user)
-	{
-		if (userRepo.existsById(user.getEmailAddress()) && user.isValid()) {
-            userRepo.save(user);
-            return true;
-        }
-        return false;
-	}
-
-	/**
-	 * Method to get a list of registered users
-	 * 
-	 * @return the usersList
-	 */
-	public List<User> getUsersList() {
-		List<User> usersList = new ArrayList<>();
-		for(User u : userRepo.findAll())
-			usersList.add(u);
-		return usersList;
-	}
-	
-	/**
-	 * Method to get a list of registered users
-	 * 
-	 * @return the usersList
-	 */
-	public UserRepository getUserRepository() {
-		return userRepo;
-	}
-
 	
 	/**
 	 * Creates an instance of a User.
@@ -127,8 +86,8 @@ public class UserService {
 	 *            Search parameter.
 	 * @return User that matches search parameter or null if no user is found.
 	 */
-	public User getUserByEmail(String email) {
-		for (User u : getUsersList())
+	public User findUserByEmail(String email) {
+		for (User u : listAllUsers())
 			if (u.getEmailAddress().equals(email))
 				return u;
 		return null;
@@ -146,7 +105,7 @@ public class UserService {
 
 		List<User> profileList = new ArrayList<>();
 
-		for (User user : getUsersList())
+		for (User user : listAllUsers())
 			if (user.getProfile().equals(userProfile))
 				profileList.add(user);
 		return profileList;
@@ -162,9 +121,10 @@ public class UserService {
 	 */
 	public boolean setUserActive(User user) {
 
-		for (User u : getUsersList())
+		for (User u : listAllUsers())
 			if (user.getEmailAddress() == u.getEmailAddress() && !user.isActive()) {
 				user.setActive();
+				updateUser(user);
 				return true;
 			}
 		
@@ -179,9 +139,10 @@ public class UserService {
 	 * @return True if assignment is successful, false otherwise.
 	 */
 	public boolean deactivateUser(User user) {
-		for (User u : getUsersList())
+		for (User u : listAllUsers())
 			if (user.getEmailAddress() == u.getEmailAddress() && user.isActive()) {
 				user.deactivate();
+				updateUser(user);
 				return true;
 			}
 		
@@ -192,20 +153,52 @@ public class UserService {
 	 * Sets a registered user as Employer
 	 *
 	 * @param user
-	 *            User to which we will assign the director profile
+	 *            User to which we will assign the Employer profile
+	 * @return True if assignment is successful, false otherwise.
 	 */
-	public void setUserProfileEmployer(User user) {
-		user.setProfileEmployer();
+	public boolean setUserProfileEmployer(User user) {
+		for (User u : listAllUsers())
+			if (user.getEmailAddress() == u.getEmailAddress()) {
+				user.setProfileEmployer();
+				updateUser(user);
+				return true;
+			}
+		return false;
 	}
 	
 	/**
 	 * Sets a registered user as Administrator
 	 *
 	 * @param user
-	 *            User to which we will assign the director profile
+	 *            User to which we will assign the administrator profile
+	 * @return True if assignment is successful, false otherwise.
 	 */
-	public void setUserProfileAdmin(User user) {
-		user.setProfileAdmin();
+	public boolean setUserProfileAdmin(User user) {
+		for (User u : listAllUsers())
+			if (user.getEmailAddress() == u.getEmailAddress()) {
+				user.setProfileAdmin();
+				updateUser(user);
+				return true;
+			}
+		return false;
+	}
+	
+	
+	/**
+	 * Sets a registered user as Store Manager
+	 *
+	 * @param user
+	 *            User to which we will assign the store manager profile
+	 * @return True if assignment is successful, false otherwise.
+	 */
+	public boolean setUserProfileStoreManager(User user) {
+		for (User u : listAllUsers())
+			if (user.getEmailAddress() == u.getEmailAddress()) {
+				user.setProfileStoreManager();
+				updateUser(user);
+				return true;
+			}
+		return false;
 	}
 	
 	/**
@@ -220,10 +213,76 @@ public class UserService {
 	 */
 	public UserLoginDTO validateData(String email, String password) {
 
-		User user = getUserByEmail(email);
+		User user = findUserByEmail(email);
 		if (user == null)
 			return new UserLoginDTO("Invalid Email or Password\n");
 		return user.validatePassword(password);
+	}
+	
+	/**
+	 * Method to update an existing user in DataBase
+	 * 
+	 * @param user
+	 * 
+	 * @return true if user exists and is successfully updated, false otherwise
+	 */
+	public boolean updateUser(User user)
+	{
+		if (userRepo.existsById(user.getEmailAddress()) && user.isValid()) {
+            userRepo.save(user);
+            return true;
+        }
+        return false;
+	}
+
+	/**
+	 * Method to get a list of registered users
+	 * 
+	 * @return the usersList
+	 */
+	public List<User> listAllUsers() {
+		List<User> usersList = new ArrayList<>();
+		for(User u : userRepo.findAll())
+			usersList.add(u);
+		return usersList;
+	}
+	
+	/**
+	 * Method to get a list of registered users
+	 * 
+	 * @return the usersList
+	 */
+	public List<User> listActiveUsers() {
+		List<User> usersList = new ArrayList<>();
+		for(User u : listAllUsers())
+			if (u.isActive())
+				usersList.add(u);
+		return usersList;
+	}
+	
+	
+	/**
+	 * Method to get a list of registered users
+	 * 
+	 * @return the usersList
+	 */
+	public List<User> listInactiveUsers() {
+		List<User> usersList = new ArrayList<>();
+		for(User u : listAllUsers())
+			if (!u.isActive())
+				usersList.add(u);
+		return usersList;
+	}
+	
+	public void setUserRepository(UserRepository userRepository)
+	{
+		this.userRepo = userRepository;
+	}
+	
+	
+	public void clearData()
+	{
+		userRepo.deleteAll();
 	}
 	
 }

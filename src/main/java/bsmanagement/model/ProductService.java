@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import bsmanagement.jparepositories.classtests.ProductRepositoryClass;
 import bsmanagement.model.Product.productType;
 import bsmanagement.model.jparepositories.ProductRepository;
 
@@ -208,6 +209,11 @@ public class ProductService {
 		}
 		Collections.sort(productList);
 		return productList;		
+	}
+
+
+	public void setRepository(ProductRepositoryClass productRepository) {
+		this.productRepo = productRepository;
 	}
 
 	

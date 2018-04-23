@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import bsmanagement.jparepositories.classtests.SaleRepositoryClass;
 import bsmanagement.model.jparepositories.SaleRepository;
 
 /**
@@ -282,6 +283,10 @@ public class SaleService {
 				listSale.add(s);
 		}
 		return listSale;
+	}
+
+	public void setRepository(SaleRepositoryClass saleRepository) {
+		this.saleRepo = saleRepository;
 	}
 	
 	
