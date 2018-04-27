@@ -56,6 +56,10 @@ public class ExpenseTest {
 		e1 = new Expense("Agua",expenseType.FIXED,35,null);
 		e2 = new Expense("Internet",expenseType.FIXED,50,null,"6 meses de contrato");
 		e3 = new Expense("Secadores",expenseType.ONEOFF,90,d1,"3 unidades");
+		
+		e1.setId(1);
+		e2.setId(2);
+		e3.setId(3);
 
 	}
 	
@@ -83,23 +87,7 @@ public class ExpenseTest {
 		
 	}
 	
-	/**
-	 * <h2>setStartIdGenerator() method test</h2>
-	 * 
-	 */
-	@Test 
-	public void testSetStartIdGenerator() {
-		
-		//Given
-		assertEquals(e1.getId(),1);
-		assertEquals(e2.getId(),2);
-		assertEquals(e3.getId(),3);
-		//When
-		Expense.setStartIdGenerator(10);
-		Expense e4 = new Expense("Luz",expenseType.FIXED,35,d2);
-		//Then
-		assertEquals(e4.getId(),10);
-	}
+	
 	
 	
 	/**

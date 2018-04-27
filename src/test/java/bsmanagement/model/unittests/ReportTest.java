@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import bsmanagement.jparepositories.classtests.ExpenseRepositoryClass;
 import bsmanagement.jparepositories.classtests.SaleRepositoryClass;
+import bsmanagement.jparepositories.classtests.UserRepositoryClass;
 import bsmanagement.model.Customer;
 import bsmanagement.model.Expense;
 import bsmanagement.model.Expense.expenseType;
@@ -23,6 +24,8 @@ import bsmanagement.model.PaymentMethod;
 import bsmanagement.model.Product;
 import bsmanagement.model.Sale;
 import bsmanagement.model.SaleService;
+import bsmanagement.model.User;
+import bsmanagement.model.UserService;
 
 
 
@@ -57,13 +60,17 @@ public class ReportTest {
 	Sale s2;
 	Sale s3;
 	Sale s4;
+	User u1;
+	User u2;
 	PaymentMethod cash;
 	PaymentMethod card;
 	
 	SaleService saleService;
 	ExpenseService expenseService;
+	UserService userService;
 	SaleRepositoryClass saleRepository;
 	ExpenseRepositoryClass expenseRepository;
+	UserRepositoryClass userRepository;
 
 	
 	Report rep17;
@@ -97,8 +104,11 @@ public class ReportTest {
 		saleService = new SaleService();
 		expenseRepository = new ExpenseRepositoryClass();
 		saleRepository = new SaleRepositoryClass();
+		userRepository = new UserRepositoryClass();
+		userService = new UserService();
 		expenseService.setRepository(expenseRepository);
 		saleService.setRepository(saleRepository);
+		userService.setUserRepository(userRepository);
 		Expense.setStartIdGenerator(0);
 		Sale.setStartIdGenerator(0);
 		Product.setStartIdGenerator(0);
@@ -120,6 +130,10 @@ public class ReportTest {
 		p2 = new Product("CORTE SIMPLES",productType.HAIRCUT,10);
 		c1 = new Customer("Joao",birthdate1,"Mangualde","914047935");
 		c2 = new Customer("Ana",birthdate2,"Porto","966677722");
+		u1 = new User("JOAO",birthdate1,"joao@domain.com","914047935","324666433");
+		u2 = new User("PEDRO",birthdate2,"pedro@hotmail.com","914047935","324666433");
+		userService.addUser(u1);
+		userService.addUser(u2);
 		
 		e1 = expenseService.createExpense("Agua",expenseType.FIXED,35,d1);
 		e2 = expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato");
@@ -128,10 +142,10 @@ public class ReportTest {
 		cash = new PaymentMethod("CASH",0.0,0.0);
 		card = new PaymentMethod("CASH",1.5,0.5);
 		
-		s1 = saleService.createSale(dt1, c1,p1,cash);
-		s2 = saleService.createSale(dt2, c2,p2,cash);
-		s3 = saleService.createSale(dt3, c1,p1,card);
-		s4 = saleService.createSale(dt4, c1,p1,card);
+		s1 = saleService.createSale(dt1, c1,p1,cash,u1);
+		s2 = saleService.createSale(dt2, c2,p2,cash,u1);
+		s3 = saleService.createSale(dt3, c1,p1,card,u2);
+		s4 = saleService.createSale(dt4, c1,p1,card,u1);
 		
 		expenseService.addExpense(e1);
 		expenseService.addExpense(e2);
@@ -225,8 +239,8 @@ public class ReportTest {
 		 */
 		List<Sale> expectedSales18 = new ArrayList<Sale>();
 		List<Sale> expectedSales17 = new ArrayList<Sale>();
-		assertEquals(rep18.getSalesList().isEmpty(),true);
-		assertEquals(rep17.getSalesList().isEmpty(),true);
+		assertEquals(rep18.getSales().isEmpty(),true);
+		assertEquals(rep17.getSales().isEmpty(),true);
 		
 		/* When: 
 		 * 		- Try to Add sales s1,s2,s3,s4 to rep17 and rep18
@@ -247,8 +261,8 @@ public class ReportTest {
 		/* Then: 
 		 * 		- Report18 has only s1,s2,s3 and Report17 has s4
 		 */
-		assertEquals(rep18.getSalesList(),expectedSales18);
-		assertEquals(rep17.getSalesList(),expectedSales17);
+		assertEquals(rep18.getSales(),expectedSales18);
+		assertEquals(rep17.getSales(),expectedSales17);
 	}
 	
 	/**
@@ -263,8 +277,8 @@ public class ReportTest {
 		 */
 		List<Expense> expectedExpenses18 = new ArrayList<Expense>();
 		List<Expense> expectedExpenses17 = new ArrayList<Expense>();
-		assertEquals(rep18.getSalesList().isEmpty(),true);
-		assertEquals(rep17.getSalesList().isEmpty(),true);
+		assertEquals(rep18.getSales().isEmpty(),true);
+		assertEquals(rep17.getSales().isEmpty(),true);
 		
 		/* When: 
 		 * 		- Try to Add fixed expense: e1 to rep18 
@@ -282,8 +296,8 @@ public class ReportTest {
 		 * 		- Report18 has fixed expenses: e1
 		 * 		- Report17 has fixed expense: e2 AND oneoff expense: e3
 		 */
-		assertEquals(rep18.getExpensesList(),expectedExpenses18);
-		assertEquals(rep17.getExpensesList(),expectedExpenses17);
+		assertEquals(rep18.getExpenses(),expectedExpenses18);
+		assertEquals(rep17.getExpenses(),expectedExpenses17);
 	}
 	
 	/**
@@ -296,7 +310,7 @@ public class ReportTest {
 		/* Given: 
 		 * 		- 1 empty reports of 2018/01 (rep18)
 		 */
-		assertEquals(rep18.getSalesList().isEmpty(),true);
+		assertEquals(rep18.getSales().isEmpty(),true);
 
 		/* When: 
 		 * 		- Try to add oneoff expense of 2017/12 and 2018/02: e3 to rep18
@@ -308,7 +322,7 @@ public class ReportTest {
 		/* Then: 
 		 * 		- Report18 still have a empty list of expenses
 		 */
-		assertEquals(rep18.getSalesList().isEmpty(),true);
+		assertEquals(rep18.getSales().isEmpty(),true);
 
 	}
 	
@@ -322,8 +336,8 @@ public class ReportTest {
 		/* Given: 
 		 * 		- Report of 2018/01, with 3 sales (rep18)
 		 */
-		assertEquals(rep18.getSalesList().isEmpty(),true);
-		assertEquals(rep18.getExpensesList().isEmpty(),true);
+		assertEquals(rep18.getSales().isEmpty(),true);
+		assertEquals(rep18.getExpenses().isEmpty(),true);
 		assertEquals(rep18.addExpense(e1),true);
 		assertEquals(rep18.addSale(s1),true);
 		assertEquals(rep18.addSale(s2),true);	
@@ -350,7 +364,7 @@ public class ReportTest {
 		/* Given: 
 		 * 		- Report of 2018/01, with 1 expense (rep17)
 		 */
-		assertEquals(rep17.getExpensesList().isEmpty(),true);
+		assertEquals(rep17.getExpenses().isEmpty(),true);
 		assertEquals(rep17.addExpense(e2),true);	
 		assertEquals(rep17.addExpense(e3),true);
 		
@@ -376,8 +390,8 @@ public class ReportTest {
 		/* Given: 
 		 * 		- Report of 2018/01, with  (rep18)
 		 */
-		assertEquals(rep18.getSalesList().isEmpty(),true);
-		assertEquals(rep18.getExpensesList().isEmpty(),true);
+		assertEquals(rep18.getSales().isEmpty(),true);
+		assertEquals(rep18.getExpenses().isEmpty(),true);
 		assertEquals(rep18.addExpense(e1),true);
 		assertEquals(rep18.addSale(s1),true);
 		assertEquals(rep18.addSale(s2),true);	
@@ -404,8 +418,8 @@ public class ReportTest {
 		/* Given: 
 		 * 		- Report of 2018/01, with  (rep18)
 		 */
-		assertEquals(rep18.getSalesList().isEmpty(),true);
-		assertEquals(rep18.getExpensesList().isEmpty(),true);
+		assertEquals(rep18.getSales().isEmpty(),true);
+		assertEquals(rep18.getExpenses().isEmpty(),true);
 		assertEquals(rep18.addExpense(e1),true);
 		assertEquals(rep18.addSale(s1),true);
 		assertEquals(rep18.addSale(s2),true);	
@@ -434,8 +448,8 @@ public class ReportTest {
 		/* Given: 
 		 * 		- Report of 2018/01, with 3 sales and 0 expenses (rep18)
 		 */
-		assertEquals(rep18.getSalesList().isEmpty(),true);
-		assertEquals(rep18.getExpensesList().isEmpty(),true);
+		assertEquals(rep18.getSales().isEmpty(),true);
+		assertEquals(rep18.getExpenses().isEmpty(),true);
 		assertEquals(rep18.addSale(s1),true);
 		assertEquals(rep18.addSale(s2),true);	
 		assertEquals(rep18.addSale(s3),true);
@@ -511,7 +525,7 @@ public class ReportTest {
 	 */
 	@Test
 	public void testToString() {
-		String expect = "Report [year=" + rep17.getYearMonth().getYear() + ", month=" + rep17.getYearMonth().getMonth().toString() + ", sales=" + rep17.getSalesList() + ", expenses=" + rep17.getExpensesList() + ", businessDays="
+		String expect = "Report [year=" + rep17.getYearMonth().getYear() + ", month=" + rep17.getYearMonth().getMonth().toString() + ", salesNumber=" + rep17.getSales().size() + ", expensesNumber=" + rep17.getExpenses().size() + ", businessDays="
 				+ rep17.getBusinessDays() + "]";
 		assertEquals(rep17.toString(),expect);
 	}

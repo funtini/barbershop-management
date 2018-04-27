@@ -4,11 +4,11 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import bsmanagement.jparepositories.classtests.ExpenseRepositoryClass;
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.jparepositories.ExpenseRepository;
 
@@ -93,13 +93,13 @@ public class ExpenseService {
 	}
 	
 	/**
-	 * Method to add a Expense to expenseList 
+	 * Method to remove a Expense from repository - Only OneOff Expenses can be removed
 	 * 
 	 * @param expense - Instance of Expense class
 	 * 
-	 * @return true if expense is successful removed, false otherwise
+	 * @return true if expense is successful removed - (OneOff Expense) - false if was just disabled (Fixed Expense)
 	 */
-	public boolean removeExpense(Expense expense) { //TODO: substituir boolean por VOID
+	public boolean removeExpense(Expense expense) {
 		expRepo.delete(expense);
 		return true;
 	}

@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import bsmanagement.model.Booking;
 import bsmanagement.model.Expense;
 import bsmanagement.model.jparepositories.ExpenseRepository;
 
@@ -75,6 +76,11 @@ public class ExpenseRepositoryClass implements ExpenseRepository{
 
 	@Override
 	public <S extends Expense> S save(S arg0) {
+		if (existsById(arg0.getId())) {
+			expenses.remove(arg0);
+			expenses.add(arg0);
+		}
+		arg0.setId(Expense.getAndIncrementId());
 		expenses.add(arg0);
 		return arg0;
 	}

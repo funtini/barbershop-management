@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Proxy;
+
 /**
  *
  * <h1> Customer </h1>
@@ -29,10 +31,12 @@ import javax.persistence.Id;
  *
  */
 @Entity
+@Proxy(lazy = false)
 public class Customer {
 	
 	@Id
-	private int id=idGenerator.incrementAndGet();
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private String name;
 	private LocalDate birth;
 	private String address;
@@ -205,6 +209,11 @@ public class Customer {
 
 	public static void setStartIdGenerator(int i) {
 		idGenerator.set(i-1);
+	}
+
+
+	public static int getAndIncrementId() {
+		return idGenerator.incrementAndGet();
 	}
 
 }

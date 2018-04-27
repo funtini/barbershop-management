@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import bsmanagement.model.Booking;
 import bsmanagement.model.Sale;
 import bsmanagement.model.jparepositories.SaleRepository;
 
@@ -75,6 +76,11 @@ public class SaleRepositoryClass implements SaleRepository{
 
 	@Override
 	public <S extends Sale> S save(S arg0) {
+		if (existsById(arg0.getId())) {
+			sales.remove(arg0);
+			sales.add(arg0);
+		}
+		arg0.setId(Sale.getAndIncrementId());
 		sales.add(arg0);
 		return arg0;
 	}

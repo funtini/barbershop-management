@@ -3,20 +3,12 @@ package bsmanagement.model;
 import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * 
@@ -41,27 +33,30 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  *
  */
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Sale implements Comparable<Sale>{
 	
 
 	@Id
-	private int id=idGenerator.incrementAndGet();
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private LocalDateTime date;
-	@ManyToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name = "customner_id")
 	private Customer customer;
-	@ManyToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
+	@ManyToOne
+    @JoinColumn(name = "product_id")
 	private Product product;
 	private double amount;
-	@ManyToOne(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name = "payment_id")
 	private PaymentMethod payment;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	private static AtomicInteger idGenerator=new AtomicInteger();
 
-	
 
-	
-	
 	/**
 	 * Constructor of Sale with Date, Customer and Product
 	 * 
@@ -69,13 +64,15 @@ public class Sale implements Comparable<Sale>{
 	 * @param customer - Customer that bought the product
 	 * @param product - Product sold
 	 * @param payment - type of payment
+	 * @param user - user that made the sale
 	 */
-	public Sale(LocalDateTime date, Customer customer, Product product, PaymentMethod payment) {
+	public Sale(LocalDateTime date, Customer customer, Product product, PaymentMethod payment,User user) {
 		this.date = date;
 		this.customer = customer;
 		this.product = product;
 		this.amount = product.getPrice();
 		this.payment = payment;
+		this.user = user;
 	}
 	
 	
@@ -84,18 +81,30 @@ public class Sale implements Comparable<Sale>{
 	 * 
 	 * @param date - DateTime of sale
 	 * @param product - Product sold
+	 * @param payment - type of payment
+	 * @param user - user that made the sale
 	 */
-	public Sale(LocalDateTime date, Product product, PaymentMethod payment) {
+	public Sale(LocalDateTime date, Product product, PaymentMethod payment, User user) {
 		this.date = date;
 		this.product = product;
 		this.customer = null;
 		this.amount = product.getPrice();
 		this.payment = payment;
+		this.user = user;
 	}
 	
 	protected Sale()
 	{
 		
+	}
+	
+	/**
+	 * 
+	 * @return user that made the sale
+	 */
+	public User getUser()
+	{
+		return this.user;
 	}
 
 	/**
@@ -279,6 +288,11 @@ public class Sale implements Comparable<Sale>{
 	public static void setStartIdGenerator(int i) {
 		idGenerator.set(i-1);
 		
+	}
+
+
+	public static int getAndIncrementId() {
+		return idGenerator.incrementAndGet();
 	}
 	
 	

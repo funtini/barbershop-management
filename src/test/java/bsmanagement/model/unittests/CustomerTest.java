@@ -52,6 +52,9 @@ public class CustomerTest {
 	c1 = new Customer("Joao",d1,"Mangualde","914047935");
 	c2 = new Customer("Ana",d2,"Porto","966677722");
 	
+	c1.setId(1);
+	c2.setId(2);
+	
 		
 	}
 	
@@ -66,25 +69,7 @@ public class CustomerTest {
 		
 		assertEquals(c2.getId(),2);
 		
-	}
-	
-	
-	/**
-	 * <h2>setStartIdGenerator() method test</h2>
-	 */
-	@Test 
-	public void testSetStartIdGenerator() {
-		
-		//Given
-		assertEquals(c1.getId(),1);
-		assertEquals(c2.getId(),2);
-		//When
-		Customer.setStartIdGenerator(10);
-		Customer c4 = new Customer("Rogerio",d1,"Porto","966677722");
-		//Then
-		assertEquals(c4.getId(),10);
-	}
-	
+	}	
 	
 	/**
 	 * getName() and setName() method test

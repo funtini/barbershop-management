@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import bsmanagement.jparepositories.classtests.SaleRepositoryClass;
 import bsmanagement.model.jparepositories.SaleRepository;
 
 /**
@@ -100,9 +100,9 @@ public class SaleService {
 	 * @param product - Product sold
 	 * @param payment - type of payment
 	 */
-	public Sale createSale(LocalDateTime date, Product product, PaymentMethod payment)
+	public Sale createSale(LocalDateTime date, Product product, PaymentMethod payment, User user)
 	{
-		Sale s = new Sale(date,product,payment);
+		Sale s = new Sale(date,product,payment, user);
 		
 		return s;
 	}
@@ -114,8 +114,8 @@ public class SaleService {
 	 * @param product - Product sold
 	 * @param payment - type of payment
 	 */
-	public Sale createSale(LocalDateTime date, Customer customer, Product product, PaymentMethod payment) {
-		Sale s = new Sale(date,customer,product,payment);
+	public Sale createSale(LocalDateTime date, Customer customer, Product product, PaymentMethod payment, User user) {
+		Sale s = new Sale(date,customer,product,payment, user);
 		return s;
 	}
 	
@@ -256,8 +256,6 @@ public class SaleService {
 		}
 		return sum;
 	}
-	
-	
 	
 	
 	/**

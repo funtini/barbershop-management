@@ -96,6 +96,8 @@ public class SaleServiceTest {
 		
 		c1 = new Customer("Joao",birthdate1,"Mangualde","914047935");
 		c2 = new Customer("Ana",birthdate2,"Porto","966677722");
+		c1.setId(1);
+		c2.setId(2);
 		
 		d1 = LocalDateTime.of(2018, 3, 11,10,30);
 		d2 = LocalDateTime.of(2018, 3, 12,11,35);
@@ -104,15 +106,42 @@ public class SaleServiceTest {
 		
 		p1 = new Product("CORTE COM LAVAGEM",productType.HAIRCUT,15);
 		p2 = new Product("CORTE SIMPLES",productType.HAIRCUT,10);
+		p1.setId(1);
+		p2.setId(2);
 		
 		cash = new PaymentMethod("CASH",0.0,0.0);
 		
-		s1 = new Sale(d1,c1,p1,cash);
-		s2 = new Sale(d2,c2,p2,cash);
-		s3 = new Sale(d3,p1,cash);
-		s4 = new Sale(d4,c1,p2,cash);
+		s1 = new Sale(d1,c1,p1,cash,null);
+		s2 = new Sale(d2,c2,p2,cash,null);
+		s3 = new Sale(d3,p1,cash,null);
+		s4 = new Sale(d4,c1,p2,cash,null);
+		s1.setId(1);
+		s2.setId(2);
+		s3.setId(3);
+		s4.setId(4);
 		
 		
+	}
+	
+	/**
+	 * <h2>setStartIdGenerator() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testSetStartIdGenerator() {
+		saleService.addSale(s1);
+		saleService.addSale(s2);
+		saleService.addSale(s3);
+		//Given
+		assertEquals(s1.getId(),1);
+		assertEquals(s2.getId(),2);
+		assertEquals(s3.getId(),3);
+		//When
+		Sale.setStartIdGenerator(10);
+		Sale s4 = new Sale(d3,p1,cash,null);
+		saleService.addSale(s4);
+		//Then
+		assertEquals(s4.getId(),10);
 	}
 
 	/**
@@ -150,11 +179,11 @@ public class SaleServiceTest {
 	
 		//When: add 3 sales (first one is added 2 times - "saleTest" - to verify the false result)
 		Sale.setStartIdGenerator(1);
-		Sale saleTest = saleService.createSale(d1,c1,p1,cash);
+		Sale saleTest = saleService.createSale(d1,c1,p1,cash,null);
 		assertEquals(saleService.addSale(saleTest),true);
 		assertEquals(saleService.addSale(saleTest),false); //already added this sale - false
-		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
 		expect.add(s1);
 		expect.add(s2);
 		expect.add(s3);
@@ -174,10 +203,10 @@ public class SaleServiceTest {
 		assertEquals(emptyList,expect);
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4,p1,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,p1,cash,null)),true);
 	
 		//When: find sales of March/2018
 		result = saleService.findSalesOf(YearMonth.of(2018, 3));
@@ -200,10 +229,10 @@ public class SaleServiceTest {
 		assertEquals(emptyList,expect);
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,cash,null)),true);
 	
 		//When: find sales of Customer c1
 		result = saleService.findSalesByCustomer(c1);
@@ -225,10 +254,10 @@ public class SaleServiceTest {
 		assertEquals(emptyList,expect);
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,cash,null)),true);
 	
 		//When: get the sum of all sales amounts
 		double sumResult = saleService.sumAllAmounts();
@@ -248,8 +277,8 @@ public class SaleServiceTest {
 		assertEquals(emptyList,expect);
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash,null)),true);
 		//When: find sales by ID
 		Sale res = saleService.findSaleById(2);
 		Sale res2 = saleService.findSaleById(1);
@@ -271,8 +300,8 @@ public class SaleServiceTest {
 		assertEquals(saleService.getSales(),emptyList); //check empty saleList
 		assertEquals(emptyList,expect);					//check empty test lists
 		Sale.setStartIdGenerator(1);		
-		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash,null)),true);
 		
 		
 		//When: find sales by ID
@@ -293,10 +322,10 @@ public class SaleServiceTest {
 		assertEquals(emptyList,expect);					//check empty test lists
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,cash,null)),true);
 		//When: find sales between dates
 		result = saleService.findSalesBetweenDates(LocalDate.of(2017, 2, 1), LocalDate.of(2018, 3, 11));
 		expect.add(s1);
@@ -318,10 +347,10 @@ public class SaleServiceTest {
 		assertEquals(emptyList,expect);					//check empty test lists
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,cash)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,cash,null)),true);
 		//When: find sales between invalid dates
 		result = saleService.findSalesBetweenDates(LocalDate.of(2019, 2, 1), LocalDate.of(2017, 3, 11));
 		//Then: get an empty List
@@ -341,12 +370,12 @@ public class SaleServiceTest {
 		PaymentMethod card = new PaymentMethod("CREDIT CARD",2.0,0.55);
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,card)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,card)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,card)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(5),c1,p2,card)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(10),c1,p2,card)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,card,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,card,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,card,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(5),c1,p2,card,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(10),c1,p2,card,null)),true);
 	
 		//When: get the sum of all Fee amounts
 		double sumResult = saleService.calculateTotalFeeAmount();
@@ -370,12 +399,12 @@ public class SaleServiceTest {
 		
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,creditCard)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,creditCard)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,creditCard)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(5),c1,p2,creditCard)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(10),c1,p2,creditCard)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,creditCard,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,creditCard,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,creditCard,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(5),c1,p2,creditCard,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(10),c1,p2,creditCard,null)),true);
 	
 		//When: find all sales payed by credit
 		creditSales = saleService.findSalesPayedBy(creditCard);
@@ -402,12 +431,12 @@ public class SaleServiceTest {
 		
 		
 		Sale.setStartIdGenerator(1);
-		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,creditCard)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,creditCard)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,creditCard)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(5),c1,p2,creditCard)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(10),c1,p2,creditCard)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,creditCard,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,creditCard,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,c1,p2,creditCard,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(5),c1,p2,creditCard,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(10),c1,p2,creditCard,null)),true);
 	
 		//When: summ all sale's amounts payed by credit
 		double creditSales = saleService.sumAllAmountsPayedBy(creditCard);

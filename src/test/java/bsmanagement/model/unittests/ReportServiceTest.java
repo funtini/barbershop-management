@@ -16,6 +16,7 @@ import bsmanagement.jparepositories.classtests.ExpenseRepositoryClass;
 import bsmanagement.jparepositories.classtests.ProductRepositoryClass;
 import bsmanagement.jparepositories.classtests.ReportRepositoryClass;
 import bsmanagement.jparepositories.classtests.SaleRepositoryClass;
+import bsmanagement.jparepositories.classtests.UserRepositoryClass;
 import bsmanagement.model.Customer;
 import bsmanagement.model.Expense;
 import bsmanagement.model.ExpenseService;
@@ -23,10 +24,13 @@ import bsmanagement.model.PaymentMethod;
 import bsmanagement.model.Product;
 import bsmanagement.model.Sale;
 import bsmanagement.model.SaleService;
+import bsmanagement.model.User;
+import bsmanagement.model.UserService;
 import bsmanagement.model.jparepositories.ExpenseRepository;
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.Product.productType;
 import bsmanagement.model.Report;
+import bsmanagement.model.ReportSaleExpenseService;
 import bsmanagement.model.ReportService;
 
 
@@ -66,6 +70,8 @@ public class ReportServiceTest {
 	Sale s2;
 	Sale s3;
 	Sale s4;
+	User u1;
+	User u2;
 	
 	Report r1;
 	Report r2;
@@ -73,9 +79,12 @@ public class ReportServiceTest {
 	SaleService saleService;
 	ExpenseService expenseService;
 	ReportService reportService;
+	UserService userService;
 	SaleRepositoryClass saleRepository;
 	ExpenseRepositoryClass expenseRepository;
 	ReportRepositoryClass reportRepository;
+	UserRepositoryClass userRepository;
+	ReportSaleExpenseService repSaleExpService;
 	List<Report> result;
 	List<Report> expect;
 	/**
@@ -103,15 +112,22 @@ public class ReportServiceTest {
 		expenseService = new ExpenseService();
 		saleService = new SaleService();
 		reportService = new ReportService();
+		userService = new UserService();
+		repSaleExpService = new ReportSaleExpenseService();
 		expenseRepository = new ExpenseRepositoryClass();
 		saleRepository = new SaleRepositoryClass();
 		reportRepository = new ReportRepositoryClass();
+		userRepository = new UserRepositoryClass();
+		userService.setUserRepository(userRepository);
 		saleService.setRepository(saleRepository);
 		expenseService.setRepository(expenseRepository);
 		reportService.setRepository(reportRepository);
+		repSaleExpService.setExpRepo(expenseRepository);
+		repSaleExpService.setReportRepo(reportRepository);
+		repSaleExpService.setSaleRepo(saleRepository);
 		expect = new ArrayList<Report>();
 		result = new ArrayList<Report>();
-		Expense.setStartIdGenerator(0);
+		Expense.setStartIdGenerator(1);
 		Sale.setStartIdGenerator(0);
 		Product.setStartIdGenerator(0);
 		Customer.setStartIdGenerator(0);
@@ -129,6 +145,10 @@ public class ReportServiceTest {
 		d3 = LocalDate.of(2017,12,21);
 		d4 = LocalDate.of(2017,10,21);
 		d5 = LocalDate.of(2018, 1, 10);
+		u1 = new User("JOAO",birthdate1,"joao@domain.com","914047935","324666433");
+		u2 = new User("PEDRO",birthdate2,"pedro@hotmail.com","914047935","324666433");
+		userService.addUser(u1);
+		userService.addUser(u2);
 		r1 = new Report(ym17);
 		r2 = new Report(ym18);
 		p1 = new Product("CORTE COM LAVAGEM",productType.HAIRCUT,15);
@@ -143,12 +163,12 @@ public class ReportServiceTest {
 		cash = new PaymentMethod("CASH",0.0,0.0);
 		card = new PaymentMethod("CASH",1.5,0.5);
 		
-		s1 = saleService.createSale(dt1, c1,p1,cash);
-		s2 = saleService.createSale(dt2, c2,p2,card);
+		s1 = saleService.createSale(dt1, c1,p1,cash,u1);
+		s2 = saleService.createSale(dt2, c2,p2,card,u1);
 		
-		expenseService.addExpense(e1);
-		expenseService.addExpense(e2);
-		expenseService.addExpense(e3);
+//		expenseService.addExpense(e1);
+//		expenseService.addExpense(e2);
+//		expenseService.addExpense(e3);
 	}
 
 	/**
@@ -166,6 +186,43 @@ public class ReportServiceTest {
 		expect.add(new Report(ym17));
 		expect.add(new Report(ym18));
 		assertEquals(expect.equals(reportService.getReports()),true);
+	}
+	
+	/**
+	 * <h2>getReportList() method test</h2>
+	 */
+	@Test 
+	public void testDefaultt() {
+		
+		//Given: empty list's
+		assertEquals(reportService.getReports().isEmpty(),true);	
+		//When: set a list with 3 sales		
+		assertEquals(reportService.addReport(ym17),true);	
+		assertEquals(reportService.addReport(ym18),true);	
+		//Then: get a list with that 3 sales
+		expect.add(new Report(ym17));
+		expect.add(new Report(ym18));
+		assertEquals(expect.equals(reportService.getReports()),true);
+		
+		
+		expenseService.addExpense(e1);
+		expenseService.addExpense(e2);
+
+		reportService.addExpense(e1);
+		reportService.addExpense(e2);
+		
+		
+
+		System.out.println(reportService.getReports());
+		System.out.println(expenseService.getExpenses());
+		System.out.println(expenseService.getExpenses().size());
+		repSaleExpService.removeExpense(e2);
+		repSaleExpService.getReport(YearMonth.of(2018, 2)).removeExpense(e2);
+		System.out.println(expenseService.getExpenses().size());
+		System.out.println(reportService.getReports());
+		System.out.println(expenseService.getExpenses());
+		
+		
 	}
 	
 	/**
@@ -286,10 +343,10 @@ public class ReportServiceTest {
 		/* When: 
 		 * 		- addSale in 12/2017(dt3), 01/2018(dt1 e dt2) and 02/2018 (dt4)
 		 */	
-		reportService.loadSale(new Sale(dt1, p1,cash));
-		reportService.loadSale(new Sale(dt2, c1, p2,card));
-		reportService.loadSale(new Sale(dt3, p1,cash));
-		reportService.loadSale(new Sale(dt4, p1,cash));
+		reportService.loadSale(new Sale(dt1, p1,cash,u1));
+		reportService.loadSale(new Sale(dt2, c1, p2,card,u1));
+		reportService.loadSale(new Sale(dt3, p1,cash,u1));
+		reportService.loadSale(new Sale(dt4, p1,cash,u1));
 		/* Then: 
 		 * 		- Reports are added with same YearMonth ym17
 		 */
@@ -317,8 +374,8 @@ public class ReportServiceTest {
 		/* When: 
 		 * 		- addSale in 12/2017(dt3), 01/2018(dt1 e dt2) and 02/2018 (dt4)
 		 */	
-		reportService.loadSale(new Sale(dt1, c1,p1,cash));
-		reportService.loadSale(new Sale(dt4, p1,cash));
+		reportService.loadSale(new Sale(dt1, c1,p1,cash,u1));
+		reportService.loadSale(new Sale(dt4, p1,cash,u1));
 		/* Then: 
 		 * 		- Reports are created for YearMonths associated to this sales
 		 */
@@ -344,8 +401,8 @@ public class ReportServiceTest {
 		assertEquals(reportService.getReports().contains(rep1802),false);		//check that list dont containst rep1802
 		assertEquals(reportService.getReport(YearMonth.of(2018, 2)),null);			//check that cant find a report of 2018/02
 		assertEquals(reportService.getReports().size(),2);							//check there is only 2 report on list
-		assertEquals(reportService.getReport(ym17).getExpensesList().isEmpty(),true);		//check if expenseList are empty
-		assertEquals(reportService.getReport(ym18).getExpensesList().isEmpty(),true);	
+		assertEquals(reportService.getReport(ym17).getExpenses().isEmpty(),true);		//check if expenseList are empty
+		assertEquals(reportService.getReport(ym18).getExpenses().isEmpty(),true);	
 		/* When: 
 		 * 		- add FIXED expenses at d1(2018/2/10), d3(2017/12/21) and d4(2017/10/21) and ONEOFF at  d2(2018/2/15) and d5(2018/1/10)
 		 * 		
@@ -356,8 +413,8 @@ public class ReportServiceTest {
 		 */	
 		reportService.addExpense("Secadores",expenseType.ONEOFF,90,d5,"3 unidades");
 		reportService.addExpense("Internet",expenseType.FIXED,50,d3,"6 meses de contrato");
-		assertEquals(reportService.getReport(ym17).getExpensesList().size(),1);		
-		assertEquals(reportService.getReport(ym18).getExpensesList().size(),2);
+		assertEquals(reportService.getReport(ym17).getExpenses().size(),1);		
+		assertEquals(reportService.getReport(ym18).getExpenses().size(),2);
 		assertEquals(reportService.getReports().size(),2);
 		reportService.addExpense("Agua",expenseType.FIXED,35,d1);
 		assertEquals(reportService.getReports().size(),3);	
@@ -372,8 +429,8 @@ public class ReportServiceTest {
 		
 		reportService.addExpense("MILHA",expenseType.FIXED,70,d4);
 		assertEquals(reportService.getReports().size(),4);	
-		assertEquals(reportService.getReport(ym17).getExpensesList().size(),2);		
-		assertEquals(reportService.getReport(ym18).getExpensesList().size(),3);
+		assertEquals(reportService.getReport(ym17).getExpenses().size(),2);		
+		assertEquals(reportService.getReport(ym18).getExpenses().size(),3);
 		
 	}
 	
@@ -397,29 +454,29 @@ public class ReportServiceTest {
 		int monthLen =dt1.getMonth().length(Year.isLeap(dt1.getYear()));	// save month length of each date (dt1 and dt3)
 		int monthLen2 =dt3.getMonth().length(Year.isLeap(dt3.getYear()));
 			
-		assertEquals(reportService.getReport(ym17).getSalesList().size(),0);		//verify that saleList of each report is empty
-		assertEquals(reportService.getReport(ym18).getSalesList().size(),0);
+		assertEquals(reportService.getReport(ym17).getSales().size(),0);		//verify that saleList of each report is empty
+		assertEquals(reportService.getReport(ym18).getSales().size(),0);
 		
 		for (int i=dt1.getDayOfMonth();i<monthLen;i++)					//Loop to put 105 sales into report 'ym18'
 		{
-			reportService.loadSale(new Sale(dt1, p1,card));
-			reportService.loadSale(new Sale(dt1.plusHours(1), c1, p2,cash));
-			reportService.loadSale(new Sale(dt1.plusHours(3), p1,cash));
-			reportService.loadSale(new Sale(dt1.plusHours(4), p2,card));
-			reportService.loadSale(new Sale(dt1.plusHours(5), p1,cash));
+			reportService.loadSale(new Sale(dt1, p1,card,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(1), c1, p2,cash,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(3), p1,cash,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(4), p2,card,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(5), p1,cash,u1));
 			
 		}		
-		assertEquals(reportService.getReport(ym18).getSalesList().size(),105);
+		assertEquals(reportService.getReport(ym18).getSales().size(),105);
 	
 		for (int i=dt3.getDayOfMonth();i<monthLen2;i++)					//Loop to put 45 sales into report 'ym17'
 		{
-			reportService.loadSale(new Sale(dt3, p1,card));
-			reportService.loadSale(new Sale(dt3.plusHours(1), c1, p2,cash));
-			reportService.loadSale(new Sale(dt3.plusHours(3), p2,card));
-			reportService.loadSale(new Sale(dt3.plusHours(4), p1,card));
-			reportService.loadSale(new Sale(dt3.plusHours(5), p1,cash));
+			reportService.loadSale(new Sale(dt3, p1,card,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(1), c1, p2,cash,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(3), p2,card,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(4), p1,card,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(5), p1,cash,u1));
 		}
-		assertEquals(reportService.getReport(ym17).getSalesList().size(),45);
+		assertEquals(reportService.getReport(ym17).getSales().size(),45);
 		
 		/* When: 
 		 * 		- calculate average ROI without any expense added
@@ -454,30 +511,30 @@ public class ReportServiceTest {
 		int monthLen =dt1.getMonth().length(Year.isLeap(dt1.getYear()));	// save month length of each date (dt1 and dt3)
 		int monthLen2 =dt3.getMonth().length(Year.isLeap(dt3.getYear()));
 			
-		assertEquals(reportService.getReport(ym17).getSalesList().size(),0);		//verify that saleList of each report is empty
-		assertEquals(reportService.getReport(ym18).getSalesList().size(),0);
+		assertEquals(reportService.getReport(ym17).getSales().size(),0);		//verify that saleList of each report is empty
+		assertEquals(reportService.getReport(ym18).getSales().size(),0);
 		
 		
 		for (int i=dt1.getDayOfMonth();i<monthLen;i++)					//Loop to put 105 sales into report 'ym18'
 		{
-			reportService.loadSale(new Sale(dt1, p1,card));
-			reportService.loadSale(new Sale(dt1.plusHours(1), c1, p2,cash));
-			reportService.loadSale(new Sale(dt1.plusHours(3), p1,cash));
-			reportService.loadSale(new Sale(dt1.plusHours(4), p2,card));
-			reportService.loadSale(new Sale(dt1.plusHours(5), p1,cash));
+			reportService.loadSale(new Sale(dt1, p1,card,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(1), c1, p2,cash,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(3), p1,cash,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(4), p2,card,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(5), p1,cash,u1));
 			
 		}		
-		assertEquals(reportService.getReport(ym18).getSalesList().size(),105);
+		assertEquals(reportService.getReport(ym18).getSales().size(),105);
 	
 		for (int i=dt3.getDayOfMonth();i<monthLen2;i++)					//Loop to put 45 sales into report 'ym17'
 		{
-			reportService.loadSale(new Sale(dt3, p1,card));
-			reportService.loadSale(new Sale(dt3.plusHours(1), c1, p2,cash));
-			reportService.loadSale(new Sale(dt3.plusHours(3), p2,card));
-			reportService.loadSale(new Sale(dt3.plusHours(4), p1,card));
-			reportService.loadSale(new Sale(dt3.plusHours(5), p1,cash));
+			reportService.loadSale(new Sale(dt3, p1,card,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(1), c1, p2,cash,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(3), p2,card,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(4), p1,card,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(5), p1,cash,u1));
 		}
-		assertEquals(reportService.getReport(ym17).getSalesList().size(),45);
+		assertEquals(reportService.getReport(ym17).getSales().size(),45);
 		
 			
 		reportService.addExpense("Agua",expenseType.FIXED,35,d3);						//add 3 expenses fixed on 12/2017 and 1 oneoff at 01/2018
@@ -485,8 +542,8 @@ public class ReportServiceTest {
 		reportService.addExpense("Luz",expenseType.FIXED,25,d3);
 		reportService.addExpense("Secadores",expenseType.ONEOFF,90,d5,"3 unidades");
 		
-		assertEquals(reportService.getReport(ym18).getExpensesList().size(),4);
-		assertEquals(reportService.getReport(ym17).getExpensesList().size(),3);
+		assertEquals(reportService.getReport(ym18).getExpenses().size(),4);
+		assertEquals(reportService.getReport(ym17).getExpenses().size(),3);
 		/* When: 
 		 * 		- calculate average ROI 
 		 */
@@ -519,30 +576,30 @@ public class ReportServiceTest {
 		int monthLen =dt1.getMonth().length(Year.isLeap(dt1.getYear()));	// save month length of each date (dt1 and dt3)
 		int monthLen2 =dt3.getMonth().length(Year.isLeap(dt3.getYear()));
 			
-		assertEquals(reportService.getReport(ym17).getSalesList().size(),0);		//verify that saleList of each report is empty
-		assertEquals(reportService.getReport(ym18).getSalesList().size(),0);
+		assertEquals(reportService.getReport(ym17).getSales().size(),0);		//verify that saleList of each report is empty
+		assertEquals(reportService.getReport(ym18).getSales().size(),0);
 		
 		
 		for (int i=dt1.getDayOfMonth();i<monthLen;i++)					//Loop to put 105 sales into report 'ym18'
 		{
-			reportService.loadSale(new Sale(dt1, p1,card));
-			reportService.loadSale(new Sale(dt1.plusHours(1), c1, p2,cash));
-			reportService.loadSale(new Sale(dt1.plusHours(3), p1,cash));
-			reportService.loadSale(new Sale(dt1.plusHours(4), p2,card));
-			reportService.loadSale(new Sale(dt1.plusHours(5), p1,cash));
+			reportService.loadSale(new Sale(dt1, p1,card,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(1), c1, p2,cash,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(3), p1,cash,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(4), p2,card,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(5), p1,cash,u1));
 			
 		}		
-		assertEquals(reportService.getReport(ym18).getSalesList().size(),105);
+		assertEquals(reportService.getReport(ym18).getSales().size(),105);
 	
 		for (int i=dt3.getDayOfMonth();i<monthLen2;i++)					//Loop to put 45 sales into report 'ym17'
 		{
-			reportService.loadSale(new Sale(dt3, p1,card));
-			reportService.loadSale(new Sale(dt3.plusHours(1), c1, p2,cash));
-			reportService.loadSale(new Sale(dt3.plusHours(3), p2,card));
-			reportService.loadSale(new Sale(dt3.plusHours(4), p1,card));
-			reportService.loadSale(new Sale(dt3.plusHours(5), p1,cash));
+			reportService.loadSale(new Sale(dt3, p1,card,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(1), c1, p2,cash,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(3), p2,card,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(4), p1,card,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(5), p1,cash,u1));
 		}
-		assertEquals(reportService.getReport(ym17).getSalesList().size(),45);
+		assertEquals(reportService.getReport(ym17).getSales().size(),45);
 		
 			
 		reportService.addExpense("Agua",expenseType.FIXED,35,d3);						//add 3 expenses fixed on 12/2017 and 1 oneoff at 01/2018
@@ -550,8 +607,8 @@ public class ReportServiceTest {
 		reportService.addExpense("Luz",expenseType.FIXED,25,d3);
 		reportService.addExpense("Secadores",expenseType.ONEOFF,90,d5,"3 unidades");
 		
-		assertEquals(reportService.getReport(ym18).getExpensesList().size(),4);
-		assertEquals(reportService.getReport(ym17).getExpensesList().size(),3);
+		assertEquals(reportService.getReport(ym18).getExpenses().size(),4);
+		assertEquals(reportService.getReport(ym17).getExpenses().size(),3);
 		/* When: 
 		 * 		- calculate average PROFIT 
 		 */
@@ -584,30 +641,30 @@ public class ReportServiceTest {
 		int monthLen =dt1.getMonth().length(Year.isLeap(dt1.getYear()));	// save month length of each date (dt1 and dt3)
 		int monthLen2 =dt3.getMonth().length(Year.isLeap(dt3.getYear()));
 			
-		assertEquals(reportService.getReport(ym17).getSalesList().size(),0);		//verify that saleList of each report is empty
-		assertEquals(reportService.getReport(ym18).getSalesList().size(),0);
+		assertEquals(reportService.getReport(ym17).getSales().size(),0);		//verify that saleList of each report is empty
+		assertEquals(reportService.getReport(ym18).getSales().size(),0);
 		
 		
 		for (int i=dt1.getDayOfMonth();i<monthLen;i++)					//Loop to put 105 sales into report 'ym18'
 		{
-			reportService.loadSale(new Sale(dt1, p1,card));
-			reportService.loadSale(new Sale(dt1.plusHours(1), c1, p2,cash));
-			reportService.loadSale(new Sale(dt1.plusHours(3), p1,cash));
-			reportService.loadSale(new Sale(dt1.plusHours(4), p2,card));
-			reportService.loadSale(new Sale(dt1.plusHours(5), p1,cash));
+			reportService.loadSale(new Sale(dt1, p1,card,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(1), c1, p2,cash,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(3), p1,cash,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(4), p2,card,u1));
+			reportService.loadSale(new Sale(dt1.plusHours(5), p1,cash,u1));
 			
 		}		
-		assertEquals(reportService.getReport(ym18).getSalesList().size(),105);
+		assertEquals(reportService.getReport(ym18).getSales().size(),105);
 	
 		for (int i=dt3.getDayOfMonth();i<monthLen2;i++)					//Loop to put 45 sales into report 'ym17'
 		{
-			reportService.loadSale(new Sale(dt3, p1,card));
-			reportService.loadSale(new Sale(dt3.plusHours(1), c1, p2,cash));
-			reportService.loadSale(new Sale(dt3.plusHours(3), p2,card));
-			reportService.loadSale(new Sale(dt3.plusHours(4), p1,card));
-			reportService.loadSale(new Sale(dt3.plusHours(5), p1,cash));
+			reportService.loadSale(new Sale(dt3, p1,card,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(1), c1, p2,cash,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(3), p2,card,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(4), p1,card,u1));
+			reportService.loadSale(new Sale(dt3.plusHours(5), p1,cash,u1));
 		}
-		assertEquals(reportService.getReport(ym17).getSalesList().size(),45);
+		assertEquals(reportService.getReport(ym17).getSales().size(),45);
 		
 			
 		reportService.addExpense("Agua",expenseType.FIXED,35,d3);						//add 3 expenses fixed on 12/2017 and 1 oneoff at 01/2018
@@ -615,8 +672,8 @@ public class ReportServiceTest {
 		reportService.addExpense("Luz",expenseType.FIXED,25,d3);
 		reportService.addExpense("Secadores",expenseType.ONEOFF,90,d5,"3 unidades");
 		
-		assertEquals(reportService.getReport(ym18).getExpensesList().size(),4);
-		assertEquals(reportService.getReport(ym17).getExpensesList().size(),3);
+		assertEquals(reportService.getReport(ym18).getExpenses().size(),4);
+		assertEquals(reportService.getReport(ym17).getExpenses().size(),3);
 		/* When: 
 		 * 		- calculate average INCOME and EXPENSES
 		 */
@@ -652,28 +709,38 @@ public class ReportServiceTest {
 		
 		int monthLen =today.getMonth().length(Year.isLeap(today.getYear()));	// save month length of today
 			
-		assertEquals(reportService.getReport(today).getSalesList().size(),0);		//verify that saleList is empty
+		assertEquals(reportService.getReport(today).getSales().size(),0);		//verify that saleList is empty
 		
 		for (int i=dateSale.getDayOfMonth();i<monthLen;i++)					//Loop to put 105 sales into report of this month
 		{
-			reportService.loadSale((new Sale(dateSale, p1,cash)));
-			reportService.loadSale((new Sale(dateSale.plusMinutes(1), c1, p2,card)));
-			reportService.loadSale((new Sale(dateSale.plusMinutes(3), p1,cash)));
-			reportService.loadSale((new Sale(dateSale.plusMinutes(4), p2,card)));
-			reportService.loadSale((new Sale(dateSale.plusMinutes(5), p1,cash)));
+			reportService.loadSale((new Sale(dateSale, p1,cash,u1)));
+			reportService.loadSale((new Sale(dateSale.plusMinutes(1), c1, p2,card,u1)));
+			reportService.loadSale((new Sale(dateSale.plusMinutes(3), p1,cash,u1)));
+			reportService.loadSale((new Sale(dateSale.plusMinutes(4), p2,card,u1)));
+			reportService.loadSale((new Sale(dateSale.plusMinutes(5), p1,cash,u1)));
 			
 		}		
-		assertEquals(reportService.getReport(today).getSalesList().size(),110);
+		assertEquals(reportService.getReport(today).getSales().size(),110);
 
+		Expense e1 = expenseService.createExpense("Agua",expenseType.FIXED,35,LocalDate.now());
+		Expense e2 = expenseService.createExpense("LUZ",expenseType.FIXED,55,LocalDate.now());
+		expenseService.addExpense(e1);
+		expenseService.addExpense(e2);
+		reportService.addExpense(e1);		
+		reportService.addExpense(e2);		// add expense
+////		Expense e = reportService.getExpenseRegistry().searchExpenseByName("LUZ").get(0);//remove expense
 		
-			
-		reportService.addExpense("Agua",expenseType.FIXED,35,LocalDate.now());		
-		reportService.addExpense("LUZ",expenseType.FIXED,55,LocalDate.now());		// add expense
-		Expense e = reportService.getExpenseRegistry().searchExpenseByName("LUZ").get(0);//remove expense
-		reportService.removeExpense(e);
-		reportService.addExpense("Secadores",expenseType.ONEOFF,90,LocalDate.of(2050, 3, 1),"3 unidades");
 		
-		assertEquals(reportService.getReport(today).getExpensesList().size(),2);		//add 2 expenses
+		Expense ex = reportService.getReport(today).findExpensesByName("LUZ").get(0);
+		expenseService.removeExpense(ex);
+		expenseService.removeExpense(expenseService.getExpenses().get(4));
+		
+		reportService.addExpense("Secadores",expenseType.ONEOFF,90,dateSale.toLocalDate(),"3 unidades");
+		reportService.updateReport(reportService.getReport(today));
+		System.out.println(reportService.getReports());
+		System.out.println(expenseService.getExpenses());
+		System.out.println(reportService.getReport(today).getExpenses());
+		assertEquals(reportService.getReport(today).getExpenses().size(),2);		//add 2 expenses
 		/* When: 
 		 * 		- calculate any average statistic
 		 */
@@ -719,15 +786,15 @@ public class ReportServiceTest {
 		
 		int monthLen =today.getMonth().length(Year.isLeap(today.getYear()));	// save month length of today
 			
-		assertEquals(reportService.getReport(today).getSalesList().size(),0);		//verify that saleList is empty
+		assertEquals(reportService.getReport(today).getSales().size(),0);		//verify that saleList is empty
 		
 		for (int i=dateSale.getDayOfMonth();i<monthLen;i++)					//Loop to put 105 sales into report of this month
 		{
-			reportService.loadSale(new Sale(dateSale, p1,cash));
-			reportService.loadSale(new Sale(dateSale.plusMinutes(1), c1, p2,card));
-			reportService.loadSale(new Sale(dateSale.plusMinutes(3), p1,cash));
-			reportService.loadSale(new Sale(dateSale.plusMinutes(4), p2,card));
-			reportService.loadSale(new Sale(dateSale.plusMinutes(5), p1,cash));
+			reportService.loadSale(new Sale(dateSale, p1,cash,u1));
+			reportService.loadSale(new Sale(dateSale.plusMinutes(1), c1, p2,card,u1));
+			reportService.loadSale(new Sale(dateSale.plusMinutes(3), p1,cash,u1));
+			reportService.loadSale(new Sale(dateSale.plusMinutes(4), p2,card,u1));
+			reportService.loadSale(new Sale(dateSale.plusMinutes(5), p1,cash,u1));
 			
 		}		
 
@@ -809,8 +876,8 @@ public class ReportServiceTest {
 		assertEquals(reportService.getReports().contains(rep1802),false);		//check that list dont containst rep1802
 		assertEquals(reportService.getReport(YearMonth.of(2018, 2)),null);			//check that cant find a report of 2018/02
 		assertEquals(reportService.getReports().size(),2);							//check there is only 2 report on list
-		assertEquals(reportService.getReport(ym17).getExpensesList().isEmpty(),true);		//check if expenseList are empty
-		assertEquals(reportService.getReport(ym18).getExpensesList().isEmpty(),true);	
+		assertEquals(reportService.getReport(ym17).getExpenses().isEmpty(),true);		//check if expenseList are empty
+		assertEquals(reportService.getReport(ym18).getExpenses().isEmpty(),true);	
 		/* When: 
 		 * 		- add FIXED expenses at d1(2018/2/10), d3(2017/12/21) and d4(2017/10/21) and ONEOFF at  d2(2018/2/15) and d5(2018/1/10)
 		 * 		
@@ -821,8 +888,8 @@ public class ReportServiceTest {
 		 */	
 		reportService.addExpense("Secadores",expenseType.ONEOFF,90,d5,"3 unidades");
 		reportService.addExpense("Internet",expenseType.FIXED,50,d3,"6 meses de contrato");
-		assertEquals(reportService.getReport(ym17).getExpensesList().size(),1);		
-		assertEquals(reportService.getReport(ym18).getExpensesList().size(),2);
+		assertEquals(reportService.getReport(ym17).getExpenses().size(),1);		
+		assertEquals(reportService.getReport(ym18).getExpenses().size(),2);
 		assertEquals(reportService.getReports().size(),2);
 		reportService.addExpense("Agua",expenseType.FIXED,35,d1);
 		assertEquals(reportService.getReports().size(),3);
@@ -837,8 +904,8 @@ public class ReportServiceTest {
 		
 		reportService.addExpense("MILHA",expenseType.FIXED,70,d4);
 		assertEquals(reportService.getReports().size(),4);	
-		assertEquals(reportService.getReport(ym17).getExpensesList().size(),2);		
-		assertEquals(reportService.getReport(ym18).getExpensesList().size(),3);
+		assertEquals(reportService.getReport(ym17).getExpenses().size(),2);		
+		assertEquals(reportService.getReport(ym18).getExpenses().size(),3);
 		
 	}
 	

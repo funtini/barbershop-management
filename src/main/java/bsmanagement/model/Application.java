@@ -39,6 +39,9 @@ public class Application{
 	
 	@Autowired
     private BookingCustomerService bookingCustomerService;
+	
+	@Autowired
+    private ReportSaleExpenseService repSaleExpService;
 
 	private Scanner scan = new Scanner(System.in);
 	
@@ -87,6 +90,9 @@ public class Application{
 		u1.addAddress(a2);
 		u2.addAddress(a3);
 		u3.addAddress(a4);
+		
+		u1.addContract(300, 25);
+		u2.addContract(0, 75);
 	
 		userService.updateUser(u1);
 		userService.updateUser(u2);
@@ -161,6 +167,7 @@ public class Application{
 		Product p4 = new Product("SHAMPOO MEN",productType.EXTRA,12);
 		
 		PaymentMethod cash = new PaymentMethod("CASH",0,0);
+		repSaleExpService.addPaymentMethod(cash);
 		
 		productService.addProduct(p1);
 		productService.addProduct(p2);
@@ -168,8 +175,14 @@ public class Application{
 		productService.addProduct(p4);
 		
 //		//Register expenses
-		repService.addExpense("Internet",expenseType.FIXED,40,LocalDate.now().minusMonths(3),"6 meses de contrato");
-		repService.addExpense("Maquina Barbear",expenseType.ONEOFF,60,LocalDate.now().minusMonths(3),"2 unidades");
+		Expense e5 = expService.createExpense("Internet",expenseType.FIXED,40,LocalDate.now().minusMonths(3),"6 meses de contrato");
+		Expense e6 = expService.createExpense("Maquina Barbear",expenseType.ONEOFF,60,LocalDate.now().minusMonths(3),"2 unidades");
+		
+		expService.addExpense(e5);
+		expService.addExpense(e6);
+		
+		repService.addExpense(e5);
+		repService.addExpense(e6);
 		
 		
 		
@@ -185,13 +198,22 @@ public class Application{
 		{
 			if (dayCount != 6 && dayCount !=7 && dayCount !=13 && dayCount !=14)
 			{
-				Sale s1 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c3,p3, cash);
-				Sale s2 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c4,p2, cash);
-				Sale s3 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c5,p1, cash);
-				Sale s4 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),p2, cash);
-				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),p2, cash);
-				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c7,p1, cash);
-				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c9,p3, cash);
+				Sale s1 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c3,p3, cash, u1);
+				Sale s2 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c4,p2, cash,u1);
+				Sale s3 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c5,p1, cash,u2);
+				Sale s4 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),p2, cash,u2);
+				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),p2, cash,u2);
+				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c7,p1, cash,u1);
+				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c9,p3, cash,u2);
+				
+				saleService.addSale(s1);
+				saleService.addSale(s2);
+				saleService.addSale(s3);
+				saleService.addSale(s4);
+				saleService.addSale(s5);
+				saleService.addSale(s6);
+				saleService.addSale(s7);
+				
 	
 				repService.loadSale(s1);
 				repService.loadSale(s2);
@@ -211,13 +233,13 @@ public class Application{
 		{
 			if (dayCount != 20 && dayCount !=21 && dayCount !=27 && dayCount !=28)
 			{
-				Sale s1 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c1,p3, cash);
-				Sale s2 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c2,p1, cash);
-				Sale s3 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c8,p1, cash);
-				Sale s4 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),p2, cash);
-				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),p2, cash);
-				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c11,p1, cash);
-				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c10,p2, cash);
+				Sale s1 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c1,p3, cash,u1);
+				Sale s2 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c2,p1, cash,u2);
+				Sale s3 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c8,p1, cash,u1);
+				Sale s4 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),p2, cash,u2);
+				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),p2, cash,u2);
+				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c11,p1, cash,u1);
+				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(3).withDayOfMonth(i),c10,p2, cash,u2);
 				
 				
 				saleService.addSale(s1);
@@ -249,13 +271,13 @@ public class Application{
 		{
 			if (dayCount != 33 && dayCount !=34 && dayCount !=40 && dayCount !=41)
 			{
-				Sale s1 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c12,p3, cash);
-				Sale s2 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c13,p1, cash);
-				Sale s3 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c14,p1, cash);
-				Sale s4 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),p2, cash);
-				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),p2, cash);
-				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c15,p1, cash);
-				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c4,p1, cash);
+				Sale s1 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c12,p3, cash,u2);
+				Sale s2 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c13,p1, cash,u2);
+				Sale s3 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c14,p1, cash,u2);
+				Sale s4 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),p2, cash,u2);
+				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),p2, cash,u1);
+				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c15,p1, cash,u1);
+				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c4,p1, cash,u1);
 				
 				saleService.addSale(s1);
 				saleService.addSale(s2);
@@ -281,13 +303,13 @@ public class Application{
 		{
 			if (dayCount != 47 && dayCount !=48 && dayCount !=54 && dayCount !=55)
 			{
-				Sale s1 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c3,p2, cash);
-				Sale s2 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c6,p1, cash);
-				Sale s3 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c7,p1, cash);
-				Sale s4 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),p2, cash);
-				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),p2, cash);
-				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c10,p1, cash);
-				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c9,p2, cash);
+				Sale s1 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c3,p2, cash,null);
+				Sale s2 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c6,p1, cash,null);
+				Sale s3 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c7,p1, cash,null);
+				Sale s4 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),p2, cash,u2);
+				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),p2, cash,u2);
+				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c10,p1, cash,u2);
+				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(2).withDayOfMonth(i),c9,p2, cash,u2);
 				
 				saleService.addSale(s1);
 				saleService.addSale(s2);
@@ -317,13 +339,13 @@ public class Application{
 		{
 			if (dayCount != 61 && dayCount !=62 && dayCount !=68 && dayCount !=69)
 			{
-				Sale s1 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c1,p2, cash);
-				Sale s2 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c2,p1, cash);
-				Sale s3 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c3,p2, cash);
-				Sale s4 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),p2, cash);
-				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),p2, cash);
-				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c5,p2, cash);
-				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c4,p3, cash);
+				Sale s1 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c1,p2, cash,u2);
+				Sale s2 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c2,p1, cash,u2);
+				Sale s3 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c3,p2, cash,u1);
+				Sale s4 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),p2, cash,u1);
+				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),p2, cash,u1);
+				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c5,p2, cash,u2);
+				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c4,p3, cash,u1);
 				
 				saleService.addSale(s1);
 				saleService.addSale(s2);
@@ -349,13 +371,13 @@ public class Application{
 		{
 			if (dayCount != 75 && dayCount !=76 && dayCount !=82 && dayCount !=83)
 			{
-				Sale s1 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c10,p2, cash);
-				Sale s2 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c11,p1, cash);
-				Sale s3 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c12,p1, cash);
-				Sale s4 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),p2, cash);
-				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),p2, cash);
-				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c15,p1, cash);
-				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c7,p2, cash);
+				Sale s1 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c10,p2, cash,u2);
+				Sale s2 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c11,p1, cash,u2);
+				Sale s3 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c12,p1, cash,u2);
+				Sale s4 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),p2, cash,u2);
+				Sale s5 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),p2, cash,u2);
+				Sale s6 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c15,p1, cash,u2);
+				Sale s7 = saleService.createSale(LocalDateTime.now().minusMonths(1).withDayOfMonth(i),c7,p2, cash,u2);
 				
 				saleService.addSale(s1);
 				saleService.addSale(s2);
@@ -387,13 +409,13 @@ public class Application{
 		{
 			if (dayCount != 89 && dayCount !=90 && dayCount !=96 && dayCount !=97)
 			{
-				Sale s1 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),c1,p2, cash);
-				Sale s2 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),c2,p1, cash);
-				Sale s3 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),c7,p2, cash);
-				Sale s4 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),p2, cash);
-				Sale s5 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),p2, cash);
-				Sale s6 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),p2, cash);
-				Sale s7 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),p1, cash);
+				Sale s1 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),c1,p2, cash,u2);
+				Sale s2 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),c2,p1, cash,u2);
+				Sale s3 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),c7,p2, cash,u2);
+				Sale s4 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),p2, cash,u2);
+				Sale s5 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),p2, cash,u2);
+				Sale s6 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),p2, cash,u2);
+				Sale s7 = saleService.createSale(LocalDateTime.now().withDayOfMonth(i),p1, cash,u2);
 				
 				saleService.addSale(s1);
 				saleService.addSale(s2);
@@ -415,23 +437,42 @@ public class Application{
 			dayCount++;
 		}
 		
-		
-		repService.addExpense("Luz",expenseType.FIXED,30,LocalDate.now().minusMonths(2),"6 meses de contrato");
-		repService.addExpense("Secadores",expenseType.ONEOFF,90,LocalDate.now().minusMonths(1),"3 unidades");
-		repService.addExpense("Shampoos",expenseType.ONEOFF,60,LocalDate.now(),"10 unidades");
-		repService.addExpense("Agua",expenseType.FIXED,35,LocalDate.now());
-		
+		Expense e1 = expService.createExpense("Luz",expenseType.FIXED,30,LocalDate.now().minusMonths(2),"6 meses de contrato");
+		Expense e2 = expService.createExpense("Secadores",expenseType.ONEOFF,90,LocalDate.now().minusMonths(1),"3 unidades");
+		Expense e3 = expService.createExpense("Shampoos",expenseType.ONEOFF,60,LocalDate.now(),"10 unidades");
+		Expense e4 = expService.createExpense("Agua",expenseType.FIXED,35,LocalDate.now());
+
+		expService.addExpense(e1);
+		expService.addExpense(e2);
+		expService.addExpense(e3);
+		expService.addExpense(e4);
+
+		repService.addExpense(e1);
+		repService.addExpense(e2);
+		repService.addExpense(e3);
+		repService.addExpense(e4);
+	
 		Report r0 = repService.getReport(YearMonth.of(2018, 01));
 		Report r1 = repService.getReport(YearMonth.of(2018, 02));
 		Report r2 = repService.getReport(YearMonth.of(2018, 03));
 		Report r3 = repService.getReport(YearMonth.of(2018, 04));
-		
+
 		
 		System.out.println(r0.calculateTotalExpensesValue()+" --- "+r0.calculateTotalSalesAmount()+" --- "+r0.calculateRoi());
 		System.out.println(r1.calculateTotalExpensesValue()+" --- "+r1.calculateTotalSalesAmount()+" --- "+r1.calculateRoi());
 		System.out.println(r2.calculateTotalExpensesValue()+" --- "+r2.calculateTotalSalesAmount()+" --- "+r2.calculateRoi());
 		System.out.println(r3.calculateTotalExpensesValue()+" --- "+r3.calculateTotalSalesAmount()+" --- "+r3.calculateRoi());
 		
+//		System.out.println(repService.getReport(YearMonth.of(2018, 04)).getSales().get(0).getCustomer());
+		System.out.println(saleService.getSales().get(470).getCustomer());
+		String choice = scan.nextLine();
+
+		System.out.println(repService.getReport(YearMonth.of(2018, 04)).getExpenses().size());
+		e4 = expService.getExpenses().get(expService.getExpenses().size()-1);
+		expService.removeExpense(e4);
+		
+		System.out.println(repService.getReport(YearMonth.of(2018, 04)).getExpenses().size());
+		System.out.println(repService.getReport(YearMonth.of(2018, 04)).getExpenses());
 		
 		System.out.println("/n************************/n"+"EXPENSES AVG: "+repService.calculateAvgMonthlyExpensesValue()+"/n************************/n");
 		System.out.println("/n************************/n"+"ROI: "+repService.calculateRoiAllTime()+"/n************************/n");
@@ -443,9 +484,9 @@ public class Application{
 		System.out.println("/n************************/n"+expService.getExpenses().size()+"/n************************/n");
 		System.out.println("/n************************/n"+bookingCustomerService.getAllCustomers()+"/n************************/n");
 //		String choice = scan.nextLine();
-		System.out.println("/n************************/n"+r1.getExpensesList()+"/n************************/n");
-		System.out.println("/n************************/n"+r2.getExpensesList()+"/n************************/n");
-		System.out.println("/n************************/n"+r3.getExpensesList()+"/n************************/n");
+		System.out.println("/n************************/n"+r1.getExpenses()+"/n************************/n");
+		System.out.println("/n************************/n"+r2.getExpenses()+"/n************************/n");
+		System.out.println("/n************************/n"+r3.getExpenses()+"/n************************/n");
 
 		/**
 		 * Verificar BusinessDays.. Esta a 0 na base de dados...

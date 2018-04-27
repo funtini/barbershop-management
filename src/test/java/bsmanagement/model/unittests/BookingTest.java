@@ -62,6 +62,9 @@ public class BookingTest {
 		b1 = new Booking(dt1,c1);
 		b2 = new Booking(dt2,c2);
 		
+		b1.setId(1);
+		b2.setId(2);
+		
 	}
 	
 	
@@ -80,21 +83,7 @@ public class BookingTest {
 	}
 	
 	
-	/**
-	 * <h2>setStartIdGenerator() method test</h2>
-	 */
-	@Test 
-	public void testSetStartIdGenerator() {
-		
-		//Given
-		assertEquals(b1.getId(),1);
-		assertEquals(b2.getId(),2);
-		//When
-		Booking.setStartIdGenerator(10);
-		Booking b3 = new Booking(dt2,c1);
-		//Then
-		assertEquals(b3.getId(),10);
-	}
+	
 	
 	
 	/**

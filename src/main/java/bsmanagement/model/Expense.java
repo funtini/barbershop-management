@@ -64,7 +64,8 @@ public class Expense implements Comparable<Expense>{
 	}
 	
 	@Id
-	private int id=idGenerator.incrementAndGet();
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private String name;
 	@Enumerated(EnumType.STRING)
 	private expenseType type;
@@ -105,13 +106,16 @@ public class Expense implements Comparable<Expense>{
 		this.type = type;
 		this.valueOfPayment = value;
 		this.description = description;
-		this.dateOfPayment = date;	
+		this.dateOfPayment = date;
 	}
 	
 	protected Expense()
 	{
 		
 	}
+	
+	
+	
 	
 	/**
 	 * @return the id of Expense
@@ -216,6 +220,23 @@ public class Expense implements Comparable<Expense>{
 		this.description = description;
 	}
 	
+//	/**
+//	 * 
+//	 * @return activation status, reports can load this expense
+//	 */
+//	public boolean isActive()
+//	{
+//		return isActive;
+//	}
+//	
+//	/**
+//	 * disable expense for next reports
+//	 */
+//	public void disable()
+//	{
+//		this.isActive=false;
+//	}
+	
 
 	@Override
 	public int hashCode() {
@@ -263,6 +284,10 @@ public class Expense implements Comparable<Expense>{
 	public static void setStartIdGenerator(int i) {
 		idGenerator.set(i-1);
 		
+	}
+
+	public static int getAndIncrementId() {
+		return idGenerator.incrementAndGet();
 	}
 	
 	

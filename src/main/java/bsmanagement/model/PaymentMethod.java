@@ -22,7 +22,7 @@ import javax.persistence.Id;
 public class PaymentMethod {
 	
 	@Id
-	private String name;
+	private String id;
 	private double fee;
 	private double minFeeValue;
 	
@@ -35,7 +35,7 @@ public class PaymentMethod {
 	 * @param minFeeValue
 	 */
 	public PaymentMethod(String type, double fee, double minFeeValue) {
-		this.name = type;
+		this.id = type;
 		this.fee = fee;
 		this.minFeeValue = minFeeValue;
 	}
@@ -49,7 +49,7 @@ public class PaymentMethod {
 	 * @return the type name of Payment
 	 */
 	public String getType() {
-		return name;
+		return id;
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class PaymentMethod {
 	 * @param type
 	 */
 	public void setType(String type) {
-		this.name = type;
+		this.id = type;
 	}
 	
 	/**
@@ -101,7 +101,7 @@ public class PaymentMethod {
 	 * @param True if payment method is valid, false otherwise
 	 */
 	public boolean isValid() {
-		if (this.name == null || this.name.isEmpty())
+		if (this.id == null || this.id.isEmpty())
 			return false;
 		return true;
 	}
@@ -115,7 +115,7 @@ public class PaymentMethod {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -136,7 +136,7 @@ public class PaymentMethod {
 		if (!(obj instanceof PaymentMethod))
 			return false;
 		PaymentMethod other = (PaymentMethod) obj;
-		if (!name.equals(other.name))
+		if (!id.equals(other.id))
 			return false;
 		return true;
 	}
@@ -150,7 +150,7 @@ public class PaymentMethod {
 	 */
 	@Override
 	public String toString() {
-		return "PaymentMethod [name=" + name + ", fee=" + fee + ", minFeeValue=" + minFeeValue + "]";
+		return "PaymentMethod [name=" + id + ", fee=" + fee + ", minFeeValue=" + minFeeValue + "]";
 	}
 	
 	

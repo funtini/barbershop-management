@@ -72,6 +72,9 @@ public class SaleTest {
 		
 		c1 = new Customer("Joao",birthdate1,"Mangualde","914047935");
 		c2 = new Customer("Ana",birthdate2,"Porto","966677722");
+		c1.setId(1);
+		c2.setId(2);
+		
 		
 		d1 = LocalDateTime.of(2018, 3, 11,10,30);
 		d2 = LocalDateTime.of(2018, 3, 12,11,35);
@@ -79,13 +82,19 @@ public class SaleTest {
 		
 		p1 = new Product("CORTE COM LAVAGEM",productType.HAIRCUT,15);
 		p2 = new Product("CORTE SIMPLES",productType.HAIRCUT,10);
+		p1.setId(1);
+		p2.setId(2);
 		
 		cash = new PaymentMethod("CASH",0.0,0.0);
 		card = new PaymentMethod("CREDIT CARD",2.0,0.55);
 		
-		s1 = new Sale(d1,c1,p1,cash);
-		s2 = new Sale(d2,c2,p2,cash);
-		s3 = new Sale(d3,p1,cash);
+		s1 = new Sale(d1,c1,p1,cash,null);
+		s2 = new Sale(d2,c2,p2,cash,null);
+		s3 = new Sale(d3,p1,cash,null);
+		s1.setId(1);
+		s2.setId(2);
+		s3.setId(3);
+		
 
 	}
 	
@@ -116,23 +125,7 @@ public class SaleTest {
 	}
 	
 	
-	/**
-	 * <h2>setStartIdGenerator() method test</h2>
-	 * 
-	 */
-	@Test 
-	public void testSetStartIdGenerator() {
-		
-		//Given
-		assertEquals(s1.getId(),1);
-		assertEquals(s2.getId(),2);
-		assertEquals(s3.getId(),3);
-		//When
-		Sale.setStartIdGenerator(10);
-		Sale s4 = new Sale(d3,p1,cash);
-		//Then
-		assertEquals(s4.getId(),10);
-	}
+	
 	
 	
 	
@@ -265,7 +258,7 @@ public class SaleTest {
 	 */
 	@Test
 	public void testHashCode() {
-		Sale s4 = new Sale(d3,p1,cash);
+		Sale s4 = new Sale(d3,p1,cash,null);
 		s4.setId(3);
 		assertEquals(s3.hashCode(),s4.hashCode());
 		assertNotEquals(s1.hashCode(),s2.hashCode());
@@ -299,7 +292,7 @@ public class SaleTest {
 	 */
 	@Test
 	public void testCompareToSameDate() {
-		Sale s4 = new Sale(d3,p1,cash);
+		Sale s4 = new Sale(d3,p1,cash,null);
 		assertEquals(s3.compareTo(s4),0);
 	}
 	
@@ -333,7 +326,7 @@ public class SaleTest {
 	 */
 	@Test
 	public void testCalculateFeeValueAmountMinValue() {
-		Sale s4 = new Sale(d3,p1,card);
+		Sale s4 = new Sale(d3,p1,card,null);
 		double expect = s4.calculateFeeValue();
 		assertEquals(0.55,expect,0.00);
 	}
@@ -346,7 +339,7 @@ public class SaleTest {
 	@Test
 	public void testCalculateFeeValueAmount() {
 		p1.setPrice(41.5);
-		Sale s4 = new Sale(d3,p1,card);
+		Sale s4 = new Sale(d3,p1,card,null);
 		double expect = s4.calculateFeeValue();
 		assertEquals(0.83,expect,0.00);
 	}

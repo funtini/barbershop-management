@@ -44,6 +44,11 @@ public class ProductTest {
 		p2 = new Product("CORTE SIMPLES",productType.HAIRCUT,10);
 		p3 = new Product("BARBA",productType.SHAVE,7);
 		p4 = new Product("SHAMPOO MEN",productType.EXTRA,12);
+		
+		p1.setId(1);
+		p2.setId(2);
+		p3.setId(3);
+		p4.setId(4);
 	}
 	
 	
@@ -69,24 +74,6 @@ public class ProductTest {
 		assertEquals(p3.getId(),34);
 	}
 	
-	
-	/**
-	 * <h2>setStartIdGenerator() method test</h2>
-	 * 
-	 */
-	@Test 
-	public void testSetStartIdGenerator() {
-		
-		//Given
-		assertEquals(p1.getId(),1);
-		assertEquals(p2.getId(),2);
-		assertEquals(p3.getId(),3);
-		//When
-		Product.setStartIdGenerator(10);
-		Product e4 = new Product("GEL",productType.EXTRA,9);
-		//Then
-		assertEquals(e4.getId(),10);
-	}
 	
 	/**
 	 * <h2>getName() and setName method test</h2>

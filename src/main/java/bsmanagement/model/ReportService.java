@@ -8,17 +8,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import bsmanagement.jparepositories.classtests.ReportRepositoryClass;
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.jparepositories.ReportRepository;
 
 /**
- * <h1> ReportRegistry </h1>
+ * <h1> ReportService </h1>
  * <p>
- * SaleList is the abstract class to manage a list of Sales in a business
+ * Report Service is a class to manage all reports in a business
  * context. This class contains information like:
  * <ul>
- * <li>ReportList - List of Monthly Reports
+ * <li>ReportRepository - Repository of Monthly Reports
  * </ul>
  * <p>
  * To create an instance of ReportList you just need to invoke the empty constructor
@@ -80,29 +79,6 @@ public class ReportService {
 		return false;
 		
 	}
-	
-//	/**
-//	 * Method to add a new sale with customer
-//	 * 
-//	 * Sale is added to report associated to sale's date.
-//	 * If there is no report with this sale's date, a new report is created with YearMonth associated to this sale's date.
-//	 * 
-//	 * @param date - DateTime of sale
-//	 * @param customer - Customer that bought the product
-//	 * @param product - Product sold
-//	 * @param payment - Payment type
-//	 * 
-//	 * @return true if new Report has been created, false if already exist a report associated with this date.
-//	 */
-//	public boolean addSale(LocalDateTime date,Customer customer, Product product, PaymentMethod payment)
-//	{
-//	
-//		Sale s = saleService.createSale(date,customer,product, payment);
-//		saleRegistry.addSale(s);
-//		
-//		return loadSale(s);
-//	}
-//	
 	
 	/**
 	 * Method to load a sale to report list
@@ -208,7 +184,7 @@ public class ReportService {
 
 		if (reportRepo.existsById(idPreviousMonth))
 		{
-			for(Expense exp: reportRepo.findById(idPreviousMonth).get().getExpensesList())
+			for(Expense exp: reportRepo.findById(idPreviousMonth).get().getExpenses())
 			{
 				if(exp.getType().equals(expenseType.FIXED))
 				{
@@ -224,8 +200,23 @@ public class ReportService {
 		
 	}
 	
-	
-	
+	//TODO: remover metodo
+	/**
+	 * Method to add a new expense with name, type, value, and date
+	 * 
+	 * @param name - Name of Expense
+	 * @param type - Type of Expense, if FIXED the date is set null, if ONEOFF the date is set to today
+	 * @param value - Value in Euros
+	 * @param date - Date of Expense's Payment
+	 * 
+	 * @return false if year/month dont match with this report, true if expense is sucessfuly added to this report
+	 */
+	public boolean addExpense(Expense e) {
+		return loadExpense(e);
+		
+	}
+
+	//TODO: remover metodo
 	/**
 	 * Method to add a new expense with name, type, value, and date
 	 * 
@@ -243,6 +234,7 @@ public class ReportService {
 		
 	}
 	
+	//TODO: remover metodo
 	/**
 	 * Method to add a new expense with name, type, value, date and description
 	 * 
@@ -259,6 +251,12 @@ public class ReportService {
 		return loadExpense(e);
 	}
 	
+	
+	public void removeExpense(Expense e)
+	{
+		getCurrentOpenReport().removeExpense(e);
+	}
+	
 	/**
 	 * Method to get a report of a specific YearMonth
 	 * 
@@ -270,6 +268,23 @@ public class ReportService {
 		for (Report rep: getReports())
 		{
 			if (rep.getId().equals(ym.toString()))
+				return rep;
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * Method to get current open report 
+	 * 
+	 * @param yearMonth
+	 * 
+	 * @return Report
+	 */
+	public Report getCurrentOpenReport() {
+		for (Report rep: getReports())
+		{
+			if (rep.getId().equals(YearMonth.now().toString()))
 				return rep;
 		}
 		return null;
@@ -408,23 +423,6 @@ public class ReportService {
 	public void setRepository(ReportRepository reportRepository) {
 		this.reportRepo = reportRepository;	
 	}
-	
-	
-	
-	/**
-	 * Method to update all reports
-	 * 
-	 * <p>For each report: Sales,Expenses and BusinessDays are updated</p>
-	 */
-//	public void updateReportList()
-//	{
-//		for(Report rep: reportList)
-//		{
-//			rep.setSales(saleList.findSalesOf(rep.getYearMonth()));
-//			rep.setExpenses(expenseList.findExpensesOf(rep.getYearMonth()));
-//			rep.updateBusinessDays();
-//		}
-//	}
 	
 	
 

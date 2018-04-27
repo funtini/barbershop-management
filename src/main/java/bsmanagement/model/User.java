@@ -16,6 +16,7 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
 
 import system.dto.UserLoginDTO;
@@ -43,6 +44,7 @@ import system.dto.UserLoginDTO;
  *
  */
 @Entity
+@Proxy(lazy = false)
 public class User {
 	
 	public enum UserProfile {
@@ -65,8 +67,74 @@ public class User {
 	private boolean activationStatus;
 	@Enumerated(EnumType.STRING)
 	private UserProfile profile;
+	@Embedded
+	@ElementCollection
+	@LazyCollection(LazyCollectionOption.FALSE)
+	List<Contract> contracts;
 	
+	/**
+	 * Method to get last contract of this User
+	 * 
+	 * @return Contract if this user has at least one contract, NULL if has no contracts
+	 */
+	public Contract getLastContract()
+	{
+		if (contracts.isEmpty())
+			return null;
+		return contracts.get(contracts.size()-1);
+	}
 	
+	/**
+	 * Method to check if user has a open contract
+	 * 
+	 * @return true if user has an open contract, false if has all contracts closed
+	 */
+	public boolean hasOpenContract()
+	{
+		if (contracts.isEmpty())
+			return false;
+		return getLastContract().isOpen();
+	}
+	
+	/**
+	 * Method to add a new contract to user. If 
+	 * 
+	 * @param baseSalary
+	 * @param salesComission
+	 * 
+	 * @return true if new contract was sucessfully added, false otherwise
+	 */
+	public boolean addContract(double baseSalary, double salesComission)
+	{
+		if (!hasOpenContract())
+		{
+			contracts.add(new Contract(baseSalary,salesComission));
+			return true;
+		}
+		return false;	
+	}
+	
+	/**
+	 * Method to close current contract
+	 * 
+	 * @return false if user has all contracts already closed, true if contract was sucessfully closed
+	 */
+	public boolean closeContract()
+	{
+		if (contracts.isEmpty())
+			return false;
+		return getLastContract().close();
+	}
+	
+	/**
+	 * Method to return all contracts of user
+	 * 
+	 * @return List of Contracts
+	 */
+	public List<Contract> getAllContracts()
+	{
+		return contracts;
+	}
 	
 	
 	/**
@@ -92,6 +160,7 @@ public class User {
 		this.addressList = new ArrayList<>();
 		this.activationStatus = true;
 		this.profile = UserProfile.EMPLPOYER;
+		this.contracts = new ArrayList<>();
 	}
 	
 	
@@ -103,6 +172,7 @@ public class User {
 	{
 		this.addressList = new ArrayList<>();
 		this.profile = UserProfile.EMPLPOYER;
+		this.contracts = new ArrayList<>();
 	}
 	
 	
@@ -371,6 +441,10 @@ public class User {
 		}
 		return new UserLoginDTO("Invalid Email or Password\n");
 	}
+	
+	
+	
+	
 
 
 	/**

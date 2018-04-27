@@ -82,7 +82,35 @@ public class ExpenseServiceTest {
 		e2 = new Expense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato");
 		e3 = new Expense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades");
 		e4 = new Expense("Shampoos",expenseType.ONEOFF,60,d2,"10 unidades");
+		e1.setId(1);
+		e2.setId(2);
+		e3.setId(3);
+		e4.setId(4);
 		
+		
+	}
+	
+	
+	/**
+	 * <h2>setStartIdGenerator() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testSetStartIdGenerator() {
+		expenseService.addExpense(e1);
+		expenseService.addExpense(e2);
+		expenseService.addExpense(e3);
+		
+		//Given
+		assertEquals(e1.getId(),1);
+		assertEquals(e2.getId(),2);
+		assertEquals(e3.getId(),3);
+		//When
+		Expense.setStartIdGenerator(10);
+		Expense e4 = new Expense("Luz",expenseType.FIXED,35,d2);
+		expenseService.addExpense(e4);
+		//Then
+		assertEquals(e4.getId(),10);
 	}
 
 	/**

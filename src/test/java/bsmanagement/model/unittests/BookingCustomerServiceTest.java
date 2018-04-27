@@ -90,6 +90,8 @@ public class BookingCustomerServiceTest {
 		bcService.setCustomersRepository(customerRepository);
 		expectBookings = new ArrayList<>();
 		resultBookings = new ArrayList<>();
+		Booking.setStartIdGenerator(1);
+		Customer.setStartIdGenerator(1);
 		
 		
 		birthdate1 = LocalDate.of(1989, 11, 30);
@@ -103,6 +105,7 @@ public class BookingCustomerServiceTest {
 		c2 = new Customer("Ana",birthdate2,"Porto","966677722");
 		c3 = new Customer("Pedro",bd3,"Mangualde","932444333");
 		
+		
 		dt1 = LocalDateTime.of(LocalDate.now(),LocalTime.of(10, 10)).plusDays(10);
 		dt2 = LocalDateTime.now().plusMinutes(30);
 		dt3 = LocalDateTime.of(LocalDate.now(),LocalTime.of(10, 10)).plusMonths(1);
@@ -112,6 +115,44 @@ public class BookingCustomerServiceTest {
 		b3 = new Booking(dt3,c1);
 
 		expect = new ArrayList<>();
+	}
+	
+	
+	/**
+	 * <h2>setStartIdGenerator() method test</h2>
+	 */
+	@Test 
+	public void testSetBookingStartIdGenerator() {
+		
+		//Given
+		bcService.addBooking(b1);
+		bcService.addBooking(b2);
+		assertEquals(b1.getId(),1);
+		assertEquals(b2.getId(),2);
+		//When
+		Booking.setStartIdGenerator(10);
+		Booking b4 = new Booking(dt2,c1);
+		bcService.addBooking(b4);
+		//Then
+		assertEquals(b4.getId(),10);
+	}
+	
+	/**
+	 * <h2>setStartIdGenerator() method test</h2>
+	 */
+	@Test 
+	public void testSetCustomerStartIdGenerator() {
+		bcService.addCustomer(c1);
+		bcService.addCustomer(c2);
+		//Given
+		assertEquals(c1.getId(),1);
+		assertEquals(c2.getId(),2);
+		//When
+		Customer.setStartIdGenerator(10);
+		Customer c4 = new Customer("Rogerio",dt1.toLocalDate(),"Porto","966677722");
+		bcService.addCustomer(c4);
+		//Then
+		assertEquals(c4.getId(),10);
 	}
 
 	

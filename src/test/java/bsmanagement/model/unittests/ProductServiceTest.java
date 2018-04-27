@@ -61,6 +61,30 @@ public class ProductServiceTest {
 		expect = new ArrayList<Product>();
 		
 	}
+	
+
+	
+	/**
+	 * <h2>setStartIdGenerator() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testSetStartIdGenerator() {
+		
+		//Given
+		productService.addProduct(p1);
+		productService.addProduct(p2);
+		productService.addProduct(p3);
+		assertEquals(p1.getId(),1);
+		assertEquals(p2.getId(),2);
+		assertEquals(p3.getId(),3);
+		//When
+		Product.setStartIdGenerator(10);
+		Product p5 = new Product("GEL",productType.EXTRA,9);
+		productService.addProduct(p5);
+		//Then
+		assertEquals(p5.getId(),10);
+	}
 
 
 	/**

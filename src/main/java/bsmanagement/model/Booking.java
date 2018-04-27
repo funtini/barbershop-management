@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 /**
  * 
  * <h1> Booking </h1>
@@ -30,9 +30,11 @@ import javax.persistence.OneToOne;
 public class Booking {
 	
 	@Id
-	private int id=idGenerator.incrementAndGet();
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private LocalDateTime date;
-	@OneToOne(cascade = CascadeType.MERGE)
+	@ManyToOne
+	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
 	private static AtomicInteger idGenerator=new AtomicInteger();
@@ -56,6 +58,11 @@ public class Booking {
 	
 	protected Booking() {
 
+	}
+	
+	public static int getAndIncrementId()
+	{
+		return idGenerator.incrementAndGet();
 	}
 	
 	/**

@@ -3,9 +3,6 @@ package bsmanagement.dto.rest;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import bsmanagement.model.Customer;
 
 public class BookingRestDTO {
 	

@@ -3,11 +3,12 @@ package bsmanagement.model;
 import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -15,10 +16,8 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.Proxy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import bsmanagement.model.Expense.expenseType;
 
@@ -26,7 +25,7 @@ import bsmanagement.model.Expense.expenseType;
 /**
  * <h1> Report </h1>
  * <p>
- * Report is the abstract base class for all monthly reports of a business
+ * Report is the base class for all monthly reports of a business
  * context. This class contains information like:
  * <ul>
  * <li>YearMonth - Year and Month of Report
@@ -101,14 +100,14 @@ public class Report {
 	/**
 	 * @return the list of sales
 	 */
-	public List<Sale> getSalesList() {
+	public List<Sale> getSales() {
 		return sales;
 	}
 	
 	/**
 	 * @return the list of expenses
 	 */
-	public List<Expense> getExpensesList() {
+	public List<Expense> getExpenses() {
 		return expenses;
 	}
 	
@@ -142,7 +141,6 @@ public class Report {
 		if (sale.getDate().getMonthValue()!=reportId.getMonthValue())
 			return false;
 		this.sales.add(sale);
-//		updateBusinessDays();
 		return true;
 	}
 	
@@ -202,7 +200,7 @@ public class Report {
 		int count = 0;
 		for (int i=1; i<=repDate.getMonth().length(Year.of(repDate.getYear()).isLeap());i++)
 		{
-			for (Sale s: getSalesList())
+			for (Sale s: getSales())
 			{
 				if (s.getDate().getDayOfMonth()==i)
 				{
@@ -252,7 +250,7 @@ public class Report {
 	public double calculateTotalExpensesValue()
 	{
 		double sum = 0;
-		for (Expense e: getExpensesList())
+		for (Expense e: getExpenses())
 			sum=sum+e.getValue();
 		return sum;
 	}
@@ -266,12 +264,105 @@ public class Report {
 	public double calculateTotalSalesAmount()
 	{
 		double sum = 0;
-		for (Sale s: getSalesList())
+		for (Sale s: getSales())
 			sum=sum+s.getAmount();
 		return sum;
 	}
 	
+	/**
+	 * Method to get a sales list of an user
+	 * 
+	 * @param user
+	 * 
+	 * @return List of Sales
+	 */
+	public List<Sale> getUserSales(User user)
+	{
+		List<Sale> userSales = new ArrayList<>();
+		for (Sale s: getSales())
+		{
+			if (s.getUser().equals(user))
+				userSales.add(s);			
+		}	
+		return userSales;		
+	}
 	
+	/**
+	 * Method to return a list of users that registered at least one sale this month
+	 * 
+	 * @return List of Users
+	 */
+	public List<User> getActiveUsersInThisMonth()
+	{
+		List<User> activeUsers = new ArrayList<>();
+		for (Sale s: getSales())
+		{
+			if (!activeUsers.contains(s.getUser()))
+				activeUsers.add(s.getUser());
+		}
+		
+		return activeUsers;
+	}
+	
+	
+	/**
+	 * Method to get fixed expenses
+	 * 
+	 * @return List of Expenses
+	 */
+	public List<Expense> getFixedExpenses()
+	{
+		List<Expense> fixedExpenses = new ArrayList<>();
+		for(Expense e : getExpenses())
+		{
+			if (e.getType().equals(expenseType.FIXED))
+				fixedExpenses.add(e);
+		}
+		
+		return fixedExpenses;
+	}
+	
+	/**
+	 * Method to get expenses filtered by name
+	 * 
+	 * @param name
+	 * 
+	 * @return List of Expenses
+	 */
+	public List<Expense> findExpensesByName(String name)
+	{
+		List<Expense> fixedExpenses = new ArrayList<>();
+		for(Expense e : getExpenses())
+		{
+			if (e.getName().toUpperCase().equals(name.toUpperCase()))
+				fixedExpenses.add(e);
+		}
+		
+		return fixedExpenses;
+	}
+	
+	
+	/**
+	 * Method that returns a Map with each user and respective salary in this month
+	 * 
+	 * @return HashMap of User->Salary
+	 */
+	public Map<User,Double> getUsersSalariesInThisMonth(){
+		Map<User,Double> usersSalariesMap = new HashMap<User,Double>();
+		double totalSalary;
+		double comission;
+		for (User u : getActiveUsersInThisMonth())
+		{
+			totalSalary=u.getLastContract().getBaseSalary();
+			comission=u.getLastContract().getSalesComission();
+			for (Sale s: getUserSales(u))
+			{
+				totalSalary=totalSalary+(comission/(100.0))*s.getAmount();
+			}
+			usersSalariesMap.put(u,totalSalary);
+		}
+		return usersSalariesMap;
+	}
 
 
 	/**
@@ -314,7 +405,7 @@ public class Report {
 	 */
 	@Override
 	public String toString() {
-		return "Report [year=" + yearMonth.getYear() + ", month=" + yearMonth.getMonth().toString() + ", sales=" + sales + ", expenses=" + expenses + ", businessDays="
+		return "Report [year=" + yearMonth.getYear() + ", month=" + yearMonth.getMonth().toString() + ", salesNumber=" + sales.size() + ", expensesNumber=" + expenses.size() + ", businessDays="
 				+ businessDays + "]";
 	}
 

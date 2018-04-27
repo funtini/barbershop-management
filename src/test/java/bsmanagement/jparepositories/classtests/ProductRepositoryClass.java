@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import bsmanagement.model.Booking;
 import bsmanagement.model.Product;
 import bsmanagement.model.jparepositories.ProductRepository;
 
@@ -75,6 +76,11 @@ public class ProductRepositoryClass implements ProductRepository{
 
 	@Override
 	public <S extends Product> S save(S arg0) {
+		if (existsById(arg0.getId())) {
+			products.remove(arg0);
+			products.add(arg0);
+		}
+		arg0.setId(Product.getAndIncrementId());
 		products.add(arg0);
 		return arg0;
 	}

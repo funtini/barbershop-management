@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
 
 /**
@@ -30,6 +31,7 @@ import org.hibernate.annotations.Type;
  * @author JOAO GOMES
  */
 @Entity
+@Proxy(lazy = false)
 public class Product implements Comparable<Product>{
 
 	
@@ -64,7 +66,8 @@ public class Product implements Comparable<Product>{
 	
 	
 	@Id
-	private int id=idGenerator.incrementAndGet();
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private String name;
 	@Enumerated(EnumType.STRING)
 	private productType type;
@@ -233,6 +236,11 @@ public class Product implements Comparable<Product>{
 	public static void setStartIdGenerator(int i) {
 		idGenerator.set(i-1);
 		
+	}
+
+	public static int getAndIncrementId() {
+		
+		return idGenerator.incrementAndGet();
 	}
 	
 	

@@ -150,6 +150,11 @@ public class BookingRepositoryClass implements BookingRepository{
 
 	@Override
 	public <S extends Booking> S save(S arg0) {
+		if (existsById(arg0.getId())) {
+			list.remove(arg0);
+			list.add(arg0);
+		}
+		arg0.setId(Booking.getAndIncrementId());
 		list.add(arg0);
 		return arg0;
 	}

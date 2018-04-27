@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import bsmanagement.model.Booking;
 import bsmanagement.model.Customer;
 import bsmanagement.model.jparepositories.CustomerRepository;
 
@@ -150,6 +151,11 @@ public class CustomerRepositoryClass implements CustomerRepository {
 
 	@Override
 	public <S extends Customer> S save(S arg0) {
+		if (existsById(arg0.getId())) {
+			list.remove(arg0);
+			list.add(arg0);
+		}
+		arg0.setId(Customer.getAndIncrementId());
 		list.add(arg0);
 		return arg0;
 	}
