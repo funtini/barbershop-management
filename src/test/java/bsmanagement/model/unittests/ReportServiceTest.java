@@ -12,11 +12,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import bsmanagement.jparepositories.classtests.BookingRepositoryClass;
+import bsmanagement.jparepositories.classtests.CustomerRepositoryClass;
 import bsmanagement.jparepositories.classtests.ExpenseRepositoryClass;
 import bsmanagement.jparepositories.classtests.ProductRepositoryClass;
 import bsmanagement.jparepositories.classtests.ReportRepositoryClass;
 import bsmanagement.jparepositories.classtests.SaleRepositoryClass;
 import bsmanagement.jparepositories.classtests.UserRepositoryClass;
+import bsmanagement.model.BookingCustomerService;
 import bsmanagement.model.Customer;
 import bsmanagement.model.Expense;
 import bsmanagement.model.ExpenseService;
@@ -27,8 +30,10 @@ import bsmanagement.model.SaleService;
 import bsmanagement.model.User;
 import bsmanagement.model.UserService;
 import bsmanagement.model.jparepositories.ExpenseRepository;
+import bsmanagement.model.jparepositories.ProductRepository;
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.Product.productType;
+import bsmanagement.model.ProductService;
 import bsmanagement.model.Report;
 import bsmanagement.model.ReportSaleExpenseService;
 import bsmanagement.model.ReportService;
@@ -64,6 +69,7 @@ public class ReportServiceTest {
 	Expense e1;
 	Expense e2;
 	Expense e3;
+	Expense e4;
 	PaymentMethod cash;
 	PaymentMethod card;
 	Sale s1;
@@ -80,10 +86,15 @@ public class ReportServiceTest {
 	ExpenseService expenseService;
 	ReportService reportService;
 	UserService userService;
+	ProductService prodService;
+	BookingCustomerService bookingCustomerService;
 	SaleRepositoryClass saleRepository;
 	ExpenseRepositoryClass expenseRepository;
 	ReportRepositoryClass reportRepository;
 	UserRepositoryClass userRepository;
+	ProductRepositoryClass productRepository;
+	BookingRepositoryClass bookRepository;
+	CustomerRepositoryClass customerRepository;
 	ReportSaleExpenseService repSaleExpService;
 	List<Report> result;
 	List<Report> expect;
@@ -113,11 +124,17 @@ public class ReportServiceTest {
 		saleService = new SaleService();
 		reportService = new ReportService();
 		userService = new UserService();
+		prodService = new ProductService();
+		bookingCustomerService = new BookingCustomerService();
 		repSaleExpService = new ReportSaleExpenseService();
 		expenseRepository = new ExpenseRepositoryClass();
 		saleRepository = new SaleRepositoryClass();
 		reportRepository = new ReportRepositoryClass();
 		userRepository = new UserRepositoryClass();
+		productRepository = new ProductRepositoryClass();
+		bookRepository = new BookingRepositoryClass();
+		customerRepository = new CustomerRepositoryClass();
+		
 		userService.setUserRepository(userRepository);
 		saleService.setRepository(saleRepository);
 		expenseService.setRepository(expenseRepository);
@@ -125,12 +142,15 @@ public class ReportServiceTest {
 		repSaleExpService.setExpRepo(expenseRepository);
 		repSaleExpService.setReportRepo(reportRepository);
 		repSaleExpService.setSaleRepo(saleRepository);
+		prodService.setRepository(productRepository);
+		bookingCustomerService.setBookRepository(bookRepository);
+		bookingCustomerService.setCustomersRepository(customerRepository);
 		expect = new ArrayList<Report>();
 		result = new ArrayList<Report>();
 		Expense.setStartIdGenerator(1);
-		Sale.setStartIdGenerator(0);
-		Product.setStartIdGenerator(0);
-		Customer.setStartIdGenerator(0);
+		Sale.setStartIdGenerator(1);
+		Product.setStartIdGenerator(1);
+		Customer.setStartIdGenerator(1);
 		
 		ym17 = YearMonth.of(2017, 12);
 		ym18= YearMonth.of(2018, 1);
@@ -153,8 +173,14 @@ public class ReportServiceTest {
 		r2 = new Report(ym18);
 		p1 = new Product("CORTE COM LAVAGEM",productType.HAIRCUT,15);
 		p2 = new Product("CORTE SIMPLES",productType.HAIRCUT,10);
+		prodService.addProduct(p1);
+		prodService.addProduct(p2);
+		
+		
 		c1 = new Customer("Joao",birthdate1,"Mangualde","914047935");
 		c2 = new Customer("Ana",birthdate2,"Porto","966677722");
+		bookingCustomerService.addCustomer(c1);
+		bookingCustomerService.addCustomer(c2);
 		
 		e1 = expenseService.createExpense("Agua",expenseType.FIXED,35,d1);
 		e2 = expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato");
@@ -666,11 +692,19 @@ public class ReportServiceTest {
 		}
 		assertEquals(reportService.getReport(ym17).getSales().size(),45);
 		
-			
-		reportService.addExpense("Agua",expenseType.FIXED,35,d3);						//add 3 expenses fixed on 12/2017 and 1 oneoff at 01/2018
-		reportService.addExpense("Internet",expenseType.FIXED,20,d3,"6 meses de contrato");
-		reportService.addExpense("Luz",expenseType.FIXED,25,d3);
-		reportService.addExpense("Secadores",expenseType.ONEOFF,90,d5,"3 unidades");
+		
+		e1 = expenseService.createExpense("Agua",expenseType.FIXED,35,d3);		//add 3 expenses fixed on 12/2017 and 1 oneoff at 01/2018
+		e2 = expenseService.createExpense("Internet",expenseType.FIXED,20,d3,"6 meses de contrato");
+		e3 = expenseService.createExpense("Luz",expenseType.FIXED,25,d3);
+		e4 = expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d5,"3 unidades");
+		expenseService.addExpense(e1);
+		expenseService.addExpense(e2);
+		expenseService.addExpense(e3);
+		expenseService.addExpense(e4);
+		reportService.addExpense(e1);						
+		reportService.addExpense(e2);
+		reportService.addExpense(e3);
+		reportService.addExpense(e4);
 		
 		assertEquals(reportService.getReport(ym18).getExpenses().size(),4);
 		assertEquals(reportService.getReport(ym17).getExpenses().size(),3);
