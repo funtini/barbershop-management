@@ -452,5 +452,25 @@ public class BookingCustomerServiceTest {
 		//Then: they are equals
 		assertEquals(result,expect);		
 	}
+	
+	/**
+	 * <h2>createCustomer() method test</h2>
+	 * 
+	 * only name as input data
+	 */
+	@Test
+	public void testRemoveCustomer() {
+		//Given: instance of Customer (Joao)
+		Customer customer = new Customer("Joao");
+		Customer notFound = new Customer("Ghost");
+		bcService.addCustomer(customer);
+		assertEquals(bcService.getAllCustomers().contains(customer),true);
+		assertEquals(bcService.findCustomerById(1),customer);
+		//When: we create by cReg a customer (Joao) and set the same ID
+		assertEquals(bcService.removeCustomer(customer),true);
+		assertEquals(bcService.removeCustomer(notFound),false);
+		//Then: they are equals
+		assertEquals(bcService.getAllCustomers().contains(customer),false);		
+	}
 
 }

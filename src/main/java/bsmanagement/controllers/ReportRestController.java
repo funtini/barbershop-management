@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import bsmanagement.model.Report;
-import bsmanagement.model.ReportService;
+import bsmanagement.model.ReportSaleExpenseService;
 
 @RestController
 public class ReportRestController {
 
 	@Autowired
-	ReportService reportService;
+	ReportSaleExpenseService reportSaleExpenseService;
 
 	public ReportRestController() {
 
@@ -22,7 +22,7 @@ public class ReportRestController {
 	@RequestMapping("/reports")
 	List<Report> listAllReports()
 	{
-		return reportService.getReports();
+		return reportSaleExpenseService.getAllReports();
 	}
 	
 }

@@ -80,7 +80,6 @@ public class SaleRepositoryClass implements SaleRepository{
 			sales.remove(arg0);
 			sales.add(arg0);
 		}
-		arg0.setId(Sale.getAndIncrementId());
 		sales.add(arg0);
 		return arg0;
 	}

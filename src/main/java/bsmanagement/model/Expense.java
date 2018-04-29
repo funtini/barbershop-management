@@ -72,6 +72,9 @@ public class Expense implements Comparable<Expense>{
 	private double valueOfPayment;
 	private LocalDate dateOfPayment;
 	private String description;
+//	@Column(nullable = false)
+//	@Type(type = "org.hibernate.type.NumericBooleanType")
+//	private boolean isActive; 
 	
 	private static AtomicInteger idGenerator=new AtomicInteger();
 	
@@ -89,7 +92,6 @@ public class Expense implements Comparable<Expense>{
 		this.valueOfPayment = value;
 		this.dateOfPayment = date;
 		this.description = "";
-		
 	}
 	
 	/**
@@ -109,14 +111,8 @@ public class Expense implements Comparable<Expense>{
 		this.dateOfPayment = date;
 	}
 	
-	protected Expense()
-	{
-		
-	}
-	
-	
-	
-	
+	protected Expense() {}
+
 	/**
 	 * @return the id of Expense
 	 */
@@ -233,6 +229,14 @@ public class Expense implements Comparable<Expense>{
 //	 * disable expense for next reports
 //	 */
 //	public void disable()
+//	{
+//		this.isActive=false;
+//	}
+//	
+//	/**
+//	 * reactivate expense for next reports
+//	 */
+//	public void activate()
 //	{
 //		this.isActive=false;
 //	}

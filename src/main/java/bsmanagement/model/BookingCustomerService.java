@@ -77,8 +77,6 @@ public class BookingCustomerService {
 	public boolean addCustomer(Customer customer) {
 		if (customersRepository.existsById(customer.getId()))
 			return false;
-		if (customersRepository.existsByName(customer.getName()))
-			return false;
 		customersRepository.save(customer);
 		return true;
 	}
@@ -124,6 +122,23 @@ public class BookingCustomerService {
 			return customersRepository.getOne(id);
 		else
 			return null;
+	}
+	
+	/**
+	 * Remove Customer
+	 * 
+	 * @param customer
+	 * 
+	 * @return true if customer is sucessful removed, false otherwise.
+	 */
+	public boolean removeCustomer(Customer customer)
+	{
+		if (customersRepository.existsById(customer.getId()))
+			{
+			customersRepository.delete(customer);
+			return true;
+			}
+		return false;
 	}
 	
 	

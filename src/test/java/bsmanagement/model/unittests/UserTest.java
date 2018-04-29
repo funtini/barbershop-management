@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bsmanagement.model.Address;
+import bsmanagement.model.Contract;
 import bsmanagement.model.User;
 import bsmanagement.model.User.UserProfile;
 import system.dto.UserLoginDTO;
@@ -37,6 +38,10 @@ public class UserTest {
 	User u2;
 	User u3;
 	
+	Contract c1;
+	Contract c2;
+	Contract c3;
+	
 	/**
 	 * <h2>Setup for all unit tests: </h2>
 	 * 
@@ -52,6 +57,10 @@ public class UserTest {
 	 * <p>Address [ad2] -> ['TRABALHO','RUA DO PASSAL','3530-194','MANGUALDE','PORTUGAL'] </p>
 	 * <p>Address [ad3] -> ['CASA','RUA LUIS CAMOES','4425-651','PORTO','PORTUGAL'] </p>
 	 * 
+	 * 
+	 * <p>Contract [c1] -> ['700','10'] </p>
+	 * <p>Contract [c2] -> ['350','60'] </p>
+	 * <p>Contract [c3] -> ['350','50'] </p>
 	 * 
 	 */
 	@Before
@@ -69,6 +78,12 @@ public class UserTest {
 		u1 = new User("JOAO",birth1,"joao@domain.com","914047935","324666433");
 		u2 = new User("PEDRO",birth2,"pedro@gmail.uk","915557911","123555433");
 		u3 = new User("ANTONIO",birth3,"antonio@domain","962337135","367876433");
+		
+		c1 = u1.createContract(700, 10);
+		c2 = u2.createContract(350,	60);
+		
+		u1.addContract(c1);
+		u2.addContract(c2);
 		
 	}
 
@@ -285,6 +300,48 @@ public class UserTest {
 		assertEquals(u2.getProfile(),UserProfile.EMPLPOYER);
 		u2.setProfileAdmin();
 		assertEquals(u2.getProfile(),UserProfile.ADMINISTRATOR);
+	}
+	
+	@Test
+	public void testHasOpenContract() {
+		
+		//Given
+		assertEquals(u1.hasOpenContract(), true);
+		//When
+		assertEquals(u1.addContract(u1.createContract(200, 10)),false);
+		assertEquals(u1.closeContract(),true);
+		assertEquals(u1.closeContract(),false);
+		//Then
+		assertEquals(u1.hasOpenContract(),false);
+	}
+	
+	@Test
+	public void testContractMethodsNoContracts() {
+
+		assertEquals(u3.hasOpenContract(), false);
+		assertEquals(u3.getLastContract(),null);
+		assertEquals(u3.closeContract(),false);
+	
+	}
+	
+	@Test
+	public void testGetAllContracts() {
+		
+		//Given
+		List<Contract> expectedList = new ArrayList<>();
+		expectedList.add(u1.getLastContract());
+		assertEquals(u1.hasOpenContract(), true);		
+		
+		//When
+		assertEquals(u1.closeContract(),true);
+		Contract expected = u1.createContract(100,20);
+		assertEquals(u1.addContract(expected),true);
+		
+		expectedList.add(expected);
+		assertEquals(u1.getLastContract(),expected);
+		
+		//Then
+		assertEquals(u1.getAllContracts(),expectedList);
 	}
 
 	@Test

@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -91,7 +90,19 @@ public class SaleService {
 		
 		return p;
 	}
-	
+
+	/**
+	 * Method to add a new sale 
+	 * 
+	 * @param sale - Instance of Sale class
+	 */
+	public boolean addSale(Sale sale)
+	{
+		if(saleRepo.existsById(sale.getId()))
+			return false;
+		saleRepo.save(sale);
+		return true;
+	}
 	
 	/**
 	 * Method to create a new instance of sale with known customer
@@ -119,21 +130,6 @@ public class SaleService {
 		return s;
 	}
 	
-	
-	/**
-	 * Method to add a new sale 
-	 * 
-	 * @param sale - Instance of Sale class
-	 */
-	public boolean addSale(Sale sale)
-	{
-		if(saleRepo.existsById(sale.getId()))
-			return false;
-		saleRepo.save(sale);
-		return true;
-	}
-	
-
 	/**
 	 * Method to find a list of sales of specific YearMonth
 	 * 
@@ -170,20 +166,6 @@ public class SaleService {
 		return listSale;
 	}
 	
-	/**
-	 * Method that sum all amounts of all sales
-	 * 
-	 * @return sum
-	 */
-	public double sumAllAmounts()
-	{
-		double sum = 0;
-		for (Sale s: getSales())
-		{
-			sum=sum+s.getAmount();
-		}
-		return sum;
-	}
 	
 	/**
 	 * Method to find a Sale by ID
@@ -220,44 +202,7 @@ public class SaleService {
 		return salesList;
 	}
 	
-	
-	
-	/**
-	 * Method to get a all amount payed by a specific payment method
-	 * 
-	 * @param PaymentMethod
-	 * 
-	 * @return double value - total amount of a specific payment method
-	 */
-	public double sumAllAmountsPayedBy(PaymentMethod payment)
-	{
-		double sum = 0;
-		for (Sale s: getSales())
-		{
-			if (s.getPayment().equals(payment))
-				sum=sum+s.getAmount();
-		}
-		return sum;
-	}
-	
-	/**
-	 * Method to get total amount of fee's payed
-	 * 
-	 * @param PaymentMethod
-	 * 
-	 * @return double value - total amount of a specific payment method
-	 */
-	public double calculateTotalFeeAmount()
-	{
-		double sum = 0;
-		for (Sale s: getSales())
-		{
-			sum=sum+s.calculateFeeValue();
-		}
-		return sum;
-	}
-	
-	
+
 	/**
 	 * Method to find a list of sales between two specific Dates
 	 * 
@@ -282,6 +227,63 @@ public class SaleService {
 		}
 		return listSale;
 	}
+	
+	
+	
+	
+	/**
+	 * Method to get a all amount payed by a specific payment method
+	 * 
+	 * @param PaymentMethod
+	 * 
+	 * @return double value - total amount of a specific payment method
+	 */
+	public double sumAllAmountsPayedBy(PaymentMethod payment)
+	{
+		double sum = 0;
+		for (Sale s: getSales())
+		{
+			if (s.getPayment().equals(payment))
+				sum=sum+s.getAmount();
+		}
+		return sum;
+	}
+	
+	/**
+	 * Method that sum all amounts of all sales
+	 * 
+	 * @return sum
+	 */
+	public double sumAllAmounts()
+	{
+		double sum = 0;
+		for (Sale s: getSales())
+		{
+			sum=sum+s.getAmount();
+		}
+		return sum;
+	}
+	
+	/**
+	 * Method to get total amount of fee's payed
+	 * 
+	 * @param PaymentMethod
+	 * 
+	 * @return double value - total amount of a specific payment method
+	 */
+	public double calculateAllTimeFeeAmount()
+	{
+		double sum = 0;
+		for (Sale s: getSales())
+		{
+			sum=sum+s.calculateFeeValue();
+		}
+		return sum;
+	}
+	
+	
+
+
 
 	public void setRepository(SaleRepository saleRepository) {
 		this.saleRepo = saleRepository;

@@ -1,11 +1,14 @@
 package bsmanagement.model;
 
+import java.lang.reflect.Constructor;
 import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -20,6 +23,8 @@ import org.hibernate.annotations.LazyCollectionOption;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import bsmanagement.model.Expense.expenseType;
+import bsmanagement.model.reportstate.Open;
+import bsmanagement.model.reportstate.ReportState;
 
 
 /**
@@ -60,6 +65,11 @@ public class Report {
 	@JoinColumn(name = "report_id")
 	private List<Expense> expenses;
 	private int businessDays;
+	private String status;
+	@Transient
+	private ReportState reportState;
+	@Transient
+    private Logger logger = Logger.getAnonymousLogger();
 	
 	
 	/**
@@ -75,6 +85,8 @@ public class Report {
 		this.sales = new ArrayList<>();
 		this.expenses = new ArrayList<>();
 		this.businessDays = 0;
+		this.reportState = new Open(this);
+		this.status = this.reportState.getClass().getSimpleName();
 	}
 	
 	protected Report ()
@@ -83,49 +95,115 @@ public class Report {
 	}
 	
 	/**
-	 * @return the yearMonth
+	 * @return the yearMonth converted in String
 	 */
 	public String getId() {
 		return id;
 	}
 	
-	
-	/**
-	 * @return the yearMonth
-	 */
 	public YearMonth getYearMonth() {
 		return yearMonth;
 	}
 	
-	/**
-	 * @return the list of sales
-	 */
 	public List<Sale> getSales() {
 		return sales;
 	}
 	
-	/**
-	 * @return the list of expenses
-	 */
 	public List<Expense> getExpenses() {
 		return expenses;
 	}
 	
-	/**
-	 * @return the business days
-	 */
 	public int getBusinessDays() {
 		return businessDays;
 	}
+	
+	public void setBusinessDays(int businessDays) {
+		this.businessDays = businessDays;
+	}
+	
+	public void removeExpense(Expense expense) {
+		expenses.remove(expense);
+	}
+	
+	public void removeSale(Sale sale) {
+		sales.remove(sale);
+	}
 
-	/**
-	 * Set report's YearMonth
-	 * 
-	 * @param year 
-	 */
 	public void setYearMonth(YearMonth yearMonth) {
 		this.yearMonth = yearMonth;
 	}
+	
+	public void setReportState(ReportState reportState)
+	{
+		this.reportState=reportState;
+	}
+	
+	public String getStatus()
+	{
+		return this.status;
+	}
+	
+	/**
+	 * Method to change report's status if its able to change it
+	 * 
+	 */
+	public void changeStatus()
+	{
+		this.reportState = getReportState();
+		reportState.changeTo();
+		this.status = this.reportState.getClass().getSimpleName();
+	}
+	
+	/**
+	 * <p>Method to get current Report State.</p>
+	 * If ReportState is null (condition achieved when the object is loaded from the
+     * database), this method "reconstructs" the attribute using reflection java concept. It uses
+     * String status, which is a string representation of reportState for the "reconstruction".
+	 * 
+	 * @return ReportState (Interface)
+	 */
+	public ReportState getReportState()
+	{
+		
+		if (this.reportState == null) {
+
+            try {
+            	Class<?> clazz = Class.forName(getReportStateAbsolutePath() + "." + this.status);
+                Constructor<?> construct = clazz.getConstructor(Report.class);
+                this.reportState = (ReportState) construct.newInstance(this);
+            } catch (Exception e) {
+                logger.log(Level.ALL, "Could not construct instance of ReportState\n" + e.getMessage(), e);
+            }
+        }
+		return this.reportState;
+	}
+	
+	/**
+     * @return the reportState interface's absolute path
+     */
+    private static String getReportStateAbsolutePath() {
+
+        return ReportState.class.getPackage().getName();
+    }
+    
+    /**
+     * <p>Method to close report</p>
+     * Report is able to be closed only if current state is WaitingApprovement
+     * 
+     * @return true if status was setted closed successfully, false otherwise
+     */
+    public boolean setStatusClosed()
+    {
+    	this.reportState = getReportState();
+    	if (this.reportState.isWaitingForApprovement())
+    	{
+    		changeStatus();
+    		return true;
+    	}
+    	
+    	return false;
+    }
+
 	
 	/**
 	 * Method to add a new sale to report
@@ -168,25 +246,6 @@ public class Report {
 		return true;	
 	}
 	
-	/**
-	 * Method to remove an expense 
-	 * 
-	 * @param expense 
-	 * 
-	 */
-	public void removeExpense(Expense expense) {
-		expenses.remove(expense);
-	}
-
-	
-	/**
-	 * Set business days 
-	 * 
-	 * @param businessDays
-	 */
-	public void setBusinessDays(int businessDays) {
-		this.businessDays = businessDays;
-	}
 	
 	/**
 	 * Check, and update if necessary, the business Days of Company in this YearMonth
@@ -215,6 +274,13 @@ public class Report {
 		return true;
 	}
 	
+	
+	/************************************
+	 * 
+	 * 	STATISTIC / OPERATION METHODS
+	 * 
+	 * **************************************************
+	 */
 	
 	/**
 	 * Calculate Current Profit/Loss of Report
@@ -362,6 +428,40 @@ public class Report {
 			usersSalariesMap.put(u,totalSalary);
 		}
 		return usersSalariesMap;
+	}
+	
+	/**
+	 * Method to get a all amount payed by a specific payment method
+	 * 
+	 * @param PaymentMethod
+	 * 
+	 * @return double value - total amount of a specific payment method
+	 */
+	public double sumAllAmountsPayedBy(PaymentMethod payment)
+	{
+		double sum = 0;
+		for (Sale s: getSales())
+		{
+			if (s.getPayment().equals(payment))
+				sum=sum+s.getAmount();
+		}
+		return sum;
+	}
+	
+	/**
+	 * Method to get total amount of fee's payed in month
+	 * 
+	 * 
+	 * @return double value - total amount of a specific payment method
+	 */
+	public double calculateTotalFeeAmount()
+	{
+		double sum = 0;
+		for (Sale s: getSales())
+		{
+			sum=sum+s.calculateFeeValue();
+		}
+		return sum;
 	}
 
 

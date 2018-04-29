@@ -104,11 +104,24 @@ public class User {
 	 * 
 	 * @return true if new contract was sucessfully added, false otherwise
 	 */
-	public boolean addContract(double baseSalary, double salesComission)
+	public Contract createContract(double baseSalary, double salesComission)
+	{
+		return new Contract(baseSalary,salesComission);
+	}
+	
+	/**
+	 * Method to add a new contract to user. If 
+	 * 
+	 * @param baseSalary
+	 * @param salesComission
+	 * 
+	 * @return true if new contract was sucessfully added, false otherwise
+	 */
+	public boolean addContract(Contract contract)
 	{
 		if (!hasOpenContract())
 		{
-			contracts.add(new Contract(baseSalary,salesComission));
+			contracts.add(contract);
 			return true;
 		}
 		return false;	

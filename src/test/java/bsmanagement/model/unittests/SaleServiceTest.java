@@ -123,26 +123,7 @@ public class SaleServiceTest {
 		
 	}
 	
-	/**
-	 * <h2>setStartIdGenerator() method test</h2>
-	 * 
-	 */
-	@Test 
-	public void testSetStartIdGenerator() {
-		saleService.addSale(s1);
-		saleService.addSale(s2);
-		saleService.addSale(s3);
-		//Given
-		assertEquals(s1.getId(),1);
-		assertEquals(s2.getId(),2);
-		assertEquals(s3.getId(),3);
-		//When
-		Sale.setStartIdGenerator(10);
-		Sale s4 = new Sale(d3,p1,cash,null);
-		saleService.addSale(s4);
-		//Then
-		assertEquals(s4.getId(),10);
-	}
+	
 
 	/**
 	 * <h2>setRepository() method test</h2>
@@ -165,6 +146,28 @@ public class SaleServiceTest {
 		//Then: service has 3 products
 		result = saleService.getSales();
 		assertEquals(result,expect);				
+	}
+	
+	
+	/**
+	 * <h2>setStartIdGenerator() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testSetStartIdGenerator() {
+		saleService.addSale(s1);
+		saleService.addSale(s2);
+		saleService.addSale(s3);
+		//Given
+		assertEquals(s1.getId(),1);
+		assertEquals(s2.getId(),2);
+		assertEquals(s3.getId(),3);
+		//When
+		Sale.setStartIdGenerator(10);
+		Sale s4 = new Sale(d3,p1,cash,null);
+		saleService.addSale(s4);
+		//Then
+		assertEquals(s4.getId(),10);
 	}
 	
 	/**
@@ -191,6 +194,7 @@ public class SaleServiceTest {
 		result = saleService.getSales();
 		assertEquals(result,expect);
 	}
+	
 	
 	/**
 	 * <h2>findSaleOf() method test</h2>
@@ -378,7 +382,7 @@ public class SaleServiceTest {
 		assertEquals(saleService.addSale(saleService.createSale(d4.plusDays(10),c1,p2,card,null)),true);
 	
 		//When: get the sum of all Fee amounts
-		double sumResult = saleService.calculateTotalFeeAmount();
+		double sumResult = saleService.calculateAllTimeFeeAmount();
 		//Then: get a total fee amount of 2.75 euros
 		double sumExpect = 2.75;
 		assertEquals(sumResult,sumExpect,0.0);

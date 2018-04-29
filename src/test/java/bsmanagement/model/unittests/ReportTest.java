@@ -161,6 +161,52 @@ public class ReportTest {
 		
 	}
 	
+	/**
+	 * <h2>changeStatus() method test</h2>
+	 */
+	@Test 
+	public void testChangeStatus() {
+
+		/**
+		 * GIVEN: Report of December/2017 and a Report of Today with both Status OPEN
+		 */
+		Report repToday = new Report(YearMonth.now()); 
+		assertEquals(rep17.getReportState().isOpen(),true);
+		assertEquals(repToday.getReportState().isOpen(),true);
+		/**
+		 * WHEN: setStatusClosd() 
+		 */
+		assertEquals(rep17.setStatusClosed(),false);
+		assertEquals(repToday.setStatusClosed(),false);
+		
+		/**
+		 * THEN: both still opened
+		 */	
+		assertEquals(rep17.getReportState().isOpen(),true);
+		assertEquals(repToday.getReportState().isOpen(),true);
+		/**
+		 * and WHEN: changeStatus()
+		 */
+		rep17.changeStatus();
+		repToday.changeStatus();
+		/**
+		 * THEN: rep17 is changed to waitingConfirmation, and todayRep still open
+		 */
+		assertEquals(rep17.getReportState().isWaitingForApprovement(),true);
+		assertEquals(repToday.getReportState().isOpen(),true);
+		/**
+		 * and WHEN: setStatusClosed()
+		 */
+		assertEquals(rep17.setStatusClosed(),true);
+		assertEquals(repToday.setStatusClosed(),false);
+		/**
+		 * THEN: rep17 is changed to closed, and todayRep still open
+		 */
+		assertEquals(rep17.getReportState().isClosed(),true);
+		assertEquals(repToday.getReportState().isOpen(),true);
+		System.out.println(rep17.getStatus());
+	}
+	
 	
 	/**
 	 * <h2>updateBusinessDays() method test</h2>

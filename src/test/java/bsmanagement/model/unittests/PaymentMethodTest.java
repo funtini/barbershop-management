@@ -42,6 +42,9 @@ public class PaymentMethodTest {
 	public void testHashCode() {
 		PaymentMethod expectPayment = new PaymentMethod("CASH",0.0,0.0);
 		assertEquals(cash.hashCode(),expectPayment.hashCode());
+		expectPayment.setType(null);
+		PaymentMethod expectPayment2 = new PaymentMethod(null,0.0,0.0);
+		assertEquals(expectPayment.hashCode(),expectPayment2.hashCode());
 	}
 
 	@Test

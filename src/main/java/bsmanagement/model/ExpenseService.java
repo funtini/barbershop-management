@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,9 +81,8 @@ public class ExpenseService {
 		return e;
 	}
 	
-	
 	/**
-	 * Method to add a Expense to expenseList 
+	 * Method to add a new Expense and load it to respective report
 	 * 
 	 * @param expense - Instance of Expense class
 	 */
@@ -93,17 +91,14 @@ public class ExpenseService {
 	}
 	
 	/**
-	 * Method to remove a Expense from repository - Only OneOff Expenses can be removed
+	 * <p>Method to delete a Expense from repository.</p>
 	 * 
-	 * @param expense - Instance of Expense class
-	 * 
-	 * @return true if expense is successful removed - (OneOff Expense) - false if was just disabled (Fixed Expense)
 	 */
-	public boolean removeExpense(Expense expense) {
+	public void removeExpense(Expense expense) {
 		expRepo.delete(expense);
-		return true;
 	}
-
+	
+	
 	/**
 	 * Method to get a list of expenses in that YearMonth
 	 * 
@@ -280,9 +275,6 @@ public class ExpenseService {
 		this.expRepo = expenseRepository;
 		
 	}
-	
-	
 
-	
 
 }

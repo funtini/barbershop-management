@@ -39,7 +39,13 @@ public class ExpenseRepositoryClass implements ExpenseRepository{
 
 	@Override
 	public void deleteById(Integer arg0) {
-		// TODO Auto-generated method stub
+		for (Expense e : expenses)
+		{
+			if(e.getId()==arg0)
+			{
+				expenses.remove(e);
+			}
+		}
 		
 	}
 

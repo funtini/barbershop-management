@@ -105,17 +105,13 @@ public class ProductService {
 	 * 
 	 * @param product
 	 * 
-	 * @return true if product is successfully removed, false otherwise
 	 */
-	public boolean removeProduct(Product product)
+	public void removeProduct(Product product)
 	{
 		if (productRepo.existsById(product.getId()))
 		{
 			product.deactivate();
-			return true;
 		}
-		
-		return false;
 	}
 	
 	

@@ -25,8 +25,8 @@ public class Application{
 	@Autowired
     private UserService userService;
 	
-	@Autowired
-    private ReportService repService;
+//	@Autowired
+//    private ReportService repSaleExpService;
 	
 	@Autowired
     private ProductService productService;
@@ -35,7 +35,7 @@ public class Application{
     private SaleService saleService;
 	
 	@Autowired
-    private ExpenseService expService;
+    private ExpenseService expenseService;
 	
 	@Autowired
     private BookingCustomerService bookingCustomerService;
@@ -90,9 +90,10 @@ public class Application{
 		u1.addAddress(a2);
 		u2.addAddress(a3);
 		u3.addAddress(a4);
-		
-		u1.addContract(300, 25);
-		u2.addContract(0, 75);
+		Contract contract1 = u1.createContract(300, 25);
+		Contract contract2 = u1.createContract(0, 75);
+		u1.addContract(contract1);
+		u2.addContract(contract2);
 	
 		userService.updateUser(u1);
 		userService.updateUser(u2);
@@ -167,7 +168,7 @@ public class Application{
 		Product p4 = new Product("SHAMPOO MEN",productType.EXTRA,12);
 		
 		PaymentMethod cash = new PaymentMethod("CASH",0,0);
-		repSaleExpService.addPaymentMethod(cash);
+		saleService.addPaymentMethod(cash);
 		
 		productService.addProduct(p1);
 		productService.addProduct(p2);
@@ -175,14 +176,14 @@ public class Application{
 		productService.addProduct(p4);
 		
 //		//Register expenses
-		Expense e5 = expService.createExpense("Internet",expenseType.FIXED,40,LocalDate.now().minusMonths(3),"6 meses de contrato");
-		Expense e6 = expService.createExpense("Maquina Barbear",expenseType.ONEOFF,60,LocalDate.now().minusMonths(3),"2 unidades");
+		Expense e5 = expenseService.createExpense("Internet",expenseType.FIXED,40,LocalDate.now().minusMonths(3),"6 meses de contrato");
+		Expense e6 = expenseService.createExpense("Maquina Barbear",expenseType.ONEOFF,60,LocalDate.now().minusMonths(3),"2 unidades");
 		
-		expService.addExpense(e5);
-		expService.addExpense(e6);
-		
-		repService.addExpense(e5);
-		repService.addExpense(e6);
+//		repSaleExpService.addExpense(e5);
+//		repSaleExpService.addExpense(e6);
+//		
+		repSaleExpService.addExpense(e5);
+		repSaleExpService.addExpense(e6);
 		
 		
 		
@@ -213,15 +214,14 @@ public class Application{
 				saleService.addSale(s5);
 				saleService.addSale(s6);
 				saleService.addSale(s7);
-				
-	
-				repService.loadSale(s1);
-				repService.loadSale(s2);
-				repService.loadSale(s3);
-				repService.loadSale(s4);
-				repService.loadSale(s5);
-				repService.loadSale(s6);
-				repService.loadSale(s7);
+
+				repSaleExpService.loadSale(s1);
+				repSaleExpService.loadSale(s2);
+				repSaleExpService.loadSale(s3);
+				repSaleExpService.loadSale(s4);
+				repSaleExpService.loadSale(s5);
+				repSaleExpService.loadSale(s6);
+				repSaleExpService.loadSale(s7);
 
 				
 			}
@@ -250,13 +250,13 @@ public class Application{
 				saleService.addSale(s6);
 				saleService.addSale(s7);
 				
-				repService.loadSale(s1);
-				repService.loadSale(s2);
-				repService.loadSale(s3);
-				repService.loadSale(s4);
-				repService.loadSale(s5);
-				repService.loadSale(s6);
-				repService.loadSale(s7);
+				repSaleExpService.loadSale(s1);
+				repSaleExpService.loadSale(s2);
+				repSaleExpService.loadSale(s3);
+				repSaleExpService.loadSale(s4);
+				repSaleExpService.loadSale(s5);
+				repSaleExpService.loadSale(s6);
+				repSaleExpService.loadSale(s7);
 			}
 			
 			dayCount++;
@@ -287,13 +287,13 @@ public class Application{
 				saleService.addSale(s6);
 				saleService.addSale(s7);
 				
-				repService.loadSale(s1);
-				repService.loadSale(s2);
-				repService.loadSale(s3);
-				repService.loadSale(s4);
-				repService.loadSale(s5);
-				repService.loadSale(s6);
-				repService.loadSale(s7);
+				repSaleExpService.loadSale(s1);
+				repSaleExpService.loadSale(s2);
+				repSaleExpService.loadSale(s3);
+				repSaleExpService.loadSale(s4);
+				repSaleExpService.loadSale(s5);
+				repSaleExpService.loadSale(s6);
+				repSaleExpService.loadSale(s7);
 			}
 			
 			dayCount++;
@@ -319,13 +319,13 @@ public class Application{
 				saleService.addSale(s6);
 				saleService.addSale(s7);
 				
-				repService.loadSale(s1);
-				repService.loadSale(s2);
-				repService.loadSale(s3);
-				repService.loadSale(s4);
-				repService.loadSale(s5);
-				repService.loadSale(s6);
-				repService.loadSale(s7);
+				repSaleExpService.loadSale(s1);
+				repSaleExpService.loadSale(s2);
+				repSaleExpService.loadSale(s3);
+				repSaleExpService.loadSale(s4);
+				repSaleExpService.loadSale(s5);
+				repSaleExpService.loadSale(s6);
+				repSaleExpService.loadSale(s7);
 			}
 			
 			dayCount++;
@@ -355,13 +355,13 @@ public class Application{
 				saleService.addSale(s6);
 				saleService.addSale(s7);
 				
-				repService.loadSale(s1);
-				repService.loadSale(s2);
-				repService.loadSale(s3);
-				repService.loadSale(s4);
-				repService.loadSale(s5);
-				repService.loadSale(s6);
-				repService.loadSale(s7);
+				repSaleExpService.loadSale(s1);
+				repSaleExpService.loadSale(s2);
+				repSaleExpService.loadSale(s3);
+				repSaleExpService.loadSale(s4);
+				repSaleExpService.loadSale(s5);
+				repSaleExpService.loadSale(s6);
+				repSaleExpService.loadSale(s7);
 			}
 			
 			dayCount++;
@@ -387,13 +387,13 @@ public class Application{
 				saleService.addSale(s6);
 				saleService.addSale(s7);
 				
-				repService.loadSale(s1);
-				repService.loadSale(s2);
-				repService.loadSale(s3);
-				repService.loadSale(s4);
-				repService.loadSale(s5);
-				repService.loadSale(s6);
-				repService.loadSale(s7);
+				repSaleExpService.loadSale(s1);
+				repSaleExpService.loadSale(s2);
+				repSaleExpService.loadSale(s3);
+				repSaleExpService.loadSale(s4);
+				repSaleExpService.loadSale(s5);
+				repSaleExpService.loadSale(s6);
+				repSaleExpService.loadSale(s7);
 			}
 			
 			dayCount++;
@@ -425,68 +425,72 @@ public class Application{
 				saleService.addSale(s6);
 				saleService.addSale(s7);
 				
-				repService.loadSale(s1);
-				repService.loadSale(s2);
-				repService.loadSale(s3);
-				repService.loadSale(s4);
-				repService.loadSale(s5);
-				repService.loadSale(s6);
-				repService.loadSale(s7);
+				repSaleExpService.loadSale(s1);
+				repSaleExpService.loadSale(s2);
+				repSaleExpService.loadSale(s3);
+				repSaleExpService.loadSale(s4);
+				repSaleExpService.loadSale(s5);
+				repSaleExpService.loadSale(s6);
+				repSaleExpService.loadSale(s7);
 			}
 			
 			dayCount++;
 		}
 		
-		Expense e1 = expService.createExpense("Luz",expenseType.FIXED,30,LocalDate.now().minusMonths(2),"6 meses de contrato");
-		Expense e2 = expService.createExpense("Secadores",expenseType.ONEOFF,90,LocalDate.now().minusMonths(1),"3 unidades");
-		Expense e3 = expService.createExpense("Shampoos",expenseType.ONEOFF,60,LocalDate.now(),"10 unidades");
-		Expense e4 = expService.createExpense("Agua",expenseType.FIXED,35,LocalDate.now());
+		Expense e1 = expenseService.createExpense("Luz",expenseType.FIXED,30,LocalDate.now().minusMonths(2),"6 meses de contrato");
+		Expense e2 = expenseService.createExpense("Secadores",expenseType.ONEOFF,90,LocalDate.now().minusMonths(1),"3 unidades");
+		Expense e3 = expenseService.createExpense("Shampoos",expenseType.ONEOFF,60,LocalDate.now(),"10 unidades");
+		Expense e4 = expenseService.createExpense("Agua",expenseType.FIXED,35,LocalDate.now());
 
-		expService.addExpense(e1);
-		expService.addExpense(e2);
-		expService.addExpense(e3);
-		expService.addExpense(e4);
+//		repSaleExpService.addExpense(e1);
+//		repSaleExpService.addExpense(e2);
+//		repSaleExpService.addExpense(e3);
+//		repSaleExpService.addExpense(e4);
 
-		repService.addExpense(e1);
-		repService.addExpense(e2);
-		repService.addExpense(e3);
-		repService.addExpense(e4);
+		repSaleExpService.addExpense(e1);
+		repSaleExpService.addExpense(e2);
+		repSaleExpService.addExpense(e3);
+		repSaleExpService.addExpense(e4);
 	
-		Report r0 = repService.getReport(YearMonth.of(2018, 01));
-		Report r1 = repService.getReport(YearMonth.of(2018, 02));
-		Report r2 = repService.getReport(YearMonth.of(2018, 03));
-		Report r3 = repService.getReport(YearMonth.of(2018, 04));
+		Report r0 = repSaleExpService.getReport(YearMonth.of(2018, 01));
+		Report r1 = repSaleExpService.getReport(YearMonth.of(2018, 02));
+		Report r2 = repSaleExpService.getReport(YearMonth.of(2018, 03));
+		Report r3 = repSaleExpService.getReport(YearMonth.of(2018, 04));
 
 		
-		System.out.println(r0.calculateTotalExpensesValue()+" --- "+r0.calculateTotalSalesAmount()+" --- "+r0.calculateRoi());
-		System.out.println(r1.calculateTotalExpensesValue()+" --- "+r1.calculateTotalSalesAmount()+" --- "+r1.calculateRoi());
-		System.out.println(r2.calculateTotalExpensesValue()+" --- "+r2.calculateTotalSalesAmount()+" --- "+r2.calculateRoi());
-		System.out.println(r3.calculateTotalExpensesValue()+" --- "+r3.calculateTotalSalesAmount()+" --- "+r3.calculateRoi());
+//		System.out.println(r0.calculateTotalExpensesValue()+" --- "+r0.calculateTotalSalesAmount()+" --- "+r0.calculateRoi());
+//		System.out.println(r1.calculateTotalExpensesValue()+" --- "+r1.calculateTotalSalesAmount()+" --- "+r1.calculateRoi());
+//		System.out.println(r2.calculateTotalExpensesValue()+" --- "+r2.calculateTotalSalesAmount()+" --- "+r2.calculateRoi());
+//		System.out.println(r3.calculateTotalExpensesValue()+" --- "+r3.calculateTotalSalesAmount()+" --- "+r3.calculateRoi());
 		
 //		System.out.println(repService.getReport(YearMonth.of(2018, 04)).getSales().get(0).getCustomer());
 		System.out.println(saleService.getSales().get(470).getCustomer());
+//		bookingCustomerService.removeCustomer(c1);
+		repSaleExpService.removeExpense(expenseService.getExpenses().get(10));
+		System.out.println(repSaleExpService.getCurrentOpenReport().getExpenses());
+//		System.out.println(b1.getCustomer());
 		String choice = scan.nextLine();
 
-		System.out.println(repService.getReport(YearMonth.of(2018, 04)).getExpenses().size());
-		e4 = expService.getExpenses().get(expService.getExpenses().size()-1);
-		expService.removeExpense(e4);
-		
-		System.out.println(repService.getReport(YearMonth.of(2018, 04)).getExpenses().size());
-		System.out.println(repService.getReport(YearMonth.of(2018, 04)).getExpenses());
-		
-		System.out.println("/n************************/n"+"EXPENSES AVG: "+repService.calculateAvgMonthlyExpensesValue()+"/n************************/n");
-		System.out.println("/n************************/n"+"ROI: "+repService.calculateRoiAllTime()+"/n************************/n");
-		System.out.println("/n************************/n"+"PROFIT AVG: "+repService.calculateAvgMonthlyProfit()+"/n************************/n");
-		System.out.println("/n************************/n"+"ROI AVG: "+repService.calculateAvgMonthlyRoi()+"/n************************/n");
-		System.out.println("/n************************/n"+"INCOME AVG: "+repService.calculateAvgMonthlySalesAmount()+"/n************************/n");
-		System.out.println("/n************************/n"+saleService.getSales().size()+"/n************************/n");
-//		System.out.println("/n************************/n"+paymentMethodService.listAvailablePaymentMethods()+"/n************************/n");
-		System.out.println("/n************************/n"+expService.getExpenses().size()+"/n************************/n");
-		System.out.println("/n************************/n"+bookingCustomerService.getAllCustomers()+"/n************************/n");
-//		String choice = scan.nextLine();
-		System.out.println("/n************************/n"+r1.getExpenses()+"/n************************/n");
-		System.out.println("/n************************/n"+r2.getExpenses()+"/n************************/n");
-		System.out.println("/n************************/n"+r3.getExpenses()+"/n************************/n");
+//		System.out.println(repSaleExpService.getReport(YearMonth.of(2018, 04)).getExpenses().size());
+//		e4 = repSaleExpService.getExpenses().get(repSaleExpService.getExpenses().size()-1);
+//		repSaleExpService.removeExpense(e4);
+//		
+//		System.out.println(repSaleExpService.getReport(YearMonth.of(2018, 04)).getExpenses().size());
+//		System.out.println(repSaleExpService.getReport(YearMonth.of(2018, 04)).getExpenses());
+//		
+//		System.out.println("/n************************/n"+"EXPENSES AVG: "+repSaleExpService.calculateAvgMonthlyExpensesValue()+"/n************************/n");
+//		System.out.println("/n************************/n"+"ROI: "+repSaleExpService.calculateRoiAllTime()+"/n************************/n");
+//		System.out.println("/n************************/n"+"PROFIT AVG: "+repSaleExpService.calculateAvgMonthlyProfit()+"/n************************/n");
+//		System.out.println("/n************************/n"+"ROI AVG: "+repSaleExpService.calculateAvgMonthlyRoi()+"/n************************/n");
+//		System.out.println("/n************************/n"+"INCOME AVG: "+repSaleExpService.calculateAvgMonthlySalesAmount()+"/n************************/n");
+//		System.out.println("/n************************/n"+repSaleExpService.getSales().size()+"/n************************/n");
+////		System.out.println("/n************************/n"+paymentMethodService.listAvailablePaymentMethods()+"/n************************/n");
+//		System.out.println("/n************************/n"+repSaleExpService.getExpenses().size()+"/n************************/n");
+//		System.out.println("/n************************/n"+bookingCustomerService.getAllCustomers()+"/n************************/n");
+////		String choice = scan.nextLine();
+//		System.out.println("/n************************/n"+r1.getExpenses()+"/n************************/n");
+//		System.out.println("/n************************/n"+r2.getExpenses()+"/n************************/n");
+//		System.out.println("/n************************/n"+r3.getExpenses()+"/n************************/n");
 
 		/**
 		 * Verificar BusinessDays.. Esta a 0 na base de dados...

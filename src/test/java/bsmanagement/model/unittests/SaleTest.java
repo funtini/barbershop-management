@@ -13,6 +13,7 @@ import bsmanagement.model.PaymentMethod;
 import bsmanagement.model.Product.productType;
 import bsmanagement.model.Product;
 import bsmanagement.model.Sale;
+import bsmanagement.model.User;
 
 
 /**
@@ -40,6 +41,8 @@ public class SaleTest {
 	
 	PaymentMethod cash;
 	PaymentMethod card;
+	
+	User u1;
 	
 	Sale s1;
 	Sale s2;
@@ -75,6 +78,7 @@ public class SaleTest {
 		c1.setId(1);
 		c2.setId(2);
 		
+		u1 = new User("JOAO",birthdate1,"joao@domain.com","914047935","324666433");
 		
 		d1 = LocalDateTime.of(2018, 3, 11,10,30);
 		d2 = LocalDateTime.of(2018, 3, 12,11,35);
@@ -342,5 +346,37 @@ public class SaleTest {
 		Sale s4 = new Sale(d3,p1,card,null);
 		double expect = s4.calculateFeeValue();
 		assertEquals(0.83,expect,0.00);
+	}
+	
+	/**
+	 * <h2>getUser() method test</h2>.
+	 * 
+	 */
+	@Test
+	public void testGetUser() {
+		//GIVEN
+		Sale s4 = new Sale(d3,p1,card,u1);
+		//WHEN
+		User expect = s4.getUser();
+		//THEN
+		assertEquals(expect,u1);
+	}
+	
+	/**
+	 * <h2>getIncrementId() method test</h2>.
+	 * 
+	 */
+	@Test
+	public void testGetIncrement() {
+		//GIVEN
+		Sale s4 = new Sale(d3,p1,card,u1);
+		assertEquals(s4.getId(),4);
+		//WHEN
+		assertEquals(Sale.getAndIncrementId(),5);
+		assertEquals(Sale.getAndIncrementId(),6);
+		assertEquals(Sale.getAndIncrementId(),7);
+		Sale s5 = new Sale(d3,p1,card,u1);
+		//THEN
+		assertEquals(s5.getId(),8);
 	}
 }

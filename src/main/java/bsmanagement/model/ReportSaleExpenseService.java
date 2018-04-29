@@ -1,6 +1,5 @@
 package bsmanagement.model;
 
-import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +68,7 @@ public class ReportSaleExpenseService {
 	/**
 	 * Method to Add new Report
 	 * 
-	 * @return true, if report was sucessfull added, and false if there is already a report with this yearMonth in ReportList
+	 * @return true, if report was successfully added, and false if there is already a report with this yearMonth in ReportList
 	 */
 	public boolean addReport(YearMonth yearMonth)
 	{
@@ -92,7 +91,18 @@ public class ReportSaleExpenseService {
 	 */
 	public void updateReport(Report report)
 	{
+		if (report.getReportState().isOpen())
+			report.changeStatus();	
 		reportRepo.save(report);
+	}
+	
+	public void refreshReportStatus()
+	{
+		for (Report r: getAllReports())
+		{
+			if (r.getReportState().isOpen())
+				r.changeStatus();
+		}
 	}
 	
 	
@@ -101,12 +111,31 @@ public class ReportSaleExpenseService {
 	 * 
 	 * @return the reports
 	 */
-	public List<Report> getReports() {
+	public List<Report> getAllReports() {
 		List<Report> reportList = new ArrayList<>();
 		for (Report r : reportRepo.findAll())
 		{
 			r.setYearMonth(YearMonth.parse(r.getId()));
 			reportList.add(r);
+		}
+			
+		return reportList;
+	}
+	
+	/**
+	 * Get a list of all non-closed monthly reports
+	 * 
+	 * @return the reports
+	 */
+	public List<Report> getOpenReports() {
+		List<Report> reportList = new ArrayList<>();
+		for (Report r : reportRepo.findAll())
+		{
+			if (!r.getReportState().isClosed())
+			{
+				r.setYearMonth(YearMonth.parse(r.getId()));
+				reportList.add(r);
+			}
 		}
 			
 		return reportList;
@@ -127,7 +156,7 @@ public class ReportSaleExpenseService {
 		YearMonth saleDate = YearMonth.of(s.getDate().getYear(), s.getDate().getMonth());
 		boolean occurence = false;
 		boolean newReportAdded = false;
-		for(Report rep: getReports())
+		for(Report rep: getOpenReports())
 		{
 			if (rep.addSale(s))
 			{
@@ -167,7 +196,7 @@ public class ReportSaleExpenseService {
 		YearMonth repDate;
 		boolean occurence = false;
 		boolean newReportAdded = false;
-		for(Report rep: getReports())
+		for(Report rep: getOpenReports())
 		{
 			repDate = YearMonth.parse(rep.getId());
 			if ((repDate.equals(expDate) && rep.addExpense(e)))
@@ -178,8 +207,9 @@ public class ReportSaleExpenseService {
 			if (repDate.isAfter(expDate) && e.getType().equals(expenseType.FIXED))
 			{
 				int year = repDate.getYear();
-				int month = repDate.getMonthValue();	
-				Expense newExp = new Expense(e.getName(), e.getType(), e.getValue(), e.getDate().withYear(year).withMonth(month));
+				int month = repDate.getMonthValue();
+				Expense newExp = expRepo.save(new Expense(e.getName(), e.getType(), e.getValue(), e.getDate().withYear(year).withMonth(month)));
+//				Expense newExp = new Expense(e.getName(), e.getType(), e.getValue(), e.getDate().withYear(year).withMonth(month));
 				rep.addExpense(newExp);
 				updateReport(rep);
 			}
@@ -221,6 +251,7 @@ public class ReportSaleExpenseService {
 					int year = reportDate.getYear();
 					int month = reportDate.getMonthValue();
 					Expense newExp = new Expense(exp.getName(), exp.getType(), exp.getValue(), exp.getDate().withYear(year).withMonth(month));
+					expRepo.save(newExp);
 					report.addExpense(newExp);
 					updateReport(report);
 				}
@@ -238,7 +269,7 @@ public class ReportSaleExpenseService {
 	 * @return Report
 	 */
 	public Report getReport(YearMonth ym) {
-		for (Report rep: getReports())
+		for (Report rep: getAllReports())
 		{
 			if (rep.getId().equals(ym.toString()))
 				return rep;
@@ -253,7 +284,7 @@ public class ReportSaleExpenseService {
 	 * @return Report
 	 */
 	public Report getCurrentOpenReport() {
-		for (Report rep: getReports())
+		for (Report rep: getAllReports())
 		{
 			if (rep.getId().equals(YearMonth.now().toString()))
 				return rep;
@@ -271,99 +302,191 @@ public class ReportSaleExpenseService {
 	
 	
 	/**
-	 * @return the listOfExpenses
-	 */
-	public List<Expense> getExpenses() {
-		List<Expense> expenses = new ArrayList<>();
-		for (Expense e: expRepo.findAll())
-			expenses.add(e);
-		return expenses;
-	}
-	
-	/**
-	 * Method to create a new instance of expense with name, type, value, and date
-	 * 
-	 * @param name - Name of Expense
-	 * @param type - Type of Expense, if FIXED the date is set null, if ONEOFF the date is set to today
-	 * @param value - Value in Euros
-	 * @param date - Date of Expense's Payment
-	 * 
-	 * @return Expense
-	 */
-	public Expense createExpense(String name, expenseType type, double value, LocalDate date) {
-		Expense e = new Expense(name,type,value,date);
-		return e;
-	}
-	
-	
-	/**
-	 * Method to create a new instance of expense with name, type, value, date and description
-	 * 
-	 * @param name - Name of Expense
-	 * @param type - Type of Expense, if FIXED the date is set null, if ONEOFF the date is set to today
-	 * @param value - Value in Euros
-	 * @param date - Date of Expense's Payment
-	 * @param description - Description of Expense
-	 * 
-	 * @return Expense
-	 */
-	public Expense createExpense(String name, expenseType type, double value, LocalDate date,String description) {
-		Expense e = new Expense(name,type,value,date,description);
-		return e;
-	}
-	
-	
-	/**
-	 * Method to add a Expense to expenseList 
+	 * Method to add a new Expense and load it to respective report
 	 * 
 	 * @param expense - Instance of Expense class
 	 */
 	public void addExpense(Expense expense) {
-		expRepo.save(expense);
-		loadExpense(expense);
+		Expense e = expRepo.save(expense);
+		loadExpense(e);
 	}
 	
 	/**
-	 * Method to remove a Expense from repository - Only OneOff Expenses can be removed
+	 * <p>Method to remove a Expense from repository.</p>
+	 * Only expenses of non-closed reports can be removed.
 	 * 
 	 * @param expense - Instance of Expense class
 	 * 
-	 * @return true if expense is successful removed - (OneOff Expense) - false if was just disabled (Fixed Expense)
+	 * @return true if expense is successful removed , false if report of expense is already closed
 	 */
 	public boolean removeExpense(Expense expense) {
-		getCurrentOpenReport().removeExpense(expense);
+		Report report = getReport(YearMonth.of(expense.getDate().getYear(), expense.getDate().getMonth()));
+		if (report.getReportState().isClosed())
+			return false;
+		report.removeExpense(expense);	
 		expRepo.delete(expense);
+		updateReport(report);
 		return true;
 	}
 	
+
+	/*
+	 * ***************************************
+	 * SALE SERVICE
+	 * 
+	 * ***************************************
+	 * */
 	
 	/**
-	 * Method to get available payment methods
+	 * Method to add a new sale 
 	 * 
-	 * @return List of PaymentMethod
+	 * @param sale - Instance of Sale class
 	 */
-	public List<PaymentMethod> getAvailablePaymentMethods()
+	public boolean addSale(Sale sale)
 	{
-		return paymentRepository.findAll();
+		if(saleRepo.existsById(sale.getId()))
+			return false;
+		Sale s = saleRepo.save(sale);
+		loadSale(s);
+		return true;
 	}
+	
+
+	
+	/********************************
+	 * 
+	 * STATISTIC/OPERATION METHODS
+	 * 
+	 * ******************************
+	 */
+
 	
 	/**
-	 * Method to get available payment methods
+	 * Method to calculate the total ROI of all reports, expect current monthly report
 	 * 
-	 * @return List of PaymentMethod
+	 * @return ROI AVEGARAGE (%) - double
 	 */
-	public void addPaymentMethod(PaymentMethod payment)
+	public double calculateRoiAllTime()
 	{
-		paymentRepository.save(payment);
+	
+		if (this.getAllReports().isEmpty())
+			return 0;
+		if (this.getAllReports().get(0).getId().equals(YearMonth.now().toString()))
+			return 0;
+		double sumExpenses = 0;
+		double sumIncome = 0;
+		for (Report r: getAllReports())
+			if (!r.getId().equals(YearMonth.now().toString()))
+			{
+				sumExpenses= sumExpenses+r.calculateTotalExpensesValue();
+				sumIncome= sumIncome+r.calculateTotalSalesAmount();
+			}
+			
+		return (((sumIncome-sumExpenses)/sumExpenses)*100);
 	}
 	
 	
 	
+	/**
+	 * Method to calculate the average ROI of all reports, expect current monthly report
+	 * 
+	 * @return ROI AVEGARAGE (%) - double
+	 */
+	public double calculateAvgMonthlyRoi()
+	{
+		if (this.getAllReports().isEmpty())
+			return 0;
+		if (this.getAllReports().get(0).getId().equals(YearMonth.now().toString()))
+			return 0;
+		double sum = 0;
+		double count = 0;
+		for (Report r: getAllReports())
+			if (!r.getId().equals(YearMonth.now().toString()))
+			{
+				sum=sum+r.calculateRoi();
+				count++;
+			}
+			
+		return (sum/count);
+	}
 	
 	
+	/**
+	 * Method to calculate the average PROFIT of all reports, expect current monthly report
+	 * 
+	 * <p>Profit: All Sales - All Expenses of all closed reports</p>
+	 * 
+	 * @return PROFIT AVEGARAGE (%) - double
+	 */
+	public double calculateAvgMonthlyProfit()
+	{
+		if (getAllReports().isEmpty())
+			return 0;
+		if (getAllReports().get(0).getId().equals(YearMonth.now().toString()))
+			return 0;
+		double sum = 0;
+		double count = 0;
+		for (Report r: getAllReports())
+			if (!r.getId().equals(YearMonth.now().toString()))
+			{
+				sum=sum+r.calculateProfit();
+				count++;
+			}
+			
+		return (sum/count);
+	}
 	
 	
+	/**
+	 * Method to calculate the average Income of all reports, expect current monthly report
+	 * 
+	 * <p>Income: Sum of all sales amount </p>
+	 * 
+	 * @return INCOME AVEGARAGE (%) - double
+	 */
+	public double calculateAvgMonthlySalesAmount()
+	{
+		if (getAllReports().isEmpty())
+			return 0;
+		if (getAllReports().get(0).getId().equals(YearMonth.now().toString()))
+			return 0;
+		double sum = 0;
+		double count = 0;
+		for (Report r: getAllReports())
+			if (!r.getId().equals(YearMonth.now().toString()))
+			{
+				sum=sum+r.calculateTotalSalesAmount();
+				count++;
+			}
+			
+		return (sum/count);
+	}
 	
+	
+	/**
+	 * Method to calculate the average Expenses Value of all reports, expect current monthly report
+	 * 
+	 * <p>Expenses: Sum of all expenses value </p>
+	 * 
+	 * @return EXPENSES AVEGARAGE (%) - double
+	 */
+	public double calculateAvgMonthlyExpensesValue()
+	{
+		if (getAllReports().isEmpty())
+			return 0;
+		if (getAllReports().get(0).getId().equals(YearMonth.now().toString()))
+			return 0;
+		double sum = 0;
+		double count = 0;
+		for (Report r: getAllReports())
+			if (!r.getId().equals(YearMonth.now().toString()))
+			{
+				sum=sum+r.calculateTotalExpensesValue();
+				count++;
+			}
+			
+		return (sum/count);
+	}
 	
 
 }

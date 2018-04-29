@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Proxy;
 /**
  * 
  * <h1> Booking </h1>
@@ -27,6 +29,7 @@ import javax.persistence.ManyToOne;
  *
  */
 @Entity
+@Proxy(lazy = false)
 public class Booking {
 	
 	@Id

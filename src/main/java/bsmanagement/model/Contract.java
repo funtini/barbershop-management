@@ -90,8 +90,8 @@ public class Contract {
 	public boolean isOpen()
 	{
 		if (this.closeDate == null)
-			return false;
-		return true;
+			return true;
+		return false;
 	}
 	
 
@@ -103,6 +103,34 @@ public class Contract {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Contract other = (Contract) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Contract [id=" + id + ", baseSalary=" + baseSalary + ", salesComission=" + salesComission
+				+ ", startDate=" + startDate + ", closeDate=" + closeDate + "]";
 	}
 	
 	

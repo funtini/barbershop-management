@@ -73,6 +73,7 @@ public class Sale implements Comparable<Sale>{
 		this.amount = product.getPrice();
 		this.payment = payment;
 		this.user = user;
+		this.id=idGenerator.incrementAndGet();
 	}
 	
 	
@@ -91,6 +92,7 @@ public class Sale implements Comparable<Sale>{
 		this.amount = product.getPrice();
 		this.payment = payment;
 		this.user = user;
+		this.id=idGenerator.incrementAndGet();
 	}
 	
 	protected Sale()
