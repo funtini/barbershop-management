@@ -105,7 +105,19 @@ public class PaymentMethod {
 			return false;
 		return true;
 	}
-	
+
+	/**
+	 * Outputs this PaymentType as a String.
+	 * 
+	 * The output will be in the format PaymentMethod [id]-[name, fee, minFeeValue]
+	 * 
+	 * @return a string representation of this object.
+	 */
+	@Override
+	public String toString() {
+		return "PaymentMethod [name=" + id + ", fee=" + fee + ", minFeeValue=" + minFeeValue + "]";
+	}
+
 	/** 
 	 * Get class hash code for this PaymentMethod
 	 * 
@@ -133,24 +145,15 @@ public class PaymentMethod {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof PaymentMethod))
+		if (getClass() != obj.getClass())
 			return false;
 		PaymentMethod other = (PaymentMethod) obj;
-		if (!id.equals(other.id))
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	/**
-	 * Outputs this PaymentType as a String.
-	 * 
-	 * The output will be in the format PaymentMethod [id]-[name, fee, minFeeValue]
-	 * 
-	 * @return a string representation of this object.
-	 */
-	@Override
-	public String toString() {
-		return "PaymentMethod [name=" + id + ", fee=" + fee + ", minFeeValue=" + minFeeValue + "]";
 	}
 	
 	

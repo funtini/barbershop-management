@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import bsmanagement.jparepositories.classtests.PaymentRepositoryClass;
 import bsmanagement.jparepositories.classtests.SaleRepositoryClass;
 import bsmanagement.model.Customer;
 import bsmanagement.model.PaymentMethod;
@@ -55,6 +56,7 @@ public class SaleServiceTest {
 	List<Sale> emptyList;
 	SaleService saleService;
 	SaleRepositoryClass saleRepository;
+	PaymentRepositoryClass paymentRepository;
 
 	/**
 	 * <h2>Setup for all unit tests: </h2>
@@ -84,8 +86,11 @@ public class SaleServiceTest {
 		emptyList = new ArrayList<Sale>();
 		saleService = new SaleService();
 		saleRepository = new SaleRepositoryClass();
+		paymentRepository = new PaymentRepositoryClass();
 		saleService.setRepository(saleRepository);
+		saleService.setPaymentRepository(paymentRepository);
 		saleService.getSales().clear();
+		
 		expect.clear();
 		result.clear();
 		

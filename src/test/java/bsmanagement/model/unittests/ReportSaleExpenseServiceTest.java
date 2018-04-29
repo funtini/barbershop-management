@@ -303,7 +303,7 @@ public class ReportSaleExpenseServiceTest {
 	
 	
 	/**
-	 * <h2>addSale()  method test</h2>
+	 * <h2>loadSale()  method test</h2>
 	 */
 	@Test 
 	public void testLoadSale() {
@@ -325,6 +325,44 @@ public class ReportSaleExpenseServiceTest {
 		repSaleExpService.loadSale(new Sale(dt2, c1, p2,card,u1));
 		repSaleExpService.loadSale(new Sale(dt3, p1,cash,u1));
 		repSaleExpService.loadSale(new Sale(dt4, p1,cash,u1));
+		/* Then: 
+		 * 		- Reports are added with same YearMonth ym17
+		 */
+		assertEquals(repSaleExpService.getReport(YearMonth.of(2018, 2)),rep1802);		//check that can fin a report of 2018/02
+		assertEquals(repSaleExpService.getAllReports().contains(rep1802),true);	//check that report list cointains report of 2018/02
+		assertEquals(repSaleExpService.getAllReports().size(),3);					//check that number of reports have increased to 3
+	}
+	
+	
+	/**
+	 * <h2>addSale()  method test</h2>
+	 */
+	@Test 
+	public void testAddSale() {
+		
+		/* Given: 
+		 * 		- reportRegistry with 2 report (2017/12 & 2018/01)
+		 */
+		Report rep1802 = new Report(YearMonth.of(2018, 2));
+		assertEquals(repSaleExpService.getAllReports().isEmpty(),true);			//check that report list is empty before adding reports
+		assertEquals(repSaleExpService.addReport(ym17),true);						//add report 2017/12
+		assertEquals(repSaleExpService.addReport(ym18),true);						//add report 2018/12
+		assertEquals(repSaleExpService.getAllReports().contains(rep1802),false);		//check that list dont containst rep1802
+		assertEquals(repSaleExpService.getReport(YearMonth.of(2018, 2)),null);			//check that cant find a report of 2018/02
+		assertEquals(repSaleExpService.getAllReports().size(),2);					//check there is only 2 report on list
+		/* When: 
+		 * 		- addSale in 12/2017(dt3), 01/2018(dt1 e dt2) and 02/2018 (dt4)
+		 */	
+		Sale s1 = new Sale(dt1, p1,cash,u1);
+		Sale s2 = new Sale(dt2, c1, p2,card,u1);
+		Sale s3 = new Sale(dt3, p1,cash,u1);
+		Sale s4 = new Sale(dt4, p1,cash,u1);
+		
+		assertEquals(repSaleExpService.addSale(s1),true);
+		assertEquals(repSaleExpService.addSale(s1),false); //repeated sale
+		assertEquals(repSaleExpService.addSale(s2),true);
+		assertEquals(repSaleExpService.addSale(s3),true);
+		assertEquals(repSaleExpService.addSale(s4),true);
 		/* Then: 
 		 * 		- Reports are added with same YearMonth ym17
 		 */
@@ -537,7 +575,8 @@ public class ReportSaleExpenseServiceTest {
 		 * 		- d1 and d2 should create a new report
 		 * 		- d4 should create a new report and add to ym17 and ym18
 		 */	
-		repSaleExpService.addExpense(new Expense("Secadores",expenseType.ONEOFF,90,d5,"3 unidades"));
+		Expense e = new Expense("Secadores",expenseType.ONEOFF,90,d5,"3 unidades");
+		repSaleExpService.addExpense(e);
 		repSaleExpService.addExpense(new Expense("Internet",expenseType.FIXED,50,d3,"6 meses de contrato"));
 		assertEquals(repSaleExpService.getReport(ym17).getExpenses().size(),1);		
 		assertEquals(repSaleExpService.getReport(ym18).getExpenses().size(),2);
@@ -558,6 +597,85 @@ public class ReportSaleExpenseServiceTest {
 		assertEquals(repSaleExpService.getReport(ym17).getExpenses().size(),2);		
 		assertEquals(repSaleExpService.getReport(ym18).getExpenses().size(),3);
 		
+	}
+	
+	
+	/**
+	 * <h2>removeExpense()  method test</h2>
+	 */
+	@Test 
+	public void testRemoveExpense() {	
+		/* Given: 
+		 * 		- reportService with 1 open report (2018/01) with 2 expenses added
+		 */
+		
+		assertEquals(repSaleExpService.getAllReports().isEmpty(),true);	
+		assertEquals(repSaleExpService.addReport(ym18),true);						
+		assertEquals(repSaleExpService.getAllReports().size(),1);							
+		assertEquals(repSaleExpService.getReport(ym18).getExpenses().isEmpty(),true);	
+		Expense e1 = expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d5,"3 unidades");
+		Expense e2 = expenseService.createExpense("Internet",expenseType.FIXED,50,d5,"6 meses de contrato");
+		repSaleExpService.addExpense(e1);
+		repSaleExpService.addExpense(e2);
+		assertEquals(repSaleExpService.getReport(ym18).getExpenses().size(),2);
+		assertEquals(repSaleExpService.getReport(ym18).getReportState().isClosed(),false);
+		/* When: 
+		 * 	
+		 * 		- remove expense (e1) from open report
+		 */	
+		assertEquals(repSaleExpService.removeExpense(e1),true);
+		/* Then: 
+		 * 	
+		 * 		- expense (e1) was sucessfully removed
+		 */	
+		assertEquals(repSaleExpService.getReport(ym18).getExpenses().size(),1);
+		/* but When: 
+		 * 	
+		 * 		- remove expense (e2) from closed report
+		 */	
+		assertEquals(repSaleExpService.closeReport(repSaleExpService.getReport(ym18)),true);
+		assertEquals(repSaleExpService.getReport(ym18).getReportState().isClosed(),true);
+		assertEquals(repSaleExpService.removeExpense(e2),false);
+		/* Then: 
+		 * 	
+		 * 		- expense (e2) was not removed and report still got 1 expense
+		 */	
+		assertEquals(repSaleExpService.getReport(ym18).getExpenses().size(),1);		
+	}
+	
+	
+	/**
+	 * <h2>closeReport() method test</h2>
+	 */
+	@Test 
+	public void testCloseReport() {	
+		/* Given: 
+		 * 		- reportService with 1 open report (2018/01)
+		 */
+		
+		assertEquals(repSaleExpService.getAllReports().isEmpty(),true);	
+		assertEquals(repSaleExpService.addReport(ym18),true);						
+		assertEquals(repSaleExpService.getAllReports().size(),1);							
+		assertEquals(repSaleExpService.getReport(ym18).getExpenses().isEmpty(),true);	
+		assertEquals(repSaleExpService.getReport(ym18).getReportState().isOpen(),true);
+		/* When: 
+		 * 		- try to close report
+		 */
+		assertEquals(repSaleExpService.closeReport(repSaleExpService.getReport(ym18)),false);
+		/* Then: 
+		 * 		- still open because only waitingApprovement status can be closed
+		 */
+		assertEquals(repSaleExpService.getReport(ym18).getReportState().isOpen(),true);
+		/* but When: 
+		 * 		-  try to close report after refresh status to waiting for approvement
+		 */
+		repSaleExpService.refreshReportStatus();
+		assertEquals(repSaleExpService.getReport(ym18).getReportState().isWaitingForApprovement(),true);
+		assertEquals(repSaleExpService.closeReport(repSaleExpService.getReport(ym18)),true);
+		/* Then: 
+		 * 		- report is closed
+		 */	
+		assertEquals(repSaleExpService.getReport(ym18).getReportState().isClosed(),true);	
 	}
 	
 	
@@ -764,22 +882,24 @@ public class ReportSaleExpenseServiceTest {
 		
 		for (int i=dt1.getDayOfMonth();i<monthLen;i++)					//Loop to put 105 sales into report 'ym18'
 		{
-			repSaleExpService.loadSale(new Sale(dt1, p1,card,u1));
-			repSaleExpService.loadSale(new Sale(dt1.plusHours(1), c1, p2,cash,u1));
-			repSaleExpService.loadSale(new Sale(dt1.plusHours(3), p1,cash,u1));
-			repSaleExpService.loadSale(new Sale(dt1.plusHours(4), p2,card,u1));
-			repSaleExpService.loadSale(new Sale(dt1.plusHours(5), p1,cash,u1));
+			Sale s1 = new Sale(dt1, p1,card,u1);
+			repSaleExpService.addSale(s1);
+			repSaleExpService.addSale(s1);
+			repSaleExpService.addSale(new Sale(dt1.plusHours(1), c1, p2,cash,u1));
+			repSaleExpService.addSale(new Sale(dt1.plusHours(3), p1,cash,u1));
+			repSaleExpService.addSale(new Sale(dt1.plusHours(4), p2,card,u1));
+			repSaleExpService.addSale(new Sale(dt1.plusHours(5), p1,cash,u1));
 			
 		}		
 		assertEquals(repSaleExpService.getReport(ym18).getSales().size(),105);
 	
 		for (int i=dt3.getDayOfMonth();i<monthLen2;i++)					//Loop to put 45 sales into report 'ym17'
 		{
-			repSaleExpService.loadSale(new Sale(dt3, p1,card,u1));
-			repSaleExpService.loadSale(new Sale(dt3.plusHours(1), c1, p2,cash,u1));
-			repSaleExpService.loadSale(new Sale(dt3.plusHours(3), p2,card,u1));
-			repSaleExpService.loadSale(new Sale(dt3.plusHours(4), p1,card,u1));
-			repSaleExpService.loadSale(new Sale(dt3.plusHours(5), p1,cash,u1));
+			repSaleExpService.addSale(new Sale(dt3, p1,card,u1));
+			repSaleExpService.addSale(new Sale(dt3.plusHours(1), c1, p2,cash,u1));
+			repSaleExpService.addSale(new Sale(dt3.plusHours(3), p2,card,u1));
+			repSaleExpService.addSale(new Sale(dt3.plusHours(4), p1,card,u1));
+			repSaleExpService.addSale(new Sale(dt3.plusHours(5), p1,cash,u1));
 		}
 		assertEquals(repSaleExpService.getReport(ym17).getSales().size(),45);
 		
@@ -795,6 +915,72 @@ public class ReportSaleExpenseServiceTest {
 	
 	}
 	
+	
+	/**
+	 * <h2>calculate method test for empty reports</h2>
+	 * 
+	 * Test method without any expenses
+	 * 
+	 */
+	@Test 
+	public void testCalculateAllValuesWithNoReports() {
+		
+		assertEquals(repSaleExpService.getAllReports().isEmpty(),true);			
+		assertEquals(repSaleExpService.calculateAvgMonthlyExpensesValue(),0,0.0);	
+		assertEquals(repSaleExpService.calculateAvgMonthlyProfit(),0,0.0);	
+		assertEquals(repSaleExpService.calculateAvgMonthlyRoi(),0,0.0);	
+		assertEquals(repSaleExpService.calculateAvgMonthlySalesAmount(),0,0.0);	
+	}
+	
+	
+	/**
+	 * <h2>Get Current Report open</h2>
+	 * 
+	 */
+	@Test 
+	public void testGetCurrentReport() {
+		/* Given: 
+		 * 		- add 2 sales with different dates to create 2 reports
+		 */
+		Report expected = new Report(YearMonth.now());
+		s1.setDate(LocalDateTime.now());
+		assertEquals(repSaleExpService.getAllReports().isEmpty(),true);			
+		repSaleExpService.addSale(s1);
+		repSaleExpService.addSale(s2);
+		assertEquals(repSaleExpService.getAllReports().size(),2);
+		/* When: 
+		 * 		- invoke getCurrentReport()
+		 */
+		Report result = repSaleExpService.getCurrentOpenReport();
+		/* Then: 
+		 * 		- expected report is returned
+		 */
+		assertEquals(expected,result);
+	}
+	
+	/**
+	 * <h2>Get Current Report open</h2>
+	 * 
+	 */
+	@Test 
+	public void testGetCurrentReportNullCase() {
+		/* Given: 
+		 * 		- add 2 sales with same old dates to create 1 report, but the current report wasnt created
+		 */
+		Report expected = null;
+		assertEquals(repSaleExpService.getAllReports().isEmpty(),true);			
+		repSaleExpService.addSale(s1);
+		repSaleExpService.addSale(s2);
+		assertEquals(repSaleExpService.getAllReports().size(),1);
+		/* When: 
+		 * 		- invoke getCurrentReport()
+		 */
+		Report result = repSaleExpService.getCurrentOpenReport();
+		/* Then: 
+		 * 		- expected report is returned
+		 */
+		assertEquals(expected,result);
+	}
 	
 
 }

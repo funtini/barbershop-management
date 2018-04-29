@@ -6,14 +6,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import bsmanagement.jparepositories.classtests.ExpenseRepositoryClass;
+import bsmanagement.jparepositories.classtests.PaymentRepositoryClass;
 import bsmanagement.jparepositories.classtests.SaleRepositoryClass;
 import bsmanagement.jparepositories.classtests.UserRepositoryClass;
+import bsmanagement.model.Contract;
 import bsmanagement.model.Customer;
 import bsmanagement.model.Expense;
 import bsmanagement.model.Expense.expenseType;
@@ -60,15 +64,19 @@ public class ReportTest {
 	Sale s2;
 	Sale s3;
 	Sale s4;
+	Sale s5;
 	User u1;
 	User u2;
 	PaymentMethod cash;
 	PaymentMethod card;
+	Contract contract1;
+	Contract contract2;
 	
 	SaleService saleService;
 	ExpenseService expenseService;
 	UserService userService;
 	SaleRepositoryClass saleRepository;
+	PaymentRepositoryClass paymentRepository;
 	ExpenseRepositoryClass expenseRepository;
 	UserRepositoryClass userRepository;
 
@@ -79,16 +87,21 @@ public class ReportTest {
 	/**
 	 * <h2>Setup for all unit tests: </h2>
 	 * 
-	 * <p>Year [y1] : 2018 </p>
-	 * <p>Year [y2] : 2017 </p>
-	 * <p>Month [m1] : January </p>
-	 * <p>Month [m2] : December </p>
-	 * <p>SaleList [sl1] : </p>
-	 * <p>SaleList [sl2] : </p>
-	 * <p>ExpenseList [ep1] : [d1,t1,c1] </p>
-	 * <p>ExpenseList [ep1] : [d2,t2,c2] </p>
-	 * <p>businessDays [bd1] : 22 </p>
-	 * <p>ExpenseList [bd2] : 21 </p>
+	 * <p>YearMonth [ym18] : 2018/01 </p>
+	 * <p>YearMonth [ym17] : 2017/12 </p>
+	 * 
+	 * <p>Services : [saleService] ; [reportService] ; [userService] ; [expenseService] </p>
+	 * 
+	 * 
+	 * <p>User [u1] : ["JOAO",birth1,"joao@domain.com","914047935","324666433"] </p>
+	 * <p>User [u2] : ["PEDRO",birth2,"pedro@dgmail.uk","915557911","123555433"] </p>
+	 * 
+	 * <p>Customer [c1] -> ['Joao',d1,a1,p1] </p>
+	 * <p>Customer [c2] -> ['Ana',d2,a2,p2] </p>
+	 * 
+	 * <p>Product [p1] -> ['CORTE COM LAVAGEM','HAIRCUT',15] </p>
+	 * <p>Product [p2] -> ['CORTE SIMPLES','HAIRCUT',10] </p>
+	 * 
 	 * <p>Payment [cash] -> ['CASH',0,0] </p>
 	 * <p>Payment [card] -> ['CREDIT CARD',0,0] </p>
 	 * 
@@ -106,8 +119,10 @@ public class ReportTest {
 		saleRepository = new SaleRepositoryClass();
 		userRepository = new UserRepositoryClass();
 		userService = new UserService();
+		paymentRepository = new PaymentRepositoryClass();
 		expenseService.setRepository(expenseRepository);
 		saleService.setRepository(saleRepository);
+		saleService.setPaymentRepository(paymentRepository);
 		userService.setUserRepository(userRepository);
 		Expense.setStartIdGenerator(0);
 		Sale.setStartIdGenerator(0);
@@ -134,18 +149,26 @@ public class ReportTest {
 		u2 = new User("PEDRO",birthdate2,"pedro@hotmail.com","914047935","324666433");
 		userService.addUser(u1);
 		userService.addUser(u2);
+		contract1 = u1.createContract(400, 20);
+		contract2 = u1.createContract(200, 60);
+		u1.addContract(contract1);
+		u2.addContract(contract2);
+		userService.updateUser(u1);
+		userService.updateUser(u2);
 		
 		e1 = expenseService.createExpense("Agua",expenseType.FIXED,35,d1);
 		e2 = expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato");
 		e3 = expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades");
 		
-		cash = new PaymentMethod("CASH",0.0,0.0);
-		card = new PaymentMethod("CASH",1.5,0.5);
-		
+		cash = saleService.createPaymentMethod("CASH",0.0,0.0);
+		card = saleService.createPaymentMethod("CARD",1.5,0.5);
+		saleService.addPaymentMethod(cash);
+		saleService.addPaymentMethod(card);
 		s1 = saleService.createSale(dt1, c1,p1,cash,u1);
-		s2 = saleService.createSale(dt2, c2,p2,cash,u1);
+		s2 = saleService.createSale(dt2, c2,p2,card,u1);
 		s3 = saleService.createSale(dt3, c1,p1,card,u2);
 		s4 = saleService.createSale(dt4, c1,p1,card,u1);
+		s5 = saleService.createSale(dt4, c1,p1,card,u2);
 		
 		expenseService.addExpense(e1);
 		expenseService.addExpense(e2);
@@ -203,6 +226,8 @@ public class ReportTest {
 		 * THEN: rep17 is changed to closed, and todayRep still open
 		 */
 		assertEquals(rep17.getReportState().isClosed(),true);
+		rep17.setReportState(null);
+		assertEquals(rep17.getReportState().isClosed(),true);
 		assertEquals(repToday.getReportState().isOpen(),true);
 		System.out.println(rep17.getStatus());
 	}
@@ -241,6 +266,268 @@ public class ReportTest {
 		 */
 		assertEquals(rep18.getBusinessDays(),2);
 		assertEquals(rep17.getBusinessDays(),1);
+		
+	}
+	
+	/**
+	 * <h2>removeSale() method test</h2>
+	 * 
+	 * <p> This test verify if 2 different reports with different status are able to remove sales
+	 */
+	@Test 
+	public void testRemoveSale() {
+		/* Given: 
+		 * 		- 1 report closed with 2 sales and 1 report open with 3 sales
+		 */
+		assertEquals(rep18.getSales().isEmpty(),true);
+		assertEquals(rep17.getSales().isEmpty(),true);
+		
+		rep18.addSale(s1);
+		rep18.addSale(s2);		
+		rep18.addSale(s3);
+		rep17.addSale(s4);
+		rep17.addSale(s5);
+		
+		assertEquals(rep18.getSales().size(),3);
+		assertEquals(rep17.getSales().size(),2);
+		rep17.changeStatus();
+		assertEquals(rep17.setStatusClosed(),true);
+		/* When: 
+		 * 		- removeSale() is executed in both reports
+		 */
+		assertEquals(rep18.removeSale(s1),true);
+		assertEquals(rep17.removeSale(s3),false);
+		/* Then: 
+		 * 		- only rep18 (opened) has sale removed, rep17 still got same 2 sales on list
+		 */
+		assertEquals(rep18.getSales().size(),2);
+		assertEquals(rep17.getSales().size(),2);
+		
+	}
+	
+	/**
+	 * <h2>getUserSales() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testGetUserSales() {
+		/* Given: 
+		 * 		- 1 open report with 3 sales 
+		 */
+		List<Sale> expected = new ArrayList<>();
+		assertEquals(rep18.getSales().isEmpty(),true);
+		
+		rep18.addSale(s1);
+		rep18.addSale(s2);		
+		rep18.addSale(s3);
+		expected.add(s1);
+		expected.add(s2);
+		
+		assertEquals(rep18.getSales().size(),3);
+		/* When: 
+		 * 		- getUserSales() is executed
+		 */
+		assertEquals(rep18.getUserSales(u1),expected);
+		assertEquals(rep18.removeSale(s2),true);
+		/* Then: 
+		 * 		- expected sales list is given
+		 */
+		expected.remove(s2);
+		assertEquals(rep18.getSales().size(),2);
+		assertEquals(rep18.getUserSales(u1),expected);
+	}
+	
+	/**
+	 * <h2>getUserSalaries() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testGetUserSalaries() {
+		/* Given: 
+		 * 		- 1 open report with 3 sales 
+		 */
+		Map<User,Double> expected = new HashMap<User,Double>();
+		Map<User,Double> result = new HashMap<User,Double>();
+		assertEquals(rep18.getSales().isEmpty(),true);
+		
+		rep18.addSale(s1);
+		rep18.addSale(s2);		
+		rep18.addSale(s3);
+		expected.put(u1,405.0); 	//400 + 0.2*15 + 0.2*10 [base salary + 2 comission sales of 20% == 400 + 3 + 2
+		expected.put(u2,209.0);		//200 + 0.6*15  [base salary + 1 comission sales of 60% == 200 + 9
+		
+		assertEquals(rep18.getSales().size(),3);
+		/* When: 
+		 * 		- getUserSaries() is executed
+		 */
+		result = rep18.getUsersSalariesInThisMonth();
+		/* Then: 
+		 * 		- got a map with all users and respective salaries
+		 */
+
+		assertEquals(expected,result);
+	}
+	
+	
+	/**
+	 * <h2>getActiveUsersInThisMonth() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testGetActiveUsersInThisMonth() {
+		/* Given: 
+		 * 		- 1 open report with 3 sales 
+		 */
+	
+		List<User> expectedUsers = new ArrayList<>();
+		List<User> result = new ArrayList<>();
+		assertEquals(rep18.getSales().isEmpty(),true);
+		
+		rep18.addSale(s1);
+		rep18.addSale(s2);		
+		rep18.addSale(s3);
+		
+		expectedUsers.add(u1);
+		expectedUsers.add(u2);
+	
+		
+		assertEquals(rep18.getActiveUsersInThisMonth().size(),2);
+		/* When: 
+		 * 		- getActiveUserInThisMonth() is executed
+		 */
+		result = rep18.getActiveUsersInThisMonth();
+		/* Then: 
+		 * 		- got all users with activity in that mounth
+		 */
+
+		assertEquals(expectedUsers,result);
+	}
+	
+	/**
+	 * <h2>getActiveUsersInThisMonth() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testCalculateTotalFeeAmount() {
+		/* Given: 
+		 * 		- 1 open report with 3 sales 
+		 */
+	
+		assertEquals(rep18.getSales().isEmpty(),true);
+		
+		rep18.addSale(s1);
+		rep18.addSale(s2);		
+		rep18.addSale(s3);
+		
+		assertEquals(rep18.getSales().size(),3);
+		/* When: 
+		 * 		- getActiveUserInThisMonth() is executed
+		 */
+		double result = rep18.calculateTotalFeeAmount();
+		/* Then: 
+		 * 		- got all users with activity in that mounth
+		 */
+
+		assertEquals(1,result,0.0);
+	}
+	
+	/**
+	 * <h2>getSumAllAmountsPayedBy() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testSumAllAmountsPayedBy() {
+		/* Given: 
+		 * 		- 1 open report with 3 sales 
+		 */
+	
+		assertEquals(rep18.getSales().isEmpty(),true);
+		
+		rep18.addSale(s1);
+		rep18.addSale(s2);		
+		rep18.addSale(s3);
+		
+		assertEquals(rep18.getSales().size(),3);
+		/* When: 
+		 * 		- getActiveUserInThisMonth() is executed
+		 */
+		double result = rep18.sumAllAmountsPayedBy(card);
+		/* Then: 
+		 * 		- got all users with activity in that mounth
+		 */
+
+		assertEquals(25,result,0.0);
+	}
+	
+	
+	/**
+	 * <h2>getFixedExpenses() method test</h2>
+	 * 
+	 */
+	@Test 
+	public void testGetFixedExpenses() {
+		/* Given: 
+		 * 		- 1 report closed with 2 sales and 1 report open with 3 sales
+		 */
+		List<Expense> expected = new ArrayList<>();
+		List<Expense> result = new ArrayList<>();
+		assertEquals(rep17.getExpenses().isEmpty(),true);
+		
+		assertEquals(rep17.addExpense(e1),true);
+		assertEquals(rep17.addExpense(e3),true);
+		assertEquals(rep17.addExpense(e2),true);
+		expected.add(e1);
+		expected.add(e2);
+		
+		assertEquals(rep17.getExpenses().size(),3);
+
+		/* When: 
+		 * 		- getFixedExpenses() is executed
+		 */
+		result = rep17.getFixedExpenses();
+		
+		/* Then: 
+		 * 		- get expected list of fixed expenses
+		 */
+		assertEquals(result,expected);
+	
+		
+	}
+
+	
+	/**
+	 * <h2>removeExpense() method test</h2>
+	 * 
+	 * <p> This test verify if 2 different reports with different status are able to remove expenses
+	 */
+	@Test 
+	public void testRemoveExpense() {
+		/* Given: 
+		 * 		- 1 report closed with 2 sales and 1 report open with 3 sales
+		 */
+		assertEquals(rep18.getExpenses().isEmpty(),true);
+		assertEquals(rep17.getExpenses().isEmpty(),true);
+		
+		assertEquals(rep18.addExpense(e1),true);
+		assertEquals(rep17.addExpense(e3),true);
+		assertEquals(rep17.addExpense(e2),true);
+		
+
+		
+		assertEquals(rep18.getExpenses().size(),1);
+		assertEquals(rep17.getExpenses().size(),2);
+		rep17.changeStatus();
+		assertEquals(rep17.setStatusClosed(),true);
+		/* When: 
+		 * 		- removeExpense() is executed in both reports
+		 */
+		assertEquals(rep18.removeExpense(e1),true);
+		assertEquals(rep17.removeExpense(e3),false);
+		/* Then: 
+		 * 		- only rep18 (opened) has expense removed, rep17 still got same 2 sales on list
+		 */
+		assertEquals(rep18.getExpenses().isEmpty(),true);
+		assertEquals(rep17.getExpenses().size(),2);
 		
 	}
 	
@@ -332,6 +619,7 @@ public class ReportTest {
 		 * 		- Try to add oneoff expense: e3 to rep17 
 		 */	
 		assertEquals(rep18.addExpense(e1),true);
+		assertEquals(rep18.addExpense(e1),false);
 		assertEquals(rep17.addExpense(e2),true);	
 		assertEquals(rep17.addExpense(e3),true);
 		expectedExpenses18.add(e1);

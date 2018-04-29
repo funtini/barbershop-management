@@ -92,6 +92,9 @@ public class UserTest {
 	public void testHashCode() {
 		User userTest = new User("PEDRO",birth2,"pedro@gmail.uk","915557911","123555433");
 		assertEquals(userTest.hashCode(),u2.hashCode());
+		u2.setEmail(null);
+		userTest.setEmail(null);
+		assertEquals(userTest.hashCode(),u2.hashCode());
 	}
 
 	@Test

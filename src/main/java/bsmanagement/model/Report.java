@@ -121,12 +121,18 @@ public class Report {
 		this.businessDays = businessDays;
 	}
 	
-	public void removeExpense(Expense expense) {
+	public boolean removeExpense(Expense expense) {
+		if (getReportState().isClosed())
+			return false;
 		expenses.remove(expense);
+		return true;
 	}
 	
-	public void removeSale(Sale sale) {
+	public boolean removeSale(Sale sale) {
+		if (getReportState().isClosed())
+			return false;
 		sales.remove(sale);
+		return true;
 	}
 
 	public void setYearMonth(YearMonth yearMonth) {

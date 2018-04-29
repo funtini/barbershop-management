@@ -41,8 +41,6 @@ public class ReportSaleExpenseService {
 	@Autowired
 	private SaleRepository saleRepo;
 	
-	@Autowired
-	private PaymentRepository paymentRepository;
 
 	public ReportSaleExpenseService() {
 	
@@ -60,11 +58,7 @@ public class ReportSaleExpenseService {
 		this.saleRepo = saleRepo;
 	}
 	
-	public void setPaymentRepository(PaymentRepository paymentRepository) {
-		this.paymentRepository=paymentRepository;
-	}
-	
-	
+
 	/**
 	 * Method to Add new Report
 	 * 
@@ -96,6 +90,11 @@ public class ReportSaleExpenseService {
 		reportRepo.save(report);
 	}
 	
+	
+	/**
+	 * Method to refresh all report status, except reports that are waiting confirmation to be closed
+	 * 
+	 */
 	public void refreshReportStatus()
 	{
 		for (Report r: getAllReports())
@@ -104,6 +103,18 @@ public class ReportSaleExpenseService {
 				r.changeStatus();
 		}
 	}
+	
+	
+	/**
+	 * Method to close report that are waiting for confirmation. Open reports cant be closed.
+	 * 
+	 * @param report
+	 */
+	public boolean closeReport(Report report)
+	{
+		return report.setStatusClosed();
+	}
+	
 	
 	
 	/**

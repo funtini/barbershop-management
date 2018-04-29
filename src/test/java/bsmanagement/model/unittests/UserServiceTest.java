@@ -236,6 +236,7 @@ public class UserServiceTest {
 	@Test
 	public void testSetProfileStoreManager() {
 		//Given: 1 employer added 
+		
 		assertEquals(userService.addUser(u1),true);
 		assertEquals(userService.findUserByEmail("joao@domain.com").getProfile(),UserProfile.EMPLPOYER);
 		//When: set profile to Store Manager
@@ -244,5 +245,14 @@ public class UserServiceTest {
 		assertEquals(userService.findUserByEmail("joao@domain.com").getProfile(),UserProfile.STOREMANAGER);
 	}
 	
-
+	
+	@Test
+	public void testMethodOnNonRegisteredUser() {	
+		assertEquals(userService.setUserProfileStoreManager(u1),false);
+		assertEquals(userService.setUserProfileEmployer(u1),false);
+		assertEquals(userService.setUserProfileAdmin(u1),false);
+		assertEquals(userService.updateUser(u1),false);
+	}
+	
+	
 }

@@ -472,5 +472,20 @@ public class BookingCustomerServiceTest {
 		//Then: they are equals
 		assertEquals(bcService.getAllCustomers().contains(customer),false);		
 	}
+	
+	/**
+	 * <h2>findCustomerById() method test</h2>
+	 * 
+	 * only name as input data
+	 */
+	@Test
+	public void testFindCustomerById() {
+		Customer customer = new Customer("Joao");
+		bcService.addCustomer(customer);
+		assertEquals(bcService.getAllCustomers().contains(customer),true);
+		assertEquals(bcService.findCustomerById(1),customer);
+		assertEquals(bcService.findCustomerById(2),null);
+			
+	}
 
 }

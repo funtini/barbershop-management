@@ -104,6 +104,7 @@ public class PaymentMethodTest {
 	@Test
 	public void testEqualsObjectNullCases() {
 		cash.setType(null);
+		assertEquals(cash.equals(creditCard),false);
 		assertEquals(creditCard.equals(cash),false);
 		assertEquals(creditCard.equals(null),false);
 	}

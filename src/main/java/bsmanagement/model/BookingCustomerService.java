@@ -45,8 +45,6 @@ public class BookingCustomerService {
 		this.bookRepository = bookRepository;
 	}
 
-
-
 	public void setCustomersRepository(CustomerRepository customersRepository) {
 		this.customersRepository = customersRepository;
 	}
@@ -240,7 +238,7 @@ public class BookingCustomerService {
 	
 	/*
 	 * --------------------------
-	 * 		MERGED SERVICE
+	 * 	 DATA TRANSFER OBJECTS
 	 * --------------------------
 	 */
 	

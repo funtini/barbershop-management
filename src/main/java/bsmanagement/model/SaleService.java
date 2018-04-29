@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import bsmanagement.model.jparepositories.PaymentRepository;
 import bsmanagement.model.jparepositories.SaleRepository;
 
 /**
@@ -30,14 +31,19 @@ public class SaleService {
 	
 	@Autowired
 	private SaleRepository saleRepo;
-	private List<PaymentMethod> availablePaymentMethods;
+	@Autowired
+	private PaymentRepository paymentRepository;
 
 
 	/**
 	 * Constructor of SaleRegistry
 	 */
 	public SaleService() {
-		availablePaymentMethods = new ArrayList<>();
+
+	}
+	
+	public void setPaymentRepository(PaymentRepository paymentRepository) {
+		this.paymentRepository=paymentRepository;
 	}
 
 	/**
@@ -54,7 +60,7 @@ public class SaleService {
 	 * @return List of available payment methods
 	 */
 	public List<PaymentMethod> getAvailablePaymentMethods() {
-		return availablePaymentMethods;
+		return paymentRepository.findAll();
 	}
 
 	/**
@@ -66,8 +72,8 @@ public class SaleService {
 	 */
 	public boolean addPaymentMethod(PaymentMethod payment)
 	{
-		if (payment.isValid() && !getAvailablePaymentMethods().contains(payment)) {
-			availablePaymentMethods.add(payment);
+		if (payment.isValid() && !paymentRepository.existsById(payment.getType())) {
+			paymentRepository.save(payment);
 			return true;
 		}
 			
