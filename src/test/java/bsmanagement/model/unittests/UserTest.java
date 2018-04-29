@@ -67,6 +67,7 @@ public class UserTest {
 	public void setUp(){
 		
 		Address.setStartIdGenerator(1);
+		Contract.setStartIdGenerator(1);
 		a1 = new Address("CASA","RUA DO AMARO","3550-444","VISEU","PORTUGAL");
 		a2 = new Address("TRABALHO","RUA DO PASSAL","3530-194","MANGUALDE","PORTUGAL");
 		a3 = new Address("CASA","RUA LUIS CAMOES","4425-651","PORTO","PORTUGAL");

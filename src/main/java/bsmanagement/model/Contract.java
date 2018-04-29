@@ -38,6 +38,15 @@ public class Contract {
 	private LocalDate closeDate;
 	
 	
+	/**
+	 * Class constructor.
+	 *
+	 * @param baseSalary
+	 *            Base Monthly Salary of contract.
+	 * @param salesComission
+	 *            Comission per sale in %.
+	 *            
+	 */
 	public Contract(double baseSalary, double salesComission) {
 		this.baseSalary = baseSalary;
 		this.salesComission = salesComission;
@@ -46,6 +55,16 @@ public class Contract {
 	}
 	
 	protected Contract() {
+	}
+	
+	/**
+	 * Static method to set new start id generator
+	 * 
+	 * @param num
+	 */
+	public static void setStartIdGenerator(int num)
+	{
+		idGenerator.set(num-1);
 	}
 
 	public int getId()
@@ -87,6 +106,14 @@ public class Contract {
 		return closeDate;
 	}
 
+	
+	/**
+	 * <p>Method to check if contract is open</p>
+	 * A contract is open if closedate still empty or null.
+	 * 
+	 *  @return true if contract is open, false otherwise
+	 *            
+	 */
 	public boolean isOpen()
 	{
 		if (this.closeDate == null)
@@ -95,6 +122,12 @@ public class Contract {
 	}
 	
 
+	/**
+	 * <p>Method to close contract</p>
+	 * The closeDate of contract is setted to LocalDate.now().
+	 *     
+	 * @return true if contract was sucessfully closed, false if contract is already closed
+	 */
 	public boolean close()
 	{
 		if (isOpen())
