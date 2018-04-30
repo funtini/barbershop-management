@@ -39,6 +39,9 @@ public class Booking {
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	private static AtomicInteger idGenerator=new AtomicInteger();
 	
@@ -52,10 +55,11 @@ public class Booking {
 	 * @param customer - Instance of Customer
 	 * 
 	 */
-	public Booking(LocalDateTime date, Customer customer) {
+	public Booking(LocalDateTime date, Customer customer, User user) {
 		
 		this.date = date;
 		this.customer = customer;
+		this.user = user;
 		
 	}
 	
@@ -68,6 +72,21 @@ public class Booking {
 		return idGenerator.incrementAndGet();
 	}
 	
+	
+	/**
+	 * @return user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * Set user
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	/**
 	 * Set booking's Id
 	 */

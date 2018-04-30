@@ -18,6 +18,7 @@ import bsmanagement.jparepositories.classtests.CustomerRepositoryClass;
 import bsmanagement.model.Booking;
 import bsmanagement.model.BookingCustomerService;
 import bsmanagement.model.Customer;
+import bsmanagement.model.User;
 
 
 /**
@@ -45,7 +46,8 @@ public class BookingCustomerServiceTest {
 	LocalDate bd2;
 	LocalDate bd3;
 	
-	
+	User u1;
+	User u2;
 	
 	Booking b1;
 	Booking b2;
@@ -67,6 +69,9 @@ public class BookingCustomerServiceTest {
 	 * <p>Customer [c1] -> ["Joao",'30/11/1989',"Mangualde",914047935] </p>
 	 * <p>Customer [c2] -> ["Ana",'15/02/1984',"Porto",966677722] </p>
 	 * <p>Customer [c3] -> ["Pedro",'25/05/1992',"Mangualde",932444333] </p>
+	 * 
+	 * <p>User [u1] : ["JOAO",birth1,"joao@domain.com","914047935","324666433"] </p>
+	 * <p>User [u2] : ["PEDRO",birth2,"pedro@dgmail.uk","915557911","123555433"] </p>
 	 * 
 	 * <p>DateTime [dt1] : Today's Date + 10 days</p>
 	 * <p>DateTime [dt2] : Today's Date + 30 mins</p>
@@ -101,6 +106,9 @@ public class BookingCustomerServiceTest {
 		bd2=LocalDate.of(1984, 02, 15);
 		bd3=LocalDate.of(1992, 05, 25);
 		
+		u1 = new User("JOAO",birthdate1,"joao@domain.com","914047935","324666433");
+		u2 = new User("PEDRO",birthdate2,"pedro@gmail.uk","915557911","123555433");
+		
 		c1 = new Customer("Joao",birthdate1,"Mangualde","914047935");
 		c2 = new Customer("Ana",birthdate2,"Porto","966677722");
 		c3 = new Customer("Pedro",bd3,"Mangualde","932444333");
@@ -110,9 +118,9 @@ public class BookingCustomerServiceTest {
 		dt2 = LocalDateTime.now().plusMinutes(30);
 		dt3 = LocalDateTime.of(LocalDate.now(),LocalTime.of(10, 10)).plusMonths(1);
 		
-		b1 = new Booking(dt1,c1);
-		b2 = new Booking(dt2,c2);
-		b3 = new Booking(dt3,c1);
+		b1 = new Booking(dt1,c1,u1);
+		b2 = new Booking(dt2,c2,u1);
+		b3 = new Booking(dt3,c1,u2);
 
 		expect = new ArrayList<>();
 	}
@@ -131,7 +139,7 @@ public class BookingCustomerServiceTest {
 		assertEquals(b2.getId(),2);
 		//When
 		Booking.setStartIdGenerator(10);
-		Booking b4 = new Booking(dt2,c1);
+		Booking b4 = new Booking(dt2,c1,u1);
 		bcService.addBooking(b4);
 		//Then
 		assertEquals(b4.getId(),10);
@@ -210,8 +218,8 @@ public class BookingCustomerServiceTest {
 		assertEquals(bcService.getBookings().isEmpty(),true);
 		
 		//When: create instances of bookings by bookingRegistry
-		Booking result1 = bcService.createBooking(dt1, c1);
-		Booking result2 = bcService.createBooking(dt2, c2);
+		Booking result1 = bcService.createBooking(dt1, c1,u2);
+		Booking result2 = bcService.createBooking(dt2, c2,u1);
 		//Then:
 		assertEquals(result1.getDate(),b1.getDate());
 		assertEquals(result2.getDate(),b2.getDate());	
@@ -326,7 +334,7 @@ public class BookingCustomerServiceTest {
 	 * <h2>getNextBookingOf() method test</h2>
 	 */
 	@Test
-	public void testGetNextBookingOf() {
+	public void testGetNextBookingOfCustomer() {
 		//Given: empty list on bookingRegistry and bookings 
 		assertEquals(bcService.getBookings().isEmpty(),true);
 		assertEquals(bcService.addBooking(b1),true);
@@ -334,13 +342,37 @@ public class BookingCustomerServiceTest {
 		assertEquals(bcService.addBooking(b3),true);
 		assertEquals(bcService.getBookings().size(),3);
 		bcService.getBookings().get(1).setDate(dt1);
-		//When: get bookings of day 11 in bookingRegistry
+		//When: get bookings of customer c1 and c2
 		
 		Booking result = bcService.getNextBookingOf(c1);
 		Booking result2 = bcService.getNextBookingOf(c2);
 		//Then:
 		assertEquals(result,b1);	
 		assertEquals(result2,b2);
+		
+	}
+	
+	/**
+	 * <h2>getNextBookingOf() method test</h2>
+	 */
+	@Test
+	public void testGetNextBookingOfUser() {
+		//Given: empty list on bookingRegistry and bookings 
+		assertEquals(bcService.getBookings().isEmpty(),true);
+	
+		assertEquals(bcService.addBooking(b1),true);
+		assertEquals(bcService.addBooking(b2),true);
+		assertEquals(bcService.addBooking(b3),true);
+		assertEquals(bcService.getBookings().size(),3);
+		bcService.getBookings().get(1).setDate(dt1);
+		List<Booking> expected =  new ArrayList<>();
+		expected.add(b1);
+		expected.add(b2);
+		//When: get bookings of user1
+		
+		List<Booking> result = bcService.getNextBookingsOf(u1.getEmailAddress());
+		//Then:
+		assertEquals(expected,result);	
 		
 	}
 	

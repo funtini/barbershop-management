@@ -135,18 +135,18 @@ public class Application{
 		bookingCustomerService.addCustomer(c15);
 		
 		//Register Bookings
-		Booking b1 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(9), c1);
-		Booking b2 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(10), c2);
-		Booking b3 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(11), c3);
-		Booking b4 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(13).withMinute(30), c4);
-		Booking b5 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(14).withMinute(30), c5);
-		Booking b6 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(16), c6);
-		Booking b7 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(2).withHour(10), c12);
-		Booking b8 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(17), c7);
-		Booking b9 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(2).withHour(11).withMinute(30), c11);
-		Booking b10 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(18), c8);
-		Booking b11 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(2).withHour(14), c9);
-		Booking b12 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(2).withHour(16).withMinute(30), c10);
+		Booking b1 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(9), c1,u1);
+		Booking b2 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(10), c2,u2);
+		Booking b3 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(11), c3,u1);
+		Booking b4 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(13).withMinute(30), c4,u1);
+		Booking b5 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(14).withMinute(30), c5,u1);
+		Booking b6 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(16), c6,u2);
+		Booking b7 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(2).withHour(10), c12,u1);
+		Booking b8 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(17), c7,u1);
+		Booking b9 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(2).withHour(11).withMinute(30), c11,u1);
+		Booking b10 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(1).withHour(18), c8,u2);
+		Booking b11 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(2).withHour(14), c9,u1);
+		Booking b12 = bookingCustomerService.createBooking(LocalDateTime.now().plusDays(2).withHour(16).withMinute(30), c10,u1);
 		
 		bookingCustomerService.addBooking(b1);
 		bookingCustomerService.addBooking(b2);
@@ -466,7 +466,7 @@ public class Application{
 //		System.out.println(repService.getReport(YearMonth.of(2018, 04)).getSales().get(0).getCustomer());
 		System.out.println(saleService.getSales().get(470).getCustomer());
 //		bookingCustomerService.removeCustomer(c1);
-		repSaleExpService.removeExpense(expenseService.getExpenses().get(10));
+		System.out.println(repSaleExpService.removeExpense(expenseService.getExpenses().get(10)));
 		System.out.println(repSaleExpService.getCurrentOpenReport().getExpenses());
 //		System.out.println(b1.getCustomer());
 		String choice = scan.nextLine();

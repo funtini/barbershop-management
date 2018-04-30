@@ -168,8 +168,8 @@ public class BookingCustomerService {
 	 * 
 	 * @return Booking - instance
 	 */
-	public Booking createBooking(LocalDateTime date, Customer customer) {
-		Booking book = new Booking(date,customer);
+	public Booking createBooking(LocalDateTime date, Customer customer, User user) {
+		Booking book = new Booking(date,customer,user);
 		return book;
 	}
 	
@@ -207,6 +207,22 @@ public class BookingCustomerService {
 	}
 	
 	/**
+	 * Method to get all next bookings order by time
+	 * 
+	 * @return List of bookings - with today's date
+	 */
+	public List<Booking> getNextBookingsOf(String userId) {
+		List<Booking> bookingList = new ArrayList<>();
+		for (Booking b: getNextBookings())
+		{
+			if (b.getUser().getEmailAddress().equals(userId))
+				bookingList.add(b);
+		}
+		return bookingList;
+	}
+	
+	
+	/**
 	 * Method to get all bookings of a specific day, order by time
 	 * 
 	 * @return List of bookings
@@ -242,25 +258,26 @@ public class BookingCustomerService {
 	 * --------------------------
 	 */
 	
-	/**
-	 * Method to add a new booking
-	 * 
-	 * @param BookingDTO - Instance of BookingRestDTO
-	 * 
-	 * @return boolean - true if booking was successfully added, false otherwise
-	 */
-	public boolean addBooking(BookingRestDTO bookingDTO) {
-		if (bookingDTO.getDate().isBefore(LocalDateTime.now()))
-		{
-			bookingDTO.setMessage("Booking not added : INVALID DATE");
-			return false;
-		}
-		bookingDTO.setMessage("Booking Sucessfully Added");	
-		Customer customer = findCustomerById(bookingDTO.getCustomerId());
-		Booking booking = createBooking(bookingDTO.getDate(),customer);
-		bookRepository.save(booking);
-		return true;
-	}
+//	/**
+//	 * Method to add a new booking
+//	 * 
+//	 * @param BookingDTO - Instance of BookingRestDTO
+//	 * 
+//	 * @return boolean - true if booking was successfully added, false otherwise
+//	 */
+//	public boolean addBooking(BookingRestDTO bookingDTO) {
+//		if (bookingDTO.getDate().isBefore(LocalDateTime.now()))
+//		{
+//			bookingDTO.setMessage("Booking not added : INVALID DATE");
+//			return false;
+//		}
+//		bookingDTO.setMessage("Booking Sucessfully Added");	
+//		Customer customer = findCustomerById(bookingDTO.getCustomerId());
+//		User user = find
+//		Booking booking = createBooking(bookingDTO.getDate(),customer,bookingDTO.getUserId());
+//		bookRepository.save(booking);
+//		return true;
+//	}
 
 	public boolean addCustomer(CustomerRestDTO customerDTO) {
 		if (customerDTO.getName()==null)

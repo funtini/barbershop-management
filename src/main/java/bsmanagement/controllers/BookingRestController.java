@@ -28,11 +28,11 @@ public class BookingRestController {
 		return bookingCustomerService.getNextBookings();
 	}
 	
-	@PostMapping("/bookings")
-	public String addBooking(@RequestBody BookingRestDTO bookingDTO) {
-		
-		bookingCustomerService.addBooking(bookingDTO);
-		return bookingDTO.getMessage();
-	}
-	
+//	@PostMapping("/bookings")
+//	public String addBooking(@RequestBody BookingRestDTO bookingDTO) {
+//		
+//		bookingCustomerService.addBooking(bookingDTO);
+//		return bookingDTO.getMessage();
+//	}
+//	
 }

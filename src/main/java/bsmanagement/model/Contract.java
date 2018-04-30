@@ -49,6 +49,10 @@ public class Contract {
 	 */
 	public Contract(double baseSalary, double salesComission) {
 		this.baseSalary = baseSalary;
+		if (salesComission < 0.0)
+			salesComission = 0.0;
+		if (salesComission > 100)
+			salesComission = 100.0;
 		this.salesComission = salesComission;
 		this.startDate = LocalDate.now();
 		
@@ -88,6 +92,10 @@ public class Contract {
 
 
 	public void setSalesComission(double salesComission) {
+		if (salesComission < 0.0)
+			salesComission = 0.0;
+		if (salesComission > 100)
+			salesComission = 100.0;
 		this.salesComission = salesComission;
 	}
 

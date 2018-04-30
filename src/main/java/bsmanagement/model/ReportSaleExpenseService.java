@@ -336,7 +336,7 @@ public class ReportSaleExpenseService {
 			return false;
 		report.removeExpense(expense);	
 		expRepo.delete(expense);
-		updateReport(report);
+		//updateReport(report);
 		return true;
 	}
 	

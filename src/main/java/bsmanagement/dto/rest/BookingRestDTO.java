@@ -10,6 +10,7 @@ public class BookingRestDTO {
 	private LocalDateTime date;
 	private int customerId;
 	private String message;
+	private String userId;
 	
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -21,6 +22,16 @@ public class BookingRestDTO {
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
+	
+	
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	public int getCustomerId() {
 		return customerId;
 	}

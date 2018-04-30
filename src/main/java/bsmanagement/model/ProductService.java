@@ -38,7 +38,7 @@ public class ProductService {
 
 	
 	/**
-	 * @return the listOfProducts
+	 * @return the list Of all Products
 	 */
 	public List<Product> getAllProducts() {
 		List<Product> allProducts = new ArrayList<>();
@@ -48,7 +48,7 @@ public class ProductService {
 	}
 	
 	/**
-	 * @return the listOfProducts
+	 * @return the list Of Active Products
 	 */
 	public List<Product> getActiveProducts() {
 		List<Product> activeProducts = new ArrayList<>();
@@ -59,14 +59,14 @@ public class ProductService {
 	}
 	
 	/**
-	 * @return the listOfProducts
+	 * @return the list Of Removed Products
 	 */
 	public List<Product> getRemovedProducts() {
-		List<Product> activeProducts = new ArrayList<>();
+		List<Product> inactiveProducts = new ArrayList<>();
 		for (Product p : getAllProducts())
 			if (!p.isActive())
-				activeProducts.add(p);
-		return activeProducts;
+				inactiveProducts.add(p);
+		return inactiveProducts;
 	}
 	
 	/**

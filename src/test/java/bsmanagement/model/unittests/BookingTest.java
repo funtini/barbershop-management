@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import bsmanagement.model.Booking;
 import bsmanagement.model.Customer;
+import bsmanagement.model.User;
 
 /**
  * 
@@ -31,6 +32,9 @@ public class BookingTest {
 	Booking b1;
 	Booking b2;
 	
+	User u1;
+	User u2;
+	
 	
 	/**
 	 * <h2>Setup for all unit tests: </h2>
@@ -41,6 +45,8 @@ public class BookingTest {
 	 * <p>Time [t2] : 14:30</p>
 	 * <p>Customer [c1] : ['Joao','30/11/1989','Mangualde','914047935'] </p>
 	 * <p>Customer [c2] : ['Ana','15/02/1984','Porto','966677722'] </p>
+	 * <p>User [u1] : ["JOAO",birth1,"joao@domain.com","914047935","324666433"] </p>
+	 * <p>User [u2] : ["PEDRO",birth2,"pedro@dgmail.uk","915557911","123555433"] </p>
 	 * 
 	 * <p>Booking [b1] -> [d1,t1,c1] : ['11/03/2018','10:30',c1] </p>
 	 * <p>Booking [b1] -> [d2,t2,c2] : ['12/03/2018','14:30',c2] </p>
@@ -53,14 +59,17 @@ public class BookingTest {
 		birthdate1 = LocalDate.of(1989, 11, 30);
 		birthdate2 = LocalDate.of(1984, 02, 15);
 		
+		u1 = new User("JOAO",birthdate1,"joao@domain.com","914047935","324666433");
+		u2 = new User("PEDRO",birthdate2,"pedro@gmail.uk","915557911","123555433");
+		
 		c1 = new Customer("Joao",birthdate1,"Mangualde","914047935");
 		c2 = new Customer("Ana",birthdate2,"Porto","966677722");
 		
 		dt1 = LocalDateTime.now().plusDays(10);
 		dt2 = LocalDateTime.now().plusDays(10).plusMinutes(1);
 		
-		b1 = new Booking(dt1,c1);
-		b2 = new Booking(dt2,c2);
+		b1 = new Booking(dt1,c1,u1);
+		b2 = new Booking(dt2,c2,u1);
 		
 		b1.setId(1);
 		b2.setId(2);
@@ -180,7 +189,7 @@ public class BookingTest {
 	 */
 	@Test
 	public void testHashCode() {
-		Booking b3 = new Booking(dt2,c2);
+		Booking b3 = new Booking(dt2,c2,u2);
 		b3.setId(2);
 		assertEquals(b3.hashCode(),b2.hashCode());
 		
