@@ -123,6 +123,7 @@ public class BookingRepositoryClass implements BookingRepository{
 		for (Booking booking : list) {
             if (booking.getId()==arg0) {
                 list.remove(booking);
+                return;
             }
         }
 		

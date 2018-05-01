@@ -554,6 +554,29 @@ public class BookingCustomerServiceTest {
 		assertEquals(bcService.findBookingById(1),b1);
 		assertEquals(bcService.findBookingById(2),b2);
 		assertEquals(bcService.findBookingById(3),null);
+
+	}
+	
+	/**
+	 * <h2>removeBooking() method test</h2>
+	 * 
+	 */
+	@Test
+	public void testRemoveBooking() {
+		//Given: 2 bookings
+		assertEquals(bcService.getBookings().isEmpty(),true);
+		assertEquals(bcService.addBooking(b1),true);
+		assertEquals(bcService.addBooking(b2),true);
+		assertEquals(bcService.getBookings().size(),2);
+		assertEquals(bcService.findBookingById(1),b1);
+		assertEquals(bcService.findBookingById(2),b2);
+		//When: remove booking
+		
+		assertEquals(bcService.removeBooking(1),true);
+		assertEquals(bcService.removeBooking(3),false);
+		//Then: remove booking
+		
+		assertEquals(bcService.findBookingById(1),null);
 		
 			
 	}

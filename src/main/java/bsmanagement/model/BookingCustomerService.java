@@ -188,6 +188,24 @@ public class BookingCustomerService {
 	}
 	
 	/**
+	 * Method to remove Booking by ID
+	 * 
+	 * @return true, if booking was sucessfully removed, false otherwise
+	 */
+	public boolean removeBooking(int bookingId) {
+
+		for (Booking b: getBookings())
+		{
+			if (b.getId()==bookingId)
+				{
+				bookRepository.delete(b);
+				return true;
+				}
+		}
+		return false;
+	}
+	
+	/**
 	 * Method to find Booking by ID
 	 * 
 	 * @return booking if Id exists, null if dont
