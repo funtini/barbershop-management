@@ -486,9 +486,8 @@ public class BookingCustomerServiceTest {
 	}
 	
 	/**
-	 * <h2>createCustomer() method test</h2>
+	 * <h2>removeCustomer() method test</h2>
 	 * 
-	 * only name as input data
 	 */
 	@Test
 	public void testRemoveCustomer() {
@@ -508,7 +507,6 @@ public class BookingCustomerServiceTest {
 	/**
 	 * <h2>findCustomerById() method test</h2>
 	 * 
-	 * only name as input data
 	 */
 	@Test
 	public void testFindCustomerById() {
@@ -517,6 +515,46 @@ public class BookingCustomerServiceTest {
 		assertEquals(bcService.getAllCustomers().contains(customer),true);
 		assertEquals(bcService.findCustomerById(1),customer);
 		assertEquals(bcService.findCustomerById(2),null);
+			
+	}
+	
+	
+	/**
+	 * <h2>setBookingDate() method test</h2>
+	 * 
+	 */
+	@Test
+	public void testSetBookingDate() {
+		//Given: 1 booking at 2018/05/11 - 10:10
+		assertEquals(bcService.getBookings().isEmpty(),true);
+		assertEquals(bcService.addBooking(b1),true);
+		assertEquals(bcService.getBookings().size(),1);
+		assertEquals(bcService.findBookingById(1).getDate(),LocalDateTime.of(2018, 5, 11, 10, 10));
+		//When: set date to 2019/1/1 - 12:00
+		assertEquals(bcService.setBookingDate(1, LocalDateTime.of(2019, 1,1,12,00)),true);
+		assertEquals(bcService.setBookingDate(2, LocalDateTime.of(2019, 1,1,12,00)),false);
+		//Then: the date is changed
+		assertEquals(bcService.findBookingById(1).getDate(),LocalDateTime.of(2019, 1, 1, 12, 00));
+			
+	}
+	
+	/**
+	 * <h2>findBookingById() method test</h2>
+	 * 
+	 */
+	@Test
+	public void testFindBookingByID() {
+		//Given: 2 bookings
+		assertEquals(bcService.getBookings().isEmpty(),true);
+		assertEquals(bcService.addBooking(b1),true);
+		assertEquals(bcService.addBooking(b2),true);
+		assertEquals(bcService.getBookings().size(),2);
+		
+		//When: find bookings by ID
+		assertEquals(bcService.findBookingById(1),b1);
+		assertEquals(bcService.findBookingById(2),b2);
+		assertEquals(bcService.findBookingById(3),null);
+		
 			
 	}
 

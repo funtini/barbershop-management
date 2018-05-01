@@ -187,9 +187,20 @@ public class BookingCustomerService {
 		return true;
 	}
 	
-	
-	
-	
+	/**
+	 * Method to find Booking by ID
+	 * 
+	 * @return booking if Id exists, null if dont
+	 */
+	public Booking findBookingById(int id) {
+
+		for (Booking b: getBookings())
+		{
+			if (b.getId()==id)
+				return b;
+		}
+		return null;
+	}
 	
 	/**
 	 * Method to get all next bookings order by time
@@ -219,6 +230,28 @@ public class BookingCustomerService {
 				bookingList.add(b);
 		}
 		return bookingList;
+	}
+	
+	/**
+	 * Method to set date on specific booking
+	 * 
+	 * @param bookingId (integer)
+	 * 
+	 * @param date (LocalDateTime)
+	 * 
+	 * @return List of bookings - with today's date
+	 */
+	public boolean setBookingDate(int bookingId,LocalDateTime date) {
+		for (Booking b: getNextBookings())
+		{
+			if (b.getId()==bookingId)
+			{
+				b.setDate(date);
+				return true;
+			}
+				
+		}
+		return false;
 	}
 	
 	
