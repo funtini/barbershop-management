@@ -194,4 +194,12 @@ public class CustomerRepositoryClass implements CustomerRepository {
         return false;
 	}
 
+	@Override
+	public Customer getOneByName(String name) {
+		for (Customer customer : list)
+			if (customer.getName().equals(name))
+				return customer;
+		return null;
+	}
+
 }

@@ -122,6 +122,22 @@ public class BookingCustomerService {
 			return null;
 	}
 	
+	
+	/**
+	 * Find Customer By ID
+	 * 
+	 * @param id
+	 * 
+	 * @return An Instance of Customer if ID exists, null otherwise.
+	 */
+	public Customer findCustomerByName(String name)
+	{
+		if (customersRepository.existsByName(name))
+			return customersRepository.getOneByName(name);
+		else
+			return null;
+	}
+	
 	/**
 	 * Remove Customer
 	 * 
@@ -259,7 +275,7 @@ public class BookingCustomerService {
 	 * 
 	 * @return List of bookings - with today's date
 	 */
-	public boolean setBookingDate(int bookingId,LocalDateTime date) {
+	public boolean setBookingDate(int bookingId, LocalDateTime date) {
 		for (Booking b: getNextBookings())
 		{
 			if (b.getId()==bookingId)

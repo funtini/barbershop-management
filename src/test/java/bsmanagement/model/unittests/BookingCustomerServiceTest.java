@@ -529,7 +529,7 @@ public class BookingCustomerServiceTest {
 		assertEquals(bcService.getBookings().isEmpty(),true);
 		assertEquals(bcService.addBooking(b1),true);
 		assertEquals(bcService.getBookings().size(),1);
-		assertEquals(bcService.findBookingById(1).getDate(),LocalDateTime.of(2018, 5, 11, 10, 10));
+		assertEquals(bcService.findBookingById(1).getDate(),LocalDateTime.of(LocalDate.now(),LocalTime.of(10, 10)).plusDays(10));
 		//When: set date to 2019/1/1 - 12:00
 		assertEquals(bcService.setBookingDate(1, LocalDateTime.of(2019, 1,1,12,00)),true);
 		assertEquals(bcService.setBookingDate(2, LocalDateTime.of(2019, 1,1,12,00)),false);
@@ -580,5 +580,34 @@ public class BookingCustomerServiceTest {
 		
 			
 	}
+	
+	
+	/**
+	 * <h2>removeBooking() method test</h2>
+	 * 
+	 */
+	@Test
+	public void testFinCustomerByName() {
+		//Given: 2 customers
+		assertEquals(bcService.getAllCustomers().isEmpty(),true);
+		assertEquals(bcService.addCustomer(c1),true);
+		assertEquals(bcService.addCustomer(c2),true);
+		assertEquals(bcService.getAllCustomers().size(),2);
+		assertEquals(bcService.findCustomerById(1),c1);
+		assertEquals(bcService.findCustomerById(2),c2);
+		//When: find customer by name
+		
+		Customer resultSuccess = bcService.findCustomerByName("Joao");
+		Customer resultNull = bcService.findCustomerByName("Pedro");
+	
+		//Then: User Joao is found, and Pedro is not
+		assertEquals(resultSuccess,c1);
+		assertEquals(resultNull,null);
+		
+		
+			
+	}
+	
+
 
 }
