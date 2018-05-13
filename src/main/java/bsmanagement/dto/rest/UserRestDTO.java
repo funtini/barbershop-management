@@ -3,12 +3,14 @@ package bsmanagement.dto.rest;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.hateoas.ResourceSupport;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import bsmanagement.model.Address;
 import bsmanagement.model.User.UserProfile;
 
-public class UserRestDTO {
+public class UserRestDTO extends ResourceSupport{
 	
 	private String email;
 	private String name;

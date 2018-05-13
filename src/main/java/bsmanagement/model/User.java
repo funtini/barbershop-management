@@ -19,6 +19,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
 
+import bsmanagement.dto.rest.UserRestDTO;
 import system.dto.UserLoginDTO;
 
 /**
@@ -45,7 +46,7 @@ import system.dto.UserLoginDTO;
  */
 @Entity
 @Proxy(lazy = false)
-public class User {
+public class User{
 	
 	public enum UserProfile {
 		ADMINISTRATOR, STOREMANAGER, EMPLPOYER
@@ -509,6 +510,20 @@ public class User {
 		} else if (!email.equals(other.email))
 			return false;
 		return true;
+	}
+
+	public UserRestDTO toDTO() {
+		UserRestDTO userDTO = new UserRestDTO();
+		userDTO.setName(this.name);
+		userDTO.setBirth(this.birth);
+		userDTO.setEmail(this.email);
+		userDTO.setPhone(this.phone);
+		userDTO.setProfile(this.profile);
+		userDTO.setTaxPayerId(this.taxPayerId);
+		userDTO.setAddressList(this.addressList);
+		userDTO.setActivationStatus(this.activationStatus);		
+		
+		return userDTO;
 	}
 
 	
