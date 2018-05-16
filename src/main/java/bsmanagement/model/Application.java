@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.Scanner;
+import java.util.TimeZone;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,6 +19,7 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.Product.productType;
+import bsmanagement.model.Role.RoleName;
 
 @ComponentScan({ "bsmanagement", "system" })
 @EntityScan(basePackageClasses = {Application.class, Jsr310JpaConverters.class})
@@ -50,6 +54,11 @@ public class Application{
 		SpringApplication.run(Application.class);
 	}
 	
+	@PostConstruct
+	void init() {
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+	}
+	
 	@Bean
 	public CommandLineRunner demo() {
 		return (String... args) -> {
@@ -69,7 +78,13 @@ public class Application{
          * 
          */
 		
+    	//Add Roles to System
+    	userService.addRole(RoleName.ROLE_USER);
+    	userService.addRole(RoleName.ROLE_MANAGER);
+    	userService.addRole(RoleName.ROLE_ADMIN);
+    	
 		//Register Employers
+    	
 		LocalDate birth1 = LocalDate.of(1998, 3, 17);
 		LocalDate birth2 = LocalDate.of(1988, 7, 21);
 		LocalDate birth3 = LocalDate.of(1968, 9, 25);
@@ -85,11 +100,17 @@ public class Application{
 		Address a2 = new Address("TRABALHO","RUA DO PASSAL","3530-194","MANGUALDE","PORTUGAL");
 		Address a3 = new Address("CASA","RUA LUIS CAMOES","4425-651","PORTO","PORTUGAL");
 		Address a4 = new Address("CASA","RUA DOS COMBATENTES","3530-221","MANGUALDE","PORTUGAL");
+	
 		
 		u1.addAddress(a1);
 		u1.addAddress(a2);
 		u2.addAddress(a3);
 		u3.addAddress(a4);
+		
+		userService.setUserRole(u1.getEmailAddress());
+		userService.setUserRole(u2.getEmailAddress());
+		userService.setUserRole(u3.getEmailAddress());
+		
 		Contract contract1 = u1.createContract(300, 25);
 		Contract contract2 = u1.createContract(0, 75);
 		u1.addContract(contract1);
@@ -97,9 +118,8 @@ public class Application{
 	
 		userService.updateUser(u1);
 		userService.updateUser(u2);
-		userService.updateUser(u1);
-		userService.updateUser(u2);
 		userService.updateUser(u3);
+		
 		
 		//Register Customers
 		Customer c1 = bookingCustomerService.createCustomer("LUIS CARLOS");

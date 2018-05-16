@@ -2,12 +2,16 @@ package bsmanagement.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import bsmanagement.exception.AppException;
+import bsmanagement.model.Role.RoleName;
 import bsmanagement.model.User.UserProfile;
+import bsmanagement.model.jparepositories.RoleRepository;
 import bsmanagement.model.jparepositories.UserRepository;
 import system.dto.UserLoginDTO;
 
@@ -33,6 +37,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private RoleRepository rolesRepository;
 
 	/**
 	 * Default Constructor of userService
@@ -275,9 +282,46 @@ public class UserService {
 	}
 	
 	
+	public void setUserRole(String email)
+	{
+		 Role userRole = rolesRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("User Role not set."));
+		 User user = findUserByEmail(email);
+	     user.setRoles(Collections.singleton(userRole));
+	     updateUser(user);
+	}
+	
+	public void setManagerRole(String email)
+	{
+		Role managerRole = rolesRepository.findByName(RoleName.ROLE_MANAGER).orElseThrow(() -> new AppException("User Role not set."));
+		User user = findUserByEmail(email);
+	    user.setRoles(Collections.singleton(managerRole));
+	    updateUser(user);
+	}
+	
+	public void setAdminRole(String email)
+	{
+		Role adminRole = rolesRepository.findByName(RoleName.ROLE_ADMIN).orElseThrow(() -> new AppException("User Role not set."));
+		User user = findUserByEmail(email);
+	    user.setRoles(Collections.singleton(adminRole));
+	    updateUser(user);
+	}
+	
+	public void addRole(RoleName role)
+	{
+		 Role newRole = new Role(role);
+		 if (!rolesRepository.existsByName(role))
+			 rolesRepository.save(newRole); 
+		 
+	}
+	
 	public void setUserRepository(UserRepository userRepository)
 	{
 		this.userRepo = userRepository;
+	}
+	
+	public void setRoleRepository(RoleRepository roleRepository)
+	{
+		this.rolesRepository = roleRepository;
 	}
 	
 	

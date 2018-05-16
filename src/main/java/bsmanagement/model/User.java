@@ -2,7 +2,9 @@ package bsmanagement.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,7 +14,11 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -72,6 +78,10 @@ public class User{
 	@ElementCollection
 	@LazyCollection(LazyCollectionOption.FALSE)
 	List<Contract> contracts;
+	@ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 	
 	/**
 	 * Method to get last contract of this User
@@ -154,7 +164,6 @@ public class User{
 	/**
 	 * Constructor of User
 	 * 
-	 * @param id
 	 * @param name
 	 * @param birth
 	 * @param email
@@ -172,6 +181,29 @@ public class User{
 		this.phone = phone;
 		this.taxPayerId = taxPayerId;
 		this.addressList = new ArrayList<>();
+		this.activationStatus = true;
+		this.profile = UserProfile.EMPLPOYER;
+		this.contracts = new ArrayList<>();
+	}
+	
+	/**
+	 * Constructor of User
+	 * 
+	 * @param name
+	 * @param birth
+	 * @param email
+	 * @param phone
+	 * @param taxPayerId
+	 * @param password
+	 */
+	public User(String name, LocalDate birth, String email, String phone, String taxPayerId, String password) {
+		this.name = name;
+		this.birth = birth;
+		this.email = email;
+		this.phone = phone;
+		this.taxPayerId = taxPayerId;
+		this.addressList = new ArrayList<>();
+		this.password = password;
 		this.activationStatus = true;
 		this.profile = UserProfile.EMPLPOYER;
 		this.contracts = new ArrayList<>();
@@ -438,6 +470,14 @@ public class User{
 	public void setProfileAdmin() {
 		this.profile = UserProfile.ADMINISTRATOR;
 	}
+	
+	public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
 	/**
 	 * Checks if user password is equal to the given parameter.
@@ -524,6 +564,10 @@ public class User{
 		userDTO.setActivationStatus(this.activationStatus);		
 		
 		return userDTO;
+	}
+
+	public String getPassword() {
+		return this.password;
 	}
 
 	
