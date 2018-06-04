@@ -212,18 +212,6 @@ public class UserRepositoryClass implements UserRepository {
 	}
 
 
-	@Override
-	public Optional<User> findByNameOrEmail(String username, String email) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<User> findByNameIn(List<String> userIds) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 	@Override
@@ -240,8 +228,24 @@ public class UserRepositoryClass implements UserRepository {
 	}
 
 
+
+
 	@Override
-	public Boolean existsByPhone(String phone) {
+	public Optional<User> findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Optional<User> findByUsernameOrEmail(String username, String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Boolean existsByUsername(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -28,6 +28,8 @@ import bsmanagement.security.JwtTokenProvider;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 
 
@@ -55,10 +57,14 @@ public class AuthController {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(),
+                        loginRequest.getUsernameOrEmail(),
                         loginRequest.getPassword()
                 )
         );
+        /**
+         * TODO:
+         * EDIT INFORMATION FOR USER LOGGED IN HERE
+         */
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -73,13 +79,10 @@ public class AuthController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        if(userRepository.existsByPhone(signUpRequest.getPhone())) {
-            return new ResponseEntity(new ApiResponse(false, "Phone number already in use!"),
-                    HttpStatus.BAD_REQUEST);
-        }
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate birth = LocalDate.parse(signUpRequest.getBirth(), formatter);
         // Creating user's account
-        User user = new User(signUpRequest.getName(), signUpRequest.getBirth(),
+        User user = new User(signUpRequest.getName(), birth,
                 signUpRequest.getEmail(), signUpRequest.getPhone(), signUpRequest.getTaxPayerId(),signUpRequest.getPassword());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));

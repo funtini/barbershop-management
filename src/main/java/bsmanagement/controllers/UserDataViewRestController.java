@@ -20,6 +20,7 @@ import bsmanagement.model.User;
 import bsmanagement.model.UserService;
 
 @RestController
+@RequestMapping("/api")
 public class UserDataViewRestController {
 
 	@Autowired

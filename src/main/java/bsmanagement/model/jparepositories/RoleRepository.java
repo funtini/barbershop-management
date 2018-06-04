@@ -10,6 +10,7 @@ import bsmanagement.model.Role.RoleName;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
+	
     Optional<Role> findByName(RoleName roleName);
     
     boolean existsByName(RoleName roleName);

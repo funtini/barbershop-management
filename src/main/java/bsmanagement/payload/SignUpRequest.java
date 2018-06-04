@@ -1,13 +1,9 @@
 package bsmanagement.payload;
 
-import java.time.LocalDate;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.*;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class SignUpRequest {
     @NotBlank
@@ -19,9 +15,8 @@ public class SignUpRequest {
     @Email
     private String email;
     
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(value=TemporalType.TIMESTAMP)
-    private LocalDate birth;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String birth;
 
 	@NotBlank
     @Size(min = 9, max = 12)
@@ -51,11 +46,11 @@ public class SignUpRequest {
         this.phone = phone;
     }
     
-    public LocalDate getBirth() {
+    public String getBirth() {
 		return birth;
 	}
 
-	public void setBirth(LocalDate birth) {
+	public void setBirth(String birth) {
 		this.birth = birth;
 	}
 

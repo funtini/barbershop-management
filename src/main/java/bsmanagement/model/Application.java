@@ -16,6 +16,9 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.Product.productType;
@@ -29,8 +32,8 @@ public class Application{
 	@Autowired
     private UserService userService;
 	
-//	@Autowired
-//    private ReportService repSaleExpService;
+	@Autowired
+    PasswordEncoder passwordEncoder;
 	
 	@Autowired
     private ProductService productService;
@@ -66,6 +69,16 @@ public class Application{
 			populateDB();
 			};
 	}
+	
+//	 @Bean
+//	    public WebMvcConfigurer corsConfigurer() {
+//	        return new WebMvcConfigurer() {
+//	            @Override
+//	            public void addCorsMappings(CorsRegistry registry) {
+//	                registry.addMapping("/**").allowedOrigins("http://localhost:3001");
+//	            }
+//	        };
+//	    }
 	
 	
 	
@@ -107,9 +120,20 @@ public class Application{
 		u2.addAddress(a3);
 		u3.addAddress(a4);
 		
+		
+		
 		userService.setUserRole(u1.getEmailAddress());
 		userService.setUserRole(u2.getEmailAddress());
 		userService.setUserRole(u3.getEmailAddress());
+		
+		
+		u1 = userService.findUserByEmail("joao@gmail.com");
+		u2 = userService.findUserByEmail("pedro@domain.uk");
+		u3 = userService.findUserByEmail("rogerio@net.com");
+		
+		u1.setPassword(passwordEncoder.encode("12345"));
+		u2.setPassword(passwordEncoder.encode("12345"));
+		u3.setPassword(passwordEncoder.encode("12345"));
 		
 		Contract contract1 = u1.createContract(300, 25);
 		Contract contract2 = u1.createContract(0, 75);

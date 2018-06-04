@@ -5,7 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import bsmanagement.exception.AppException;
@@ -13,6 +19,7 @@ import bsmanagement.model.Role.RoleName;
 import bsmanagement.model.User.UserProfile;
 import bsmanagement.model.jparepositories.RoleRepository;
 import bsmanagement.model.jparepositories.UserRepository;
+import bsmanagement.security.UserPrincipal;
 import system.dto.UserLoginDTO;
 
 
@@ -33,7 +40,7 @@ import system.dto.UserLoginDTO;
  *
  */
 @Service
-public class UserService {
+public class UserService implements UserDetailsService{
 
 	@Autowired
 	private UserRepository userRepo;
@@ -329,5 +336,25 @@ public class UserService {
 	{
 		userRepo.deleteAll();
 	}
+
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String usernameOrEmail)  //DODO ver excep
+            throws UsernameNotFoundException {
+        // Let people login with email
+        User user = userRepo.findById(usernameOrEmail).orElseThrow( () -> 
+                new UsernameNotFoundException("User not found with username or email : " + usernameOrEmail));
+        return UserPrincipal.create(user);
+    }
+    
+    // This method is used by JWTAuthenticationFilter
+    @Transactional
+    public UserDetails loadUserById(String id) {
+        User user = userRepo.findById(id).orElseThrow(
+            () -> new UsernameNotFoundException("User not found with id : " + id)
+        );
+
+        return UserPrincipal.create(user);
+    }
 	
 }

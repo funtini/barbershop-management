@@ -5,7 +5,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -14,28 +13,33 @@ import java.util.stream.Collectors;
 import bsmanagement.model.User;
 
 public class UserPrincipal implements UserDetails {
-    private String id;
+	
+	private static final long serialVersionUID = 1L;
+	
+	private String id;
+	
+	private String name;
+	
+	private String username;
+	
+	private String phone;
 
-    private String name;
+	@JsonIgnore
+    private String email;
 
-    @JsonIgnore
-    private LocalDate birth;
-
-    @JsonIgnore
-    private String phone;
-
-    @JsonIgnore
+	@JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(String id, String name, LocalDate birth, String phone, String password, Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
+    public UserPrincipal(String email, String name, String phone,String password, Collection<? extends GrantedAuthority> authorities) {
+    	this.id=email;
+        this.email = email;
         this.name = name;
-        this.birth = birth;
-        this.phone = phone;
         this.password = password;
         this.authorities = authorities;
+        this.username = email;
+        this.phone = phone;
     }
 
     public static UserPrincipal create(User user) {
@@ -46,33 +50,36 @@ public class UserPrincipal implements UserDetails {
         return new UserPrincipal(
                 user.getEmailAddress(),
                 user.getName(),
-                user.getBirthDate(),
                 user.getPhone(),
                 user.getPassword(),
                 authorities
         );
     }
-
+    
     public String getId() {
-        return id;
+        return email;
     }
-
+    
     public String getName() {
         return name;
     }
-
+    
     public String getEmail() {
-        return phone;
+        return email;
     }
-
-    @Override
-    public String getUsername() {
-        return id;
+    
+    public String getPhone() {
+        return phone;
     }
 
     @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 
     @Override

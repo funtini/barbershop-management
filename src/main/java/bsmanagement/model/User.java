@@ -1,5 +1,7 @@
 package bsmanagement.model;
 
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,6 +20,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Email;
 import javax.persistence.*;
 
 import org.hibernate.annotations.LazyCollection;
@@ -59,6 +62,7 @@ public class User{
 	}
 		
 	@Id
+	@Email
 	private String email;
 	private String name;
 	private LocalDate birth;
@@ -82,6 +86,7 @@ public class User{
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+	private String username;
 	
 	/**
 	 * Method to get last contract of this User
@@ -184,6 +189,7 @@ public class User{
 		this.activationStatus = true;
 		this.profile = UserProfile.EMPLPOYER;
 		this.contracts = new ArrayList<>();
+		this.username = email;
 	}
 	
 	/**
@@ -207,6 +213,7 @@ public class User{
 		this.activationStatus = true;
 		this.profile = UserProfile.EMPLPOYER;
 		this.contracts = new ArrayList<>();
+		this.username = email;
 	}
 	
 	
@@ -570,7 +577,10 @@ public class User{
 		return this.password;
 	}
 
-	
+
+	public String getUsername() {
+        return username;
+    }
 
 	
 	
