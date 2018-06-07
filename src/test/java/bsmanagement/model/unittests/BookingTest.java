@@ -65,8 +65,8 @@ public class BookingTest {
 		c1 = new Customer("Joao",birthdate1,"Mangualde","914047935");
 		c2 = new Customer("Ana",birthdate2,"Porto","966677722");
 		
-		dt1 = LocalDateTime.now().plusDays(10);
-		dt2 = LocalDateTime.now().plusDays(10).plusMinutes(1);
+		dt1 = LocalDateTime.of(2030,10,10,10,10).plusDays(10);
+		dt2 = LocalDateTime.of(2030,10,10,10,10).plusDays(10).plusMinutes(1);
 		
 		b1 = new Booking(dt1,c1,u1);
 		b2 = new Booking(dt2,c2,u1);
@@ -203,6 +203,33 @@ public class BookingTest {
 	public void testToString() {
 		String expect = "Booking [id=" + b1.getId() + ", date=" + b1.getDate().toLocalDate() + ", time=" + b1.getDate().toLocalTime() + ", customer=" + b1.getCustomer() + "]";
 		assertEquals(b1.toString(),expect);
+	}
+	
+	/**
+	 * <h2>compareTo() method test</h2>
+	 * <p>test null cases</p>
+	 */
+	@Test
+	public void testCompareToPositive() {
+		assertEquals(b1.compareTo(b2),1);
+	}
+	
+	/**
+	 * <h2>compareTo() method test</h2>
+	 * <p>test null cases</p>
+	 */
+	@Test
+	public void testCompareToNegative() {
+		assertEquals(b2.compareTo(b1),-1);
+	}
+	
+	/**
+	 * <h2>compareTo() method test</h2>
+	 * <p>test null cases</p>
+	 */
+	@Test
+	public void testCompareToNull() {
+		assertEquals(b2.compareTo(b2),0);
 	}
 	
 	

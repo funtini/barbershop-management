@@ -30,7 +30,7 @@ import org.hibernate.annotations.Proxy;
  */
 @Entity
 @Proxy(lazy = false)
-public class Booking {
+public class Booking implements Comparable<Booking>{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -167,6 +167,21 @@ public class Booking {
 
 	public static void setStartIdGenerator(int i) {
 		idGenerator.set(i-1);
+	}
+
+	
+	/**
+	 * Method that compares dates with another booking
+	 * 
+	 * @return 0 if they have the same date, 1 if this date is older and -1 if is newest
+	 */
+	@Override
+	public int compareTo(Booking booking) {
+		if (this.date.isAfter(booking.getDate()))
+			return -1;
+		if (this.date.isBefore(booking.getDate()))
+			return 1;
+		return 0;
 	}
 
 
