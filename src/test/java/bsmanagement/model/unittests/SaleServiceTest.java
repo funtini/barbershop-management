@@ -13,11 +13,15 @@ import org.junit.Test;
 
 import bsmanagement.jparepositories.classtests.PaymentRepositoryClass;
 import bsmanagement.jparepositories.classtests.SaleRepositoryClass;
+import bsmanagement.jparepositories.classtests.UserRepositoryClass;
+import bsmanagement.model.Contract;
 import bsmanagement.model.Customer;
 import bsmanagement.model.PaymentMethod;
 import bsmanagement.model.Product;
 import bsmanagement.model.Sale;
 import bsmanagement.model.SaleService;
+import bsmanagement.model.User;
+import bsmanagement.model.UserService;
 import bsmanagement.model.Product.productType;
 
 
@@ -51,12 +55,17 @@ public class SaleServiceTest {
 	Sale s3;
 	Sale s4;
 	
+	User u1;
+	User u2;
+	
 	List<Sale> expect;
 	List<Sale> result;
 	List<Sale> emptyList;
 	SaleService saleService;
 	SaleRepositoryClass saleRepository;
 	PaymentRepositoryClass paymentRepository;
+	UserService userService;
+	UserRepositoryClass userRepository;
 
 	/**
 	 * <h2>Setup for all unit tests: </h2>
@@ -64,13 +73,16 @@ public class SaleServiceTest {
 	 * <p>DateTime [d1] : 2018/03/11 - 10:30 </p>
 	 * <p>DateTime [d2] : 2018/03/12 - 11:35 </p>
 	 * <p>DateTime [d3] : 2018/03/12 - 12:15</p>
-	 * <p>DateTime [d4] : 2017/02/22 - 15:15</p>
+	 * <p>DateTime [d4] : 2018/02/22 - 15:15</p>
 	 * 
 	 * <p>Product [p1] : ["CORTE COM LAVAGEM",'HAIRCUT',15] </p>
 	 * <p>Product [p2] : ["CORTE SIMPLES",'HAIRCUT',10] </p>
 	 * 
 	 * <p>Customer [c1] -> ['Joao',birthdate1,"Mangualde","914047935"] </p>
 	 * <p>Customer [c2] -> ['Ana',birthdate2,"Porto","966677722"] </p>
+	 * 
+	 * <p>User [u1] : ["JOAO",birth1,"joao@domain.com","914047935","324666433"] </p>
+	 * <p>User [u2] : ["PEDRO",birth2,"pedro@dgmail.uk","915557911","123555433"] </p>
 	 * 
 	 * <p>Payment [cash] -> ['CASH',0,0] </p>
 	 * 
@@ -85,10 +97,13 @@ public class SaleServiceTest {
 		result = new ArrayList<Sale>();
 		emptyList = new ArrayList<Sale>();
 		saleService = new SaleService();
+		userService= new UserService();
+		userRepository = new UserRepositoryClass();
 		saleRepository = new SaleRepositoryClass();
 		paymentRepository = new PaymentRepositoryClass();
 		saleService.setRepository(saleRepository);
 		saleService.setPaymentRepository(paymentRepository);
+		userService.setUserRepository(userRepository);
 		saleService.getSales().clear();
 		
 		expect.clear();
@@ -98,6 +113,19 @@ public class SaleServiceTest {
 		
 		birthdate1 = LocalDate.of(1989, 11, 30);
 		birthdate2 = LocalDate.of(1984, 02, 15);
+		
+		u1 = userService.createUser("JOAO",birthdate1,"joao@domain.com","914047935","324666433");
+		u2 = userService.createUser("PEDRO",birthdate2,"pedro@gmail.uk","915557911","123555433");
+		
+		u1.addContract(new Contract(800,25));
+		u1.getLastContract().setStartDate(LocalDate.of(2017,10, 1));
+		u1.getLastContract().closeAt(LocalDate.of(2018,2, 1));
+		u1.addContract(new Contract(800,55));
+		u1.getLastContract().setStartDate(LocalDate.of(2018,3, 1));
+		
+		u2.addContract(new Contract(500,75));
+		u2.getLastContract().setStartDate(LocalDate.of(2018,2, 1));
+		
 		
 		c1 = new Customer("Joao",birthdate1,"Mangualde","914047935");
 		c2 = new Customer("Ana",birthdate2,"Porto","966677722");
@@ -116,10 +144,10 @@ public class SaleServiceTest {
 		
 		cash = new PaymentMethod("CASH",0.0,0.0);
 		
-		s1 = new Sale(d1,c1,p1,cash,null);
-		s2 = new Sale(d2,c2,p2,cash,null);
-		s3 = new Sale(d3,p1,cash,null);
-		s4 = new Sale(d4,c1,p2,cash,null);
+		s1 = new Sale(d1,c1,p1,cash,u1);
+		s2 = new Sale(d2,c2,p2,cash,u1);
+		s3 = new Sale(d3,p1,cash,u2);
+		s4 = new Sale(d4,c1,p2,cash,u1);
 		s1.setId(1);
 		s2.setId(2);
 		s3.setId(3);
@@ -509,6 +537,60 @@ public class SaleServiceTest {
 		
 		assertEquals(payments,expected);
 	}
+	
+	
+	/**
+	 * <h2>findSaleByUser() method test</h2>
+	 */
+	@Test 
+	public void testFindSaleByUser() {
+		
+		//Given: saleList with 4 sales (3 of User (u1), 1 of User (u2))
+		assertEquals(saleService.getSales(),emptyList);
+		assertEquals(emptyList,expect);
+		
+		Sale.setStartIdGenerator(1);
+		assertEquals(saleService.addSale(s1),true);
+		assertEquals(saleService.addSale(s2),true);
+		assertEquals(saleService.addSale(s3),true);
+		assertEquals(saleService.addSale(s4),true);
+	
+		//When: find sales of User u1
+		result = saleService.findSalesByUser(u1);
+		
+		//Then: get a list of 3 sales
+		expect.add(s1);
+		expect.add(s2);
+		expect.add(s4);
+		assertEquals(result,expect);
+	}
+	
+	
+	/**
+	 * <h2>calculateComissionAmountOfMonth() method test</h2>
+	 */
+	@Test 
+	public void testCalculateUserComissionAmountInMonth() {
+		
+		//Given: saleList with 4 sales (3 of User (u1), 1 of User (u2))
+		assertEquals(saleService.getSales(),emptyList);
+		assertEquals(emptyList,expect);
+		
+		Sale.setStartIdGenerator(1);
+		assertEquals(saleService.addSale(s1),true);
+		assertEquals(saleService.addSale(s2),true);
+		assertEquals(saleService.addSale(s3),true);
+		assertEquals(saleService.addSale(s4),true);
+	
+		//When: calculate total amount of comission in 2018/03
+		double res = saleService.calculateUserComissionAmountInMonth(u1, YearMonth.of(2018, 3));
+		
+		//Then: get expected result
+		double exp = (25.0*55);
+		Math.round(exp);
+		assertEquals(exp/100,res,0.0);
+	}
+	
 	
 	
 	

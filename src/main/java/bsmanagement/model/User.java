@@ -3,6 +3,8 @@ package bsmanagement.model;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -112,19 +114,19 @@ public class User{
 		return getLastContract().isOpen();
 	}
 	
-	/**
-	 * Method to add a new contract to user. If 
-	 * 
-	 * @param baseSalary
-	 * @param salesComission
-	 * 
-	 * @return true if new contract was sucessfully added, false otherwise
-	 */
-	public Contract createContract(double baseSalary, double salesComission)
-	{
-		return new Contract(baseSalary,salesComission);
-	}
-	
+//	/**
+//	 * Method to add a new contract to user. If 
+//	 * 
+//	 * @param baseSalary
+//	 * @param salesComission
+//	 * 
+//	 * @return true if new contract was sucessfully added, false otherwise
+//	 */
+//	public Contract createContract(double baseSalary, double salesComission)
+//	{
+//		return new Contract(baseSalary,salesComission);
+//	}
+//	
 	/**
 	 * Method to add a new contract to user. If 
 	 * 
@@ -163,6 +165,45 @@ public class User{
 	public List<Contract> getAllContracts()
 	{
 		return contracts;
+	}
+	
+	/**
+	 * Method to return current sales comission in contract
+	 * 
+	 * @return double [if user doesn't has contract, the value returned is 0.0]
+	 */
+	public double getCurrentSalesComission()
+	{
+		if (getLastContract()!=null && getLastContract().isOpen())
+			return getLastContract().getSalesComission();
+		return 0.0;
+	}
+	
+	/**
+	 * Method to return sales comission in contract of specific yearMonth
+	 * 
+	 * @return double [if user doesn't has contract in this yearMonth, the value returned is 0.0]
+	 */
+	public double getSalesComissionOfMonth(YearMonth yearMonth)
+	{
+		for (Contract c: this.contracts)
+		{
+			YearMonth startDate = YearMonth.from(c.getStartDate());
+			YearMonth endDate;
+			if (!c.isOpen())
+			{
+				endDate = YearMonth.from(c.getCloseDate());
+				if (!yearMonth.isBefore(startDate) && !yearMonth.isAfter(endDate))
+					return c.getSalesComission();
+			}
+			else
+			{
+				if (!yearMonth.isBefore(startDate))
+					return c.getSalesComission();
+			}
+		}
+		
+		return 0.0;
 	}
 	
 	

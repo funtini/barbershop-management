@@ -135,8 +135,8 @@ public class Application{
 		u2.setPassword(passwordEncoder.encode("12345"));
 		u3.setPassword(passwordEncoder.encode("12345"));
 		
-		Contract contract1 = u1.createContract(300, 25);
-		Contract contract2 = u1.createContract(0, 75);
+		Contract contract1 = new Contract(300, 25);
+		Contract contract2 = new Contract(0, 75);
 		u1.addContract(contract1);
 		u2.addContract(contract2);
 	

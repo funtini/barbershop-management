@@ -3,6 +3,7 @@ package bsmanagement.model.unittests;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,8 +81,8 @@ public class UserTest {
 		u2 = new User("PEDRO",birth2,"pedro@gmail.uk","915557911","123555433");
 		u3 = new User("ANTONIO",birth3,"antonio@domain","962337135","367876433");
 		
-		c1 = u1.createContract(700, 10);
-		c2 = u2.createContract(350,	60);
+		c1 = new Contract(700, 10);
+		c2 = new Contract(350,	60);
 		
 		u1.addContract(c1);
 		u2.addContract(c2);
@@ -312,7 +313,7 @@ public class UserTest {
 		//Given
 		assertEquals(u1.hasOpenContract(), true);
 		//When
-		assertEquals(u1.addContract(u1.createContract(200, 10)),false);
+		assertEquals(u1.addContract(new Contract(200, 10)),false);
 		assertEquals(u1.closeContract(),true);
 		assertEquals(u1.closeContract(),false);
 		//Then
@@ -338,7 +339,7 @@ public class UserTest {
 		
 		//When
 		assertEquals(u1.closeContract(),true);
-		Contract expected = u1.createContract(100,20);
+		Contract expected = new Contract(100,20);
 		assertEquals(u1.addContract(expected),true);
 		
 		expectedList.add(expected);
@@ -347,6 +348,40 @@ public class UserTest {
 		//Then
 		assertEquals(u1.getAllContracts(),expectedList);
 	}
+	
+	@Test
+	public void testCalculateCurrentAccumulateComissionAmountOfMonth() {
+		
+
+		assertEquals(u1.getCurrentSalesComission(), 10.0,0.0);
+		
+		assertEquals(u2.getCurrentSalesComission(), 60.0,0.0);
+		u2.closeContract();
+		assertEquals(u2.getCurrentSalesComission(), 0.0,0.0);
+		
+	}
+	
+	
+	@Test
+	public void testCalculateAccumulateComissionAmountOfMonth() {
+		
+		u1.getLastContract().setStartDate(LocalDate.of(2017, 9, 1));
+		u1.getLastContract().closeAt(LocalDate.of(2018, 1, 30));
+		Contract c1 = new Contract(1000, 35);
+		u1.addContract(c1);
+		Contract c2 = u1.getLastContract();
+		assertEquals(c1,c2);
+		u1.getLastContract().setStartDate(LocalDate.of(2018, 2, 1));
+
+		assertEquals(u1.getSalesComissionOfMonth(YearMonth.of(2017, 9)), 10.0,0.0);
+		assertEquals(u1.getSalesComissionOfMonth(YearMonth.of(2017, 8)), 0.0,0.0);
+		assertEquals(u1.getSalesComissionOfMonth(YearMonth.of(2017, 12)), 10.0,0.0);
+		assertEquals(u1.getSalesComissionOfMonth(YearMonth.of(2018, 2)), 35.0,0.0);
+	
+		
+	}
+	
+	
 
 	@Test
 	public void testValidatePassword() {

@@ -113,6 +113,7 @@ public class Contract {
 	public LocalDate getCloseDate() {
 		return closeDate;
 	}
+	
 
 	
 	/**
@@ -145,6 +146,25 @@ public class Contract {
 		}
 		return false;
 	}
+	
+	
+	/**
+	 * <p>Method to close contract at specific date</p>
+	 *  
+	 *  @return true if operation is valid (date is after startDate), false otherwise
+	 */
+	public boolean closeAt(LocalDate date)
+	{
+		if (startDate.isBefore(date))
+		{
+			this.closeDate=date;
+			return true;
+		}
+		return false;
+		
+	}
+	
+	
 
 	@Override
 	public int hashCode() {

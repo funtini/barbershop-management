@@ -149,8 +149,8 @@ public class ReportTest {
 		u2 = new User("PEDRO",birthdate2,"pedro@hotmail.com","914047935","324666433");
 		userService.addUser(u1);
 		userService.addUser(u2);
-		contract1 = u1.createContract(400, 20);
-		contract2 = u1.createContract(200, 60);
+		contract1 = new Contract(400, 20);
+		contract2 = new Contract(200, 60);
 		u1.addContract(contract1);
 		u2.addContract(contract2);
 		userService.updateUser(u1);

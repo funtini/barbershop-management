@@ -2,6 +2,7 @@ package bsmanagement.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +14,14 @@ import bsmanagement.model.jparepositories.PaymentRepository;
 import bsmanagement.model.jparepositories.SaleRepository;
 
 /**
- * <h1> SaleRegistry </h1>
+ * <h1> SaleService </h1>
  * <p>
- * SaleRegistry is the abstract class to manage a list of Sales in a business
+ * SaleService is a service class to manage a list of Sales in a business
  * context. This class contains information like:
  * <ul>
- * <li>listOfSales - List of sales
+ * <li>saleRepo - SaleRepository
+ * <li>paymentRepository - PaymentRepository
+ * <li>saleRepo - SaleRepository
  * </ul>
  * <p>
  * To create an instance of SaleRegistry you just need to invoke the empty constructor
@@ -232,6 +235,51 @@ public class SaleService {
 				listSale.add(s);
 		}
 		return listSale;
+	}
+	
+	/**
+	 * Method to find a list of sales of specific User
+	 * 
+	 * @param User
+	 * 
+	 * @return List of Sales
+	 */
+	public List<Sale> findSalesByUser(User user)
+	{
+		List<Sale> listSale = new ArrayList<Sale>();
+		for (Sale s: getSales())
+		{
+			if (user.equals(s.getUser())) 
+				listSale.add(s);
+		}
+		return listSale;
+	}
+	
+	
+	
+	/**
+	 * Method to calculate total accumulate comission's amount of specific month 
+	 * 
+	 * @param user
+	 * @param month
+	 * @return
+	 */
+	public double calculateUserComissionAmountInMonth(User user,YearMonth yearMonth)
+	{
+		List<Sale> sales = new ArrayList<Sale>();
+		for (Sale s: findSalesByUser(user))
+		{
+			YearMonth saleDate = YearMonth.from(s.getDate());
+			if(saleDate.equals(yearMonth))
+				sales.add(s);
+		}
+		double totalAmount = 0.0;
+		for (Sale s: sales)
+		{
+			totalAmount=totalAmount+s.getAmount()*user.getSalesComissionOfMonth(yearMonth);
+		}
+		Math.round(totalAmount);
+		return totalAmount/100;
 	}
 	
 	

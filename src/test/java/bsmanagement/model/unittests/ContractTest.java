@@ -3,15 +3,11 @@ package bsmanagement.model.unittests;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import bsmanagement.model.Address;
-import bsmanagement.model.Booking;
 import bsmanagement.model.Contract;
-import bsmanagement.model.Customer;
 import bsmanagement.model.User;
 
 /**
@@ -58,8 +54,8 @@ public class ContractTest {
 		u1 = new User("JOAO",birth1,"joao@domain.com","914047935","324666433");
 		u2 = new User("PEDRO",birth2,"pedro@gmail.uk","915557911","123555433");
 		
-		c1 = u1.createContract(700, 10);
-		c2 = u2.createContract(350,	60);
+		c1 = new Contract(700, 10);
+		c2 = new Contract(350,	60);
 		
 		u1.addContract(c1);
 		u2.addContract(c2);
@@ -70,7 +66,7 @@ public class ContractTest {
 	public void testHashCode() {
 		
 		Contract.setStartIdGenerator(1);
-		Contract c3 = u1.createContract(700, 10);
+		Contract c3 = new Contract(700, 10);
 		assertEquals(c3.hashCode(),c1.hashCode());
 	}
 
@@ -109,6 +105,11 @@ public class ContractTest {
 		assertEquals(c1.close(),true);
 		assertEquals(c1.getCloseDate(),LocalDate.now());
 		assertEquals(c1.close(),false);
+		assertEquals(c1.closeAt(LocalDate.of(2017, 1, 1)),false);
+		c1.setStartDate(LocalDate.of(2018, 1, 1));
+		assertEquals(c1.closeAt(LocalDate.of(2018, 1, 1)),false);
+		assertEquals(c1.closeAt(LocalDate.of(2018, 1, 2)),true);
+		
 	}
 
 	@Test
@@ -122,7 +123,7 @@ public class ContractTest {
 	@Test
 	public void testEqualsSuccess() {
 		Contract.setStartIdGenerator(1);
-		Contract c3 = u1.createContract(700, 10);
+		Contract c3 = new Contract(700, 10);
 		assertEquals(c1.equals(c3),true);
 		assertEquals(c1.equals(c2),false);
 		c3=null;
