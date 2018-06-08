@@ -187,6 +187,33 @@ public class ProductServiceTest {
 		assertEquals(p3,expect3);		
 	}
 	
+	
+	/**
+	 * <h2>updateProduct() method test</h2>
+	 * 
+	 */
+	@Test
+	public void testUpdateProduct() {
+		//Given: list with 3 Products
+		assertEquals(productService.getActiveProducts().isEmpty(),true);
+		assertEquals(productService.updateProduct(p1),false);
+		productService.addProduct(p1);
+		assertEquals(productService.getActiveProducts().size(),1);
+		assertEquals(p1.getPrice(),15.0,0.0);
+		Product pp1 = productService.findProductById(1);
+		pp1.setPrice(10);
+		
+		//When: update product and find by ID
+
+		assertEquals(productService.updateProduct(pp1),true);
+		Product expect = productService.findProductById(1);
+		
+		//Then: the price has been updated 
+		assertEquals(expect.getPrice(),10.0,0.0);	
+	
+		
+	}
+	
 	/**
 	 * <h2>findProductById() method test</h2>
 	 * 

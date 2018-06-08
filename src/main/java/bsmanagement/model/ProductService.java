@@ -70,6 +70,22 @@ public class ProductService {
 	}
 	
 	/**
+	 * Method to update an existing product in DataBase
+	 * 
+	 * @param product
+	 * 
+	 * @return true if product exists and is successfully updated, false otherwise
+	 */
+	public boolean updateProduct(Product product)
+	{
+		if (productRepo.existsById(product.getId())) {
+			productRepo.save(product);
+            return true;
+        }
+        return false;
+	}
+	
+	/**
 	 * Method to create an instance of Product
 	 * 
 	 * @param name - name of product

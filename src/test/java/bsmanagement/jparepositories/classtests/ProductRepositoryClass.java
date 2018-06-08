@@ -79,6 +79,7 @@ public class ProductRepositoryClass implements ProductRepository{
 		if (existsById(arg0.getId())) {
 			products.remove(arg0);
 			products.add(arg0);
+			return arg0;
 		}
 		arg0.setId(Product.getAndIncrementId());
 		products.add(arg0);
