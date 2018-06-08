@@ -283,10 +283,10 @@ public class ExpenseServiceTest {
 	}
 	
 	/**
-	 * <h2>findExpensesOfYearMonth() method test</h2>
+	 * <h2>findExpensesOfMonth() method test</h2>
 	 */
 	@Test 
-	public void testFindExpensesOfYearMonth() {
+	public void testFindExpensesOfMonth() {
 		
 		//Given: 1 expense of March, 2 expenses of April and 1 expenses of December/2017
 		assertEquals(expenseService.getExpenses(),emptyList);
@@ -299,15 +299,44 @@ public class ExpenseServiceTest {
 		expenseService.addExpense(e17);
 		//When: get a list of April/2018 
 		
-		result = expenseService.findExpensesOf(YearMonth.of(2018, 4));
+		result = expenseService.findExpensesOfMonth(YearMonth.of(2018, 4));
 		expect.add(e2);
 		expect.add(e3);
 		assertEquals(result,expect);
 		//		clear test lists, and repeat test for December/2017 expenses
 		result.clear();
 		expect.clear();
-		result = expenseService.findExpensesOf(YearMonth.of(2017, 12));
+		result = expenseService.findExpensesOfMonth(YearMonth.of(2017, 12));
 		expect.add(e4);
+		assertEquals(result,expect);		
+	}
+	
+	/**
+	 * <h2>findExpensesOfDay() method test</h2>
+	 */
+	@Test 
+	public void testFindExpensesOfDay() {
+		
+		//Given: 1 expense of March, 2 expenses of April and 1 expenses of December/2017
+		assertEquals(expenseService.getExpenses(),emptyList);
+		assertEquals(emptyList,expect);
+		Expense.setStartIdGenerator(1);
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
+		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
+		Expense e17 = expenseService.createExpense("Shampoo",expenseType.ONEOFF,120,d2,"15 unidades");
+		expenseService.addExpense(e17);
+		//When: get a list of 10/April/2018 
+		
+		result = expenseService.findExpensesOfDay(LocalDate.of(2018, 4,10));
+		expect.add(e2);
+		expect.add(e17);
+		assertEquals(result,expect);
+		//		clear test lists, and repeat test for 15/April/2018 expenses
+		result.clear();
+		expect.clear();
+		result = expenseService.findExpensesOfDay(LocalDate.of(2018, 4,15));
+		expect.add(e3);
 		assertEquals(result,expect);		
 	}
 	

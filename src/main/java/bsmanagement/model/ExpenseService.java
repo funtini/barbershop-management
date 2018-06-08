@@ -106,11 +106,29 @@ public class ExpenseService {
 	 * 
 	 * @return list of Expense
 	 */
-	public List<Expense> findExpensesOf(YearMonth yearMonth) {
+	public List<Expense> findExpensesOfMonth(YearMonth yearMonth) {
 		List<Expense> listExp = new ArrayList<Expense>();
 		for (Expense e: getExpenses())
 		{
 			if (e.getDate().getYear()==yearMonth.getYear() && e.getDate().getMonth().equals(yearMonth.getMonth()))
+				listExp.add(e);
+		}
+		
+		return listExp;
+	}
+	
+	/**
+	 * Method to get a list of expenses in specific day
+	 * 
+	 * @param LocalDate 
+	 * 
+	 * @return list of Expense
+	 */
+	public List<Expense> findExpensesOfDay(LocalDate day) {
+		List<Expense> listExp = new ArrayList<Expense>();
+		for (Expense e: getExpenses())
+		{
+			if (e.getDate().equals(day))
 				listExp.add(e);
 		}
 		
