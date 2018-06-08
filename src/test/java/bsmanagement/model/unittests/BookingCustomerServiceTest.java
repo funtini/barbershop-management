@@ -324,7 +324,7 @@ public class BookingCustomerServiceTest {
 		//When: get bookings of day 11 in bookingRegistry
 		expectBookings.add(b1);
 		expectBookings.add(b2);
-		resultBookings = bcService.getBookingsOf(dt1.toLocalDate());
+		resultBookings = bcService.getBookingsOfDay(dt1.toLocalDate());
 		//Then:
 		assertEquals(resultBookings,expectBookings);		
 	}

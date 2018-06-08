@@ -294,7 +294,7 @@ public class BookingCustomerService {
 	 * 
 	 * @return List of bookings
 	 */
-	public List<Booking> getBookingsOf(LocalDate date) {
+	public List<Booking> getBookingsOfDay(LocalDate date) {
 		List<Booking> bookingList = new ArrayList<>();
 		for (Booking b: getBookings())
 		{
