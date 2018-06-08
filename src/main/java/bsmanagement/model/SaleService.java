@@ -146,12 +146,30 @@ public class SaleService {
 	 * 
 	 * @return List of Sales
 	 */
-	public List<Sale> findSalesOf(YearMonth yearMonth) {
+	public List<Sale> findSalesOfMonth(YearMonth yearMonth) {
 		
 		List<Sale> listSale = new ArrayList<Sale>();
 		for (Sale s: getSales())
 		{
 			if (s.getDate().getYear()== yearMonth.getYear() && s.getDate().getMonth().equals(yearMonth.getMonth()))
+				listSale.add(s);
+		}
+		return listSale;
+	}
+	
+	/**
+	 * Method to get a list of sales of specific day
+	 * 
+	 * @param day (LocalDate)
+	 * 
+	 * @return List of Sales
+	 */
+	public List<Sale> findSalesOfDay(LocalDate day) {
+		
+		List<Sale> listSale = new ArrayList<Sale>();
+		for (Sale s: getSales())
+		{
+			if (s.getDate().toLocalDate().equals(day))
 				listSale.add(s);
 		}
 		return listSale;

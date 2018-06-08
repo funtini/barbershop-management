@@ -230,7 +230,34 @@ public class SaleServiceTest {
 	
 	
 	/**
-	 * <h2>findSaleOf() method test</h2>
+	 * <h2>findSaleOfMonth() method test</h2>
+	 */
+	@Test 
+	public void testFindSaleOfMonth() {
+		
+		//Given: saleList with 4 sales (3 of 12-March-2018 and 1 of 11-March-2018)
+		assertEquals(saleService.getSales(),emptyList);
+		assertEquals(emptyList,expect);
+		
+		Sale.setStartIdGenerator(1);
+		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
+		s4 =  saleService.createSale(d3,p1,cash,null);
+		assertEquals(saleService.addSale(s4),true);
+	
+		//When: find sales of March/2018
+		result = saleService.findSalesOfDay(LocalDate.of(2018, 3,12));
+		expect.add(s2);
+		expect.add(s3);
+		expect.add(s4);
+		//Then: get a list with that 3 sales
+		
+		assertEquals(result,expect);
+	}
+	
+	/**
+	 * <h2>findSaleOfDay() method test</h2>
 	 */
 	@Test 
 	public void testFindSaleOf() {
@@ -243,10 +270,10 @@ public class SaleServiceTest {
 		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash,null)),true);
 		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash,null)),true);
 		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d4,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
 	
 		//When: find sales of March/2018
-		result = saleService.findSalesOf(YearMonth.of(2018, 3));
+		result = saleService.findSalesOfMonth(YearMonth.of(2018, 3));
 		expect.add(s1);
 		expect.add(s2);
 		expect.add(s3);
@@ -256,7 +283,7 @@ public class SaleServiceTest {
 	}
 	
 	/**
-	 * <h2>findSaleOf() method test</h2>
+	 * <h2>findSaleByCustomer() method test</h2>
 	 */
 	@Test 
 	public void testFindSaleByCustomer() {
