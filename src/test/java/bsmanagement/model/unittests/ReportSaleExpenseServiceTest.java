@@ -675,7 +675,9 @@ public class ReportSaleExpenseServiceTest {
 		/* Then: 
 		 * 		- report is closed
 		 */	
-		assertEquals(repSaleExpService.getReport(ym18).getReportState().isClosed(),true);	
+		assertEquals(repSaleExpService.getReport(ym18).getReportState().isClosed(),true);
+		expect.add(repSaleExpService.getReport(ym18));
+		assertEquals(repSaleExpService.getClosedReports(),expect);
 	}
 	
 	

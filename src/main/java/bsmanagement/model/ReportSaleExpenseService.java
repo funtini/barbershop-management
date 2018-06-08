@@ -153,6 +153,25 @@ public class ReportSaleExpenseService {
 	}
 	
 	/**
+	 * Get a list of all closed monthly reports
+	 * 
+	 * @return the reports
+	 */
+	public List<Report> getClosedReports() {
+		List<Report> reportList = new ArrayList<>();
+		for (Report r : reportRepo.findAll())
+		{
+			if (r.getReportState().isClosed())
+			{
+				r.setYearMonth(YearMonth.parse(r.getId()));
+				reportList.add(r);
+			}
+		}
+			
+		return reportList;
+	}
+	
+	/**
 	 * Method to load a sale to report list
 	 * 
 	 * Sale is added to report associated to sale's date.
