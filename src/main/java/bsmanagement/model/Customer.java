@@ -38,6 +38,7 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
+	private String email;
 	private LocalDate birth;
 	private String address;
 	private String phone;
@@ -63,6 +64,30 @@ public class Customer {
 		this.birth = birth;
 		this.address = address;
 		this.phone = phone;
+		this.email = "";
+	}
+	
+	
+	/**
+	 * Constructor of a customer with name, birth, address/location and phone number
+	 * 
+	 * @param name - Name of Customer
+	 * 
+	 * @param birth - Birthdate of Customer
+	 * 
+	 * @param address - Address or location of customer
+	 * 
+	 * @param phone - Phone number of Customer 
+	 * 
+	 * @param email = email address of Customer
+	 */
+	public Customer(String name, LocalDate birth, String address, String phone, String email) {
+
+		this.name = name;
+		this.birth = birth;
+		this.address = address;
+		this.phone = phone;
+		this.email = email;
 	}
 
 
@@ -74,6 +99,8 @@ public class Customer {
 	public Customer(String name) {
 		
 		this.name = name;
+		this.email = "";
+		this.phone = "";
 	}
 
 	protected Customer() {
@@ -163,11 +190,23 @@ public class Customer {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+		
+	/**
+	 * @return email
+	 */
+	public String getEmail() {
+		return email;
+	}
 
+	/**
+	 * Set new email address to Customer
+	 * 
+	 * @param email
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-
-
-	
 
 	@Override
 	public int hashCode() {

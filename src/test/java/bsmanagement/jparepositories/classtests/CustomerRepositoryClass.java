@@ -202,4 +202,19 @@ public class CustomerRepositoryClass implements CustomerRepository {
 		return null;
 	}
 
+	@Override
+	public boolean existsByEmail(String email) {
+		for (Customer customer : list)
+			if (customer.getEmail().equals(email))
+				return true;
+		return false;
+	}
+
+	@Override
+	public Customer getOneByEmail(String email) {
+		for (Customer customer : list)
+			if (customer.getEmail().equals(email))
+				return customer;
+		return null;
+	}
 }

@@ -583,11 +583,11 @@ public class BookingCustomerServiceTest {
 	
 	
 	/**
-	 * <h2>removeBooking() method test</h2>
+	 * <h2>findCustomerByName() method test</h2>
 	 * 
 	 */
 	@Test
-	public void testFinCustomerByName() {
+	public void testFindCustomerByName() {
 		//Given: 2 customers
 		assertEquals(bcService.getAllCustomers().isEmpty(),true);
 		assertEquals(bcService.addCustomer(c1),true);
@@ -601,6 +601,34 @@ public class BookingCustomerServiceTest {
 		Customer resultNull = bcService.findCustomerByName("Pedro");
 	
 		//Then: User Joao is found, and Pedro is not
+		assertEquals(resultSuccess,c1);
+		assertEquals(resultNull,null);
+		
+		
+			
+	}
+	
+	/**
+	 * <h2>findCustomerByEmail() method test</h2>
+	 * 
+	 */
+	@Test
+	public void testFindCustomerByEmail() {
+		//Given: 2 customers
+		assertEquals(bcService.getAllCustomers().isEmpty(),true);
+		c1.setEmail("joao@mail.com");
+		assertEquals(bcService.addCustomer(c1),true);
+		assertEquals(bcService.addCustomer(c2),true);
+		assertEquals(bcService.getAllCustomers().size(),2);
+		
+		assertEquals(bcService.findCustomerById(1),c1);
+		assertEquals(bcService.findCustomerById(2),c2);
+		//When: find customer by email
+		
+		Customer resultSuccess = bcService.findCustomerByEmail("joao@mail.com");
+		Customer resultNull = bcService.findCustomerByEmail("jaca@mail.com");
+	
+		//Then: User Joao is found, and Jaca is not
 		assertEquals(resultSuccess,c1);
 		assertEquals(resultNull,null);
 		

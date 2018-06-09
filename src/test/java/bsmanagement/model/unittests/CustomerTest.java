@@ -26,6 +26,7 @@ public class CustomerTest {
 	LocalDate d2;
 	Customer c1;
 	Customer c2;
+	Customer c3;
 
 	/**
 	 * <h2>Setup for all unit tests: </h2>
@@ -51,6 +52,7 @@ public class CustomerTest {
 	
 	c1 = new Customer("Joao",d1,"Mangualde","914047935");
 	c2 = new Customer("Ana",d2,"Porto","966677722");
+	c3 = new Customer("Joaquim",d2,"Lisboa","914447833","joaquim@gmail.com");
 	
 	c1.setId(1);
 	c2.setId(2);
@@ -68,6 +70,18 @@ public class CustomerTest {
 		assertEquals(c1.getId(),1);
 		
 		assertEquals(c2.getId(),2);
+		
+	}	
+	
+	/**
+	 * getEmail() and setEmail method test
+	 */
+	@Test 
+	public void testSetAndGetEmail() {
+		c2.setEmail("ana@gmail.com");
+		assertEquals(c2.getEmail(),"ana@gmail.com");
+		
+		assertEquals(c3.getEmail(),"joaquim@gmail.com");
 		
 	}	
 	

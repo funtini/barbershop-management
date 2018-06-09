@@ -124,9 +124,9 @@ public class BookingCustomerService {
 	
 	
 	/**
-	 * Find Customer By ID
+	 * Find Customer By Name
 	 * 
-	 * @param id
+	 * @param name
 	 * 
 	 * @return An Instance of Customer if ID exists, null otherwise.
 	 */
@@ -134,6 +134,21 @@ public class BookingCustomerService {
 	{
 		if (customersRepository.existsByName(name))
 			return customersRepository.getOneByName(name);
+		else
+			return null;
+	}
+	
+	/**
+	 * Find Customer By Email
+	 * 
+	 * @param name
+	 * 
+	 * @return An Instance of Customer if ID exists, null otherwise.
+	 */
+	public Customer findCustomerByEmail(String email)
+	{
+		if (customersRepository.existsByEmail(email))
+			return customersRepository.getOneByEmail(email);
 		else
 			return null;
 	}

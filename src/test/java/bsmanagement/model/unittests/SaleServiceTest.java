@@ -270,7 +270,7 @@ public class SaleServiceTest {
 		assertEquals(saleService.addSale(saleService.createSale(d1,c1,p1,cash,null)),true);
 		assertEquals(saleService.addSale(saleService.createSale(d2,c2,p2,cash,null)),true);
 		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
-		assertEquals(saleService.addSale(saleService.createSale(d3,p1,cash,null)),true);
+		assertEquals(saleService.addSale(saleService.createSale(d4,p1,cash,null)),true);
 	
 		//When: find sales of March/2018
 		result = saleService.findSalesOfMonth(YearMonth.of(2018, 3));
