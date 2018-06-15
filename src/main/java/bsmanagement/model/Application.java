@@ -512,6 +512,12 @@ public class Application{
 //		bookingCustomerService.removeCustomer(c1);
 		System.out.println(repSaleExpService.removeExpense(expenseService.getExpenses().get(10)));
 		System.out.println(repSaleExpService.getCurrentOpenReport().getExpenses());
+		Expense editable = expenseService.findExpenseById(5);
+		editable.setValue(35);
+		System.out.println(expenseService.findExpensesOfMonth(YearMonth.now()));
+		expenseService.updateExpense(editable);
+		System.out.println(expenseService.findExpensesOfMonth(YearMonth.now()));
+		System.out.println(repSaleExpService.getCurrentOpenReport().getExpenses());
 //		System.out.println(b1.getCustomer());
 		String choice = scan.nextLine();
 

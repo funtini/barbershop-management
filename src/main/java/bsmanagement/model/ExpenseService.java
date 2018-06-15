@@ -38,6 +38,15 @@ public class ExpenseService {
 	public ExpenseService() {
 		
 	}
+	
+	public boolean updateExpense(Expense expense)
+	{
+		if (expRepo.existsById(expense.getId())) {
+            expRepo.save(expense);
+            return true;
+        }
+        return false;
+	}
 
 	/**
 	 * @return the listOfExpenses
