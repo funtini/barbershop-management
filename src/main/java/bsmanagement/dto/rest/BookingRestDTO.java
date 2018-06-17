@@ -6,13 +6,20 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class BookingRestDTO {
 	
+	private int bookingId;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime date;
 	private int customerId;
-	private String message;
 	private String userId;
-	
-	
+
+	public int getBookingId() {
+		return bookingId;
+	}
+
+	public void setBookingId(int bookingId) {
+		this.bookingId = bookingId;
+	}
+
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public LocalDateTime getDate() {
 		return date;
@@ -22,7 +29,6 @@ public class BookingRestDTO {
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
-	
 	
 	public String getUserId() {
 		return userId;
@@ -38,21 +44,15 @@ public class BookingRestDTO {
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
-	
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + bookingId;
 		result = prime * result + customerId;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((message == null) ? 0 : message.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
 	}
 
@@ -65,6 +65,8 @@ public class BookingRestDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		BookingRestDTO other = (BookingRestDTO) obj;
+		if (bookingId != other.bookingId)
+			return false;
 		if (customerId != other.customerId)
 			return false;
 		if (date == null) {
@@ -72,14 +74,14 @@ public class BookingRestDTO {
 				return false;
 		} else if (!date.equals(other.date))
 			return false;
-		if (message == null) {
-			if (other.message != null)
+		if (userId == null) {
+			if (other.userId != null)
 				return false;
-		} else if (!message.equals(other.message))
+		} else if (!userId.equals(other.userId))
 			return false;
 		return true;
 	}
-	
 
+	
 	
 }

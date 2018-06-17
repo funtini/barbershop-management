@@ -9,6 +9,7 @@ import java.time.temporal.ChronoUnit;
 import org.junit.Before;
 import org.junit.Test;
 
+import bsmanagement.dto.rest.BookingRestDTO;
 import bsmanagement.model.Booking;
 import bsmanagement.model.Customer;
 import bsmanagement.model.User;
@@ -230,6 +231,21 @@ public class BookingTest {
 	@Test
 	public void testCompareToNull() {
 		assertEquals(b2.compareTo(b2),0);
+	}
+	
+	/**
+	 * <h2>toRestDTO() method test</h2>
+	 */
+	@Test
+	public void testToRestDTO() {
+		BookingRestDTO expected = new BookingRestDTO();
+		expected.setBookingId(b1.getId());
+		expected.setCustomerId(b1.getCustomer().getId());
+		expected.setDate(b1.getDate());
+		expected.setUserId(b1.getUser().getEmailAddress());
+	
+		BookingRestDTO result = b1.toRestDTO();
+		assertEquals(result,expected);
 	}
 	
 	

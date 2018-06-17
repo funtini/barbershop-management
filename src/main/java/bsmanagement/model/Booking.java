@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Proxy;
+
+import bsmanagement.dto.rest.BookingRestDTO;
 /**
  * 
  * <h1> Booking </h1>
@@ -133,6 +135,22 @@ public class Booking implements Comparable<Booking>{
 	 */
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+	
+	/**
+	 * Method to convert booking in a DTO to use in API REST CONTROLLERS
+	 * 
+	 * @return BookingRestDTO
+	 */
+	public BookingRestDTO toRestDTO()
+	{
+		BookingRestDTO booking = new BookingRestDTO();
+		booking.setCustomerId(this.customer.getId());
+		booking.setDate(this.date);
+		booking.setBookingId(this.id);
+		booking.setUserId(this.user.getEmailAddress());
+		
+		return booking;
 	}
 
 

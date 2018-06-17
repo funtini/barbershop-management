@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import bsmanagement.exception.ResourceNotFoundException;
 import bsmanagement.model.User;
-import bsmanagement.model.jparepositories.RoleRepository;
 import bsmanagement.model.jparepositories.UserRepository;
 import bsmanagement.payload.UserIdentityAvailability;
 import bsmanagement.payload.UserProfile;

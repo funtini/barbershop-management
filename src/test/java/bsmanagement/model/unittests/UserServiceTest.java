@@ -9,14 +9,13 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import bsmanagement.jparepositories.classtests.RoleRepositoryClass;
 import bsmanagement.jparepositories.classtests.UserRepositoryClass;
 import bsmanagement.model.Address;
 import bsmanagement.model.User;
-import bsmanagement.model.User.UserProfile;
 import bsmanagement.model.UserService;
-import system.dto.UserLoginDTO;
-
-
+import bsmanagement.model.roles.Role;
+import bsmanagement.model.roles.RoleName;
 
 /**
  * 
@@ -29,6 +28,8 @@ public class UserServiceTest {
 	
 	UserService userService;
 	UserRepositoryClass userRepositoryClass;
+	RoleRepositoryClass roleRepositoryClass;
+	
 
 	Address a1;
 	Address a2;
@@ -63,7 +64,9 @@ public class UserServiceTest {
 	public void setUp() {
 		userService = new UserService();
 		userRepositoryClass = new UserRepositoryClass();
+		roleRepositoryClass = new RoleRepositoryClass();
 		userService.setUserRepository(userRepositoryClass);
+		userService.setRoleRepository(roleRepositoryClass);
 		Address.setStartIdGenerator(1);
 		a1 = new Address("CASA","RUA DO AMARO","3550-444","VISEU","PORTUGAL");
 		a2 = new Address("TRABALHO","RUA DO PASSAL","3530-194","MANGUALDE","PORTUGAL");
@@ -72,6 +75,10 @@ public class UserServiceTest {
 		birth1 = LocalDate.of(1998, 3, 17);
 		birth2 = LocalDate.of(1988, 7, 21);
 		birth3 = LocalDate.of(1968, 9, 25);
+		
+		userService.addRole(RoleName.ROLE_USER);
+    	userService.addRole(RoleName.ROLE_STOREMANAGER);
+    	userService.addRole(RoleName.ROLE_ADMINISTRATOR);
 		
 		u1 = userService.createUser("JOAO",birth1,"joao@domain.com","914047935","324666433");
 		u2 = userService.createUser("PEDRO",birth2,"pedro@gmail.uk","915557911","123555433");
@@ -128,6 +135,8 @@ public class UserServiceTest {
 		//Given: 2 users employer added and 1 user admin added
 		assertEquals(userService.addUser(u1),true);
 		assertEquals(userService.addUser(u2),true);
+		userService.setUserProfileEmployer(u1);
+		userService.setUserProfileEmployer(u2);
 		u3.setEmail("antonio@gmail.com");
 		assertEquals(userService.addUser(u3),true);
 		userService.setUserProfileAdmin(u3);
@@ -137,13 +146,13 @@ public class UserServiceTest {
 		expectEmployer.add(u1);
 		expectEmployer.add(u2);
 		expectAdmin.add(u3);
-		List<User> resultEmployer = userService.searchUserByProfile(UserProfile.EMPLPOYER);
-		List<User> resultAdmin = userService.searchUserByProfile(UserProfile.ADMINISTRATOR);
+		List<User> resultEmployer = userService.searchUserByProfile(new Role(RoleName.ROLE_USER));
+		List<User> resultAdmin = userService.searchUserByProfile(new Role(RoleName.ROLE_ADMINISTRATOR));
 		//Then: expect and result are same
 		assertEquals(expectEmployer,resultEmployer);	
 		assertEquals(expectAdmin,resultAdmin);
 		userService.setUserProfileEmployer(u3);
-		assertEquals(u3.getProfile(),UserProfile.EMPLPOYER);
+		assertEquals(u3.getRoles().contains(new Role(RoleName.ROLE_USER)),true);
 	}
 
 	@Test
@@ -163,47 +172,6 @@ public class UserServiceTest {
 	}
 
 
-	@Test
-	public void testValidateDataValidLogin() {
-		//Given: 1 user added and deactivated
-		assertEquals(userService.addUser(u1),true);
-		u1.setPassword("qwerty");
-		//When: validate user
-		UserLoginDTO validLogin = userService.validateData("joao@domain.com", "qwerty");
-		UserLoginDTO expectValid = new UserLoginDTO(u1.getName(), u1.getEmailAddress(), u1.getProfile().toString(),
-				"\n" + u1.getProfile().toString() + " " + u1.getName() + " Successfully Logged\n");
-
-		//Then: user is sucessfull logged
-		assertEquals(validLogin.getMessage(),expectValid.getMessage());			
-	}
-	
-	@Test
-	public void testValidateDataInvalidMail() {
-		//Given: 1 user added and deactivated
-		assertEquals(userService.addUser(u1),true);
-		u1.setPassword("qwerty");
-		//When: validate user
-		UserLoginDTO invalidLogin = userService.validateData("joao@main.com", "qwerty");
-		
-		UserLoginDTO expectInvalid = new UserLoginDTO("Invalid Email or Password\n");
-		
-		//Then: user got invalid email or password
-		assertEquals(invalidLogin.getMessage(),expectInvalid.getMessage());				
-	}
-	
-	@Test
-	public void testValidateDataInvalidPassword() {
-		//Given: 1 user added and deactivated
-		assertEquals(userService.addUser(u1),true);
-		u1.setPassword("qwerty");
-		//When: validate user
-		
-		UserLoginDTO invalidLogin = userService.validateData("joao@domain.com", "qdsrty");
-		UserLoginDTO expectInvalid = new UserLoginDTO("Invalid Email or Password\n");
-		
-		//Then: user got invalid email or password
-		assertEquals(invalidLogin.getMessage(),expectInvalid.getMessage());			
-	}
 	
 	@Test
 	public void testListActiveUsers() {
@@ -238,11 +206,12 @@ public class UserServiceTest {
 		//Given: 1 employer added 
 		
 		assertEquals(userService.addUser(u1),true);
-		assertEquals(userService.findUserByEmail("joao@domain.com").getProfile(),UserProfile.EMPLPOYER);
+		assertEquals(userService.setUserProfileEmployer(u1),true);
+		assertEquals(userService.findUserByEmail("joao@domain.com").hasRoleUser(),true);
 		//When: set profile to Store Manager
 		assertEquals(userService.setUserProfileStoreManager(u1),true);
 		//Then: expect and result are same
-		assertEquals(userService.findUserByEmail("joao@domain.com").getProfile(),UserProfile.STOREMANAGER);
+		assertEquals(userService.findUserByEmail("joao@domain.com").hasRoleStoreManager(),true);
 	}
 	
 	

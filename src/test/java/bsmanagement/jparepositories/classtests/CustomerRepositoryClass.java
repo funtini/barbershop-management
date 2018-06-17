@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import bsmanagement.model.Booking;
 import bsmanagement.model.Customer;
 import bsmanagement.model.jparepositories.CustomerRepository;
 

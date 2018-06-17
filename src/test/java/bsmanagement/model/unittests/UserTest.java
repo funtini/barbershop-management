@@ -13,8 +13,8 @@ import org.junit.Test;
 import bsmanagement.model.Address;
 import bsmanagement.model.Contract;
 import bsmanagement.model.User;
-import bsmanagement.model.User.UserProfile;
-import system.dto.UserLoginDTO;
+import bsmanagement.model.roles.Role;
+import bsmanagement.model.roles.RoleName;
 
 
 /**
@@ -236,10 +236,11 @@ public class UserTest {
 	}
 
 	@Test
-	public void testGetProfile() {
-		assertEquals(u1.getProfile(),UserProfile.EMPLPOYER);
+	public void testGetRole() {
+		u1.setProfileEmployer();
+		assertEquals(u1.getRoles().contains(new Role(RoleName.ROLE_USER)),true);
 		u2.setProfileAdmin();
-		assertEquals(u2.getProfile(),UserProfile.ADMINISTRATOR);
+		assertEquals(u2.getRoles().contains(new Role(RoleName.ROLE_ADMINISTRATOR)),true);
 	}
 
 	@Test
@@ -288,23 +289,24 @@ public class UserTest {
 	public void testSetProfileEmployer() {
 		
 		u2.setProfileAdmin();
-		assertEquals(u2.getProfile(),UserProfile.ADMINISTRATOR);
+		assertEquals(u2.getRoles().contains(new Role(RoleName.ROLE_ADMINISTRATOR)),true);
 		u2.setProfileEmployer();
-		assertEquals(u2.getProfile(),UserProfile.EMPLPOYER);
+		assertEquals(u2.getRoles().contains(new Role(RoleName.ROLE_USER)),true);
 	}
 	
 	@Test
 	public void testSetProfileStoreManager() {
 		
 		u2.setProfileStoreManager();
-		assertEquals(u2.getProfile(),UserProfile.STOREMANAGER);
+		assertEquals(u2.getRoles().contains(new Role(RoleName.ROLE_STOREMANAGER)),true);
 	}
 
 	@Test
 	public void testSetProfileAdmin() {
-		assertEquals(u2.getProfile(),UserProfile.EMPLPOYER);
+		u2.setProfileEmployer();
+		assertEquals(u2.getRoles().contains(new Role(RoleName.ROLE_USER)),true);
 		u2.setProfileAdmin();
-		assertEquals(u2.getProfile(),UserProfile.ADMINISTRATOR);
+		assertEquals(u2.getRoles().contains(new Role(RoleName.ROLE_ADMINISTRATOR)),true);
 	}
 	
 	@Test
@@ -381,21 +383,11 @@ public class UserTest {
 		
 	}
 	
-	
-
-	@Test
-	public void testValidatePassword() {
-		u1.setPassword("qwerty");
-		UserLoginDTO dto = new UserLoginDTO(u1.getName(), u1.getEmailAddress(), u1.getProfile().toString(),"\n" + u1.getProfile().toString().toString() + " " + u1.getName() + " Successfully Logged\n");
-		UserLoginDTO wrongPass = new UserLoginDTO("Invalid Email or Password\n");
-		assertEquals(u1.validatePassword("qwerty").getMessage(),dto.getMessage());
-		assertEquals(u1.validatePassword("dsa2").getMessage(),wrongPass.getMessage());
-	}
 
 	@Test
 	public void testToString() {
 		assertEquals(u1.toString(),"User [" + u1.getEmailAddress() + "]-[name: " + u1.getName() + ", birth: " + u1.getBirthDate() + ", phone: " + u1.getPhone()
-				+ ", taxPayerId: " + u1.getTaxPayerId() + ", ActivationStatus: " + u1.isActive() + ", profile: " + u1.getProfile() + "]");
+				+ ", taxPayerId: " + u1.getTaxPayerId() + ", ActivationStatus: " + u1.isActive() + ", profile: " + u1.getRoles().toString() + "]");
 
 	}
 

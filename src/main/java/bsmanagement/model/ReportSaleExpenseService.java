@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.jparepositories.ExpenseRepository;
-import bsmanagement.model.jparepositories.PaymentRepository;
 import bsmanagement.model.jparepositories.ReportRepository;
 import bsmanagement.model.jparepositories.SaleRepository;
 

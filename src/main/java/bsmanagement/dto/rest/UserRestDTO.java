@@ -1,14 +1,11 @@
 package bsmanagement.dto.rest;
 
 import java.time.LocalDate;
-import java.util.List;
-
 import org.springframework.hateoas.ResourceSupport;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import bsmanagement.model.Address;
-import bsmanagement.model.User.UserProfile;
+
 
 public class UserRestDTO extends ResourceSupport{
 	
@@ -18,10 +15,9 @@ public class UserRestDTO extends ResourceSupport{
 	private LocalDate birth;
 	private String phone;
 	private String taxPayerId;
-	private List<Address> addressList;
 	private String password;
 	private boolean activationStatus;
-	private UserProfile profile;
+	private String profile;
 	
 	
 	
@@ -56,12 +52,7 @@ public class UserRestDTO extends ResourceSupport{
 	public void setTaxPayerId(String taxPayerId) {
 		this.taxPayerId = taxPayerId;
 	}
-	public List<Address> getAddressList() {
-		return addressList;
-	}
-	public void setAddressList(List<Address> addressList) {
-		this.addressList = addressList;
-	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -74,10 +65,10 @@ public class UserRestDTO extends ResourceSupport{
 	public void setActivationStatus(boolean activationStatus) {
 		this.activationStatus = activationStatus;
 	}
-	public UserProfile getProfile() {
+	public String getProfile() {
 		return profile;
 	}
-	public void setProfile(UserProfile profile) {
+	public void setProfile(String profile) {
 		this.profile = profile;
 	}
 	@Override

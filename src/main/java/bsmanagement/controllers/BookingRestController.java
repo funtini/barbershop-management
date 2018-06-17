@@ -1,10 +1,12 @@
 package bsmanagement.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,9 +25,15 @@ public class BookingRestController {
 	}
 	
 	@RequestMapping("/bookings")
-	public List<Booking> listNextBookings()
+	@PreAuthorize("hasRole('USER') || hasRole('MANAGER') || hasRole('ADMIN')")
+	public ResponseEntity<List<BookingRestDTO>> listNextBookings()
 	{
-		return bookingCustomerService.getNextBookings();
+		List<BookingRestDTO> bookingsRestDTO = new ArrayList<>();
+		for (Booking b : bookingCustomerService.getNextBookings())
+		{
+			bookingsRestDTO.add(b.toRestDTO());
+		}
+		return new ResponseEntity<>(bookingsRestDTO,HttpStatus.OK);
 	}
 	
 //	@PostMapping("/bookings")

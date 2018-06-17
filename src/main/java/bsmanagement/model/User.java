@@ -1,27 +1,14 @@
 package bsmanagement.model;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
-
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.YearMonth;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.validation.constraints.Email;
 import javax.persistence.*;
 
@@ -31,7 +18,8 @@ import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
 
 import bsmanagement.dto.rest.UserRestDTO;
-import system.dto.UserLoginDTO;
+import bsmanagement.model.roles.Role;
+import bsmanagement.model.roles.RoleName;
 
 /**
  * <h1> User </h1>
@@ -59,9 +47,7 @@ import system.dto.UserLoginDTO;
 @Proxy(lazy = false)
 public class User{
 	
-	public enum UserProfile {
-		ADMINISTRATOR, STOREMANAGER, EMPLPOYER
-	}
+	
 		
 	@Id
 	@Email
@@ -78,16 +64,15 @@ public class User{
 	@Column(nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean activationStatus;
-	@Enumerated(EnumType.STRING)
-	private UserProfile profile;
 	@Embedded
 	@ElementCollection
 	@LazyCollection(LazyCollectionOption.FALSE)
 	List<Contract> contracts;
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = new LinkedHashSet<>();
 	private String username;
 	
 	/**
@@ -228,7 +213,6 @@ public class User{
 		this.taxPayerId = taxPayerId;
 		this.addressList = new ArrayList<>();
 		this.activationStatus = true;
-		this.profile = UserProfile.EMPLPOYER;
 		this.contracts = new ArrayList<>();
 		this.username = email;
 	}
@@ -252,7 +236,6 @@ public class User{
 		this.addressList = new ArrayList<>();
 		this.password = password;
 		this.activationStatus = true;
-		this.profile = UserProfile.EMPLPOYER;
 		this.contracts = new ArrayList<>();
 		this.username = email;
 	}
@@ -265,7 +248,6 @@ public class User{
 	protected User ()
 	{
 		this.addressList = new ArrayList<>();
-		this.profile = UserProfile.EMPLPOYER;
 		this.contracts = new ArrayList<>();
 	}
 	
@@ -419,14 +401,14 @@ public class User{
 	}
 
 
-	/**
-	 * Method to get user's profile
-	 * 
-	 * @return the profile
-	 */
-	public UserProfile getProfile() {
-		return profile;
-	}
+//	/**
+//	 * Method to get user's profile
+//	 * 
+//	 * @return the profile
+//	 */
+//	public UserProfile getProfile() {
+//		return profile;
+//	}
 
 	/**
 	 * @param name the name to set
@@ -498,7 +480,8 @@ public class User{
 	 * @param profile 
 	 */
 	public void setProfileEmployer() {
-		this.profile = UserProfile.EMPLPOYER;
+		Role collaborator = new Role(RoleName.ROLE_USER);
+        roles.add(collaborator);
 	}
 	
 	/**
@@ -507,7 +490,8 @@ public class User{
 	 * @param profile 
 	 */
 	public void setProfileStoreManager() {
-		this.profile = UserProfile.STOREMANAGER;
+		Role collaborator = new Role(RoleName.ROLE_STOREMANAGER);
+        roles.add(collaborator);
 	}
 	
 	/**
@@ -516,7 +500,8 @@ public class User{
 	 * @param profile 
 	 */
 	public void setProfileAdmin() {
-		this.profile = UserProfile.ADMINISTRATOR;
+		Role collaborator = new Role(RoleName.ROLE_ADMINISTRATOR);
+        roles.add(collaborator);
 	}
 	
 	public Set<Role> getRoles() {
@@ -526,27 +511,48 @@ public class User{
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+    
+    /**
+     * Method to check if user has role registered user.
+     *
+     * @return true if he has, false otherwise.
+     */
+    public boolean hasRoleStoreManager() {
+        for (Role r : roles) {
+            if (r.isStoreManager()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	/**
-	 * Checks if user password is equal to the given parameter.
-	 *
-	 * @param password
-	 *            Parameter to compare user password to.
-	 * @return String containing user name and user profile, if successful, or
-	 *         error message otherwise.
-	 */
-	public UserLoginDTO validatePassword(String password) {
+    /**
+     * Method to check if user has role administrator user.
+     *
+     * @return true if he has, false otherwise.
+     */
+    public boolean hasRoleAdministrator() {
+        for (Role r : roles) {
+            if (r.isAdministrator()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-		if (this.password.equals(password)) {
-			return new UserLoginDTO(name, email, profile.toString(),
-					"\n" + profile.toString() + " " + name + " Successfully Logged\n");
-		}
-		return new UserLoginDTO("Invalid Email or Password\n");
-	}
-	
-	
-	
-	
+    /**
+     * Method to check if user has role collaborator user.
+     *
+     * @return true if he has, false otherwise.
+     */
+    public boolean hasRoleUser() {
+        for (Role r : roles) {
+            if (r.isUser()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 	/**
@@ -559,7 +565,7 @@ public class User{
 	@Override
 	public String toString() {
 		return "User [" + email + "]-[name: " + name + ", birth: " + birth + ", phone: " + phone
-				+ ", taxPayerId: " + taxPayerId + ", ActivationStatus: " + activationStatus + ", profile: " + profile + "]";
+				+ ", taxPayerId: " + taxPayerId + ", ActivationStatus: " + activationStatus + ", profile: " + roles + "]";
 	}
 
 	/** 
@@ -606,9 +612,8 @@ public class User{
 		userDTO.setBirth(this.birth);
 		userDTO.setEmail(this.email);
 		userDTO.setPhone(this.phone);
-		userDTO.setProfile(this.profile);
+		userDTO.setProfile(this.roles.toString());
 		userDTO.setTaxPayerId(this.taxPayerId);
-		userDTO.setAddressList(this.addressList);
 		userDTO.setActivationStatus(this.activationStatus);		
 		
 		return userDTO;

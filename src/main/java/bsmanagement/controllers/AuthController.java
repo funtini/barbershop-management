@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import bsmanagement.exception.AppException;
-import bsmanagement.model.Role;
-import bsmanagement.model.Role.RoleName;
 import bsmanagement.model.User;
 import bsmanagement.model.jparepositories.RoleRepository;
 import bsmanagement.model.jparepositories.UserRepository;
+import bsmanagement.model.roles.Role;
+import bsmanagement.model.roles.RoleName;
 import bsmanagement.payload.ApiResponse;
 import bsmanagement.payload.JwtAuthenticationResponse;
 import bsmanagement.payload.LoginRequest;

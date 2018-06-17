@@ -18,20 +18,20 @@ import bsmanagement.model.jparepositories.UserRepository;
 
 public class UserRepositoryClass implements UserRepository {
 
-	Set<User> list = new LinkedHashSet<>();
+	Set<User> users = new LinkedHashSet<>();
 
 	
 
 	@Override
 	public void delete(User arg0) {
-		list.remove(arg0);
+		users.remove(arg0);
 		
 	}
 
 
 	@Override
 	public boolean existsById(String arg0) {
-		for (User userA : list) {
+		for (User userA : users) {
             if (userA.getEmailAddress().equals(arg0)) {
                 return true;
             }
@@ -43,7 +43,7 @@ public class UserRepositoryClass implements UserRepository {
 
 	@Override
 	public Optional<User> findById(String arg0) {
-		for (User userA : list) {
+		for (User userA : users) {
             if (userA.getEmailAddress().equals(arg0)) {
                 return Optional.of(userA);
             }
@@ -53,7 +53,7 @@ public class UserRepositoryClass implements UserRepository {
 
 	@Override
 	public <S extends User> S save(S arg0) {
-		list.add(arg0);
+		users.add(arg0);
         return arg0;
 	}
 
@@ -75,7 +75,7 @@ public class UserRepositoryClass implements UserRepository {
 	@Override
 	public List<User> findAll() {
 		// TODO Auto-generated method stub
-		return new ArrayList<User>(list);
+		return new ArrayList<User>(users);
 	}
 
 
@@ -116,7 +116,7 @@ public class UserRepositoryClass implements UserRepository {
 
 	@Override
 	public User getOne(String arg0) {
-		for (User userA : list) {
+		for (User userA : users) {
             if (userA.getEmailAddress().equals(arg0)) {
                 return userA;
             }
@@ -155,9 +155,9 @@ public class UserRepositoryClass implements UserRepository {
 
 	@Override
 	public void deleteById(String id) {
-		for (User userA : list) {
+		for (User userA : users) {
             if (userA.getEmailAddress().equals(id)) {
-                list.remove(userA);
+                users.remove(userA);
             }
         }		
 	}
@@ -172,7 +172,7 @@ public class UserRepositoryClass implements UserRepository {
 
 	@Override
 	public void deleteAll() {
-		// TODO Auto-generated method stub
+		users.clear();
 		
 	}
 

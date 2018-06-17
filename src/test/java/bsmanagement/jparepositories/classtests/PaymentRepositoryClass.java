@@ -11,10 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import bsmanagement.model.Customer;
-import bsmanagement.model.Expense;
 import bsmanagement.model.PaymentMethod;
-import bsmanagement.model.Product;
 import bsmanagement.model.jparepositories.PaymentRepository;
 
 public class PaymentRepositoryClass implements PaymentRepository{

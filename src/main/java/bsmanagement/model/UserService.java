@@ -2,26 +2,23 @@ package bsmanagement.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import bsmanagement.exception.AppException;
-import bsmanagement.model.Role.RoleName;
-import bsmanagement.model.User.UserProfile;
 import bsmanagement.model.jparepositories.RoleRepository;
 import bsmanagement.model.jparepositories.UserRepository;
+import bsmanagement.model.roles.Role;
+import bsmanagement.model.roles.RoleName;
 import bsmanagement.security.UserPrincipal;
-import system.dto.UserLoginDTO;
-
 
 
 
@@ -115,12 +112,12 @@ public class UserService implements UserDetailsService{
 	 *            Search parameter.
 	 * @return List of users that match the search parameter.
 	 */
-	public List<User> searchUserByProfile(UserProfile userProfile) {
+	public List<User> searchUserByProfile(Role role) {
 
 		List<User> profileList = new ArrayList<>();
 
 		for (User user : listAllUsers())
-			if (user.getProfile().equals(userProfile))
+			if (user.getRoles().contains(role) && user.isActive())
 				profileList.add(user);
 		return profileList;
 	}
@@ -171,13 +168,19 @@ public class UserService implements UserDetailsService{
 	 * @return True if assignment is successful, false otherwise.
 	 */
 	public boolean setUserProfileEmployer(User user) {
-		for (User u : listAllUsers())
-			if (user.getEmailAddress() == u.getEmailAddress()) {
-				user.setProfileEmployer();
-				updateUser(user);
-				return true;
-			}
-		return false;
+		
+		if (user != null && userRepo.existsById(user.getEmailAddress())) {
+            if (user.getRoles().contains(rolesRepository.getOneByName((RoleName.ROLE_USER)))) {
+                return false;
+            } else {
+                Set<Role> userRoles = new LinkedHashSet<>();
+                userRoles.add(rolesRepository.getOneByName((RoleName.ROLE_USER)));
+                user.setRoles(userRoles);
+                userRepo.save(user);
+                return true;
+            }
+        }
+        return false;
 	}
 	
 	/**
@@ -188,14 +191,20 @@ public class UserService implements UserDetailsService{
 	 * @return True if assignment is successful, false otherwise.
 	 */
 	public boolean setUserProfileAdmin(User user) {
-		for (User u : listAllUsers())
-			if (user.getEmailAddress() == u.getEmailAddress()) {
-				user.setProfileAdmin();
-				updateUser(user);
-				return true;
-			}
-		return false;
+		if (user != null && userRepo.existsById(user.getEmailAddress())) {
+            if (user.getRoles().contains(rolesRepository.getOneByName((RoleName.ROLE_ADMINISTRATOR)))) {
+                return false;
+            } else {
+                Set<Role> userRoles = new LinkedHashSet<>();
+                userRoles.add(rolesRepository.getOneByName((RoleName.ROLE_ADMINISTRATOR)));
+                user.setRoles(userRoles);
+                userRepo.save(user);
+                return true;
+            }
+        }
+        return false;
 	}
+	
 	
 	
 	/**
@@ -206,32 +215,27 @@ public class UserService implements UserDetailsService{
 	 * @return True if assignment is successful, false otherwise.
 	 */
 	public boolean setUserProfileStoreManager(User user) {
-		for (User u : listAllUsers())
-			if (user.getEmailAddress() == u.getEmailAddress()) {
-				user.setProfileStoreManager();
-				updateUser(user);
-				return true;
-			}
-		return false;
+		if (user != null && userRepo.existsById(user.getEmailAddress())) {
+            if (user.getRoles().contains(rolesRepository.getOneByName((RoleName.ROLE_STOREMANAGER)))) {
+                return false;
+            } else {
+                Set<Role> userRoles = new LinkedHashSet<>();
+                userRoles.add(rolesRepository.getOneByName((RoleName.ROLE_STOREMANAGER)));
+                user.setRoles(userRoles);
+                userRepo.save(user);
+                return true;
+            }
+        }
+        return false;
 	}
 	
-	/**
-	 * Find user by email and, if successful, validate his password.
-	 *
-	 * @param email
-	 *            Required login parameter.
-	 * @param password
-	 *            Parameter to be passed on to validatePassword method (in User
-	 *            class), only if email is found.
-	 * @return UserLoginDTO - Object that behaves like Data Transfer Object
-	 */
-	public UserLoginDTO validateData(String email, String password) {
+	public void addRole(RoleName role)
+    {
+    	Role newRole = new Role(role);
+    	if (!rolesRepository.existsByName(role))
+    		rolesRepository.save(newRole);
+    }
 
-		User user = findUserByEmail(email);
-		if (user == null)
-			return new UserLoginDTO("Invalid Email or Password\n");
-		return user.validatePassword(password);
-	}
 	
 	/**
 	 * Method to update an existing user in DataBase
@@ -286,39 +290,6 @@ public class UserService implements UserDetailsService{
 			if (!u.isActive())
 				usersList.add(u);
 		return usersList;
-	}
-	
-	
-	public void setUserRole(String email)
-	{
-		 Role userRole = rolesRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("User Role not set."));
-		 User user = findUserByEmail(email);
-	     user.setRoles(Collections.singleton(userRole));
-	     updateUser(user);
-	}
-	
-	public void setManagerRole(String email)
-	{
-		Role managerRole = rolesRepository.findByName(RoleName.ROLE_MANAGER).orElseThrow(() -> new AppException("User Role not set."));
-		User user = findUserByEmail(email);
-	    user.setRoles(Collections.singleton(managerRole));
-	    updateUser(user);
-	}
-	
-	public void setAdminRole(String email)
-	{
-		Role adminRole = rolesRepository.findByName(RoleName.ROLE_ADMIN).orElseThrow(() -> new AppException("User Role not set."));
-		User user = findUserByEmail(email);
-	    user.setRoles(Collections.singleton(adminRole));
-	    updateUser(user);
-	}
-	
-	public void addRole(RoleName role)
-	{
-		 Role newRole = new Role(role);
-		 if (!rolesRepository.existsByName(role))
-			 rolesRepository.save(newRole); 
-		 
 	}
 	
 	public void setUserRepository(UserRepository userRepository)

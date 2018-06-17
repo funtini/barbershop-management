@@ -17,12 +17,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.Product.productType;
-import bsmanagement.model.Role.RoleName;
+import bsmanagement.model.roles.RoleName;
 
 @ComponentScan({ "bsmanagement", "system" })
 @EntityScan(basePackageClasses = {Application.class, Jsr310JpaConverters.class})
@@ -93,8 +91,8 @@ public class Application{
 		
     	//Add Roles to System
     	userService.addRole(RoleName.ROLE_USER);
-    	userService.addRole(RoleName.ROLE_MANAGER);
-    	userService.addRole(RoleName.ROLE_ADMIN);
+    	userService.addRole(RoleName.ROLE_STOREMANAGER);
+    	userService.addRole(RoleName.ROLE_ADMINISTRATOR);
     	
 		//Register Employers
     	
@@ -121,10 +119,9 @@ public class Application{
 		u3.addAddress(a4);
 		
 		
-		
-		userService.setUserRole(u1.getEmailAddress());
-		userService.setUserRole(u2.getEmailAddress());
-		userService.setUserRole(u3.getEmailAddress());
+		userService.setUserProfileEmployer(u1);
+		userService.setUserProfileEmployer(u2);
+		userService.setUserProfileEmployer(u3);
 		
 		
 		u1 = userService.findUserByEmail("joao@gmail.com");
@@ -510,14 +507,9 @@ public class Application{
 //		System.out.println(repService.getReport(YearMonth.of(2018, 04)).getSales().get(0).getCustomer());
 		System.out.println(saleService.getSales().get(470).getCustomer());
 //		bookingCustomerService.removeCustomer(c1);
-		System.out.println(repSaleExpService.removeExpense(expenseService.getExpenses().get(10)));
-		System.out.println(repSaleExpService.getCurrentOpenReport().getExpenses());
-		Expense editable = expenseService.findExpenseById(5);
-		editable.setValue(35);
-		System.out.println(expenseService.findExpensesOfMonth(YearMonth.now()));
-		expenseService.updateExpense(editable);
-		System.out.println(expenseService.findExpensesOfMonth(YearMonth.now()));
-		System.out.println(repSaleExpService.getCurrentOpenReport().getExpenses());
+		User u5 =userService.listAllUsers().get(0);
+		System.out.println(userService.listAllUsers().get(0));
+		System.out.println(u5.getRoles().toString()+" ... "+u5.getLastContract());
 //		System.out.println(b1.getCustomer());
 		String choice = scan.nextLine();
 

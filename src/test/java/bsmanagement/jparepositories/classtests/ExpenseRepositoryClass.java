@@ -5,7 +5,6 @@ import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import bsmanagement.model.Booking;
 import bsmanagement.model.Expense;
 import bsmanagement.model.jparepositories.ExpenseRepository;
 
