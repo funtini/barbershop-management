@@ -3,8 +3,10 @@ package bsmanagement.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -186,6 +188,7 @@ public class BookingCustomerService {
 		List<Booking> bookings = new ArrayList<>();
 		for (Booking b : bookRepository.findAll())
 			bookings.add(b);
+		bookings.sort(Collections.reverseOrder());
 		return bookings;
 	}
 
@@ -263,6 +266,7 @@ public class BookingCustomerService {
 			if (b.getDate().isEqual(LocalDateTime.now()) || b.getDate().isAfter(LocalDateTime.now()))
 				bookingList.add(b);
 		}
+		bookingList.sort(Collections.reverseOrder());
 		return bookingList;
 	}
 	
@@ -278,6 +282,7 @@ public class BookingCustomerService {
 			if (b.getUser().getEmailAddress().equals(userId))
 				bookingList.add(b);
 		}
+		bookingList.sort(Collections.reverseOrder());
 		return bookingList;
 	}
 	
@@ -316,6 +321,7 @@ public class BookingCustomerService {
 			if (b.getDate().toLocalDate().isEqual(date))
 				bookingList.add(b);
 		}
+		bookingList.sort(Collections.reverseOrder());
 		return bookingList;
 	}
 	

@@ -10,7 +10,9 @@ public class BookingRestDTO {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime date;
 	private int customerId;
+	private String customerName;
 	private String userId;
+	private String userName;
 
 	public int getBookingId() {
 		return bookingId;
@@ -43,6 +45,22 @@ public class BookingRestDTO {
 	}
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	@Override

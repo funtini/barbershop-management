@@ -176,8 +176,8 @@ public class BookingCustomerServiceTest {
 		bcService.addBooking(b1);
 		bcService.addBooking(b2);
 		bcService.addBooking(b3);
-		expectBookings.add(b1);
 		expectBookings.add(b2);
+		expectBookings.add(b1);
 		expectBookings.add(b3);
 		//Then: get a list with that 3 bookings
 		resultBookings = bcService.getBookings();
@@ -199,8 +199,8 @@ public class BookingCustomerServiceTest {
 		bookRepoTest.save(b3);
 		
 		//When: set new bookingRepo with 3 bookings
-		expectBookings.add(b1);
 		expectBookings.add(b2);
+		expectBookings.add(b1);
 		expectBookings.add(b3);
 		bcService.setBookRepository(bookRepoTest);
 		//Then: get a list with that 3 bookings
@@ -239,8 +239,8 @@ public class BookingCustomerServiceTest {
 		assertEquals(bcService.addBooking(b1),true);
 		assertEquals(bcService.addBooking(b2),true);
 		assertEquals(bcService.addBooking(b3),true);
-		expectBookings.add(b1);
 		expectBookings.add(b2);
+		expectBookings.add(b1);
 		expectBookings.add(b3);
 		resultBookings = bcService.getBookings();
 		//Then:
@@ -301,7 +301,7 @@ public class BookingCustomerServiceTest {
 		assertEquals(bcService.getBookings().size(),3);
 		bcService.getBookings().get(0).setDate(LocalDateTime.now().minusDays(11));
 		//When: get next bookings in bookingRegistry
-		expectBookings.add(b2);
+		expectBookings.add(b1);
 		expectBookings.add(b3);
 		resultBookings = bcService.getNextBookings();
 		//Then:
@@ -320,7 +320,7 @@ public class BookingCustomerServiceTest {
 		assertEquals(bcService.addBooking(b2),true);
 		assertEquals(bcService.addBooking(b3),true);
 		assertEquals(bcService.getBookings().size(),3);
-		bcService.getBookings().get(1).setDate(dt1);
+		bcService.getBookings().get(0).setDate(dt1);
 		//When: get bookings of day 11 in bookingRegistry
 		expectBookings.add(b1);
 		expectBookings.add(b2);
@@ -366,8 +366,9 @@ public class BookingCustomerServiceTest {
 		assertEquals(bcService.getBookings().size(),3);
 		bcService.getBookings().get(1).setDate(dt1);
 		List<Booking> expected =  new ArrayList<>();
-		expected.add(b1);
+		
 		expected.add(b2);
+		expected.add(b1);
 		//When: get bookings of user1
 		
 		List<Booking> result = bcService.getNextBookingsOf(u1.getEmailAddress());

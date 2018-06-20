@@ -121,7 +121,7 @@ public class Application{
 		
 		userService.setUserProfileEmployer(u1);
 		userService.setUserProfileEmployer(u2);
-		userService.setUserProfileEmployer(u3);
+		userService.setUserProfileStoreManager(u3);
 		
 		
 		u1 = userService.findUserByEmail("joao@gmail.com");
