@@ -55,10 +55,10 @@ public class Application{
 		SpringApplication.run(Application.class);
 	}
 	
-	@PostConstruct
-	void init() {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-	}
+//	@PostConstruct
+//	void init() {
+//		TimeZone.setDefault(TimeZone.getTimeZone("UTC+1"));
+//	}
 	
 	@Bean
 	public CommandLineRunner demo() {

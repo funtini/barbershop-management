@@ -1,10 +1,11 @@
-package bsmanagement.controllers;
+package bsmanagement.controllers.rest;
 
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +14,16 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import bsmanagement.controllers.rest.BookingRestController;
 import bsmanagement.dto.rest.BookingRestDTO;
 import bsmanagement.jparepositories.classtests.BookingRepositoryClass;
 import bsmanagement.jparepositories.classtests.CustomerRepositoryClass;
+import bsmanagement.jparepositories.classtests.UserRepositoryClass;
 import bsmanagement.model.Booking;
 import bsmanagement.model.BookingCustomerService;
 import bsmanagement.model.Customer;
 import bsmanagement.model.User;
+import bsmanagement.model.UserService;
 
 public class BookingRestControllerTest {
 	
@@ -56,6 +60,8 @@ public class BookingRestControllerTest {
 	BookingCustomerService bcService;
 	CustomerRepositoryClass customerRepository;
 	BookingRepositoryClass bookingRepository;
+	UserRepositoryClass userRepository;
+	UserService userService;
 	
 	List<BookingRestDTO> bookings;
 	ResponseEntity<BookingRestDTO> response;
@@ -94,9 +100,12 @@ public class BookingRestControllerTest {
 		bcService = new BookingCustomerService();
 		customerRepository = new CustomerRepositoryClass();
 		bookingRepository = new BookingRepositoryClass();
+		userRepository = new UserRepositoryClass();
+		userService = new UserService();
 		bcService.setBookRepository(bookingRepository);
 		bcService.setCustomersRepository(customerRepository);
-		brc = new BookingRestController(bcService);
+		userService.setUserRepository(userRepository);
+		brc = new BookingRestController(bcService,userService);
 		bookings = new ArrayList<>();
 		Booking.setStartIdGenerator(1);
 		Customer.setStartIdGenerator(1);
@@ -221,7 +230,8 @@ public class BookingRestControllerTest {
 		bookings.add(b3_DTO);
 		
 		//WHEN
-		responseList = brc.listBookingsOfDate("2018-06-30");
+		LocalDate date = LocalDate.now().plusDays(10);
+		responseList = brc.listBookingsOfDate(date.toString());
 		
 		//THEN
 		
@@ -358,4 +368,184 @@ public class BookingRestControllerTest {
 		assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());						
 	}
 
+	/**
+	 * testCreateBooking() controller
+	 * 
+	 * <p>GIVEN: List of 4 bookings </p>
+	 * <p>WHEN: call createBooking() controller to add new booking with valid date</p>
+	 * <p>THEN: List of bookings has increased to 5 and response of controller is Created</p>
+	 */
+	@Test
+	public void testCreateBookingSuccess() {
+		//GIVEN
+		assertEquals(bcService.getBookings().size(),4);
+		
+		//WHEN
+		BookingRestDTO bookingDTO = new BookingRestDTO();
+		bookingDTO.setDate(LocalDateTime.now().plusDays(1));
+		bookingDTO.setCustomerId(2);
+		response = brc.createBooking(bookingDTO);
+		
+		//THEN
+		
+		assertEquals(bookingDTO.getCustomerId(),response.getBody().getCustomerId());
+		assertEquals(bookingDTO.getDate(),response.getBody().getDate());
+		assertEquals(HttpStatus.CREATED,response.getStatusCode());
+		assertEquals(bcService.getBookings().size(),5);
+	}
+	
+	
+	/**
+	 * testCreateBooking() controller
+	 * 
+	 * <p>GIVEN: List of 4 bookings </p>
+	 * <p>WHEN: call createBooking() controller to add new booking with invalid date</p>
+	 * <p>THEN: List of bookings still 4 and response of controller is BadRequest</p>
+	 */
+	@Test
+	public void testCreateBookingBadRequest() {
+		//GIVEN
+		assertEquals(bcService.getBookings().size(),4);
+		
+		//WHEN
+		BookingRestDTO bookingDTO = new BookingRestDTO();
+		bookingDTO.setDate(LocalDateTime.now().minusDays(1));
+		bookingDTO.setCustomerId(2);
+		response = brc.createBooking(bookingDTO);
+		
+		//THEN
+		
+	
+		assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+		assertEquals(bcService.getBookings().size(),4);
+	}
+	
+	/**
+	 * testEditBooking() controller
+	 * 
+	 * <p>GIVEN: List of 4 bookings </p>
+	 * <p>WHEN: call editBooking() controller to edit a booking with valid inputs</p>
+	 * <p>THEN: List of bookings still 4, response of controller is OK and booking has been changed successfully</p>
+	 */
+	@Test
+	public void testEditBookingSuccess() {
+		//GIVEN
+		assertEquals(bcService.getBookings().size(),4);
+		assertEquals(bcService.findBookingById(2).getCustomer().getId(),2);
+		assertEquals(bcService.findBookingById(2).getDate(),dt2);
+		LocalDateTime date = LocalDateTime.now().plusDays(1);
+		
+		//WHEN
+		BookingRestDTO bookingDTO = new BookingRestDTO();
+		bookingDTO.setDate(date);
+		bookingDTO.setCustomerId(1);
+		response = brc.editBooking(2, bookingDTO);
+		
+		//THEN
+		assertEquals(bcService.findBookingById(2).getDate(),date.truncatedTo(ChronoUnit.MINUTES));
+		assertEquals(bcService.findBookingById(2).getCustomer().getId(),1);
+		assertEquals(bookingDTO.getCustomerId(),response.getBody().getCustomerId());
+		assertEquals(bookingDTO.getDate(),response.getBody().getDate());
+		assertEquals(HttpStatus.OK,response.getStatusCode());
+		assertEquals(bcService.getBookings().size(),4);
+	}
+	
+	
+	/**
+	 * testEditBooking() controller
+	 * 
+	 * <p>GIVEN: List of 4 bookings </p>
+	 * <p>WHEN: call editBooking() controller to edit a booking with valid inputs</p>
+	 * <p>THEN: List of bookings still 4, response of controller is BAD_REQUEST and booking still unchanged</p>
+	 */
+	@Test
+	public void testEditBookingBadRequest() {
+		//GIVEN
+		assertEquals(bcService.getBookings().size(),4);
+		assertEquals(bcService.findBookingById(2).getCustomer().getId(),2);
+		assertEquals(bcService.findBookingById(2).getDate(),dt2);
+		
+		//WHEN
+		BookingRestDTO bookingDTO = new BookingRestDTO();
+		bookingDTO.setDate(LocalDateTime.now().minusDays(1));
+		bookingDTO.setCustomerId(1);
+		response = brc.editBooking(2, bookingDTO);
+		
+		//THEN
+		assertEquals(bcService.findBookingById(2).getDate(),dt2);
+		assertEquals(bcService.findBookingById(2).getCustomer().getId(),2);
+		assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+		assertEquals(bcService.getBookings().size(),4);
+	}
+	
+	
+	
+	/**
+	 * testEditBooking() controller
+	 * 
+	 * <p>GIVEN: List of 4 bookings </p>
+	 * <p>WHEN: call editBooking() controller to edit a booking with invalid id</p>
+	 * <p>THEN: response of controller is NOT_FOUND and bookings size still unchanged</p>
+	 */
+	@Test
+	public void testEditBookingNotFound() {
+		//GIVEN
+		assertEquals(bcService.getBookings().size(),4);
+		assertEquals(bcService.findBookingById(2).getCustomer().getId(),2);
+		assertEquals(bcService.findBookingById(2).getDate(),dt2);
+		
+		//WHEN
+		BookingRestDTO bookingDTO = new BookingRestDTO();
+		bookingDTO.setDate(LocalDateTime.now().minusDays(1));
+		bookingDTO.setCustomerId(1);
+		response = brc.editBooking(111, bookingDTO);	
+		//THEN
+		assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+		assertEquals(bcService.getBookings().size(),4);
+	}
+	
+	
+	/**
+	 * testRemoveBooking() controller
+	 * 
+	 * <p>GIVEN: List of 4 bookings </p>
+	 * <p>WHEN: call removeBooking() controller to delete a booking with valid id</p>
+	 * <p>THEN: List of bookings has decreased to 3 and response of controller is OK</p>
+	 */
+	@Test
+	public void testRemoveBookingSuccess() {
+		//GIVEN
+		assertEquals(bcService.getBookings().size(),4);
+		
+		//WHEN
+		response = brc.removeBooking(2);
+		
+		//THEN
+		
+		assertEquals(HttpStatus.OK,response.getStatusCode());
+		assertEquals(bcService.getBookings().size(),3);
+	}
+	
+	/**
+	 * testRemoveBooking() controller
+	 * 
+	 * <p>GIVEN: List of 4 bookings </p>
+	 * <p>WHEN: call removeBooking() controller to delete a booking with invalid id</p>
+	 * <p>THEN: List of bookings still unchanged and response of controller is NOT_FOUND</p>
+	 */
+	@Test
+	public void testRemoveBookingNotFound() {
+		//GIVEN
+		assertEquals(bcService.getBookings().size(),4);
+		
+		//WHEN
+		response = brc.removeBooking(55);
+		
+		//THEN
+		
+		assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+		assertEquals(bcService.getBookings().size(),4);
+	}
+	
+	
 }

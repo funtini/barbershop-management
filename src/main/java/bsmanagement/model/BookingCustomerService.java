@@ -6,12 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import bsmanagement.dto.rest.BookingRestDTO;
-import bsmanagement.dto.rest.CustomerRestDTO;
 import bsmanagement.model.jparepositories.BookingRepository;
 import bsmanagement.model.jparepositories.CustomerRepository;
 
@@ -96,6 +93,8 @@ public class BookingCustomerService {
 		return c;
 	}
 	
+	
+	//TODO: Unused constructor on controller
 	/**
 	 * Create an Instance of Customer
 	 * 
@@ -124,7 +123,7 @@ public class BookingCustomerService {
 			return null;
 	}
 	
-	
+	//TODO: Unused method on controller
 	/**
 	 * Find Customer By Name
 	 * 
@@ -140,6 +139,7 @@ public class BookingCustomerService {
 			return null;
 	}
 	
+	//TODO: Unused method on controller
 	/**
 	 * Find Customer By Email
 	 * 
@@ -158,15 +158,16 @@ public class BookingCustomerService {
 	/**
 	 * Remove Customer
 	 * 
-	 * @param customer
+	 * @param customerId
 	 * 
-	 * @return true if customer is sucessful removed, false otherwise.
+	 * @return true if customer was successfully removed, false otherwise.
 	 */
-	public boolean removeCustomer(Customer customer)
+	public boolean removeCustomer(int customerId)
 	{
-		if (customersRepository.existsById(customer.getId()))
+		Customer c = findCustomerById(customerId);
+		if (c!=null)
 			{
-			customersRepository.delete(customer);
+			customersRepository.delete(c);
 			return true;
 			}
 		return false;
@@ -341,46 +342,30 @@ public class BookingCustomerService {
 	
 	
 	/*
-	 * --------------------------
-	 * 	 DATA TRANSFER OBJECTS
-	 * --------------------------
+	 * -----------------------------
+	 * 	 UPDATE OBJECTS IN DATABASE
+	 * -----------------------------
 	 */
 	
-//	/**
-//	 * Method to add a new booking
-//	 * 
-//	 * @param BookingDTO - Instance of BookingRestDTO
-//	 * 
-//	 * @return boolean - true if booking was successfully added, false otherwise
-//	 */
-//	public boolean addBooking(BookingRestDTO bookingDTO) {
-//		if (bookingDTO.getDate().isBefore(LocalDateTime.now()))
-//		{
-//			bookingDTO.setMessage("Booking not added : INVALID DATE");
-//			return false;
-//		}
-//		bookingDTO.setMessage("Booking Sucessfully Added");	
-//		Customer customer = findCustomerById(bookingDTO.getCustomerId());
-//		User user = find
-//		Booking booking = createBooking(bookingDTO.getDate(),customer,bookingDTO.getUserId());
-//		bookRepository.save(booking);
-//		return true;
-//	}
 
-	public boolean addCustomer(CustomerRestDTO customerDTO) {
-		if (customerDTO.getName()==null)
-		{
-			customerDTO.setSuccessMessage("Customer not added : INVALID NAME");
-			return false;
-		}
-		Customer customer = createCustomer(customerDTO.getName(), customerDTO.getBirth(), customerDTO.getAddress(), customerDTO.getPhone());
-		if (addCustomer(customer))
-		{
-			customerDTO.setSuccessMessage("Customer Sucessfully Added!");
-			return true;
-		}
-		customerDTO.setSuccessMessage("Customer not added : Customer's Name Already Exist");
-		return false;
+	public boolean updateBooking(Booking b) {
+		if (bookRepository.existsById(b.getId()) && !b.getDate().isBefore(LocalDateTime.now())) {
+            bookRepository.save(b);
+            return true;
+        }
+        return false;
+		
+	}
+	
+
+	
+	public boolean updateCustomer(Customer c) {
+		if (customersRepository.existsById(c.getId())) {
+			customersRepository.save(c);
+            return true;
+        }
+        return false;
+		
 	}
 
 }

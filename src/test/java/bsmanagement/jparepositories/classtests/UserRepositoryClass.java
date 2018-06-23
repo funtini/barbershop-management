@@ -53,6 +53,12 @@ public class UserRepositoryClass implements UserRepository {
 
 	@Override
 	public <S extends User> S save(S arg0) {
+		if (existsById(arg0.getEmailAddress()))
+		{
+			users.remove(arg0);
+			users.add(arg0);
+			return arg0;
+		}
 		users.add(arg0);
         return arg0;
 	}

@@ -1,6 +1,7 @@
-package bsmanagement.controllers;
+package bsmanagement.controllers.rest;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import bsmanagement.dto.rest.BookingRestDTO;
 import bsmanagement.model.Booking;
 import bsmanagement.model.BookingCustomerService;
+import bsmanagement.model.Customer;
+import bsmanagement.model.User;
+import bsmanagement.model.UserService;
 
 @RestController
 public class BookingRestController {
@@ -25,8 +33,12 @@ public class BookingRestController {
 	@Autowired
 	BookingCustomerService bookingCustomerService;
 	
-	public BookingRestController(BookingCustomerService bookingCustomerService) {
+	@Autowired
+	UserService userService;
+	
+	public BookingRestController(BookingCustomerService bookingCustomerService, UserService userService) {
 		this.bookingCustomerService = bookingCustomerService;
+		this.userService = userService;
 	}
 	
 	/**
@@ -42,8 +54,10 @@ public class BookingRestController {
 		for (Booking b : bookingCustomerService.getNextBookings())
 		{
 			BookingRestDTO booking = b.toRestDTO();
-			booking.setCustomerName(b.getCustomer().getName());
-			booking.setUserName(b.getUser().getName());
+			if (b.getCustomer() != null)
+				booking.setCustomerName(b.getCustomer().getName());
+			if (b.getUser() != null)
+				booking.setUserName(b.getUser().getName());
 			bookingsRestDTO.add(booking);
 			
 			
@@ -65,8 +79,10 @@ public class BookingRestController {
 		for (Booking b : bookingCustomerService.getBookingsOfDay(LocalDate.now()))
 		{
 			BookingRestDTO booking = b.toRestDTO();
-			booking.setCustomerName(b.getCustomer().getName());
-			booking.setUserName(b.getUser().getName());
+			if (b.getCustomer() != null)
+				booking.setCustomerName(b.getCustomer().getName());
+			if (b.getUser() != null)
+				booking.setUserName(b.getUser().getName());
 			bookingsRestDTO.add(booking);
 			
 			
@@ -97,8 +113,10 @@ public class BookingRestController {
 		for (Booking b : bookingCustomerService.getBookingsOfDay(dateConverted))
 		{
 			BookingRestDTO booking = b.toRestDTO();
-			booking.setCustomerName(b.getCustomer().getName());
-			booking.setUserName(b.getUser().getName());
+			if (b.getCustomer() != null)
+				booking.setCustomerName(b.getCustomer().getName());
+			if (b.getUser() != null)
+				booking.setUserName(b.getUser().getName());
 			bookingsRestDTO.add(booking);
 			
 			
@@ -124,8 +142,10 @@ public class BookingRestController {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
 			BookingRestDTO booking = b.toRestDTO();
-			booking.setCustomerName(b.getCustomer().getName());
-			booking.setUserName(b.getUser().getName());
+			if (b.getCustomer() != null)
+				booking.setCustomerName(b.getCustomer().getName());
+			if (b.getUser() != null)
+				booking.setUserName(b.getUser().getName());
 	
 		return new ResponseEntity<>(booking,HttpStatus.OK);
 	}
@@ -146,8 +166,10 @@ public class BookingRestController {
 		for (Booking b : bookingCustomerService.getNextBookingsOf(userId))
 		{
 			BookingRestDTO booking = b.toRestDTO();
-			booking.setCustomerName(b.getCustomer().getName());
-			booking.setUserName(b.getUser().getName());
+			if (b.getCustomer() != null)
+				booking.setCustomerName(b.getCustomer().getName());
+			if (b.getUser() != null)
+				booking.setUserName(b.getUser().getName());
 			bookingsRestDTO.add(booking);		
 			
 		}
@@ -169,14 +191,85 @@ public class BookingRestController {
 			if (b==null)
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			BookingRestDTO booking = b.toRestDTO();
-			booking.setCustomerName(b.getCustomer().getName());
-			booking.setUserName(b.getUser().getName());
+			if (b.getCustomer() != null)
+				booking.setCustomerName(b.getCustomer().getName());
+			if (b.getUser() != null)
+				booking.setUserName(b.getUser().getName());
 			
 			
 		
 		return new ResponseEntity<>(booking,HttpStatus.OK);
 	}
 	
+	
+	/**
+	 * Rest Controller to create a new booking
+	 * 
+	 * @return ResponseEntity CREATED if date is valid, otherwise return BAD_REQUEST
+	 */
+	@PostMapping("/bookings")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	public ResponseEntity<BookingRestDTO> createBooking(@RequestBody BookingRestDTO bookingDTO)
+	{
+		Customer c = bookingCustomerService.findCustomerById(bookingDTO.getCustomerId());
+		User u = userService.findUserByEmail(bookingDTO.getUserId());
+		Booking b = bookingCustomerService.createBooking(bookingDTO.getDate(), c, u);
+		if (!bookingCustomerService.addBooking(b))
+		{
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		BookingRestDTO booking = b.toRestDTO();
+		if (b.getCustomer() != null)
+			booking.setCustomerName(b.getCustomer().getName());
+		if (b.getUser() != null)
+			booking.setUserName(b.getUser().getName());	
+		
+		return new ResponseEntity<>(booking,HttpStatus.CREATED);
+	}
+	
+	/**
+	 * Rest Controller to edit booking
+	 * 
+	 * @return ResponseEntity OK if bookingId is valid, otherwise return NOT_FOUND
+	 */
+	@PutMapping("/bookings/{bookingId}")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	public ResponseEntity<BookingRestDTO> editBooking(@PathVariable(value = "bookingId") int bookingId,@RequestBody BookingRestDTO bookingDTO)
+	{
+		Booking b = bookingCustomerService.findBookingById(bookingId);
+		if (b==null)
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		if (bookingDTO.getDate().isBefore(LocalDateTime.now()))
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		if (bookingDTO.getCustomerId() != 0)
+			b.setCustomer(bookingCustomerService.findCustomerById(bookingDTO.getCustomerId()));
+		if (bookingDTO.getUserId() != null)
+			b.setUser(userService.findUserByEmail(bookingDTO.getUserId()));
+		
+		if (bookingDTO.getDate() != null)
+			b.setDate(bookingDTO.getDate());
+		
+		bookingCustomerService.updateBooking(b);
+		
+		
+		return new ResponseEntity<>(b.toRestDTO(),HttpStatus.OK);
+	}
+	
+	
+	/**
+	 * Rest Controller to delete a single booking by ID
+	 * 
+	 * @return HttpStatus.OK if booking was deleted, otherwise, return http status of NOT_FOUND
+	 */
+	@DeleteMapping("/bookings/{bookingId}")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	public ResponseEntity<BookingRestDTO> removeBooking(@PathVariable(value = "bookingId") int bookingId)
+	{	
+			if (!bookingCustomerService.removeBooking(bookingId))
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 	
 	
 //	@PostMapping("/bookings")

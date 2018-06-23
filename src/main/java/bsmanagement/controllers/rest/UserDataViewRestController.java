@@ -1,4 +1,4 @@
-package bsmanagement.controllers;
+package bsmanagement.controllers.rest;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;

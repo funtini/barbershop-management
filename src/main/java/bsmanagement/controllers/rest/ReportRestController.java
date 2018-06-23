@@ -1,4 +1,4 @@
-package bsmanagement.controllers;
+package bsmanagement.controllers.rest;
 
 import java.util.List;
 

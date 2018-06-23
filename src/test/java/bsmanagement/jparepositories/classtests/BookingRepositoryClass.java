@@ -154,6 +154,7 @@ public class BookingRepositoryClass implements BookingRepository{
 		if (existsById(arg0.getId())) {
 			list.remove(arg0);
 			list.add(arg0);
+			return arg0;
 		}
 		arg0.setId(Booking.getAndIncrementId());
 		list.add(arg0);

@@ -145,11 +145,14 @@ public class Booking implements Comparable<Booking>{
 	public BookingRestDTO toRestDTO()
 	{
 		BookingRestDTO booking = new BookingRestDTO();
-		booking.setCustomerId(this.customer.getId());
+		if (this.customer != null)
+			booking.setCustomerId(this.customer.getId());
+		
 		booking.setDate(this.date);
 		booking.setBookingId(this.id);
-		booking.setUserId(this.user.getEmailAddress());
-		
+		if (this.user != null)
+			booking.setUserId(this.user.getEmailAddress());
+	
 		return booking;
 	}
 

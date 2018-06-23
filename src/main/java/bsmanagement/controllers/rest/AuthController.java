@@ -1,4 +1,4 @@
-package bsmanagement.controllers;
+package bsmanagement.controllers.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

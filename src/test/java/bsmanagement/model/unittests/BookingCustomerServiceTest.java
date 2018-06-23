@@ -499,8 +499,8 @@ public class BookingCustomerServiceTest {
 		assertEquals(bcService.getAllCustomers().contains(customer),true);
 		assertEquals(bcService.findCustomerById(1),customer);
 		//When: we create by cReg a customer (Joao) and set the same ID
-		assertEquals(bcService.removeCustomer(customer),true);
-		assertEquals(bcService.removeCustomer(notFound),false);
+		assertEquals(bcService.removeCustomer(customer.getId()),true);
+		assertEquals(bcService.removeCustomer(notFound.getId()),false);
 		//Then: they are equals
 		assertEquals(bcService.getAllCustomers().contains(customer),false);		
 	}

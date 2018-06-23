@@ -78,6 +78,7 @@ public class SaleRepositoryClass implements SaleRepository{
 		if (existsById(arg0.getId())) {
 			sales.remove(arg0);
 			sales.add(arg0);
+			return arg0 ;
 		}
 		sales.add(arg0);
 		return arg0;

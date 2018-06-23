@@ -98,6 +98,7 @@ public class PaymentRepositoryClass implements PaymentRepository{
 		if (existsById(entity.getType())) {
 			payments.remove(entity);
 			payments.add(entity);
+			return entity;
 		}
 		payments.add(entity);
 		return entity;
