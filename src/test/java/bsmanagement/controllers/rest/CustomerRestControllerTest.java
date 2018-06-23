@@ -144,6 +144,8 @@ public class CustomerRestControllerTest {
 	}
 	
 	
+	
+	
 	/**
 	 * testAddCustomer() controller
 	 * 
@@ -192,6 +194,7 @@ public class CustomerRestControllerTest {
 		CustomerRestDTO customer = new CustomerRestDTO();
 		customer.setPhone("9191911");
 		customer.setEmail("jajaaj@gmail.com");
+	
 		response = crc.editCustomer(55,customer);
 		
 		//THEN
@@ -222,12 +225,18 @@ public class CustomerRestControllerTest {
 		CustomerRestDTO customer = new CustomerRestDTO();
 		customer.setPhone("9191911");
 		customer.setAddress("Mangualde");
+		customer.setName("Joana");
+		customer.setBirth(LocalDate.of(2000, 11, 11));
+		customer.setEmail("joana@gmail.com");
 		response = crc.editCustomer(2,customer);
 		
 		//THEN
 		assertEquals(response.getStatusCode(),HttpStatus.OK);
 		assertEquals(bcService.findCustomerById(2).getPhone(),"9191911");
 		assertEquals(bcService.findCustomerById(2).getAddress(),"Mangualde");
+		assertEquals(bcService.findCustomerById(2).getEmail(),"joana@gmail.com");
+		assertEquals(bcService.findCustomerById(2).getBirth(),LocalDate.of(2000, 11, 11));
+		assertEquals(bcService.findCustomerById(2).getName(),"Joana");
 		
 	}
 

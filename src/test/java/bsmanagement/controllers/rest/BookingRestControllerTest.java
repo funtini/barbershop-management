@@ -121,6 +121,9 @@ public class BookingRestControllerTest {
 		u1 = new User("JOAO",birthdate1,"joao@domain.com","914047935","324666433");
 		u2 = new User("PEDRO",birthdate2,"pedro@gmail.uk","915557911","123555433");
 		
+		userService.addUser(u1);
+		userService.addUser(u2);
+		
 		c1 = new Customer("Joao",birthdate1,"Mangualde","914047935");
 		c2 = new Customer("Ana",birthdate2,"Porto","966677722");
 		c3 = new Customer("Pedro",bd3,"Mangualde","932444333");
@@ -384,6 +387,7 @@ public class BookingRestControllerTest {
 		BookingRestDTO bookingDTO = new BookingRestDTO();
 		bookingDTO.setDate(LocalDateTime.now().plusDays(1));
 		bookingDTO.setCustomerId(2);
+		bookingDTO.setUserId("pedro@gmail.uk");
 		response = brc.createBooking(bookingDTO);
 		
 		//THEN
@@ -411,6 +415,7 @@ public class BookingRestControllerTest {
 		BookingRestDTO bookingDTO = new BookingRestDTO();
 		bookingDTO.setDate(LocalDateTime.now().minusDays(1));
 		bookingDTO.setCustomerId(2);
+		
 		response = brc.createBooking(bookingDTO);
 		
 		//THEN
@@ -439,6 +444,7 @@ public class BookingRestControllerTest {
 		BookingRestDTO bookingDTO = new BookingRestDTO();
 		bookingDTO.setDate(date);
 		bookingDTO.setCustomerId(1);
+		bookingDTO.setUserId("pedro@gmail.uk");
 		response = brc.editBooking(2, bookingDTO);
 		
 		//THEN

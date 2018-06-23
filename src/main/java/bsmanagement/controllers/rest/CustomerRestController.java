@@ -65,10 +65,8 @@ public class CustomerRestController {
 		Customer c = bookingCustomerService.createCustomer(customerDTO.getName(), customerDTO.getBirth(), customerDTO.getAddress(), customerDTO.getPhone());
 		if (customerDTO.getEmail()!= null)
 			c.setEmail(customerDTO.getEmail());
-		if (!bookingCustomerService.addCustomer(c))
-		{
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}	
+		bookingCustomerService.addCustomer(c);
+		
 		return new ResponseEntity<>(customerDTO,HttpStatus.CREATED);
 	}
 	

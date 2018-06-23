@@ -1,7 +1,6 @@
 package bsmanagement.dto.rest;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
