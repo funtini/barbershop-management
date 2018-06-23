@@ -6,13 +6,20 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class CustomerRestDTO {
 	
+	private int bookingId;
 	private String name;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birth;
 	private String address;
 	private String phone;
-	private String successMessage;
+	private String email;
 	
+	public int getBookingId() {
+		return bookingId;
+	}
+	public void setBookingId(int bookingId) {
+		this.bookingId = bookingId;
+	}
 	public String getName() {
 		return name;
 	}
@@ -37,11 +44,11 @@ public class CustomerRestDTO {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getSuccessMessage() {
-		return successMessage;
+	public String getEmail() {
+		return email;
 	}
-	public void setSuccessMessage(String successMessage) {
-		this.successMessage = successMessage;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	@Override

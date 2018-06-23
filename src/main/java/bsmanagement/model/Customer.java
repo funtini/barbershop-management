@@ -10,6 +10,8 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.Proxy;
 
+import bsmanagement.dto.rest.CustomerRestDTO;
+
 /**
  *
  * <h1> Customer </h1>
@@ -206,6 +208,22 @@ public class Customer {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	/**
+	 * Method to convert customer in a RestDTO
+	 * 
+	 * @return CustomerRestDTO
+	 */
+	public CustomerRestDTO toRestDTO() {
+		CustomerRestDTO customer = new CustomerRestDTO();
+		customer.setAddress(this.address);
+		customer.setBirth(this.birth);
+		customer.setBookingId(this.id);
+		customer.setEmail(this.email);
+		customer.setName(this.name);
+		customer.setPhone(this.phone);
+		return customer;
+	}
 
 
 	@Override
@@ -254,6 +272,9 @@ public class Customer {
 	public static int getAndIncrementId() {
 		return idGenerator.incrementAndGet();
 	}
+
+
+	
 
 }
 

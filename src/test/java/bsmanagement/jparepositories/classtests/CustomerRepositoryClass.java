@@ -153,6 +153,7 @@ public class CustomerRepositoryClass implements CustomerRepository {
 		if (existsById(arg0.getId())) {
 			list.remove(arg0);
 			list.add(arg0);
+			return arg0 ;
 		}
 		arg0.setId(Customer.getAndIncrementId());
 		list.add(arg0);
