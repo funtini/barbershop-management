@@ -121,7 +121,7 @@ public class ReportTest {
 		userService = new UserService();
 		paymentRepository = new PaymentRepositoryClass();
 		expenseService.setRepository(expenseRepository);
-		saleService.setRepository(saleRepository);
+		saleService.setSaleRepository(saleRepository);
 		saleService.setPaymentRepository(paymentRepository);
 		userService.setUserRepository(userRepository);
 		Expense.setStartIdGenerator(0);

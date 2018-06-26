@@ -108,6 +108,8 @@ public class Booking implements Comparable<Booking>{
 	 * @return booking's date
 	 */
 	public LocalDateTime getDate() {
+		if (date == null)
+			return null;
 		return date.truncatedTo(ChronoUnit.MINUTES);
 	}
 	

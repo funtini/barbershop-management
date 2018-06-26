@@ -138,7 +138,7 @@ public class ReportSaleExpenseServiceTest {
 		repSaleExpService.setSaleRepo(saleRepository);
 		expenseService.setRepository(expenseRepository);
 		prodService.setRepository(productRepository);
-		saleService.setRepository(saleRepository);
+		saleService.setSaleRepository(saleRepository);
 		bookingCustomerService.setBookRepository(bookRepository);
 		bookingCustomerService.setCustomersRepository(customerRepository);
 		expect = new ArrayList<Report>();

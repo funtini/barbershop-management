@@ -3,8 +3,6 @@ package bsmanagement.controllers.rest;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,16 +11,12 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import bsmanagement.dto.rest.BookingRestDTO;
 import bsmanagement.dto.rest.CustomerRestDTO;
 import bsmanagement.jparepositories.classtests.BookingRepositoryClass;
 import bsmanagement.jparepositories.classtests.CustomerRepositoryClass;
-import bsmanagement.jparepositories.classtests.UserRepositoryClass;
 import bsmanagement.model.Booking;
 import bsmanagement.model.BookingCustomerService;
 import bsmanagement.model.Customer;
-import bsmanagement.model.User;
-import bsmanagement.model.UserService;
 
 public class CustomerRestControllerTest {
 

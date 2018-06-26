@@ -216,6 +216,8 @@ public class BookingCustomerService {
 	 * @return boolean - true if booking was successfully added, false otherwise
 	 */
 	public boolean addBooking(Booking booking) {
+		if (booking.getDate()==null)
+			return false;
 		if (booking.getDate().isBefore(LocalDateTime.now()))
 			return false;
 		bookRepository.save(booking);

@@ -64,6 +64,19 @@ public class SaleService {
 	public List<PaymentMethod> getAvailablePaymentMethods() {
 		return paymentRepository.findAll();
 	}
+	
+	/**
+	 * @return payment method if id is valid, null otherwise
+	 */
+	public PaymentMethod findPaymentMethodById(String paymentName) {
+		for (PaymentMethod payment : paymentRepository.findAll())
+		{
+			if(payment.getType().equals(paymentName))
+				return payment;
+		}
+		return null;
+	}
+
 
 	/**
 	 * Add new payment method
@@ -95,6 +108,8 @@ public class SaleService {
 	public PaymentMethod createPaymentMethod(String name, double fee, double minFeeValue)
 	{
 		PaymentMethod p = new PaymentMethod(name,fee,minFeeValue);
+		if (p.getType()!= null)
+			p.setType(name.toUpperCase());
 		
 		return p;
 	}
@@ -108,6 +123,9 @@ public class SaleService {
 	{
 		if(saleRepo.existsById(sale.getId()))
 			return false;
+		if(sale.getProduct()==null || sale.getDate()==null)
+			return false;
+			
 		saleRepo.save(sale);
 		return true;
 	}
@@ -352,11 +370,23 @@ public class SaleService {
 		return sum;
 	}
 	
-	
+	/**
+	 * Method to update a PaymentMethod
+	 * 
+	 * @param payment
+	 * @return
+	 */
+	public boolean updatePaymentMethod(PaymentMethod payment) {
+		if (paymentRepository.existsById(payment.getType()))
+		{
+			paymentRepository.save(payment);
+			return true;
+		}
+		return false;
+	}
 
 
-
-	public void setRepository(SaleRepository saleRepository) {
+	public void setSaleRepository(SaleRepository saleRepository) {
 		this.saleRepo = saleRepository;
 	}
 	

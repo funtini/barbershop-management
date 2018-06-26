@@ -101,7 +101,7 @@ public class SaleServiceTest {
 		userRepository = new UserRepositoryClass();
 		saleRepository = new SaleRepositoryClass();
 		paymentRepository = new PaymentRepositoryClass();
-		saleService.setRepository(saleRepository);
+		saleService.setSaleRepository(saleRepository);
 		saleService.setPaymentRepository(paymentRepository);
 		userService.setUserRepository(userRepository);
 		saleService.getSales().clear();
@@ -175,7 +175,7 @@ public class SaleServiceTest {
 		expect.add(s1);
 		expect.add(s2);
 		expect.add(s3);
-		saleService.setRepository(saleRepoTest);
+		saleService.setSaleRepository(saleRepoTest);
 		//Then: service has 3 products
 		result = saleService.getSales();
 		assertEquals(result,expect);				

@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import bsmanagement.dto.rest.SaleRestDTO;
+
 /**
  * 
  * <h1> Sale </h1>
@@ -70,7 +72,8 @@ public class Sale implements Comparable<Sale>{
 		this.date = date;
 		this.customer = customer;
 		this.product = product;
-		this.amount = product.getPrice();
+		if (product!=null)
+			this.amount = product.getPrice();
 		this.payment = payment;
 		this.user = user;
 		this.id=idGenerator.incrementAndGet();
@@ -89,7 +92,8 @@ public class Sale implements Comparable<Sale>{
 		this.date = date;
 		this.product = product;
 		this.customer = null;
-		this.amount = product.getPrice();
+		if (product!=null)
+			this.amount = product.getPrice();
 		this.payment = payment;
 		this.user = user;
 		this.id=idGenerator.incrementAndGet();
@@ -228,6 +232,37 @@ public class Sale implements Comparable<Sale>{
 			return this.payment.getMinFeeValue();
 		return feeValue;
 	}
+	
+	/**
+	 * Method to convert sale in a restDTO 
+	 * 
+	 * @return SaleRestDTO
+	 */
+	public SaleRestDTO toRestDTO() {
+		SaleRestDTO sale = new SaleRestDTO();
+		sale.setSaleId(this.id);
+		sale.setAmount(this.amount);
+		sale.setDate(this.date);
+		if (this.customer != null)
+		{
+			sale.setCustomerId(this.customer.getId());
+			sale.setCustomerName(this.customer.getName());
+		}
+		if (this.payment != null)
+			sale.setPaymentMethod(this.payment.getType());
+		if (this.product != null)
+		{
+			sale.setProductId(this.product.getId());
+			sale.setProductName(this.product.getName());
+		}
+		if (this.user != null)
+		{
+			sale.setUserEmail(this.user.getEmailAddress());
+			sale.setUserName(this.user.getName());
+		}
+		
+		return sale;
+	}
 
 
 	/**
@@ -296,6 +331,9 @@ public class Sale implements Comparable<Sale>{
 	public static int getAndIncrementId() {
 		return idGenerator.incrementAndGet();
 	}
+
+
+	
 	
 	
 	
