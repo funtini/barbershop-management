@@ -3,6 +3,8 @@ package bsmanagement.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import bsmanagement.dto.rest.PaymentRestDTO;
+
 /**
  * <h1> PaymentMethod </h1>
  * <p>
@@ -104,6 +106,23 @@ public class PaymentMethod {
 		if (this.id == null || this.id.isEmpty())
 			return false;
 		return true;
+	}
+	
+	
+	/**
+	 * Method to convert this object in a RestDTO
+	 * 
+	 * @return PaymentRestDTO
+	 */
+	public PaymentRestDTO toRestDTO()
+	{
+		PaymentRestDTO payment = new PaymentRestDTO();
+		
+		payment.setName(this.id);
+		payment.setMinFeeValue(this.minFeeValue);
+		payment.setFee(this.fee);
+		
+		return payment;
 	}
 
 	/**
