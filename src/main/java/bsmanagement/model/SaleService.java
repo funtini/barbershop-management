@@ -389,6 +389,15 @@ public class SaleService {
 	public void setSaleRepository(SaleRepository saleRepository) {
 		this.saleRepo = saleRepository;
 	}
+
+	public void removePaymentMethod(PaymentMethod p) {
+		paymentRepository.delete(p);
+	}
+
+	public void removeSale(Sale sale) {
+		saleRepo.delete(sale);
+		
+	}
 	
 	
 

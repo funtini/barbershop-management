@@ -231,5 +231,51 @@ public class PaymentMethodRestControllerTest {
 		assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
 		assertEquals(saleService.getAvailablePaymentMethods().size(),2);		
 	}
+	
+	/**
+	 * testRemovePaymentMethod() controller
+	 * 
+	 * <p>GIVEN: Added 2 PaymentMethods to service</p>
+	 * <p>WHEN: call removePaymentMethodsByName() controller filled with valid name</p>
+	 * <p>THEN: Get response code OK and the list has decreased to 1</p>
+	 */
+	@Test
+	public void testRemovePaymentMethodByNameSuccess() {
+		//GIVEN
+		assertEquals(saleService.getAvailablePaymentMethods().isEmpty(),true);
+		assertEquals(saleService.addPaymentMethod(cash), true);
+		assertEquals(saleService.addPaymentMethod(credit), true);
+		assertEquals(saleService.getAvailablePaymentMethods().size(),2);
+		
+		//WHEN
+		response = prc.removePaymentMethod(credit.getType());
+		
+		//THEN
+		assertEquals(HttpStatus.OK,response.getStatusCode());	
+		assertEquals(saleService.getAvailablePaymentMethods().size(),1);
+	}
+	
+	/**
+	 * testRemovePaymentMethod() controller
+	 * 
+	 * <p>GIVEN: Added 2 PaymentMethods to service</p>
+	 * <p>WHEN: call removePaymentMethodsByName() controller filled with valid name</p>
+	 * <p>THEN: Get response code NOT_FOUND and the list still has the same size</p>
+	 */
+	@Test
+	public void testRemovePaymentMethodByInvalidName() {
+		//GIVEN
+		assertEquals(saleService.getAvailablePaymentMethods().isEmpty(),true);
+		assertEquals(saleService.addPaymentMethod(cash), true);
+		assertEquals(saleService.addPaymentMethod(credit), true);
+		assertEquals(saleService.getAvailablePaymentMethods().size(),2);
+		
+		//WHEN
+		response = prc.removePaymentMethod("VISA");
+		
+		//THEN
+		assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());	
+		assertEquals(saleService.getAvailablePaymentMethods().size(),2);
+	}
 
 }

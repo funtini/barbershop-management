@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -83,6 +84,25 @@ public class PaymentMethodRestController {
 		}
 			
 		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+	}
+	
+	/**
+	 * Rest Controller to remove Payment Method
+	 * 
+	 * @return ResponseEntity with a response code OK if name exists in repository, otherwise returns NOT_FOUND
+	 * 
+	 */
+	@DeleteMapping("/paymentMethods/{id}")
+	@PreAuthorize("hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	public ResponseEntity<PaymentRestDTO> removePaymentMethod(@PathVariable(value = "id") String paymentName)
+	{
+		PaymentMethod p = saleService.findPaymentMethodById(paymentName);
+		if (p==null)
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		saleService.removePaymentMethod(p);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	

@@ -773,6 +773,60 @@ public class SaleRestControllerTest {
 		//THEN
 		assertEquals(HttpStatus.NOT_FOUND,responseList.getStatusCode());	
 	}
+	
+	/**
+	 * testDeleteSaleById() controller
+	 * 
+	 * <p>GIVEN: Added 4 sales to service</p>
+	 * <p>WHEN: call deleteSaleById() controller with valid ID</p>
+	 * <p>THEN: Get a response code OK and sales list has decreased to 3</p>
+	 */
+	@Test
+	public void testDeleteSaleByIdSuccess() {
+		//GIVEN
+		assertEquals(saleService.getSales().isEmpty(),true);
+		assertEquals(saleService.addSale(s1),true);
+		assertEquals(saleService.addSale(s2),true);
+		assertEquals(saleService.addSale(s3),true);
+		assertEquals(saleService.addSale(s4),true);
+		assertEquals(saleService.getSales().size(),4);
+		
+		//WHEN
+		response = src.deleteSaleById(1);
+		
+		//THEN
+	
+		assertEquals(HttpStatus.OK,response.getStatusCode());
+		assertEquals(saleService.getSales().size(),3);
+
+	}
+	
+	/**
+	 * testDeleteSaleById() controller
+	 * 
+	 * <p>GIVEN: Added 4 sales to service</p>
+	 * <p>WHEN: call deleteSaleById() controller with invalid ID</p>
+	 * <p>THEN: Get a response code OK and sales still the same size</p>
+	 */
+	@Test
+	public void testDeleteSaleByIdNotFound() {
+		//GIVEN
+		assertEquals(saleService.getSales().isEmpty(),true);
+		assertEquals(saleService.addSale(s1),true);
+		assertEquals(saleService.addSale(s2),true);
+		assertEquals(saleService.addSale(s3),true);
+		assertEquals(saleService.addSale(s4),true);
+		assertEquals(saleService.getSales().size(),4);
+		
+		//WHEN
+		response = src.deleteSaleById(11);
+		
+		//THEN
+	
+		assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+		assertEquals(saleService.getSales().size(),4);
+
+	}
 
 
 }

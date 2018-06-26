@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -233,7 +234,7 @@ public class SaleRestController {
 	 * 
 	 * @return HttpStatus OK with a list of saleRestDTO if both dates are valid, otherwise HttpStatus BAD_REQUEST
 	 */
-	@RequestMapping("/sales")
+	@RequestMapping(value = "/sales", params = {"startDay","endDay"})
 	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
 	public ResponseEntity<List<SaleRestDTO>> listSalesBetweenDates(@RequestParam(value = "startDay", required = true) String startDate,@RequestParam(value = "endDay", required = true) String endDate)
 	{
@@ -283,6 +284,25 @@ public class SaleRestController {
 			salesRestDTO.add(sale);		
 		}
 		return new ResponseEntity<>(salesRestDTO,HttpStatus.OK);
+	}
+	
+	/**
+	 * Rest Controller to delete sale by ID
+	 * 
+	 * @return ResponseEntity with a response code OK if id exists, otherwise return NOT_FOUND
+	 */
+	@DeleteMapping("/sales/{id}")
+	@PreAuthorize("hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	public ResponseEntity<SaleRestDTO> deleteSaleById(@PathVariable(value = "id") int id)
+	{
+		Sale sale = saleService.findSaleById(id);
+		if(sale == null)
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		saleService.removeSale(sale);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+		
+		
 	}
 	
 }
