@@ -57,21 +57,21 @@ public class ExpenseService {
 			expenses.add(e);
 		return expenses;
 	}
-	
-	/**
-	 * Method to create a new instance of expense with name, type, value, and date
-	 * 
-	 * @param name - Name of Expense
-	 * @param type - Type of Expense, if FIXED the date is set null, if ONEOFF the date is set to today
-	 * @param value - Value in Euros
-	 * @param date - Date of Expense's Payment
-	 * 
-	 * @return Expense
-	 */
-	public Expense createExpense(String name, expenseType type, double value, LocalDate date) {
-		Expense e = new Expense(name,type,value,date);
-		return e;
-	}
+//	
+//	/**
+//	 * Method to create a new instance of expense with name, type, value, and date
+//	 * 
+//	 * @param name - Name of Expense
+//	 * @param type - Type of Expense, if FIXED the date is set null, if ONEOFF the date is set to today
+//	 * @param value - Value in Euros
+//	 * @param date - Date of Expense's Payment
+//	 * 
+//	 * @return Expense
+//	 */
+//	public Expense createExpense(String name, expenseType type, double value, LocalDate date) {
+//		Expense e = new Expense(name,type,value,date);
+//		return e;
+//	}
 	
 	
 	/**
@@ -95,8 +95,8 @@ public class ExpenseService {
 	 * 
 	 * @param expense - Instance of Expense class
 	 */
-	public void addExpense(Expense expense) {
-		expRepo.save(expense);
+	public Expense addExpense(Expense expense) {
+		return expRepo.save(expense);
 	}
 	
 	/**

@@ -23,7 +23,7 @@ public class SignUpRequest {
     private String phone;
 	
 	@NotBlank
-    @Size(min = 9, max = 9)
+    @Size(min = 9, max = 12)
     private String taxPayerId;
     
     @NotBlank

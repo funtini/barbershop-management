@@ -148,7 +148,7 @@ public class ExpenseServiceTest {
 	
 		//When: add 3 expenses
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 		expect.add(e1);
@@ -171,7 +171,7 @@ public class ExpenseServiceTest {
 		assertEquals(expenseService.getExpenses(),emptyList);
 		assertEquals(emptyList,expect);
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 	
@@ -196,7 +196,7 @@ public class ExpenseServiceTest {
 		assertEquals(emptyList,expect);
 		//When: add 3 expenses - (2)fixed and (1)oneoff
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 		//Then: get a list of FIXED expenses 
@@ -217,7 +217,7 @@ public class ExpenseServiceTest {
 		assertEquals(emptyList,expect);
 		//When: add 3 expenses - (2)fixed and (1)oneoff
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 		//Then: get a list of FIXED expenses 
@@ -238,7 +238,7 @@ public class ExpenseServiceTest {
 	
 		//When: add 3 expenses
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 		//Then: get a list with expenses above 55 value
@@ -266,7 +266,7 @@ public class ExpenseServiceTest {
 	
 		//When: add 3 expenses
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 		//Then: get a list with expenses below 40 value
@@ -292,7 +292,7 @@ public class ExpenseServiceTest {
 		assertEquals(expenseService.getExpenses(),emptyList);
 		assertEquals(emptyList,expect);
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 		Expense e17 = expenseService.createExpense("Shampoo",expenseType.ONEOFF,120,LocalDate.of(2017, 12, 22),"15 unidades");
@@ -321,7 +321,7 @@ public class ExpenseServiceTest {
 		assertEquals(expenseService.getExpenses(),emptyList);
 		assertEquals(emptyList,expect);
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 		Expense e17 = expenseService.createExpense("Shampoo",expenseType.ONEOFF,120,d2,"15 unidades");
@@ -351,7 +351,7 @@ public class ExpenseServiceTest {
 		assertEquals(expenseService.getExpenses(),emptyList);
 		assertEquals(emptyList,expect);
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 		
@@ -375,7 +375,7 @@ public class ExpenseServiceTest {
 		assertEquals(expenseService.getExpenses(),emptyList);
 		assertEquals(emptyList,expect);
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 		
@@ -397,7 +397,7 @@ public class ExpenseServiceTest {
 		assertEquals(expenseService.getExpenses(),emptyList);
 		assertEquals(emptyList,expect);
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 		Expense e17 = expenseService.createExpense("Shampoo",expenseType.ONEOFF,120,LocalDate.of(2017, 12, 22),"15 unidades");
@@ -429,7 +429,7 @@ public class ExpenseServiceTest {
 		assertEquals(expenseService.getExpenses(),emptyList);
 		assertEquals(emptyList,expect);
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 		Expense e17 = expenseService.createExpense("Shampoo",expenseType.ONEOFF,120,LocalDate.of(2017, 12, 22),"15 unidades");
@@ -451,7 +451,7 @@ public class ExpenseServiceTest {
 		assertEquals(expenseService.getExpenses(),emptyList);
 		assertEquals(emptyList,expect);
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 		//When: get the sum of all expenses value
@@ -471,7 +471,7 @@ public class ExpenseServiceTest {
 		assertEquals(expenseService.getExpenses(),emptyList);
 		assertEquals(emptyList,expect);
 		Expense.setStartIdGenerator(1);
-		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1));
+		expenseService.addExpense(expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null));
 		expenseService.addExpense(expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato"));
 		expenseService.addExpense(expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades"));
 		//When: get the sum of all expenses value of a specific Type

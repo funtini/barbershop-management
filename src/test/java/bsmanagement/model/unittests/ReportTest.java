@@ -156,7 +156,7 @@ public class ReportTest {
 		userService.updateUser(u1);
 		userService.updateUser(u2);
 		
-		e1 = expenseService.createExpense("Agua",expenseType.FIXED,35,d1);
+		e1 = expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null);
 		e2 = expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato");
 		e3 = expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades");
 		

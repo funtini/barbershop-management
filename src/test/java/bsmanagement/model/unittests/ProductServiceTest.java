@@ -156,13 +156,13 @@ public class ProductServiceTest {
 		//When: remove 1 product (2 times to get a false result)
 		expect.add(p1);
 
-		productService.removeProduct(p2);
+		productService.disableProduct(p2);
 		
 		//Then: 1 products still in list
 		assertEquals(productService.getActiveProducts(),expect);
 		expect.remove(p1);
 		expect.add(p2);
-		assertEquals(productService.getRemovedProducts(),expect);
+		assertEquals(productService.getDisabledProducts(),expect);
 	}
 	
 	/**

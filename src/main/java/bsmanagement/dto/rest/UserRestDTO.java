@@ -15,12 +15,8 @@ public class UserRestDTO extends ResourceSupport{
 	private LocalDate birth;
 	private String phone;
 	private String taxPayerId;
-	private String password;
 	private boolean activationStatus;
 	private String profile;
-	
-	
-	
 	
 	public String getEmail() {
 		return email;
@@ -53,12 +49,6 @@ public class UserRestDTO extends ResourceSupport{
 		this.taxPayerId = taxPayerId;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	public boolean isActivationStatus() {
 		return activationStatus;
 	}

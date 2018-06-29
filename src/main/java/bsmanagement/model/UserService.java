@@ -29,9 +29,10 @@ import bsmanagement.security.UserPrincipal;
  * This class contains information like:
  * <ul>
  * <li>userRepository - Repository of users 
+ * <li>rolesRepository - Repository of roles
  * </ul>
  * <p>
- * UserService has annotation 'Autowired' from springboot framework, so this class doesn't need to be constructed in Spring Boot Applications.
+ * UserService has annotation 'Autowired' on both repositories
  * 
  * @author JOAO GOMES
  *
@@ -310,22 +311,26 @@ public class UserService implements UserDetailsService{
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String usernameOrEmail)  //DODO ver excep
+    public UserDetails loadUserByUsername(String usernameOrEmail) 
             throws UsernameNotFoundException {
         // Let people login with email
         User user = userRepo.findById(usernameOrEmail).orElseThrow( () -> 
                 new UsernameNotFoundException("User not found with username or email : " + usernameOrEmail));
         return UserPrincipal.create(user);
     }
-    
-    // This method is used by JWTAuthenticationFilter
-    @Transactional
-    public UserDetails loadUserById(String id) {
-        User user = userRepo.findById(id).orElseThrow(
-            () -> new UsernameNotFoundException("User not found with id : " + id)
-        );
 
-        return UserPrincipal.create(user);
-    }
+	public Boolean isEmailAvailable(String email) {
+		return !userRepo.existsById(email);
+	}
+    
+//    // This method is used by JWTAuthenticationFilter
+//    @Transactional
+//    public UserDetails loadUserById(String id) {
+//        User user = userRepo.findById(id).orElseThrow(
+//            () -> new UsernameNotFoundException("User not found with id : " + id)
+//        );
+//
+//        return UserPrincipal.create(user);
+//    }
 	
 }

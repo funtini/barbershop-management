@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
 
+import bsmanagement.dto.rest.ProductRestDTO;
+
 /**
  * <h1> Product </h1>
  * <p>
@@ -192,6 +194,23 @@ public class Product implements Comparable<Product>{
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+	
+	/**
+	 * Method to convert product object in RestDTO
+	 * 
+	 * @return ProductRestDTO
+	 */
+	public ProductRestDTO toRestDTO() {
+		ProductRestDTO productDTO = new ProductRestDTO();
+		productDTO.setActive(active);
+		productDTO.setName(name);
+		productDTO.setPrice(price);
+		productDTO.setProductId(id);
+		productDTO.setType(type.toString());
+		
+		return productDTO;
+	}
 
 	
 	@Override
@@ -242,6 +261,8 @@ public class Product implements Comparable<Product>{
 		
 		return idGenerator.incrementAndGet();
 	}
+
+	
 	
 	
 }

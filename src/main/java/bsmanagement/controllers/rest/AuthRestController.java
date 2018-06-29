@@ -35,7 +35,7 @@ import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class AuthRestController {
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -73,9 +73,9 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<ApiResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if(userRepository.existsById(signUpRequest.getEmail())) {
-            return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
+            return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
 
@@ -95,7 +95,7 @@ public class AuthController {
         User result = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/users/{id}")
+                .fromCurrentContextPath().path("/users/{email}")
                 .buildAndExpand(result.getEmailAddress()).toUri();
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));

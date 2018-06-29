@@ -34,7 +34,7 @@ public class PaymentMethodRestController {
 	 * @return ResponseEntity with a List of PaymentRestDTO
 	 */
 	@RequestMapping("/paymentMethods")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<List<PaymentRestDTO>> listAvailablePaymentMethods()
 	{
 		List<PaymentRestDTO> paymentsRestDTO = new ArrayList<>();
@@ -52,7 +52,7 @@ public class PaymentMethodRestController {
 	 * @return ResponseEntity with a PaymentRestDTO if id is valid, otherwise returned NOT_FOUND
 	 */
 	@RequestMapping("/paymentMethods/{id}")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<PaymentRestDTO> getPaymentMethodByName(@PathVariable(value = "id") String paymentName)
 	{
 		PaymentMethod p = saleService.findPaymentMethodById(paymentName);
@@ -71,7 +71,7 @@ public class PaymentMethodRestController {
 	 * If name is valid but already exists in repository, returned NOT_ACCEPTABLE
 	 */
 	@PostMapping("/paymentMethods")
-	@PreAuthorize("hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<PaymentRestDTO> addPaymentMethod(@RequestBody PaymentRestDTO payment)
 	{
 		if (payment.getName() == null || payment.getName().isEmpty())
@@ -93,7 +93,7 @@ public class PaymentMethodRestController {
 	 * 
 	 */
 	@DeleteMapping("/paymentMethods/{id}")
-	@PreAuthorize("hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<PaymentRestDTO> removePaymentMethod(@PathVariable(value = "id") String paymentName)
 	{
 		PaymentMethod p = saleService.findPaymentMethodById(paymentName);

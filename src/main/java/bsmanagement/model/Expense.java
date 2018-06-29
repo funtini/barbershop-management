@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import bsmanagement.dto.rest.ExpenseRestDTO;
+
 /**
  * <h1> Expense </h1>
  * <p>
@@ -72,9 +74,6 @@ public class Expense implements Comparable<Expense>{
 	private double valueOfPayment;
 	private LocalDate dateOfPayment;
 	private String description;
-//	@Column(nullable = false)
-//	@Type(type = "org.hibernate.type.NumericBooleanType")
-//	private boolean isActive; 
 	
 	private static AtomicInteger idGenerator=new AtomicInteger();
 	
@@ -216,31 +215,23 @@ public class Expense implements Comparable<Expense>{
 		this.description = description;
 	}
 	
-//	/**
-//	 * 
-//	 * @return activation status, reports can load this expense
-//	 */
-//	public boolean isActive()
-//	{
-//		return isActive;
-//	}
-//	
-//	/**
-//	 * disable expense for next reports
-//	 */
-//	public void disable()
-//	{
-//		this.isActive=false;
-//	}
-//	
-//	/**
-//	 * reactivate expense for next reports
-//	 */
-//	public void activate()
-//	{
-//		this.isActive=false;
-//	}
-	
+	/**
+	 * Method to convert expense in RestDTO
+	 * 
+	 * @return ExpenseRestDTO
+	 */
+	public ExpenseRestDTO toRestDTO()
+	{
+		ExpenseRestDTO expenseDTO = new ExpenseRestDTO();
+		expenseDTO.setExpenseId(id);
+		expenseDTO.setDateOfPayment(dateOfPayment);
+		expenseDTO.setDescription(description);
+		expenseDTO.setName(name);
+		expenseDTO.setType(type.toString());
+		expenseDTO.setValueOfPayment(valueOfPayment);
+		
+		return expenseDTO;
+	}
 
 	@Override
 	public int hashCode() {

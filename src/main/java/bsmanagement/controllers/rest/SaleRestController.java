@@ -59,7 +59,7 @@ public class SaleRestController {
 	 * @return ResponseEntity with a List of SaleRestDTO
 	 */
 	@RequestMapping("/sales")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<List<SaleRestDTO>> listAllSales()
 	{
 		List<SaleRestDTO> salesRestDTO = new ArrayList<>();
@@ -78,7 +78,7 @@ public class SaleRestController {
 	 * @return ResponseEntity with a SaleRestDTO created, if some parm is invalid return BAD_REQUEST
 	 */
 	@PostMapping("/sales")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<SaleRestDTO> addSale(@RequestBody SaleRestDTO saleRestDTO)
 	{
 		Customer customer = bookingCustomerService.findCustomerById(saleRestDTO.getCustomerId());
@@ -102,7 +102,7 @@ public class SaleRestController {
 	 * @return ResponseEntity with a SaleRestDTO if id is valid, otherwise return NOT_FOUND
 	 */
 	@RequestMapping("/sales/{id}")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<SaleRestDTO> findSaleById(@PathVariable(value = "id") int id)
 	{
 		Sale sale = saleService.findSaleById(id);
@@ -122,7 +122,7 @@ public class SaleRestController {
 	 * @return HttpStatus OK with a list of saleRestDTO if customerID is valid, otherwise HttpStatus NOT_FOUND
 	 */
 	@GetMapping(value = "sales", params = "customerId")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<List<SaleRestDTO>> listSalesOfCustomer(@RequestParam(value = "customerId", required = true) int customerId)
 	{
 		
@@ -146,7 +146,7 @@ public class SaleRestController {
 	 * @return HttpStatus OK with a list of saleRestDTO if userID is valid, otherwise HttpStatus NOT_FOUND
 	 */
 	@GetMapping(value = "sales", params = "userId")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<List<SaleRestDTO>> listSalesOfUser(@RequestParam(value = "userId", required = true) String userId)
 	{
 		
@@ -170,7 +170,7 @@ public class SaleRestController {
 	 * @return HttpStatus OK with a list of saleRestDTO if date is valid, otherwise HttpStatus BAD_REQUEST
 	 */
 	@GetMapping(value = "sales", params = "date")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<List<SaleRestDTO>> listSalesOfDay(@RequestParam(value = "date", required = true) String date)
 	{
 		
@@ -202,7 +202,7 @@ public class SaleRestController {
 	 * @return HttpStatus OK with a list of saleRestDTO if YearMonth is valid, otherwise HttpStatus BAD_REQUEST
 	 */
 	@GetMapping(value = "sales", params = "month")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<List<SaleRestDTO>> listSalesOfMonth(@RequestParam(value = "month", required = true) String month)
 	{
 		
@@ -235,7 +235,7 @@ public class SaleRestController {
 	 * @return HttpStatus OK with a list of saleRestDTO if both dates are valid, otherwise HttpStatus BAD_REQUEST
 	 */
 	@RequestMapping(value = "/sales", params = {"startDay","endDay"})
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<List<SaleRestDTO>> listSalesBetweenDates(@RequestParam(value = "startDay", required = true) String startDate,@RequestParam(value = "endDay", required = true) String endDate)
 	{
 		
@@ -270,7 +270,7 @@ public class SaleRestController {
 	 * @return HttpStatus OK with a list of saleRestDTO if paymentId is valid, otherwise HttpStatus NOT_FOUND
 	 */
 	@GetMapping(value = "sales", params = "payedBy")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<List<SaleRestDTO>> listSalesPayedBy(@RequestParam(value = "payedBy", required = true) String paymentId)
 	{
 		
@@ -292,7 +292,7 @@ public class SaleRestController {
 	 * @return ResponseEntity with a response code OK if id exists, otherwise return NOT_FOUND
 	 */
 	@DeleteMapping("/sales/{id}")
-	@PreAuthorize("hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<SaleRestDTO> deleteSaleById(@PathVariable(value = "id") int id)
 	{
 		Sale sale = saleService.findSaleById(id);

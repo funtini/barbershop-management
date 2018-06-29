@@ -183,8 +183,6 @@ public class SaleRestControllerTest {
 		s3 = saleService.createSale(d3,p1,cash,u2);
 		s4 = saleService.createSale(d4,c1,p2,cash,u1);
 		
-		System.out.println(saleService.getSales());
-		System.out.println(s1);
 
 	}
 

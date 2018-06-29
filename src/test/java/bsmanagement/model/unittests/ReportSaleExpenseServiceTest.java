@@ -173,7 +173,7 @@ public class ReportSaleExpenseServiceTest {
 		c1 = new Customer("Joao",birthdate1,"Mangualde","914047935");
 		c2 = new Customer("Ana",birthdate2,"Porto","966677722");
 
-		e1 = expenseService.createExpense("Agua",expenseType.FIXED,35,d1);
+		e1 = expenseService.createExpense("Agua",expenseType.FIXED,35,d1,null);
 		e2 = expenseService.createExpense("Internet",expenseType.FIXED,50,d2,"6 meses de contrato");
 		e3 = expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d3,"3 unidades");
 		
@@ -434,8 +434,8 @@ public class ReportSaleExpenseServiceTest {
 		}		
 		assertEquals(repSaleExpService.getReport(today).getSales().size(),100);		//Check 100 sales in report
 																					//add 2 expenses with another date
-		Expense e1 = expenseService.createExpense("Agua",expenseType.FIXED,35,LocalDate.of(2018,2, 22));
-		Expense e2 = expenseService.createExpense("LUZ",expenseType.FIXED,55,LocalDate.of(2018,2, 25));
+		Expense e1 = expenseService.createExpense("Agua",expenseType.FIXED,35,LocalDate.of(2018,2, 22),null);
+		Expense e2 = expenseService.createExpense("LUZ",expenseType.FIXED,55,LocalDate.of(2018,2, 25),null);
 		
 		repSaleExpService.addExpense(e1);
 		repSaleExpService.addExpense(e2);
@@ -520,9 +520,9 @@ public class ReportSaleExpenseServiceTest {
 		}
 		assertEquals(repSaleExpService.getReport(ym17).getSales().size(),45);
 		
-		e1 = expenseService.createExpense("Agua",expenseType.FIXED,35,d3);		//add 3 expenses fixed on 12/2017 and 1 oneoff at 01/2018
+		e1 = expenseService.createExpense("Agua",expenseType.FIXED,35,d3,null);		//add 3 expenses fixed on 12/2017 and 1 oneoff at 01/2018
 		e2 = expenseService.createExpense("Internet",expenseType.FIXED,20,d3,"6 meses de contrato");
-		e3 = expenseService.createExpense("Luz",expenseType.FIXED,25,d3);
+		e3 = expenseService.createExpense("Luz",expenseType.FIXED,25,d3,null);
 		e4 = expenseService.createExpense("Secadores",expenseType.ONEOFF,90,d5,"3 unidades");
 
 		repSaleExpService.addExpense(e1);						

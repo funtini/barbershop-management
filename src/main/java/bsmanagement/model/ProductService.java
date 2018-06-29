@@ -61,7 +61,7 @@ public class ProductService {
 	/**
 	 * @return the list Of Removed Products
 	 */
-	public List<Product> getRemovedProducts() {
+	public List<Product> getDisabledProducts() {
 		List<Product> inactiveProducts = new ArrayList<>();
 		for (Product p : getAllProducts())
 			if (!p.isActive())
@@ -122,11 +122,28 @@ public class ProductService {
 	 * @param product
 	 * 
 	 */
-	public void removeProduct(Product product)
+	public void disableProduct(Product product)
 	{
 		if (productRepo.existsById(product.getId()))
 		{
 			product.deactivate();
+			productRepo.save(product);
+		}
+	}
+	
+	
+	/**
+	 * Method to remove Product to Inventory
+	 * 
+	 * @param product
+	 * 
+	 */
+	public void activateProduct(Product product)
+	{
+		if (productRepo.existsById(product.getId()))
+		{
+			product.activate();
+			productRepo.save(product);
 		}
 	}
 	

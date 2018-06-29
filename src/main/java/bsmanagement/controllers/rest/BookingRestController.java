@@ -99,7 +99,7 @@ public class BookingRestController {
 	 * @return If date is valid : ResponseEntity with a List of BookingRestDTO and a OK httpstatus. Otherwise, BadRequest Status returned
 	 */
 	@GetMapping(value = "bookings", params = "date")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<List<BookingRestDTO>> listBookingsOfDate(@RequestParam(value = "date", required = true) String date)
 	{
 		LocalDate dateConverted;
@@ -133,7 +133,7 @@ public class BookingRestController {
 	 * @return HttpStatus OK with a bookingRestDTO if customerID is valid, otherwise HttpStatus NOT_FOUND
 	 */
 	@GetMapping(value = "bookings", params = "customerId")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<BookingRestDTO> listBookingsOfCustomer(@RequestParam(value = "customerId", required = true) int customerId)
 	{
 			Booking b = bookingCustomerService.getNextBookingOf(bookingCustomerService.findCustomerById(customerId));
@@ -159,7 +159,7 @@ public class BookingRestController {
 	 * @return HttpStatus OK with a bookingRestDTO if userID is valid, otherwise HttpStatus NOT_FOUND
 	 */
 	@GetMapping(value = "bookings", params = "userId")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<List<BookingRestDTO>> listBookingsOfUser(@RequestParam(value = "userId", required = true) String userId)
 	{
 		List<BookingRestDTO> bookingsRestDTO = new ArrayList<>();
@@ -183,7 +183,7 @@ public class BookingRestController {
 	 * @return HttpStatus.OK  with a BookingRestDTO if ID exists, otherwise, return http status of NOT_FOUND
 	 */
 	@RequestMapping("/bookings/{bookingId}")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<BookingRestDTO> getBookingById(@PathVariable(value = "bookingId") int bookingId)
 	{
 		
@@ -208,7 +208,7 @@ public class BookingRestController {
 	 * @return ResponseEntity CREATED if date is valid, otherwise return BAD_REQUEST
 	 */
 	@PostMapping("/bookings")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<BookingRestDTO> createBooking(@RequestBody BookingRestDTO bookingDTO)
 	{
 		Customer c = bookingCustomerService.findCustomerById(bookingDTO.getCustomerId());
@@ -233,13 +233,13 @@ public class BookingRestController {
 	 * @return ResponseEntity OK if bookingId is valid, otherwise return NOT_FOUND
 	 */
 	@PutMapping("/bookings/{bookingId}")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<BookingRestDTO> editBooking(@PathVariable(value = "bookingId") int bookingId,@RequestBody BookingRestDTO bookingDTO)
 	{
 		Booking b = bookingCustomerService.findBookingById(bookingId);
 		if (b==null)
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		if (bookingDTO.getDate().isBefore(LocalDateTime.now()))
+		if (bookingDTO.getDate() != null && bookingDTO.getDate().isBefore(LocalDateTime.now()))
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		if (bookingDTO.getCustomerId() != 0)
 			b.setCustomer(bookingCustomerService.findCustomerById(bookingDTO.getCustomerId()));
@@ -262,7 +262,7 @@ public class BookingRestController {
 	 * @return HttpStatus.OK if booking was deleted, otherwise, return http status of NOT_FOUND
 	 */
 	@DeleteMapping("/bookings/{bookingId}")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<BookingRestDTO> removeBooking(@PathVariable(value = "bookingId") int bookingId)
 	{	
 			if (!bookingCustomerService.removeBooking(bookingId))

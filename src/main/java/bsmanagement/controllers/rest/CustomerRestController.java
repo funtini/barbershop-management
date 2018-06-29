@@ -38,7 +38,7 @@ public class CustomerRestController {
 	 * @return ResponseEntity with a List of CustomerRestDTO
 	 */
 	@RequestMapping("/customers")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<List<CustomerRestDTO>> getAllCustomers()
 	{
 		List<CustomerRestDTO> customersRestDTO = new ArrayList<>();
@@ -57,7 +57,7 @@ public class CustomerRestController {
 	 * @return ResponseEntity CREATED if name is valid, otherwise return BAD_REQUEST
 	 */
 	@PostMapping("/customers")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<CustomerRestDTO> addCustomer(@RequestBody CustomerRestDTO customerDTO)
 	{
 		if(customerDTO.getName()==null)
@@ -76,7 +76,7 @@ public class CustomerRestController {
 	 * @return ResponseEntity OK if customer exists , otherwise return NOT_FOUND
 	 */
 	@PutMapping("/customers/{customerId}")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<CustomerRestDTO> editCustomer(@PathVariable(value = "customerId") int customerId,@RequestBody CustomerRestDTO customerDTO)
 	{
 		Customer c = bookingCustomerService.findCustomerById(customerId);
@@ -103,7 +103,7 @@ public class CustomerRestController {
 	 * @return ResponseEntity with a CustomerRestDTO if id is valid, otherwise return NOT_FOUND
 	 */
 	@RequestMapping("/customers/{customerId}")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<CustomerRestDTO> findCustomerById(@PathVariable(value = "customerId") int customerId)
 	{
 		Customer c = bookingCustomerService.findCustomerById(customerId);
@@ -119,7 +119,7 @@ public class CustomerRestController {
 	 * @return ResponseEntity with a CustomerRestDTO if id is valid, otherwise return NOT_FOUND
 	 */
 	@DeleteMapping("/customers/{customerId}")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
 	public ResponseEntity<CustomerRestDTO> removeCustomer(@PathVariable(value = "customerId") int customerId)
 	{
 		if(!bookingCustomerService.removeCustomer(customerId))

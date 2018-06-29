@@ -8,6 +8,7 @@ import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 
+import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -102,10 +103,12 @@ public class Application{
 		User u1 = userService.createUser("JOAO",birth1,"joao@gmail.com","914047935","324666433");
 		User u2 = userService.createUser("PEDRO",birth2,"pedro@domain.uk","915557911","123555433");
 		User u3 = userService.createUser("ROGERIO",birth3,"rogerio@net.com","962337135","367876433");
+		User u4 = userService.createUser("FUNTINI",birth1,"admin@bsm.com","9090909090","3030303030");
 		
 		userService.addUser(u1);
 		userService.addUser(u2);
 		userService.addUser(u3);
+		userService.addUser(u4);
 		
 		Address a1 = new Address("CASA","RUA DO AMARO","3550-444","VISEU","PORTUGAL");
 		Address a2 = new Address("TRABALHO","RUA DO PASSAL","3530-194","MANGUALDE","PORTUGAL");
@@ -122,15 +125,18 @@ public class Application{
 		userService.setUserProfileEmployer(u1);
 		userService.setUserProfileEmployer(u2);
 		userService.setUserProfileStoreManager(u3);
+		userService.setUserProfileAdmin(u4);
 		
 		
 		u1 = userService.findUserByEmail("joao@gmail.com");
 		u2 = userService.findUserByEmail("pedro@domain.uk");
 		u3 = userService.findUserByEmail("rogerio@net.com");
+		u4 = userService.findUserByEmail("admin@bsm.com");
 		
 		u1.setPassword(passwordEncoder.encode("12345"));
 		u2.setPassword(passwordEncoder.encode("12345"));
 		u3.setPassword(passwordEncoder.encode("12345"));
+		u4.setPassword(passwordEncoder.encode("12345"));
 		
 		Contract contract1 = new Contract(300, 25);
 		Contract contract2 = new Contract(0, 75);
@@ -140,6 +146,7 @@ public class Application{
 		userService.updateUser(u1);
 		userService.updateUser(u2);
 		userService.updateUser(u3);
+		userService.updateUser(u4);
 		
 		
 		//Register Customers
@@ -481,7 +488,7 @@ public class Application{
 		Expense e1 = expenseService.createExpense("Luz",expenseType.FIXED,30,LocalDate.now().minusMonths(2),"6 meses de contrato");
 		Expense e2 = expenseService.createExpense("Secadores",expenseType.ONEOFF,90,LocalDate.now().minusMonths(1),"3 unidades");
 		Expense e3 = expenseService.createExpense("Shampoos",expenseType.ONEOFF,60,LocalDate.now(),"10 unidades");
-		Expense e4 = expenseService.createExpense("Agua",expenseType.FIXED,35,LocalDate.now());
+		Expense e4 = expenseService.createExpense("Agua",expenseType.FIXED,35,LocalDate.now(),null);
 
 //		repSaleExpService.addExpense(e1);
 //		repSaleExpService.addExpense(e2);
@@ -510,7 +517,11 @@ public class Application{
 		User u5 =userService.listAllUsers().get(0);
 		System.out.println(userService.listAllUsers().get(0));
 		System.out.println(u5.getRoles().toString()+" ... "+u5.getLastContract());
-//		System.out.println(b1.getCustomer());
+//		System.out.println(expenseType.values().toString()+"***/n****");
+//		System.out.println(expenseType.valueOf("FIXED").toString()+"***/n****");
+//		
+//		System.out.println(Arrays.asList(expenseType.values()).contains(expenseType.valueOf("FIXED")));
+//		System.out.println(Arrays.asList(expenseType.values()).contains(expenseType.valueOf("NAO EXISTE")));
 		String choice = scan.nextLine();
 
 //		System.out.println(repSaleExpService.getReport(YearMonth.of(2018, 04)).getExpenses().size());
