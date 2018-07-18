@@ -38,7 +38,7 @@ import bsmanagement.security.UserPrincipal;
  *
  */
 @Service
-public class UserService implements UserDetailsService{
+public class UserService{
 
 	@Autowired
 	private UserRepository userRepo;
@@ -53,6 +53,16 @@ public class UserService implements UserDetailsService{
 		
 	}
 	
+	
+	
+	public UserService(UserRepository userRepo, RoleRepository rolesRepository) {
+		super();
+		this.userRepo = userRepo;
+		this.rolesRepository = rolesRepository;
+	}
+
+
+
 	/**
 	 * Creates an instance of a User.
 	 *
@@ -309,15 +319,7 @@ public class UserService implements UserDetailsService{
 		userRepo.deleteAll();
 	}
 
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String usernameOrEmail) 
-            throws UsernameNotFoundException {
-        // Let people login with email
-        User user = userRepo.findById(usernameOrEmail).orElseThrow( () -> 
-                new UsernameNotFoundException("User not found with username or email : " + usernameOrEmail));
-        return UserPrincipal.create(user);
-    }
+
 
 	public Boolean isEmailAvailable(String email) {
 		return !userRepo.existsById(email);

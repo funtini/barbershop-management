@@ -39,6 +39,14 @@ public class ExpenseService {
 		
 	}
 	
+	
+	
+	public ExpenseService(ExpenseRepository expRepo) {
+		this.expRepo = expRepo;
+	}
+
+
+
 	public boolean updateExpense(Expense expense)
 	{
 		if (expRepo.existsById(expense.getId())) {

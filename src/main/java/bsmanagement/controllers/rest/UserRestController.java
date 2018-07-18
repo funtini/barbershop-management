@@ -41,64 +41,7 @@ public class UserRestController {
 		this.userService = userService;
 	}
 
-	/**
-	 * Rest Controller to get credentials of current user
-	 * 
-	 * @return UserSummaryDTO with credentials of current logged user
-	 */
-	@GetMapping("/users/me")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
-	public UserSummaryRestDTO getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-
-		return new UserSummaryRestDTO(currentUser.getEmail(), currentUser.getName(),
-				currentUser.getAuthorities().toString());
-	}
 	
-	/**
-	 * Rest Controller to edit personal data of current user
-	 * 
-	 * @return UserRestDTO with updated data of current logged user and Response ACCEPTED if all data inputed is valid. If birthdate
-	 * inputed is invalid or no valid field was really changed, then return BAD_REQUEST
-	 */
-	@PutMapping("/users/me")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
-	public ResponseEntity<UserRestDTO> editPersonalData(@CurrentUser UserPrincipal currentUser, @RequestBody UserRestDTO userInDTO) {
-
-		User user = userService.findUserByEmail(currentUser.getEmail());
-		boolean fieldChanged = false;
-		
-        
-        if (userInDTO.getBirth() != null && userInDTO.getBirth().isAfter(LocalDate.now()))
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-	
-        if (userInDTO.getPhone() != null){
-        	user.setPhone(userInDTO.getPhone());
-        	fieldChanged = true;
-        }        	
-		
-        if ( userInDTO.getTaxPayerId()!=null){
-        	user.setTaxPayerId(userInDTO.getTaxPayerId());
-        	fieldChanged = true;
-        }        	
-        
-        if ( userInDTO.getName()!= null){
-        	user.setName(userInDTO.getName());
-        	fieldChanged = true;
-        }       	
-        
-        if ( userInDTO.getBirth()!= null){
-        	user.setBirth(userInDTO.getBirth());
-        	fieldChanged = true;
-        }
-        
-        if (fieldChanged) {
-        	userService.updateUser(user);
-        	UserRestDTO userOutDTO = userService.findUserByEmail(currentUser.getEmail()).toDTO();
-        	return new ResponseEntity<>(userOutDTO, HttpStatus.ACCEPTED);
-        }
-        	
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-	}
 
 	/**
 	 * Rest Controller to check if some user has specific email

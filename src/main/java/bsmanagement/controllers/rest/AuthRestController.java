@@ -3,19 +3,25 @@ package bsmanagement.controllers.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import bsmanagement.dto.rest.UserRestDTO;
+import bsmanagement.dto.rest.UserSummaryRestDTO;
 import bsmanagement.exception.AppException;
 import bsmanagement.model.User;
+import bsmanagement.model.UserService;
 import bsmanagement.model.jparepositories.RoleRepository;
 import bsmanagement.model.jparepositories.UserRepository;
 import bsmanagement.model.roles.Role;
@@ -24,7 +30,9 @@ import bsmanagement.payload.ApiResponse;
 import bsmanagement.payload.JwtAuthenticationResponse;
 import bsmanagement.payload.LoginRequest;
 import bsmanagement.payload.SignUpRequest;
+import bsmanagement.security.CurrentUser;
 import bsmanagement.security.JwtTokenProvider;
+import bsmanagement.security.UserPrincipal;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -41,7 +49,7 @@ public class AuthRestController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @Autowired
     RoleRepository roleRepository;
@@ -53,7 +61,7 @@ public class AuthRestController {
     JwtTokenProvider tokenProvider;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -69,12 +77,12 @@ public class AuthRestController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        return new ResponseEntity<>(new JwtAuthenticationResponse(jwt), HttpStatus.OK);
     }
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-        if(userRepository.existsById(signUpRequest.getEmail())) {
+        if(!userService.isEmailAvailable(signUpRequest.getEmail())) {
             return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
@@ -92,12 +100,14 @@ public class AuthRestController {
 
         user.setRoles(Collections.singleton(userRole));
 
-        User result = userRepository.save(user);
+        userService.addUser(user);
+        User result = userService.findUserByEmail(user.getEmailAddress());
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{email}")
                 .buildAndExpand(result.getEmailAddress()).toUri();
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
-    }
+    }   
+	
 }

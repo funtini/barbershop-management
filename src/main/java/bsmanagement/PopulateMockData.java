@@ -1,32 +1,37 @@
-package bsmanagement.model;
+package bsmanagement;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.Scanner;
-import java.util.TimeZone;
 
-import javax.annotation.PostConstruct;
-
-import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
+import bsmanagement.model.Address;
+import bsmanagement.model.Booking;
+import bsmanagement.model.BookingCustomerService;
+import bsmanagement.model.Contract;
+import bsmanagement.model.Customer;
+import bsmanagement.model.Expense;
+import bsmanagement.model.ExpenseService;
+import bsmanagement.model.PaymentMethod;
+import bsmanagement.model.Product;
+import bsmanagement.model.ProductService;
+import bsmanagement.model.Report;
+import bsmanagement.model.ReportSaleExpenseService;
+import bsmanagement.model.Sale;
+import bsmanagement.model.SaleService;
+import bsmanagement.model.User;
+import bsmanagement.model.UserService;
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.Product.productType;
 import bsmanagement.model.roles.RoleName;
 
-@ComponentScan({ "bsmanagement", "system" })
-@EntityScan(basePackageClasses = {Application.class, Jsr310JpaConverters.class})
-@SpringBootApplication
-public class Application{
+@Component
+public class PopulateMockData implements CommandLineRunner{
 	
 	@Autowired
     private UserService userService;
@@ -51,37 +56,29 @@ public class Application{
 
 	private Scanner scan = new Scanner(System.in);
 	
-	public static void main(String[] args) {
+	
 
-		SpringApplication.run(Application.class);
+	public PopulateMockData(UserService userService, ProductService productService, SaleService saleService,
+			ExpenseService expenseService, BookingCustomerService bookingCustomerService,
+			ReportSaleExpenseService repSaleExpService) {
+
+		this.userService = userService;
+		this.productService = productService;
+		this.saleService = saleService;
+		this.expenseService = expenseService;
+		this.bookingCustomerService = bookingCustomerService;
+		this.repSaleExpService = repSaleExpService;
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		populateDB(false);
+
 	}
 	
-//	@PostConstruct
-//	void init() {
-//		TimeZone.setDefault(TimeZone.getTimeZone("UTC+1"));
-//	}
-	
-	@Bean
-	public CommandLineRunner demo() {
-		return (String... args) -> {
-
-			populateDB();
-			};
-	}
-	
-//	 @Bean
-//	    public WebMvcConfigurer corsConfigurer() {
-//	        return new WebMvcConfigurer() {
-//	            @Override
-//	            public void addCorsMappings(CorsRegistry registry) {
-//	                registry.addMapping("/**").allowedOrigins("http://localhost:3001");
-//	            }
-//	        };
-//	    }
 	
 	
-	
-    public void populateDB() {
+	public void populateDB(boolean yesOrNo) {
 		
 		
         /**
@@ -96,6 +93,9 @@ public class Application{
     	userService.addRole(RoleName.ROLE_ADMINISTRATOR);
     	
 		//Register Employers
+    	if (yesOrNo)
+    	{
+    		
     	
 		LocalDate birth1 = LocalDate.of(1998, 3, 17);
 		LocalDate birth2 = LocalDate.of(1988, 7, 21);
@@ -504,7 +504,6 @@ public class Application{
 		Report r1 = repSaleExpService.getReport(YearMonth.of(2018, 02));
 		Report r2 = repSaleExpService.getReport(YearMonth.of(2018, 03));
 		Report r3 = repSaleExpService.getReport(YearMonth.of(2018, 04));
-
 		
 //		System.out.println(r0.calculateTotalExpensesValue()+" --- "+r0.calculateTotalSalesAmount()+" --- "+r0.calculateRoi());
 //		System.out.println(r1.calculateTotalExpensesValue()+" --- "+r1.calculateTotalSalesAmount()+" --- "+r1.calculateRoi());
@@ -522,7 +521,7 @@ public class Application{
 //		
 //		System.out.println(Arrays.asList(expenseType.values()).contains(expenseType.valueOf("FIXED")));
 //		System.out.println(Arrays.asList(expenseType.values()).contains(expenseType.valueOf("NAO EXISTE")));
-		String choice = scan.nextLine();
+//		String choice = scan.nextLine();
 
 //		System.out.println(repSaleExpService.getReport(YearMonth.of(2018, 04)).getExpenses().size());
 //		e4 = repSaleExpService.getExpenses().get(repSaleExpService.getExpenses().size()-1);
@@ -548,10 +547,7 @@ public class Application{
 		/**
 		 * Verificar BusinessDays.. Esta a 0 na base de dados...
 		 */	
-
+    	}
     }
-	
-	
-	
 
 }

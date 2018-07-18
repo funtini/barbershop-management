@@ -128,7 +128,7 @@ public class BookingRestControllerTest {
 		c2 = new Customer("Ana",birthdate2,"Porto","966677722");
 		c3 = new Customer("Pedro",bd3,"Mangualde","932444333");
 		
-		dt1 = LocalDateTime.now().plusMinutes(30);
+		dt1 = LocalDateTime.now().plusMinutes(1);
 		dt2 = LocalDateTime.of(LocalDate.now(),LocalTime.of(10, 10)).plusDays(10);
 		dt3 = LocalDateTime.of(LocalDate.now(),LocalTime.of(14, 30)).plusDays(10);
 		dt4 = LocalDateTime.of(LocalDate.now(),LocalTime.of(10, 10)).plusMonths(1);

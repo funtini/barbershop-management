@@ -229,7 +229,6 @@ public class ReportTest {
 		rep17.setReportState(null);
 		assertEquals(rep17.getReportState().isClosed(),true);
 		assertEquals(repToday.getReportState().isOpen(),true);
-		System.out.println(rep17.getStatus());
 	}
 	
 	

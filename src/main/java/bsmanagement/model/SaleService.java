@@ -44,6 +44,16 @@ public class SaleService {
 
 	}
 	
+	
+	
+	public SaleService(SaleRepository saleRepo, PaymentRepository paymentRepository) {
+		super();
+		this.saleRepo = saleRepo;
+		this.paymentRepository = paymentRepository;
+	}
+
+
+
 	public void setPaymentRepository(PaymentRepository paymentRepository) {
 		this.paymentRepository=paymentRepository;
 	}

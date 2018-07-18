@@ -44,6 +44,16 @@ public class ReportSaleExpenseService {
 	public ReportSaleExpenseService() {
 	
 	}
+	
+	
+
+	public ReportSaleExpenseService(ReportRepository reportRepo, ExpenseRepository expRepo, SaleRepository saleRepo) {
+		this.reportRepo = reportRepo;
+		this.expRepo = expRepo;
+		this.saleRepo = saleRepo;
+	}
+
+
 
 	public void setReportRepo(ReportRepository reportRepo) {
 		this.reportRepo = reportRepo;

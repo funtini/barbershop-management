@@ -40,6 +40,15 @@ public class BookingCustomerService {
 		
 	}
 	
+	
+	
+	public BookingCustomerService(BookingRepository bookRepository, CustomerRepository customersRepository) {
+		this.bookRepository = bookRepository;
+		this.customersRepository = customersRepository;
+	}
+
+
+
 	public void setBookRepository(BookingRepository bookRepository) {
 		this.bookRepository = bookRepository;
 	}
