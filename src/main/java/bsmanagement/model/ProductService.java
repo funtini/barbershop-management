@@ -11,15 +11,15 @@ import bsmanagement.model.Product.productType;
 import bsmanagement.model.jparepositories.ProductRepository;
 
 /**
- * <h1> ProductList </h1>
+ * <h1> ProductService </h1>
  * <p>
- * ProductList is the abstract class to manage a list of Products in a business
+ * ProductService is a service class to manage a list of Products in a business
  * context. This class contains information like:
  * <ul>
- * <li>ProductList - List of products
+ * <li>ProductRepository - Product Repository
  * </ul>
  * <p>
- * To create an instance of ProductList you just need to invoke the empty constructor
+ * A product registered in service cant be deleted, only disabled. 
  * 
  * @author JOAO GOMES
  *

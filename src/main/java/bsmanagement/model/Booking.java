@@ -18,12 +18,13 @@ import bsmanagement.dto.rest.BookingRestDTO;
  * 
  * <h1> Booking </h1>
  * <p>
- * Booking is the abstract base class for all bookings in a barber shop
+ * Booking is a class for all bookings in a barber shop
  * context. This class contains information like:
  * <ul>
  * <li>ID - Unique Identifier
  * <li>Date - Date and Time of Booking
  * <li>Customer - An instance of Customer that made the booking
+ * <li>User - An instance of User that registered the booking
  * </ul>
  * <p>
  * <p>

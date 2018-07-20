@@ -15,14 +15,13 @@ import bsmanagement.model.jparepositories.CustomerRepository;
 /**
  * <h1> BookingCustomerService </h1>
  * <p>
- * BookingCustomerService is a service class to manage all Customers and Bookings in a barbershop business
+ * BookingCustomerService is a super service class to manage all Customers and Bookings in a barbershop business
  * context. This class contains information like:
  * <ul>
  * <li>bookRepository - JpaRepository of all bookings
  * <li>customerRepository - JpaRepository of all customers
  * </ul>
  * <p>
- * Both repositories have annotation autowired of springframework framework.
  * 
  * @author JOAO GOMES
  *

@@ -24,10 +24,10 @@ import bsmanagement.model.roles.RoleName;
 /**
  * <h1> User </h1>
  * <p>
- * User is the abstract base class for an user registered in business application.
+ * User is a class for an user registered in business application.
  * This class contains information like:
  * <ul>
- * <li>ID - Unique Identifier (int)
+ * <li>Email - Unique Identifier
  * <li>Name - String
  * <li>BirthDate - LocalDate
  * <li>Phone - String
@@ -36,9 +36,10 @@ import bsmanagement.model.roles.RoleName;
  * <li>AddressList - List of Addresses
  * <li>profile - userProfile.
  * <li>Activation Status - userProfile
+ * <li>Contracts - List of contracts
+ * <li>Roles - List of Roles profiles
  * </ul>
  * <p>
- * To create an instance of CustomerRegistry you just need to invoke the empty constructor
  * 
  * @author JOAO GOMES
  *

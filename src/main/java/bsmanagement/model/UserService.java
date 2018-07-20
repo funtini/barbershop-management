@@ -6,19 +6,13 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import bsmanagement.model.jparepositories.RoleRepository;
 import bsmanagement.model.jparepositories.UserRepository;
 import bsmanagement.model.roles.Role;
 import bsmanagement.model.roles.RoleName;
-import bsmanagement.security.UserPrincipal;
 
 
 
@@ -29,10 +23,9 @@ import bsmanagement.security.UserPrincipal;
  * This class contains information like:
  * <ul>
  * <li>userRepository - Repository of users 
- * <li>rolesRepository - Repository of roles
+ * <li>rolesRepository - Repository of role profiles
  * </ul>
  * <p>
- * UserService has annotation 'Autowired' on both repositories
  * 
  * @author JOAO GOMES
  *

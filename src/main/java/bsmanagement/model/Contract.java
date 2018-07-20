@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
  * 
  * <h1> Contract </h1>
  * <p>
- * Contract is a class for manage user's contracts.
+ * Contract is a class for user's contracts.
  * This class contains information like:
  * <ul>
  * <li>ID - Unique Identifier

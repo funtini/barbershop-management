@@ -13,12 +13,12 @@ import bsmanagement.model.jparepositories.ExpenseRepository;
 
 
 /**
- * <h1> ExpenseRegistry </h1>
+ * <h1> ExpenseService </h1>
  * <p>
- * ExpenseRegistry is the abstract class to manage a list of Expenses in a business
+ * ExpenseService is a base class to manage a list of Expenses in a business
  * context. This class contains information like:
  * <ul>
- * <li>listOfExpenses - List of expenses
+ * <li>expRepo - Expense Repository
  * </ul>
  * <p>
  * To create an instance of ExpenseRegistry you just need to invoke the empty constructor

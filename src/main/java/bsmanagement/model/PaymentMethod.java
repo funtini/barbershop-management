@@ -24,7 +24,7 @@ import bsmanagement.dto.rest.PaymentRestDTO;
 public class PaymentMethod {
 	
 	@Id
-	private String id;
+	private String name;
 	private double fee;
 	private double minFeeValue;
 	
@@ -37,7 +37,7 @@ public class PaymentMethod {
 	 * @param minFeeValue
 	 */
 	public PaymentMethod(String type, double fee, double minFeeValue) {
-		this.id = type;
+		this.name = type;
 		this.fee = fee;
 		this.minFeeValue = minFeeValue;
 	}
@@ -51,7 +51,7 @@ public class PaymentMethod {
 	 * @return the type name of Payment
 	 */
 	public String getType() {
-		return id;
+		return name;
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class PaymentMethod {
 	 * @param type
 	 */
 	public void setType(String type) {
-		this.id = type;
+		this.name = type;
 	}
 	
 	/**
@@ -103,7 +103,7 @@ public class PaymentMethod {
 	 * @param True if payment method is valid, false otherwise
 	 */
 	public boolean isValid() {
-		if (this.id == null || this.id.isEmpty())
+		if (this.name == null || this.name.isEmpty())
 			return false;
 		return true;
 	}
@@ -118,7 +118,7 @@ public class PaymentMethod {
 	{
 		PaymentRestDTO payment = new PaymentRestDTO();
 		
-		payment.setName(this.id);
+		payment.setName(this.name);
 		payment.setMinFeeValue(this.minFeeValue);
 		payment.setFee(this.fee);
 		
@@ -134,7 +134,7 @@ public class PaymentMethod {
 	 */
 	@Override
 	public String toString() {
-		return "PaymentMethod [name=" + id + ", fee=" + fee + ", minFeeValue=" + minFeeValue + "]";
+		return "PaymentMethod [name=" + name + ", fee=" + fee + ", minFeeValue=" + minFeeValue + "]";
 	}
 
 	/** 
@@ -146,7 +146,7 @@ public class PaymentMethod {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -167,10 +167,10 @@ public class PaymentMethod {
 		if (getClass() != obj.getClass())
 			return false;
 		PaymentMethod other = (PaymentMethod) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}

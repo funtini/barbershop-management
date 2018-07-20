@@ -19,13 +19,14 @@ import bsmanagement.dto.rest.ProductRestDTO;
 /**
  * <h1> Product </h1>
  * <p>
- * Product is the abstract class for all Products registered in a barber shop
+ * Product is a base class for all Products registered in a barber shop
  * context. This class contains information like:
  * <ul>
  * <li>ID - Unique Identifier
  * <li>Name - Name of Product
  * <li>Product Type - Type of Product, in this barber shop context has to be one of this three: HAIRCUT,SHAVE and EXTRA.
  * <li>Price - Value of actual price of Product
+ * <li>active - Boolean that represent activation status of product
  * </ul>
  * <p>
  * To create an instance of Product you have to define a Name, Type and Price.

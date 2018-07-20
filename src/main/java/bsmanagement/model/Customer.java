@@ -16,7 +16,7 @@ import bsmanagement.dto.rest.CustomerRestDTO;
  *
  * <h1> Customer </h1>
  * <p>
- * Customer is the abstract base class for a client registered in a shop
+ * Customer is a base class for a client registered in a shop
  * context. This class contains information like:
  * <ul>
  * <li>ID - Unique Identifier
@@ -25,9 +25,6 @@ import bsmanagement.dto.rest.CustomerRestDTO;
  * <li>Address/Location - Name of Costumer's Address or Location 
  * <li>Phone Number - Number of Costumer's Phone
  * </ul>
- * <p>
- * Only name of customer is absolutely necessary to construct an instance of Customer.
- * <p>
  * 
  * @author JOAO GOMES
  *

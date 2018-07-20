@@ -37,11 +37,15 @@ import bsmanagement.model.reportstate.ReportState;
  * <li>salesList - A list of all sales made in this month, at this year
  * <li>expenseList - A list of all expenses made in this month, at this year
  * <li>businessDays - Number of business days in a month. It represents all working days in a certain month/year
+ * <li>status - status of report [OPEN,CLOSED or WAITINGFORAPPROVEMENT]
  * </ul>
  * <p>
- * To create an instance of Report you need a Year, Month and a number of working/business days.
+ * To create an instance of Report you need a YearMonth.
  * <p>
- * The salesList and expensesList must be updated after creating an instance of this class
+ * The report has state open while YearMonth matches with current local month. When current local month ends, the respective report
+ * changes state to WAITING FOR APPROVEMENT. 
+ * <p>
+ * A closed report has all data locked and unchanged.
  * 
  * @author JOAO GOMES
  *

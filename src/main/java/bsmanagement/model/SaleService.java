@@ -20,7 +20,6 @@ import bsmanagement.model.jparepositories.SaleRepository;
  * <ul>
  * <li>saleRepo - SaleRepository
  * <li>paymentRepository - PaymentRepository
- * <li>saleRepo - SaleRepository
  * </ul>
  * <p>
  * To create an instance of SaleRegistry you just need to invoke the empty constructor

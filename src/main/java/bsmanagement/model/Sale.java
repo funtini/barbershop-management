@@ -16,7 +16,7 @@ import bsmanagement.dto.rest.SaleRestDTO;
  * 
  * <h1> Sale </h1>
  * <p>
- * Sale is the abstract base class for all sales registered in a shop
+ * Sale is a class for all sales registered in a shop
  * context. This class contains information like:
  * <ul>
  * <li>ID - Unique Identifier
@@ -24,6 +24,8 @@ import bsmanagement.dto.rest.SaleRestDTO;
  * <li>Customer - An instance of Customer that contains information about the buyer
  * <li>Product - An instance of Product that contains information about product sold
  * <li>Amount - Value of Product Sold at the time of Sale
+ * <li>Payment - Payment method used
+ * <li>User - An instance of User that contains information about the seller
  * </ul>
  * <p>
  * An instance of Product is needed to construct a Sale but it can be constructed without any associated customer, like an anonymous's sale.

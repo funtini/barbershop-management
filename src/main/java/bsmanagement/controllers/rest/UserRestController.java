@@ -1,6 +1,5 @@
 package bsmanagement.controllers.rest;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import bsmanagement.dto.rest.UserRestDTO;
-import bsmanagement.dto.rest.UserSummaryRestDTO;
 import bsmanagement.model.User;
 import bsmanagement.model.UserService;
 import bsmanagement.payload.UserIdentityAvailability;
-import bsmanagement.security.CurrentUser;
-import bsmanagement.security.UserPrincipal;
 
 @RestController
 @RequestMapping("/api")
@@ -159,6 +155,47 @@ public class UserRestController {
         UserRestDTO userOutDTO = userService.findUserByEmail(userId).toDTO();  
         return new ResponseEntity<>(userOutDTO,HttpStatus.ACCEPTED);
 
+    }
+	
+	/**
+     * Rest Controller to change role profile of a specific user
+     *
+     * @param userId (email)
+     * @param userRestDTO
+     * @return response code ACCEPTED if profile is valid, otherwise return BAD_REQUEST
+     */
+	@PreAuthorize("hasRole('ADMINISTRATOR')")
+    @PutMapping(value = "/users/{userId}/profile")
+    public ResponseEntity<UserRestDTO> setUserProfile(@PathVariable("userEmail") String userId, @RequestBody UserRestDTO userDTO) {
+		UserRestDTO userOutDTO;
+        String profile = userDTO.getProfile();
+        
+        if (userService.findUserByEmail(userId) == null)
+        	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        
+        if (profile == null)
+        	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        switch (profile.toUpperCase()) {
+
+            case "ADMINISTRATOR":
+                userService.setUserProfileAdmin(userService.findUserByEmail(userId));
+                userOutDTO = userService.findUserByEmail(userId).toDTO();
+                return new ResponseEntity<>(userOutDTO, HttpStatus.ACCEPTED);
+
+            case "STOREMANAGER":
+                userService.setUserProfileStoreManager(userService.findUserByEmail(userId));
+                userOutDTO = userService.findUserByEmail(userId).toDTO();
+                return new ResponseEntity<>(userOutDTO, HttpStatus.ACCEPTED);
+
+            case "EMPLOYER":
+                userService.setUserProfileEmployer(userService.findUserByEmail(userId));
+                userOutDTO = userService.findUserByEmail(userId).toDTO();
+                return new ResponseEntity<>(userOutDTO, HttpStatus.ACCEPTED);
+
+            default:
+            	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

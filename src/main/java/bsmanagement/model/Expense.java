@@ -15,7 +15,7 @@ import bsmanagement.dto.rest.ExpenseRestDTO;
 /**
  * <h1> Expense </h1>
  * <p>
- * Expense is the abstract base class for all expenses registered in a shop
+ * Expense is a base base class for all expenses registered in a shop
  * context. This class contains information like:
  * <ul>
  * <li>ID - Unique Identifier
@@ -23,13 +23,8 @@ import bsmanagement.dto.rest.ExpenseRestDTO;
  * <li>Type - An enum constant of expenseType: FIXED or ONEOFF
  * <li>Value - Value of expense's payment in Euros
  * <li>Date - Date of Expense. This date can be null if this is a fixed expense
- * <li>Amount - Value of Product Sold at the time of Sale
+ * <li>Description - Additional description of Expense
  * </ul>
- * <p>
- * An instance of Product is needed to construct a Sale but it can be constructed without any associated customer, like an anonymous's sale.
- * <p>
- * In certain sales, the value of amount can be different of product's price along time, which means
- * that the product's price today can be different of yesterday, and the value of sale's amount is always the same along time.
  * 
  * @author JOAO GOMES
  */

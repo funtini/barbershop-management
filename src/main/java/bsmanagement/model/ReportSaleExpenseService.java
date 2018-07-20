@@ -23,7 +23,6 @@ import bsmanagement.model.jparepositories.SaleRepository;
  * <li>saleRepository - JpaRepository of all sales
  * </ul>
  * <p>
- * Both repositories have annotation autowired of springframework framework.
  * 
  * @author JOAO GOMES
  *

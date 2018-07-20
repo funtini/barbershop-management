@@ -1,3 +1,4 @@
+package bsmanagement.model;
 //package bsmanagement.model;
 //
 //import java.time.LocalDate;
