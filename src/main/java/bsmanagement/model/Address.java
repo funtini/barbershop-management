@@ -4,6 +4,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.persistence.Embeddable;
 
+import bsmanagement.dto.rest.AddressRestDTO;
+
 /**
  * 
  * <h1> Address </h1>
@@ -201,6 +203,24 @@ public class Address {
 	 */
 	public void setStreet(String street) {
 		this.street = street;
+	}
+	
+	/**
+	 * Method to convert address in Rest DTO
+	 * 
+	 * @return Address Rest DTO
+	 */
+	public AddressRestDTO toRestDTO()
+	{
+		AddressRestDTO address = new AddressRestDTO();
+		address.setAddressDescription(addressDescription);
+		address.setCity(city);
+		address.setCountry(country);
+		address.setId(id);
+		address.setPostalCode(postalCode);
+		address.setStreet(street);
+		
+		return address;
 	}
 
 
