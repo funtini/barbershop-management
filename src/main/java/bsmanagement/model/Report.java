@@ -430,7 +430,7 @@ public class Report {
 		for (User u : getActiveUsersInThisMonth())
 		{
 			totalSalary=u.getLastContract().getBaseSalary();
-			comission=u.getLastContract().getSalesComission();
+			comission=u.getLastContract().getSalesCommission();
 			for (Sale s: getUserSales(u))
 			{
 				totalSalary=totalSalary+(comission/(100.0))*s.getAmount();

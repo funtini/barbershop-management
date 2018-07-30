@@ -88,9 +88,9 @@ public class UserRestControllerTest {
 		u2.setProfileStoreManager();
 		userService.deactivateUser(u3);
 		
-		u1_DTO = u1.toDTO();
-		u2_DTO = u2.toDTO();
-		u3_DTO = u3.toDTO();
+		u1_DTO = u1.toRestDTO();
+		u2_DTO = u2.toRestDTO();
+		u3_DTO = u3.toRestDTO();
 		
 		userService.updateUser(u1);
 		userService.updateUser(u2);
@@ -325,7 +325,7 @@ public class UserRestControllerTest {
 		assertEquals(userService.listAllUsers().size(),3);
 		
 		//WHEN
-		response = urc.activateUser("notfound@email.com");
+		response = urc.deactivateUser("notfound@email.com");
 		
 		//THEN	
 		assertEquals(response.getStatusCode(),HttpStatus.NOT_FOUND);
@@ -414,6 +414,26 @@ public class UserRestControllerTest {
 		//WHEN
 		UserRestDTO profile = new UserRestDTO();
 		profile.setProfile("master");
+		response = urc.setUserProfile("pedro@gmail.uk", profile);
+		
+		//THEN	
+		assertEquals(response.getStatusCode(),HttpStatus.BAD_REQUEST);
+	}
+	
+	/**
+	 * testSetUserProfile() controller
+	 * 
+	 * <p>GIVEN: 3 users added to userService, which one is employer</p>
+	 * <p>WHEN: set profile to an user with no existing role</p>
+	 * <p>THEN: controller return response code BAD_REQUEST</p>
+	 */
+	@Test
+	public void testSetUserProfileBadRequestProfileNull() {
+		//GIVEN
+		assertEquals(userService.listAllUsers().size(),3);
+		
+		//WHEN
+		UserRestDTO profile = new UserRestDTO();
 		response = urc.setUserProfile("pedro@gmail.uk", profile);
 		
 		//THEN	

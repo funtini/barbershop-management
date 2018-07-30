@@ -5,6 +5,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.persistence.Embeddable;
 
+import bsmanagement.dto.rest.ContractRestDTO;
+
 
 
 /**
@@ -16,7 +18,7 @@ import javax.persistence.Embeddable;
  * <ul>
  * <li>ID - Unique Identifier
  * <li>BaseSalary - Base Salary of contract
- * <li>SalesComission - Sales Comission by all sales
+ * <li>SalesCommission - Sales Commission by all sales
  * <li>StartDate - Start Date of contract
  * <li>CloseDate - End Date of contract
  * <li>
@@ -33,7 +35,7 @@ public class Contract {
 	
 	private int id=idGenerator.incrementAndGet();;
 	private double baseSalary;
-	private double salesComission;
+	private double salesCommission;
 	private LocalDate startDate;
 	private LocalDate closeDate;
 	
@@ -43,17 +45,17 @@ public class Contract {
 	 *
 	 * @param baseSalary
 	 *            Base Monthly Salary of contract.
-	 * @param salesComission
+	 * @param salesCommission
 	 *            Comission per sale in %.
 	 *            
 	 */
-	public Contract(double baseSalary, double salesComission) {
+	public Contract(double baseSalary, double salesCommission) {
 		this.baseSalary = baseSalary;
-		if (salesComission < 0.0)
-			salesComission = 0.0;
-		if (salesComission > 100)
-			salesComission = 100.0;
-		this.salesComission = salesComission;
+		if (salesCommission < 0.0)
+			salesCommission = 0.0;
+		if (salesCommission > 100)
+			salesCommission = 100.0;
+		this.salesCommission = salesCommission;
 		this.startDate = LocalDate.now();
 		
 	}
@@ -86,17 +88,17 @@ public class Contract {
 	}
 
 
-	public double getSalesComission() {
-		return salesComission;
+	public double getSalesCommission() {
+		return salesCommission;
 	}
 
 
-	public void setSalesComission(double salesComission) {
+	public void setSalesCommission(double salesComission) {
 		if (salesComission < 0.0)
 			salesComission = 0.0;
 		if (salesComission > 100)
 			salesComission = 100.0;
-		this.salesComission = salesComission;
+		this.salesCommission = salesComission;
 	}
 
 
@@ -165,6 +167,23 @@ public class Contract {
 	}
 	
 	
+	/**
+	 * <p>Method to convert contract in RestDTO</p>
+	 * 
+	 * @return ContractRestDTO
+	 */
+	public ContractRestDTO toRestDTO() {
+		ContractRestDTO contractDTO = new ContractRestDTO();
+		contractDTO.setBaseSalary(baseSalary);
+		contractDTO.setCloseDate(closeDate);
+		contractDTO.setId(id);
+		contractDTO.setSalesCommission(salesCommission);
+		contractDTO.setStartDate(startDate);
+		
+		return contractDTO;
+	}
+	
+	
 
 	@Override
 	public int hashCode() {
@@ -190,7 +209,7 @@ public class Contract {
 
 	@Override
 	public String toString() {
-		return "Contract [id=" + id + ", baseSalary=" + baseSalary + ", salesComission=" + salesComission
+		return "Contract [id=" + id + ", baseSalary=" + baseSalary + ", salesComission=" + salesCommission
 				+ ", startDate=" + startDate + ", closeDate=" + closeDate + "]";
 	}
 	

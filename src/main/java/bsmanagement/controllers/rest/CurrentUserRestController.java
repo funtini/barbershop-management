@@ -113,7 +113,7 @@ public class CurrentUserRestController {
         
         if (fieldChanged) {
         	userService.updateUser(user);
-        	UserRestDTO userOutDTO = userService.findUserByEmail(currentUser.getEmail()).toDTO();
+        	UserRestDTO userOutDTO = userService.findUserByEmail(currentUser.getEmail()).toRestDTO();
         	return new ResponseEntity<>(userOutDTO, HttpStatus.ACCEPTED);
         }
         	

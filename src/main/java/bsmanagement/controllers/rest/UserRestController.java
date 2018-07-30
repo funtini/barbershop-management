@@ -67,7 +67,7 @@ public class UserRestController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(user.toDTO(), HttpStatus.OK);
+		return new ResponseEntity<>(user.toRestDTO(), HttpStatus.OK);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class UserRestController {
 
 		List<UserRestDTO> usersList = new ArrayList<>();
 		for (User u : userService.listAllUsers()) {
-			usersList.add(u.toDTO());
+			usersList.add(u.toRestDTO());
 		}
 
 		return new ResponseEntity<>(usersList, HttpStatus.OK);
@@ -98,7 +98,7 @@ public class UserRestController {
 
 		List<UserRestDTO> usersList = new ArrayList<>();
 		for (User u : userService.listActiveUsers()) {
-			usersList.add(u.toDTO());
+			usersList.add(u.toRestDTO());
 		}
 
 		return new ResponseEntity<>(usersList, HttpStatus.OK);
@@ -115,7 +115,7 @@ public class UserRestController {
 
 		List<UserRestDTO> usersList = new ArrayList<>();
 		for (User u : userService.listInactiveUsers()) {
-			usersList.add(u.toDTO());
+			usersList.add(u.toRestDTO());
 		}
 
 		return new ResponseEntity<>(usersList, HttpStatus.OK);
@@ -134,7 +134,7 @@ public class UserRestController {
         if ( user == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);     
         userService.setUserActive(user);     
-        UserRestDTO userOutDTO = userService.findUserByEmail(userId).toDTO();  
+        UserRestDTO userOutDTO = userService.findUserByEmail(userId).toRestDTO();  
         return new ResponseEntity<>(userOutDTO,HttpStatus.ACCEPTED);
 
     }
@@ -152,7 +152,7 @@ public class UserRestController {
         if ( user == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);     
         userService.deactivateUser(user);     
-        UserRestDTO userOutDTO = userService.findUserByEmail(userId).toDTO();  
+        UserRestDTO userOutDTO = userService.findUserByEmail(userId).toRestDTO();  
         return new ResponseEntity<>(userOutDTO,HttpStatus.ACCEPTED);
 
     }
@@ -180,17 +180,17 @@ public class UserRestController {
 
             case "ADMINISTRATOR":
                 userService.setUserProfileAdmin(userService.findUserByEmail(userId));
-                userOutDTO = userService.findUserByEmail(userId).toDTO();
+                userOutDTO = userService.findUserByEmail(userId).toRestDTO();
                 return new ResponseEntity<>(userOutDTO, HttpStatus.ACCEPTED);
 
             case "STOREMANAGER":
                 userService.setUserProfileStoreManager(userService.findUserByEmail(userId));
-                userOutDTO = userService.findUserByEmail(userId).toDTO();
+                userOutDTO = userService.findUserByEmail(userId).toRestDTO();
                 return new ResponseEntity<>(userOutDTO, HttpStatus.ACCEPTED);
 
             case "EMPLOYER":
                 userService.setUserProfileEmployer(userService.findUserByEmail(userId));
-                userOutDTO = userService.findUserByEmail(userId).toDTO();
+                userOutDTO = userService.findUserByEmail(userId).toRestDTO();
                 return new ResponseEntity<>(userOutDTO, HttpStatus.ACCEPTED);
 
             default:

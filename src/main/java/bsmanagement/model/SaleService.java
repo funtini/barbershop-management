@@ -320,7 +320,7 @@ public class SaleService {
 		double totalAmount = 0.0;
 		for (Sale s: sales)
 		{
-			totalAmount=totalAmount+s.getAmount()*user.getSalesComissionOfMonth(yearMonth);
+			totalAmount=totalAmount+s.getAmount()*user.getSalesCommissionOfMonth(yearMonth);
 		}
 		Math.round(totalAmount);
 		return totalAmount/100;

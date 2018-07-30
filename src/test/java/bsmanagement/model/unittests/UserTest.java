@@ -355,11 +355,11 @@ public class UserTest {
 	public void testCalculateCurrentAccumulateComissionAmountOfMonth() {
 		
 
-		assertEquals(u1.getCurrentSalesComission(), 10.0,0.0);
+		assertEquals(u1.getCurrentSalesCommission(), 10.0,0.0);
 		
-		assertEquals(u2.getCurrentSalesComission(), 60.0,0.0);
+		assertEquals(u2.getCurrentSalesCommission(), 60.0,0.0);
 		u2.closeContract();
-		assertEquals(u2.getCurrentSalesComission(), 0.0,0.0);
+		assertEquals(u2.getCurrentSalesCommission(), 0.0,0.0);
 		
 	}
 	
@@ -375,10 +375,10 @@ public class UserTest {
 		assertEquals(c1,c2);
 		u1.getLastContract().setStartDate(LocalDate.of(2018, 2, 1));
 
-		assertEquals(u1.getSalesComissionOfMonth(YearMonth.of(2017, 9)), 10.0,0.0);
-		assertEquals(u1.getSalesComissionOfMonth(YearMonth.of(2017, 8)), 0.0,0.0);
-		assertEquals(u1.getSalesComissionOfMonth(YearMonth.of(2017, 12)), 10.0,0.0);
-		assertEquals(u1.getSalesComissionOfMonth(YearMonth.of(2018, 2)), 35.0,0.0);
+		assertEquals(u1.getSalesCommissionOfMonth(YearMonth.of(2017, 9)), 10.0,0.0);
+		assertEquals(u1.getSalesCommissionOfMonth(YearMonth.of(2017, 8)), 0.0,0.0);
+		assertEquals(u1.getSalesCommissionOfMonth(YearMonth.of(2017, 12)), 10.0,0.0);
+		assertEquals(u1.getSalesCommissionOfMonth(YearMonth.of(2018, 2)), 35.0,0.0);
 	
 		
 	}

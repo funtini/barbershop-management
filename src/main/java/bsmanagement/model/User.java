@@ -116,10 +116,9 @@ public class User{
 	/**
 	 * Method to add a new contract to user. If 
 	 * 
-	 * @param baseSalary
-	 * @param salesComission
+	 * @param contract
 	 * 
-	 * @return true if new contract was sucessfully added, false otherwise
+	 * @return true if new contract was successfully added, false if user already has a opened contract
 	 */
 	public boolean addContract(Contract contract)
 	{
@@ -158,10 +157,10 @@ public class User{
 	 * 
 	 * @return double [if user doesn't has contract, the value returned is 0.0]
 	 */
-	public double getCurrentSalesComission()
+	public double getCurrentSalesCommission()
 	{
 		if (getLastContract()!=null && getLastContract().isOpen())
-			return getLastContract().getSalesComission();
+			return getLastContract().getSalesCommission();
 		return 0.0;
 	}
 	
@@ -170,7 +169,7 @@ public class User{
 	 * 
 	 * @return double [if user doesn't has contract in this yearMonth, the value returned is 0.0]
 	 */
-	public double getSalesComissionOfMonth(YearMonth yearMonth)
+	public double getSalesCommissionOfMonth(YearMonth yearMonth)
 	{
 		for (Contract c: this.contracts)
 		{
@@ -180,12 +179,12 @@ public class User{
 			{
 				endDate = YearMonth.from(c.getCloseDate());
 				if (!yearMonth.isBefore(startDate) && !yearMonth.isAfter(endDate))
-					return c.getSalesComission();
+					return c.getSalesCommission();
 			}
 			else
 			{
 				if (!yearMonth.isBefore(startDate))
-					return c.getSalesComission();
+					return c.getSalesCommission();
 			}
 		}
 		
@@ -607,7 +606,7 @@ public class User{
 		return true;
 	}
 
-	public UserRestDTO toDTO() {
+	public UserRestDTO toRestDTO() {
 		UserRestDTO userDTO = new UserRestDTO();
 		userDTO.setName(this.name);
 		userDTO.setBirth(this.birth);
@@ -615,8 +614,12 @@ public class User{
 		userDTO.setPhone(this.phone);
 		userDTO.setProfile(this.roles.toString());
 		userDTO.setTaxPayerId(this.taxPayerId);
-		userDTO.setActivationStatus(this.activationStatus);		
-		
+		userDTO.setActivationStatus(this.activationStatus);
+		userDTO.setCurrentSalesCommission(this.getCurrentSalesCommission());
+		if (this.hasOpenContract())
+			userDTO.setCurrentBaseSalary(this.getLastContract().getBaseSalary());
+		else
+			userDTO.setCurrentBaseSalary(0.0);		
 		return userDTO;
 	}
 

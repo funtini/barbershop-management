@@ -85,9 +85,9 @@ public class ContractTest {
 
 	@Test
 	public void testGetAndSetSalesComission() {
-		assertEquals(c1.getSalesComission(),10,0.0);
-		c1.setSalesComission(30);
-		assertEquals(c1.getSalesComission(),30,0.0);
+		assertEquals(c1.getSalesCommission(),10,0.0);
+		c1.setSalesCommission(30);
+		assertEquals(c1.getSalesCommission(),30,0.0);
 	}
 
 
@@ -133,7 +133,7 @@ public class ContractTest {
 
 	@Test
 	public void testToString() {
-		String expected = "Contract [id=" + c1.getId() + ", baseSalary=" + c1.getBaseSalary() + ", salesComission=" + c1.getSalesComission()
+		String expected = "Contract [id=" + c1.getId() + ", baseSalary=" + c1.getBaseSalary() + ", salesComission=" + c1.getSalesCommission()
 				+ ", startDate=" + c1.getStartDate() + ", closeDate=" + c1.getCloseDate() + "]";
 		
 		assertEquals(expected,c1.toString());

@@ -17,7 +17,21 @@ public class UserRestDTO extends ResourceSupport{
 	private String taxPayerId;
 	private boolean activationStatus;
 	private String profile;
-	
+	private double currentSalesCommission;
+	private double currentBaseSalary;
+
+	public double getCurrentSalesCommission() {
+		return currentSalesCommission;
+	}
+	public void setCurrentSalesCommission(double currentSalesCommission) {
+		this.currentSalesCommission = currentSalesCommission;
+	}
+	public double getCurrentBaseSalary() {
+		return currentBaseSalary;
+	}
+	public void setCurrentBaseSalary(double currentBaseSalary) {
+		this.currentBaseSalary = currentBaseSalary;
+	}
 	public String getEmail() {
 		return email;
 	}

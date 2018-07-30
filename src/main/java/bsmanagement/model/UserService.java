@@ -1,6 +1,7 @@
 package bsmanagement.model;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import bsmanagement.dto.rest.ContractRestDTO;
 import bsmanagement.model.jparepositories.RoleRepository;
 import bsmanagement.model.jparepositories.UserRepository;
 import bsmanagement.model.roles.Role;
@@ -296,6 +298,107 @@ public class UserService{
 		return usersList;
 	}
 	
+	/*****************************
+	 * 
+	 * 	CONTRACTS
+	 * 
+	 * ******************
+	 */
+	
+	/**
+	 * Method to get sales commission of an user in a specific month
+	 * 
+	 * @param userId - user email
+	 * @param yearMonth - month
+	 * 
+	 * @return commission in percentage (double)
+	 */
+	public double getUserSalesCommissionOfMonth(String userId,YearMonth yearMonth)
+	{
+		User u = findUserByEmail(userId);
+		if (u == null)
+			return 0.0;
+		return u.getSalesCommissionOfMonth(yearMonth);
+	}	
+	
+	/**
+	 * Method to list all user contracts
+	 * 
+	 * @param userId - user email
+	 * 
+	 * @return List of Contracts, null if userId doesnt exists
+	 */
+	public List<Contract> listUserContracts(String userId)
+	{
+		if (findUserByEmail(userId)==null)
+			return null;
+		return findUserByEmail(userId).getAllContracts();
+	}
+	
+	/**
+	 * Method to list all active contracts
+	 * 
+	 * @return List of ContractsRestDTO
+	 */
+	public List<ContractRestDTO> listOpenContractsRestDTO()
+	{
+		List<ContractRestDTO> contractsList= new ArrayList<>();
+		ContractRestDTO contract;
+ 		for (User u : listAllUsers())
+ 			if (u.hasOpenContract()) {
+ 				contract = u.getLastContract().toRestDTO();
+ 				contract.setEmail(u.getEmailAddress());
+ 				contract.setName(u.getName());
+ 				contract.setRole(u.getRoles().toString());
+ 				contractsList.add(contract);
+ 			}
+ 				
+ 		return contractsList;
+	}
+	
+	/**
+	 * Method to add new contract to an user
+	 * 
+	 * @param user
+	 * @param baseSalary
+	 * @param salesCommission
+	 * 
+	 * @return true if new contract was successfully added, false if user has already an open contract
+	 */
+	public boolean addContract(User user,double baseSalary, double salesCommission)
+	{
+		if (user == null)
+			return false;
+		
+		return user.addContract(new Contract(baseSalary,salesCommission));
+	}
+	
+	/**
+	 * Method to close current contract of an user
+	 * 
+	 * @return false if user has no contracts or has all contracts already closed, true if contract was successfully closed
+	 */
+	public boolean closeContract(String userId)
+	{
+		if (findUserByEmail(userId)==null)
+			return false;
+		return findUserByEmail(userId).closeContract();
+	}
+	
+	/**
+	 * Method to get last contract of an User
+	 * 
+	 * @return Contract if the user has at least one contract, NULL if user has no contracts or if UserId doesn't exist
+	 */
+	public Contract getUserLastContract(String userId)
+	{
+		if (findUserByEmail(userId)==null)
+			return null;
+		return findUserByEmail(userId).getLastContract();
+	}
+	
+	
+	
 	public void setUserRepository(UserRepository userRepository)
 	{
 		this.userRepo = userRepository;
@@ -313,19 +416,14 @@ public class UserService{
 	}
 
 
-
+	/**
+	 * Method to check if an email exists on repository
+	 * 
+	 * @return true if email doesnt exists, false otherwise.
+	 */
 	public Boolean isEmailAvailable(String email) {
 		return !userRepo.existsById(email);
 	}
     
-//    // This method is used by JWTAuthenticationFilter
-//    @Transactional
-//    public UserDetails loadUserById(String id) {
-//        User user = userRepo.findById(id).orElseThrow(
-//            () -> new UsernameNotFoundException("User not found with id : " + id)
-//        );
-//
-//        return UserPrincipal.create(user);
-//    }
 	
 }
