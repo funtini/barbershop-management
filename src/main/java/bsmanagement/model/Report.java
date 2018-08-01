@@ -22,6 +22,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import bsmanagement.dto.rest.ReportRestDTO;
 import bsmanagement.model.Expense.expenseType;
 import bsmanagement.model.reportstate.Open;
 import bsmanagement.model.reportstate.ReportState;
@@ -429,15 +430,35 @@ public class Report {
 		double comission;
 		for (User u : getActiveUsersInThisMonth())
 		{
-			totalSalary=u.getLastContract().getBaseSalary();
-			comission=u.getLastContract().getSalesCommission();
-			for (Sale s: getUserSales(u))
+			totalSalary = 0.0;
+			if (!u.getAllContracts().isEmpty())
 			{
-				totalSalary=totalSalary+(comission/(100.0))*s.getAmount();
+				totalSalary=u.getLastContract().getBaseSalary();
+				comission=u.getLastContract().getSalesCommission();
+				for (Sale s: getUserSales(u))
+				{
+					totalSalary=totalSalary+(comission/(100.0))*s.getAmount();
+				}
 			}
+			
 			usersSalariesMap.put(u,totalSalary);
 		}
 		return usersSalariesMap;
+	}
+	
+	/**
+	 * Method that returns the total salaries amount value
+	 * 
+	 * @return double value
+	 */
+	public double sumAllSalariesAmount(){
+		
+		double sumSalary = 0.0;
+		for (Double salary : getUsersSalariesInThisMonth().values())
+		{
+			sumSalary=sumSalary+salary;
+		}
+		return sumSalary;
 	}
 	
 	/**
@@ -472,6 +493,29 @@ public class Report {
 			sum=sum+s.calculateFeeValue();
 		}
 		return sum;
+	}
+	
+	
+	/**
+	 * Method to convert Report in a RestDTO
+	 * 
+	 * @return ReportRestDTO
+	 */
+	public ReportRestDTO toRestDTO()
+	{
+		ReportRestDTO reportDTO = new ReportRestDTO();
+		reportDTO.setId(id);
+		reportDTO.setBusinessDays(businessDays);
+		reportDTO.setStatus(status);
+		reportDTO.setExpenses(calculateTotalExpensesValue());
+		reportDTO.setIncome(calculateTotalSalesAmount());
+		reportDTO.setRoi(calculateRoi());
+		reportDTO.setProfit(calculateProfit());
+		reportDTO.setSalaries(sumAllSalariesAmount());
+		reportDTO.setTotalFeeAmount(calculateTotalFeeAmount());
+		reportDTO.setNumOfSales(getSales().size());
+		
+		return reportDTO;
 	}
 
 
@@ -515,7 +559,7 @@ public class Report {
 	 */
 	@Override
 	public String toString() {
-		return "Report [year=" + yearMonth.getYear() + ", month=" + yearMonth.getMonth().toString() + ", salesNumber=" + sales.size() + ", expensesNumber=" + expenses.size() + ", businessDays="
+		return "Report [year=" + yearMonth.getYear() + ", month=" + yearMonth.getMonth().toString() + ", status=" + status + ", salesNumber=" + sales.size() + ", expensesNumber=" + expenses.size() + ", businessDays="
 				+ businessDays + "]";
 	}
 

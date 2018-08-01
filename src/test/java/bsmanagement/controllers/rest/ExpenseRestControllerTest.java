@@ -188,213 +188,213 @@ public class ExpenseRestControllerTest {
 			
 	}
 
-	/**
-	 * testAddExpense() controller
-	 * 
-	 * <p>GIVEN: Added 4 Expenses to service</p>
-	 * <p>WHEN: call listAddExpense() controller with valid input fields</p>
-	 * <p>THEN: the list of expenses has increased to 5</p>
-	 */
-	@Test
-	public void testAddExpenseSuccess() {
-		//GIVEN
-		assertEquals(expenseService.getExpenses().isEmpty(),true);
-		expenseService.addExpense(e1);
-		expenseService.addExpense(e2);
-		expenseService.addExpense(e3);
-		expenseService.addExpense(e4);
-		assertEquals(expenseService.getExpenses().size(),4);
-		//WHEN
-		expenseDTO.setName("Expense Test");
-		expenseDTO.setType("fiXed");
-		expenseDTO.setValueOfPayment(50);
-		expenseDTO.setDateOfPayment(LocalDate.now());
-		response = erc.addExpense(expenseDTO);
-		//THEN
-		assertEquals(response.getStatusCode(),HttpStatus.OK);
-		assertEquals(expenseService.getExpenses().size(),5);
-	}
-	
-	/**
-	 * testAddExpense() controller
-	 * 
-	 * <p>GIVEN: Added 4 Expenses to service</p>
-	 * <p>WHEN: call listAddExpense() controller with invalid input name</p>
-	 * <p>THEN: the list of expenses still 4</p>
-	 */
-	@Test
-	public void testAddExpenseBadRequestEmptyName() {
-		//GIVEN
-		assertEquals(expenseService.getExpenses().isEmpty(),true);
-		expenseService.addExpense(e1);
-		expenseService.addExpense(e2);
-		expenseService.addExpense(e3);
-		expenseService.addExpense(e4);
-		assertEquals(expenseService.getExpenses().size(),4);
-		//WHEN
-		
-		expenseDTO.setType("fiXed");
-		expenseDTO.setValueOfPayment(50);
-		expenseDTO.setDateOfPayment(LocalDate.now());
-		response = erc.addExpense(expenseDTO);
-		//THEN
-		assertEquals(response.getStatusCode(),HttpStatus.BAD_REQUEST);
-		assertEquals(expenseService.getExpenses().size(),4);
-	}
-	
-	/**
-	 * testAddExpense() controller
-	 * 
-	 * <p>GIVEN: Added 4 Expenses to service</p>
-	 * <p>WHEN: call listAddExpense() controller with invalid input value of Payment</p>
-	 * <p>THEN: the list of expenses still 4</p>
-	 */
-	@Test
-	public void testAddExpenseBadRequestEmptyValue() {
-		//GIVEN
-		assertEquals(expenseService.getExpenses().isEmpty(),true);
-		expenseService.addExpense(e1);
-		expenseService.addExpense(e2);
-		expenseService.addExpense(e3);
-		expenseService.addExpense(e4);
-		assertEquals(expenseService.getExpenses().size(),4);
-		//WHEN
-		expenseDTO.setName("Expense Test");
-		expenseDTO.setType("fiXed");
-	
-		expenseDTO.setDateOfPayment(LocalDate.now());
-		response = erc.addExpense(expenseDTO);
-		//THEN
-		assertEquals(response.getStatusCode(),HttpStatus.BAD_REQUEST);
-		assertEquals(expenseService.getExpenses().size(),4);
-	}
-	
-	/**
-	 * testAddExpense() controller
-	 * 
-	 * <p>GIVEN: Added 4 Expenses to service</p>
-	 * <p>WHEN: call listAddExpense() controller with invalid input type of Expense</p>
-	 * <p>THEN: the list of expenses still 4</p>
-	 */
-	@Test
-	public void testAddExpenseBadRequestEmptyType() {
-		//GIVEN
-		assertEquals(expenseService.getExpenses().isEmpty(),true);
-		expenseService.addExpense(e1);
-		expenseService.addExpense(e2);
-		expenseService.addExpense(e3);
-		expenseService.addExpense(e4);
-		assertEquals(expenseService.getExpenses().size(),4);
-		//WHEN
-		expenseDTO.setName("Expense Test");
-		
-		expenseDTO.setValueOfPayment(50);
-		expenseDTO.setDateOfPayment(LocalDate.now());
-		response = erc.addExpense(expenseDTO);
-		//THEN
-		assertEquals(response.getStatusCode(),HttpStatus.BAD_REQUEST);
-		assertEquals(expenseService.getExpenses().size(),4);
-	}
-	
-	/**
-	 * testAddExpense() controller
-	 * 
-	 * <p>GIVEN: Added 4 Expenses to service</p>
-	 * <p>WHEN: call listAddExpense() controller with invalid input type of Expense</p>
-	 * <p>THEN: the list of expenses still 4</p>
-	 */
-	@Test
-	public void testAddExpenseBadRequestInvalidType() {
-		//GIVEN
-		assertEquals(expenseService.getExpenses().isEmpty(),true);
-		expenseService.addExpense(e1);
-		expenseService.addExpense(e2);
-		expenseService.addExpense(e3);
-		expenseService.addExpense(e4);
-		assertEquals(expenseService.getExpenses().size(),4);
-		//WHEN
-		expenseDTO.setName("Expense Test");
-		expenseDTO.setType("Invalid Type");
-		expenseDTO.setValueOfPayment(50);
-		expenseDTO.setDateOfPayment(LocalDate.now());
-		response = erc.addExpense(expenseDTO);
-		//THEN
-		assertEquals(response.getStatusCode(),HttpStatus.BAD_REQUEST);
-		assertEquals(expenseService.getExpenses().size(),4);
-	}
-	
-	/**
-	 * testAddExpense() controller
-	 * 
-	 * <p>GIVEN: Added 4 Expenses to service</p>
-	 * <p>WHEN: call listAddExpense() controller with invalid input date of Expense</p>
-	 * <p>THEN: the list of expenses still 4</p>
-	 */
-	@Test
-	public void testAddExpenseBadRequestInvalidDate() {
-		//GIVEN
-		assertEquals(expenseService.getExpenses().isEmpty(),true);
-		expenseService.addExpense(e1);
-		expenseService.addExpense(e2);
-		expenseService.addExpense(e3);
-		expenseService.addExpense(e4);
-		assertEquals(expenseService.getExpenses().size(),4);
-		//WHEN
-		expenseDTO.setName("Expense Test");
-		expenseDTO.setType("fixed");
-		expenseDTO.setValueOfPayment(50);
-	
-		response = erc.addExpense(expenseDTO);
-		//THEN
-		assertEquals(response.getStatusCode(),HttpStatus.BAD_REQUEST);
-		assertEquals(expenseService.getExpenses().size(),4);
-	}
-
-	/**
-	 * testRemoveExpense() controller
-	 * 
-	 * <p>GIVEN: Added 4 Expenses to service</p>
-	 * <p>WHEN: call removeExpense() controller with valid Id</p>
-	 * <p>THEN: the list of expenses has decreased to 3</p>
-	 */
-	@Test
-	public void testRemoveExpenseSuccess() {
-		//GIVEN
-		assertEquals(expenseService.getExpenses().isEmpty(),true);
-		expenseService.addExpense(e1);
-		expenseService.addExpense(e2);
-		expenseService.addExpense(e3);
-		expenseService.addExpense(e4);
-		assertEquals(expenseService.getExpenses().size(),4);
-		//WHEN	
-		response = erc.removeExpense(1);
-		//THEN
-		assertEquals(response.getStatusCode(),HttpStatus.OK);
-		assertEquals(expenseService.getExpenses().size(),3);		
-	}
-	
-	/**
-	 * testRemoveExpense() controller
-	 * 
-	 * <p>GIVEN: Added 4 Expenses to service</p>
-	 * <p>WHEN: call removeExpense() controller with invalid Id</p>
-	 * <p>THEN: the list of expenses still 4 and response returned is NOT_FOUND</p>
-	 */
-	@Test
-	public void testRemoveExpenseNotFoundId() {
-		//GIVEN
-		assertEquals(expenseService.getExpenses().isEmpty(),true);
-		expenseService.addExpense(e1);
-		expenseService.addExpense(e2);
-		expenseService.addExpense(e3);
-		expenseService.addExpense(e4);
-		assertEquals(expenseService.getExpenses().size(),4);
-		//WHEN	
-		response = erc.removeExpense(21);
-		//THEN
-		assertEquals(response.getStatusCode(),HttpStatus.NOT_FOUND);
-		assertEquals(expenseService.getExpenses().size(),4);		
-	}
+//	/**
+//	 * testAddExpense() controller
+//	 * 
+//	 * <p>GIVEN: Added 4 Expenses to service</p>
+//	 * <p>WHEN: call listAddExpense() controller with valid input fields</p>
+//	 * <p>THEN: the list of expenses has increased to 5</p>
+//	 */
+//	@Test
+//	public void testAddExpenseSuccess() {
+//		//GIVEN
+//		assertEquals(expenseService.getExpenses().isEmpty(),true);
+//		expenseService.addExpense(e1);
+//		expenseService.addExpense(e2);
+//		expenseService.addExpense(e3);
+//		expenseService.addExpense(e4);
+//		assertEquals(expenseService.getExpenses().size(),4);
+//		//WHEN
+//		expenseDTO.setName("Expense Test");
+//		expenseDTO.setType("fiXed");
+//		expenseDTO.setValueOfPayment(50);
+//		expenseDTO.setDateOfPayment(LocalDate.now());
+//		response = erc.addExpense(expenseDTO);
+//		//THEN
+//		assertEquals(response.getStatusCode(),HttpStatus.OK);
+//		assertEquals(expenseService.getExpenses().size(),5);
+//	}
+//	
+//	/**
+//	 * testAddExpense() controller
+//	 * 
+//	 * <p>GIVEN: Added 4 Expenses to service</p>
+//	 * <p>WHEN: call listAddExpense() controller with invalid input name</p>
+//	 * <p>THEN: the list of expenses still 4</p>
+//	 */
+//	@Test
+//	public void testAddExpenseBadRequestEmptyName() {
+//		//GIVEN
+//		assertEquals(expenseService.getExpenses().isEmpty(),true);
+//		expenseService.addExpense(e1);
+//		expenseService.addExpense(e2);
+//		expenseService.addExpense(e3);
+//		expenseService.addExpense(e4);
+//		assertEquals(expenseService.getExpenses().size(),4);
+//		//WHEN
+//		
+//		expenseDTO.setType("fiXed");
+//		expenseDTO.setValueOfPayment(50);
+//		expenseDTO.setDateOfPayment(LocalDate.now());
+//		response = erc.addExpense(expenseDTO);
+//		//THEN
+//		assertEquals(response.getStatusCode(),HttpStatus.BAD_REQUEST);
+//		assertEquals(expenseService.getExpenses().size(),4);
+//	}
+//	
+//	/**
+//	 * testAddExpense() controller
+//	 * 
+//	 * <p>GIVEN: Added 4 Expenses to service</p>
+//	 * <p>WHEN: call listAddExpense() controller with invalid input value of Payment</p>
+//	 * <p>THEN: the list of expenses still 4</p>
+//	 */
+//	@Test
+//	public void testAddExpenseBadRequestEmptyValue() {
+//		//GIVEN
+//		assertEquals(expenseService.getExpenses().isEmpty(),true);
+//		expenseService.addExpense(e1);
+//		expenseService.addExpense(e2);
+//		expenseService.addExpense(e3);
+//		expenseService.addExpense(e4);
+//		assertEquals(expenseService.getExpenses().size(),4);
+//		//WHEN
+//		expenseDTO.setName("Expense Test");
+//		expenseDTO.setType("fiXed");
+//	
+//		expenseDTO.setDateOfPayment(LocalDate.now());
+//		response = erc.addExpense(expenseDTO);
+//		//THEN
+//		assertEquals(response.getStatusCode(),HttpStatus.BAD_REQUEST);
+//		assertEquals(expenseService.getExpenses().size(),4);
+//	}
+//	
+//	/**
+//	 * testAddExpense() controller
+//	 * 
+//	 * <p>GIVEN: Added 4 Expenses to service</p>
+//	 * <p>WHEN: call listAddExpense() controller with invalid input type of Expense</p>
+//	 * <p>THEN: the list of expenses still 4</p>
+//	 */
+//	@Test
+//	public void testAddExpenseBadRequestEmptyType() {
+//		//GIVEN
+//		assertEquals(expenseService.getExpenses().isEmpty(),true);
+//		expenseService.addExpense(e1);
+//		expenseService.addExpense(e2);
+//		expenseService.addExpense(e3);
+//		expenseService.addExpense(e4);
+//		assertEquals(expenseService.getExpenses().size(),4);
+//		//WHEN
+//		expenseDTO.setName("Expense Test");
+//		
+//		expenseDTO.setValueOfPayment(50);
+//		expenseDTO.setDateOfPayment(LocalDate.now());
+//		response = erc.addExpense(expenseDTO);
+//		//THEN
+//		assertEquals(response.getStatusCode(),HttpStatus.BAD_REQUEST);
+//		assertEquals(expenseService.getExpenses().size(),4);
+//	}
+//	
+//	/**
+//	 * testAddExpense() controller
+//	 * 
+//	 * <p>GIVEN: Added 4 Expenses to service</p>
+//	 * <p>WHEN: call listAddExpense() controller with invalid input type of Expense</p>
+//	 * <p>THEN: the list of expenses still 4</p>
+//	 */
+//	@Test
+//	public void testAddExpenseBadRequestInvalidType() {
+//		//GIVEN
+//		assertEquals(expenseService.getExpenses().isEmpty(),true);
+//		expenseService.addExpense(e1);
+//		expenseService.addExpense(e2);
+//		expenseService.addExpense(e3);
+//		expenseService.addExpense(e4);
+//		assertEquals(expenseService.getExpenses().size(),4);
+//		//WHEN
+//		expenseDTO.setName("Expense Test");
+//		expenseDTO.setType("Invalid Type");
+//		expenseDTO.setValueOfPayment(50);
+//		expenseDTO.setDateOfPayment(LocalDate.now());
+//		response = erc.addExpense(expenseDTO);
+//		//THEN
+//		assertEquals(response.getStatusCode(),HttpStatus.BAD_REQUEST);
+//		assertEquals(expenseService.getExpenses().size(),4);
+//	}
+//	
+//	/**
+//	 * testAddExpense() controller
+//	 * 
+//	 * <p>GIVEN: Added 4 Expenses to service</p>
+//	 * <p>WHEN: call listAddExpense() controller with invalid input date of Expense</p>
+//	 * <p>THEN: the list of expenses still 4</p>
+//	 */
+//	@Test
+//	public void testAddExpenseBadRequestInvalidDate() {
+//		//GIVEN
+//		assertEquals(expenseService.getExpenses().isEmpty(),true);
+//		expenseService.addExpense(e1);
+//		expenseService.addExpense(e2);
+//		expenseService.addExpense(e3);
+//		expenseService.addExpense(e4);
+//		assertEquals(expenseService.getExpenses().size(),4);
+//		//WHEN
+//		expenseDTO.setName("Expense Test");
+//		expenseDTO.setType("fixed");
+//		expenseDTO.setValueOfPayment(50);
+//	
+//		response = erc.addExpense(expenseDTO);
+//		//THEN
+//		assertEquals(response.getStatusCode(),HttpStatus.BAD_REQUEST);
+//		assertEquals(expenseService.getExpenses().size(),4);
+//	}
+//
+//	/**
+//	 * testRemoveExpense() controller
+//	 * 
+//	 * <p>GIVEN: Added 4 Expenses to service</p>
+//	 * <p>WHEN: call removeExpense() controller with valid Id</p>
+//	 * <p>THEN: the list of expenses has decreased to 3</p>
+//	 */
+//	@Test
+//	public void testRemoveExpenseSuccess() {
+//		//GIVEN
+//		assertEquals(expenseService.getExpenses().isEmpty(),true);
+//		expenseService.addExpense(e1);
+//		expenseService.addExpense(e2);
+//		expenseService.addExpense(e3);
+//		expenseService.addExpense(e4);
+//		assertEquals(expenseService.getExpenses().size(),4);
+//		//WHEN	
+//		response = erc.removeExpense(1);
+//		//THEN
+//		assertEquals(response.getStatusCode(),HttpStatus.OK);
+//		assertEquals(expenseService.getExpenses().size(),3);		
+//	}
+//	
+//	/**
+//	 * testRemoveExpense() controller
+//	 * 
+//	 * <p>GIVEN: Added 4 Expenses to service</p>
+//	 * <p>WHEN: call removeExpense() controller with invalid Id</p>
+//	 * <p>THEN: the list of expenses still 4 and response returned is NOT_FOUND</p>
+//	 */
+//	@Test
+//	public void testRemoveExpenseNotFoundId() {
+//		//GIVEN
+//		assertEquals(expenseService.getExpenses().isEmpty(),true);
+//		expenseService.addExpense(e1);
+//		expenseService.addExpense(e2);
+//		expenseService.addExpense(e3);
+//		expenseService.addExpense(e4);
+//		assertEquals(expenseService.getExpenses().size(),4);
+//		//WHEN	
+//		response = erc.removeExpense(21);
+//		//THEN
+//		assertEquals(response.getStatusCode(),HttpStatus.NOT_FOUND);
+//		assertEquals(expenseService.getExpenses().size(),4);		
+//	}
 
 	
 	/**

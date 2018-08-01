@@ -17,6 +17,7 @@ import bsmanagement.dto.rest.SalaryRestDTO;
 import bsmanagement.jparepositories.classtests.RoleRepositoryClass;
 import bsmanagement.jparepositories.classtests.UserRepositoryClass;
 import bsmanagement.model.Address;
+import bsmanagement.model.SaleService;
 import bsmanagement.model.User;
 import bsmanagement.model.UserService;
 import bsmanagement.model.roles.RoleName;
@@ -24,6 +25,7 @@ import bsmanagement.model.roles.RoleName;
 public class ContractRestControllerTest {
 
 	UserService userService;
+	SaleService saleService;
 	ContractRestController crc;
 	UserRepositoryClass userRepositoryClass;
 	RoleRepositoryClass roleRepositoryClass;
@@ -33,7 +35,6 @@ public class ContractRestControllerTest {
 	
 	ResponseEntity<ContractRestDTO> response;
 	ResponseEntity<SalaryRestDTO> responseSalary;
-	ResponseEntity<SalaryRestDTO> expectedSalary;
 	ResponseEntity<ContractRestDTO> expected;
 	ResponseEntity<List<ContractRestDTO>> responseList;
 	List<ContractRestDTO> expectedList;
@@ -453,10 +454,10 @@ public class ContractRestControllerTest {
 	
 		//WHEN
 
-		responseSalary = crc.getComissionSalesOfMonth("joao@domain.com","2017-10");
+		response = crc.getComissionSalesOfMonth("joao@domain.com","2017-10");
 		
 		//THEN
-		assertEquals(HttpStatus.OK,responseSalary.getStatusCode());			
+		assertEquals(HttpStatus.OK,response.getStatusCode());			
 	}
 	
 	/**
@@ -474,10 +475,10 @@ public class ContractRestControllerTest {
 
 		//WHEN
 
-		responseSalary = crc.getComissionSalesOfMonth("joao@domain.com","2017-101");
+		response = crc.getComissionSalesOfMonth("joao@domain.com","2017-101");
 		
 		//THEN
-		assertEquals(HttpStatus.BAD_REQUEST,responseSalary.getStatusCode());			
+		assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());			
 	}
 	
 	/**
@@ -495,10 +496,10 @@ public class ContractRestControllerTest {
 
 		//WHEN
 
-		responseSalary = crc.getComissionSalesOfMonth("unknwon@domain.com","2017-10");
+		response = crc.getComissionSalesOfMonth("unknwon@domain.com","2017-10");
 		
 		//THEN
-		assertEquals(HttpStatus.NOT_FOUND,responseSalary.getStatusCode());			
+		assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());			
 	}
 
 }

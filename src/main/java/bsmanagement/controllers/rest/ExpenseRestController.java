@@ -99,46 +99,46 @@ public class ExpenseRestController {
 	}
 	
 	
-	/**
-	 * Rest Controller to add new expense
-	 * 
-	 * @return ResponseEntity with a ExpenseRestDTO added if all fields inputed are valid, otherwise return BAD_REQUEST
-	 */
-	@PostMapping("/expenses")
-	@PreAuthorize("hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
-	public ResponseEntity<ExpenseRestDTO> addExpense(@RequestBody ExpenseRestDTO expenseDTO)
-	{
-		List<String> availableTypes = Arrays.asList("FIXED", "ONEOFF");
-		if (expenseDTO.getType() == null || !availableTypes.contains(expenseDTO.getType().toUpperCase()) || 
-				expenseDTO.getDateOfPayment()==null || expenseDTO.getValueOfPayment()<=0.0 || expenseDTO.getName()==null )
-		{
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		Expense e = expenseService.createExpense(expenseDTO.getName(),expenseType.valueOf(expenseDTO.getType().toUpperCase()), 
-				expenseDTO.getValueOfPayment(), expenseDTO.getDateOfPayment(),expenseDTO.getDescription());
-		
-		ExpenseRestDTO expensesRestDTO = expenseService.addExpense(e).toRestDTO();
-		return new ResponseEntity<>(expensesRestDTO,HttpStatus.OK);
-	}
-	
-	
-	/**
-	 * Rest Controller to remove an expense
-	 * 
-	 * @return ResponseEntity with code status OK if id exists, otherwise return NOT_FOUND
-	 */
-	@DeleteMapping("/expenses/{id}")
-	@PreAuthorize("hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
-	public ResponseEntity<ExpenseRestDTO> removeExpense(@PathVariable(value = "id") int id)
-	{
-		if (expenseService.findExpenseById(id)==null)
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		
-		expenseService.removeExpense(expenseService.findExpenseById(id));
-		
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+//	/**
+//	 * Rest Controller to add new expense
+//	 * 
+//	 * @return ResponseEntity with a ExpenseRestDTO added if all fields inputed are valid, otherwise return BAD_REQUEST
+//	 */
+//	@PostMapping("/expenses")
+//	@PreAuthorize("hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
+//	public ResponseEntity<ExpenseRestDTO> addExpense(@RequestBody ExpenseRestDTO expenseDTO)
+//	{
+//		List<String> availableTypes = Arrays.asList("FIXED", "ONEOFF");
+//		if (expenseDTO.getType() == null || !availableTypes.contains(expenseDTO.getType().toUpperCase()) || 
+//				expenseDTO.getDateOfPayment()==null || expenseDTO.getValueOfPayment()<=0.0 || expenseDTO.getName()==null )
+//		{
+//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		}
+//		
+//		Expense e = expenseService.createExpense(expenseDTO.getName(),expenseType.valueOf(expenseDTO.getType().toUpperCase()), 
+//				expenseDTO.getValueOfPayment(), expenseDTO.getDateOfPayment(),expenseDTO.getDescription());
+//		
+//		ExpenseRestDTO expensesRestDTO = expenseService.addExpense(e).toRestDTO();
+//		return new ResponseEntity<>(expensesRestDTO,HttpStatus.OK);
+//	}
+//	
+//	
+//	/**
+//	 * Rest Controller to remove an expense
+//	 * 
+//	 * @return ResponseEntity with code status OK if id exists, otherwise return NOT_FOUND
+//	 */
+//	@DeleteMapping("/expenses/{id}")
+//	@PreAuthorize("hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
+//	public ResponseEntity<ExpenseRestDTO> removeExpense(@PathVariable(value = "id") int id)
+//	{
+//		if (expenseService.findExpenseById(id)==null)
+//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//		
+//		expenseService.removeExpense(expenseService.findExpenseById(id));
+//		
+//		return new ResponseEntity<>(HttpStatus.OK);
+//	}
 	
 	/**
 	 * Rest Controller to get an expense by id

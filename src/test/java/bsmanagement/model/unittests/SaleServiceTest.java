@@ -610,7 +610,7 @@ public class SaleServiceTest {
 		assertEquals(saleService.addSale(s4),true);
 	
 		//When: calculate total amount of comission in 2018/03
-		double res = saleService.calculateUserComissionAmountInMonth(u1, YearMonth.of(2018, 3));
+		double res = saleService.calculateUserCommissionAmountInMonth(u1, YearMonth.of(2018, 3));
 		
 		//Then: get expected result
 		double exp = (25.0*55);

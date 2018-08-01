@@ -858,7 +858,7 @@ public class ReportTest {
 	 */
 	@Test
 	public void testToString() {
-		String expect = "Report [year=" + rep17.getYearMonth().getYear() + ", month=" + rep17.getYearMonth().getMonth().toString() + ", salesNumber=" + rep17.getSales().size() + ", expensesNumber=" + rep17.getExpenses().size() + ", businessDays="
+		String expect = "Report [year=" + rep17.getYearMonth().getYear() + ", month=" + rep17.getYearMonth().getMonth().toString() + ", status=" + rep17.getStatus() + ", salesNumber=" + rep17.getSales().size() + ", expensesNumber=" + rep17.getExpenses().size() + ", businessDays="
 				+ rep17.getBusinessDays() + "]";
 		assertEquals(rep17.toString(),expect);
 	}

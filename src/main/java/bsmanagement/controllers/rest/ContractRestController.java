@@ -187,10 +187,10 @@ public class ContractRestController {
 	 */
 	@GetMapping(value = "/users/{email}/salesComission", params = "date")
 	@PreAuthorize("hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
-	public ResponseEntity<SalaryRestDTO> getComissionSalesOfMonth(@PathVariable(value = "email") String email, @RequestParam(value = "date", required = true) String date) {
+	public ResponseEntity<ContractRestDTO> getComissionSalesOfMonth(@PathVariable(value = "email") String email, @RequestParam(value = "date", required = true) String date) {
 
 		YearMonth dateConverted;
-		SalaryRestDTO salary = new SalaryRestDTO();
+		ContractRestDTO contract = new ContractRestDTO();
 		try {
 			dateConverted = YearMonth.parse(date);
 		}
@@ -201,9 +201,9 @@ public class ContractRestController {
 		{
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		salary.setCommissionSale(userService.findUserByEmail(email).getSalesCommissionOfMonth(dateConverted));
+		contract.setSalesCommission(userService.findUserByEmail(email).getSalesCommissionOfMonth(dateConverted));
 
-		return new ResponseEntity<>(salary,HttpStatus.OK);
+		return new ResponseEntity<>(contract,HttpStatus.OK);
 	}
 
 }

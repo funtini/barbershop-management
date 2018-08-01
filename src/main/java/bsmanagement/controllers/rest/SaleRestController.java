@@ -56,7 +56,7 @@ public class SaleRestController {
 	/**
 	 * Rest Controller to list all sales
 	 * 
-	 * @return ResponseEntity with a List of SaleRestDTO
+	 * @return ResponseEntity with status code OK and a List of SaleRestDTO
 	 */
 	@RequestMapping("/sales")
 	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
@@ -72,28 +72,28 @@ public class SaleRestController {
 	}
 	
 	
-	/**
-	 * Rest Controller to add new sale
-	 * 
-	 * @return ResponseEntity with a SaleRestDTO created, if some parm is invalid return BAD_REQUEST
-	 */
-	@PostMapping("/sales")
-	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
-	public ResponseEntity<SaleRestDTO> addSale(@RequestBody SaleRestDTO saleRestDTO)
-	{
-		Customer customer = bookingCustomerService.findCustomerById(saleRestDTO.getCustomerId());
-		Product product = productService.findProductById(saleRestDTO.getProductId());
-		PaymentMethod payment = saleService.findPaymentMethodById(saleRestDTO.getPaymentMethod());
-		User user = userService.findUserByEmail(saleRestDTO.getUserEmail());
-		
-		Sale sale = saleService.createSale(saleRestDTO.getDate(), customer, product, payment, user);
-		
-		if (saleService.addSale(sale))
-			return new ResponseEntity<>(sale.toRestDTO(),HttpStatus.CREATED);
-		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		
-		
-	}
+//	/**
+//	 * Rest Controller to add new sale
+//	 * 
+//	 * @return ResponseEntity with a SaleRestDTO created, if some parm is invalid return BAD_REQUEST
+//	 */
+//	@PostMapping("/sales")
+//	@PreAuthorize("hasRole('USER') || hasRole('STOREMANAGER') || hasRole('ADMINISTRATOR')")
+//	public ResponseEntity<SaleRestDTO> addSale(@RequestBody SaleRestDTO saleRestDTO)
+//	{
+//		Customer customer = bookingCustomerService.findCustomerById(saleRestDTO.getCustomerId());
+//		Product product = productService.findProductById(saleRestDTO.getProductId());
+//		PaymentMethod payment = saleService.findPaymentMethodById(saleRestDTO.getPaymentMethod());
+//		User user = userService.findUserByEmail(saleRestDTO.getUserEmail());
+//		
+//		Sale sale = saleService.createSale(saleRestDTO.getDate(), customer, product, payment, user);
+//		
+//		if (saleService.addSale(sale))
+//			return new ResponseEntity<>(sale.toRestDTO(),HttpStatus.CREATED);
+//		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		
+//		
+//	}
 	
 	
 	/**

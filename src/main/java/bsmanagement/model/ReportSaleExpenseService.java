@@ -384,6 +384,8 @@ public class ReportSaleExpenseService {
 	{
 		if(saleRepo.existsById(sale.getId()))
 			return false;
+		if(sale.getProduct()==null || sale.getDate()==null)
+			return false;
 		Sale s = saleRepo.save(sale);
 		loadSale(s);
 		return true;

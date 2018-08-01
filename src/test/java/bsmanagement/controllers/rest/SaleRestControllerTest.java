@@ -22,6 +22,7 @@ import bsmanagement.jparepositories.classtests.UserRepositoryClass;
 import bsmanagement.model.BookingCustomerService;
 import bsmanagement.model.Contract;
 import bsmanagement.model.Customer;
+import bsmanagement.model.Expense;
 import bsmanagement.model.PaymentMethod;
 import bsmanagement.model.Product;
 import bsmanagement.model.Sale;
@@ -126,6 +127,8 @@ public class SaleRestControllerTest {
 		Sale.setStartIdGenerator(1);
 		Customer.setStartIdGenerator(1);
 		Product.setStartIdGenerator(1);
+		Expense.setStartIdGenerator(1);
+	
 		
 		//add 2 users
 		birthdate1 = LocalDate.of(1989, 11, 30);
@@ -214,93 +217,6 @@ public class SaleRestControllerTest {
 		expectedList.add(saleService.findSaleById(4).toRestDTO());
 		assertEquals(HttpStatus.OK,responseList.getStatusCode());
 		assertEquals(expectedList,responseList.getBody());
-
-	}
-
-	/**
-	 * testAddSale() controller
-	 * 
-	 * <p>GIVEN: Added 4 sales to service</p>
-	 * <p>WHEN: call AddSale() controller filled with valid Date and Valid product </p>
-	 * <p>THEN: The list of those sales has increased to 5</p>
-	 */
-	@Test
-	public void testAddSaleSuccess() {
-		//GIVEN
-		assertEquals(saleService.getSales().isEmpty(),true);
-		assertEquals(saleService.addSale(s1),true);
-		assertEquals(saleService.addSale(s2),true);
-		assertEquals(saleService.addSale(s3),true);
-		assertEquals(saleService.addSale(s4),true);
-		assertEquals(saleService.getSales().size(),4);
-		
-		//WHEN
-		SaleRestDTO newSale = new SaleRestDTO();
-		newSale.setDate(LocalDateTime.of(2018, 5, 5,10,10));
-		newSale.setProductId(1);
-		response = src.addSale(newSale);
-		
-		//THEN
-		assertEquals(saleService.getSales().size(),5);
-		assertEquals(HttpStatus.CREATED, response.getStatusCode());
-
-	}
-	
-	/**
-	 * testAddSale() controller
-	 * 
-	 * <p>GIVEN: Added 4 sales to service</p>
-	 * <p>WHEN: call AddSale() controller filled with valid Date but invalid product </p>
-	 * <p>THEN: The list of those sales still 4 and returned value is BAD_REQUEST</p>
-	 */
-	@Test
-	public void testAddSaleInvalidProduct() {
-		//GIVEN
-		assertEquals(saleService.getSales().isEmpty(),true);
-		assertEquals(saleService.addSale(s1),true);
-		assertEquals(saleService.addSale(s2),true);
-		assertEquals(saleService.addSale(s3),true);
-		assertEquals(saleService.addSale(s4),true);
-		assertEquals(saleService.getSales().size(),4);
-		
-		//WHEN
-		SaleRestDTO newSale = new SaleRestDTO();
-		newSale.setDate(LocalDateTime.of(2018, 5, 5,10,10));
-		newSale.setProductId(11);
-		response = src.addSale(newSale);
-		
-		//THEN
-		assertEquals(saleService.getSales().size(),4);
-		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-	}
-	
-	/**
-	 * testAddSale() controller
-	 * 
-	 * <p>GIVEN: Added 4 sales to service</p>
-	 * <p>WHEN: call AddSale() controller filled with valid product but invalid date </p>
-	 * <p>THEN: The list of those sales still 4 and returned value is BAD_REQUEST</p>
-	 */
-	@Test
-	public void testAddSaleInvalidDate() {
-		//GIVEN
-		assertEquals(saleService.getSales().isEmpty(),true);
-		assertEquals(saleService.addSale(s1),true);
-		assertEquals(saleService.addSale(s2),true);
-		assertEquals(saleService.addSale(s3),true);
-		assertEquals(saleService.addSale(s4),true);
-		assertEquals(saleService.getSales().size(),4);
-		
-		//WHEN
-		SaleRestDTO newSale = new SaleRestDTO();
-
-		newSale.setProductId(1);
-		response = src.addSale(newSale);
-		
-		//THEN
-		assertEquals(saleService.getSales().size(),4);
-		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
 	}
 

@@ -37,16 +37,13 @@ public class SaleService {
 
 
 	/**
-	 * Constructor of SaleRegistry
+	 * Constructor of SaleService
 	 */
 	public SaleService() {
 
 	}
 	
-	
-	
 	public SaleService(SaleRepository saleRepo, PaymentRepository paymentRepository) {
-		super();
 		this.saleRepo = saleRepo;
 		this.paymentRepository = paymentRepository;
 	}
@@ -308,7 +305,7 @@ public class SaleService {
 	 * @param month
 	 * @return
 	 */
-	public double calculateUserComissionAmountInMonth(User user,YearMonth yearMonth)
+	public double calculateUserCommissionAmountInMonth(User user,YearMonth yearMonth)
 	{
 		List<Sale> sales = new ArrayList<Sale>();
 		for (Sale s: findSalesByUser(user))
@@ -325,9 +322,6 @@ public class SaleService {
 		Math.round(totalAmount);
 		return totalAmount/100;
 	}
-	
-	
-	
 	
 	/**
 	 * Method to get a all amount payed by a specific payment method
