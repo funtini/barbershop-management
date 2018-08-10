@@ -8,7 +8,7 @@ module.exports = {
         filename: './app.js'
     },
     devServer: {
-        port: 8080,
+        port: 8081,
         contentBase: './public',
     },
     resolve: {
@@ -33,7 +33,7 @@ module.exports = {
             loader: 'babel-loader',
             exclude: /node_modules/,
             query: {
-                presets: ['es2015', 'react'],
+                presets: ['es2015', 'react','stage-2'],
                 plugins: ['transform-object-rest-spread']
             }
         }, {
