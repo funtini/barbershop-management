@@ -18,7 +18,7 @@ export default props => (
             <MenuNotification colour="red" number="3"/>
         </MenuItem>
         <MenuItem path='#customers' label='Customers' icon='users' />
-        <MenuItem path='#' label='Products' icon='cut' />
+        <MenuItem path='#products' label='Products' icon='cut' />
         <MenuTree label='Sales' icon='usd'> 
             <MenuItem path='#newSale'
                 label='Add' icon='usd' />
