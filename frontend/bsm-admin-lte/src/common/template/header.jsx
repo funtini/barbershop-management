@@ -14,7 +14,7 @@ export default props => (
             </span>
         </a>
         <nav className='navbar navbar-static-top'>
-            <a href className='sidebar-toggle' data-toggle='offcanvas'></a>
+            <a href='/#/' className='sidebar-toggle' data-toggle='offcanvas'></a>
             <HeaderNav>
             <HeaderDropdown type="notifications-menu" header="You have 10 messages" number="10" badge="warning" icon="bell-o" footer="View All" centered>
                 <DropdownInfo icon="warning" color="yellow" text="Report of July is available to close"/>

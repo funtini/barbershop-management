@@ -9,7 +9,7 @@ export default props => (
                 <p>{props.text}</p>
             </div>
             <div className='icon'>
-                <i className={`fa fa-${props.icon}`}/>
+                {props.icon? <i className={`fa fa-${props.icon}`}/> : <i className={`${props.fullIcon}`}/>}
             </div>
         </div>
     </Grid>

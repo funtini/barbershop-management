@@ -1,7 +1,7 @@
 import React from 'react'
 import { Router, Route, IndexRoute, Redirect, hashHistory } from 'react-router'
+import Loadable from 'react-loadable'
 
-import App from './app'
 import Dashboard from '../components/dashboard'
 import Sales from '../components/sales'
 import Widgets from '../components/ui/widgets';
@@ -16,10 +16,20 @@ import Customers from '../components/customers';
 import Products from '../components/products';
 import More from '../components/ui/more';
 import Forms from '../components/ui/forms';
+import Booking from '../components/booking';
+import DashboardBusiness from '../components/dashboard/business';
+
+// const Dashboard = Loadable({
+//     loader: () => import('../components/dashboard'),
+//     loading: () => import('../components/loading'),
+//   });
+
+
 
 export default props => (
     <Router history={hashHistory}>
         <Route path='/' component={Dashboard}/>
+        <Route path='dashboard/business' component={DashboardBusiness}/>
             
         <Route path='newSale' component={Sales} />
         <Route path='widgets' component={Widgets} />
@@ -34,7 +44,7 @@ export default props => (
         <Route path='products' component={Products} />
         <Route path='more' component={More} />
         <Route path='forms' component={Forms} />
-
+        <Route path='booking' component={Booking} />
         <Redirect from='*' to='/' />
     </Router>
 )

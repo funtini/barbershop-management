@@ -12,7 +12,7 @@ export default props => (
                 <i className={`fa fa-${props.icon}`}/>
             </div>
             <div className="small-box-footer">
-            {props.footer}
+            <strong>{props.footerTitle} </strong>{props.footerText}
             </div>
         </div>
     </Grid>

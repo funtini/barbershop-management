@@ -18,6 +18,10 @@ export default props => (props.cols?
             <div className={`box-body ${props.centered ? "text-center" : null}`}>
                 {props.children}
             </div>
+            {props.isLoading? <div className="overlay">
+              <i className="fa fa-refresh fa-spin"></i>
+            </div>:
+        null}  
         </div>
     </Grid>:<div className={`box box-${props.type} ${props.collapsed ? "collapsed-box" : ''} ${props.solid?"box-solid":''}`}>
             <div className="box-header with-border">
@@ -31,8 +35,12 @@ export default props => (props.cols?
                     <button type="button" className="btn btn-box-tool" data-widget="remove"><i className="fa fa-times"></i></button>:null}
                 </div>
             </div>
-            <div className={`box-body ${props.centered ? "text-center" : null}`}>
+            <div className={`box-body ${props.noPadding?'no-padding':''} ${props.table?'table-responsive':''} ${props.centered ? "text-center" : null}`} >
                 {props.children}
             </div>
+            {props.isLoading? <div className="overlay">
+              <i className="fa fa-refresh fa-spin"></i>
+            </div>:
+        null}  
         </div>
 )

@@ -10,10 +10,10 @@ export default props => (
         <MenuTree label='Dashboard' icon='dashboard'> 
             <MenuItem path='#'
                 label='Today' icon='circle-o' />
-            <MenuItem path='#'
+            <MenuItem path='#dashboard/business'
                 label='Business Summary' icon='circle-o' />
         </MenuTree>
-        <MenuItem path='#' label='Booking' icon='calendar'>
+        <MenuItem path='#booking' label='Booking' icon='calendar'>
             <MenuNotification colour="blue" number="10"/>
             <MenuNotification colour="red" number="3"/>
         </MenuItem>

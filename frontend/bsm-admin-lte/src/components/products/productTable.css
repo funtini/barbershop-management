@@ -1,0 +1,16 @@
+.input-number:hover{
+    border: 2px solid #3c8dbc
+}
+
+.input-text:hover{
+    border: 2px solid #3c8dbc
+    
+}
+
+.select2:hover{
+    border: 2px solid #3c8dbc
+}
+
+.select2 option{
+    width: 100%;
+}

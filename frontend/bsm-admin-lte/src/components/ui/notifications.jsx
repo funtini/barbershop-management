@@ -12,8 +12,9 @@ import WarningAlert from '../../common/elements/warningAlert'
 import Grid from '../../common/layout/grid'
 import ProgressBar from '../../common/label/progressBar'
 import Button from '../../common/elements/button'
-// import { Modal, Carousel} from 'react-bootstrap';
-import Chart from 'chart.js';
+import { Modal, Carousel} from 'react-bootstrap';
+// import Chart from 'chart.js';
+import {Bar,Line,Pie} from 'react-chartjs-2';
 
 
 export default class Notifications extends Component {
@@ -24,7 +25,34 @@ export default class Notifications extends Component {
         this.handleClose = this.handleClose.bind(this);
     
         this.state = {
-          show: false
+          show: false,
+          chartData:{
+              labels: ['Simple Haircut','Full Haircut','Shave','HairGel','CleanShave','Shave&Haircut'],
+              datasets:[
+                  {
+                      label:'Products',
+                      borderCapStyle:'butt',
+                      borderJoinStyle:'miter',
+                      borderDash:[],
+                      borderDashOffset:0.0,
+                      data:[
+                          251,
+                          181,
+                          211,
+                          30,
+                          41,
+                          98
+                      ],
+                      borderWidth: 1,
+                        hoverBackgroundColor: 'rgba(91, 163, 245,0.4)',
+                        hoverBorderColor: 'rgba(91, 163, 245,1)',
+                    
+                      hoverBorderWidth:2,
+                      backgroundColor: 'rgba(91, 163, 245,1)',
+                      borderColor: 'rgba(75,192,192,1)'
+                  }
+              ]
+          }
         };
       }
 
@@ -44,9 +72,9 @@ export default class Notifications extends Component {
             datasets: [
                 {
                   label               : 'Electronics',
-                  fillColor           : 'rgba(210, 214, 222, 1)',
-                  strokeColor         : 'rgba(210, 214, 222, 1)',
-                  pointColor          : 'rgba(210, 214, 222, 1)',
+                  fillColor           : 'rgba(0,0,255,0.3)',
+                  strokeColor         : 'rgba(0,0,255,0.3)',
+                  pointColor          : 'rgba(0,0,255,0.3)',
                   pointStrokeColor    : '#c1c7d1',
                   pointHighlightFill  : '#fff',
                   pointHighlightStroke: 'rgba(220,220,220,1)',
@@ -54,12 +82,12 @@ export default class Notifications extends Component {
                 },
                 {
                   label               : 'Digital Goods',
-                  fillColor           : 'rgba(60,141,188,0.9)',
-                  strokeColor         : 'rgba(60,141,188,0.8)',
+                  fillColor           : 'rgba(0,0,255,0.3)',
+                  strokeColor         : 'rgba(0,0,255,0.3)',
                   pointColor          : '#3b8bba',
-                  pointStrokeColor    : 'rgba(60,141,188,1)',
+                  pointStrokeColor    : 'rgba(0,0,255,0.3)',
                   pointHighlightFill  : '#fff',
-                  pointHighlightStroke: 'rgba(60,141,188,1)',
+                  pointHighlightStroke: 'rgba(0,0,255,0.3)',
                   data                : [28, 48, 40, 19, 86, 27, 90]
                 }
               ]
@@ -70,7 +98,7 @@ export default class Notifications extends Component {
             //Boolean - Whether grid lines are shown across the chart
             scaleShowGridLines      : false,
             //String - Colour of the grid lines
-            scaleGridLineColor      : 'rgba(0,0,0,.05)',
+            scaleGridLineColor      : 'rgba(0,0,255,0.3)',
             //Number - Width of the grid lines
             scaleGridLineWidth      : 1,
             //Boolean - Whether to show horizontal lines (except X axis)
@@ -446,6 +474,14 @@ export default class Notifications extends Component {
                         <Box cols="12 6" title="Charts" icon="warning" collapsable removable>
                             <div className="chart">
                                 <canvas id="areaChart" style={{height:"250px"}}></canvas>
+                            </div>
+                        </Box>
+                        <Box cols="12 6" title="React-Charts-2" icon="warning" collapsable removable>
+                            <div className="chart">
+                                <Bar data={this.state.chartData} width={100} height={250} options={{
+                                    maintainAspectRatio: false
+                                }}
+                                />
                             </div>
                         </Box>
                     </Row>
