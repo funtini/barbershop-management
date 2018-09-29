@@ -8,6 +8,7 @@ import Routes from './routes'
 import Lockscreen from './../components/lockscreen/lockscreen'
 
 export default props => (
+    <div className='skin-blue fixed sidebar-mini'>
     <div className='wrapper'>
         <Header />
         <SideBar/>
@@ -15,6 +16,7 @@ export default props => (
             <Routes />
         </div>
         <Footer/>
+    </div>
     </div>
     
     // <Lockscreen/>

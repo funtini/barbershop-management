@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default props => (
-    <li> 
+    <li className="menuItem"> 
         <a href={props.path}>
             <i className={`fa fa-${props.icon}`}/>
             <span>

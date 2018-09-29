@@ -18,6 +18,9 @@ import More from '../components/ui/more';
 import Forms from '../components/ui/forms';
 import Booking from '../components/booking';
 import DashboardBusiness from '../components/dashboard/business';
+import Settings from '../components/settings'
+import CurrentReport from '../components/reports'
+import AllReports from '../components/reports/allTime/allReports'
 
 // const Dashboard = Loadable({
 //     loader: () => import('../components/dashboard'),
@@ -45,6 +48,9 @@ export default props => (
         <Route path='more' component={More} />
         <Route path='forms' component={Forms} />
         <Route path='booking' component={Booking} />
+        <Route path='settings' component={Settings} />
+        <Route path='reports/current' component={CurrentReport} />
+        <Route path='reports/all' component={AllReports} />
         <Redirect from='*' to='/' />
     </Router>
 )

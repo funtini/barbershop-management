@@ -1,3 +1,3 @@
-import Reports from './reports'
+import CurrentReport from './currentReport'
 
-export default Reports
+export default CurrentReport
