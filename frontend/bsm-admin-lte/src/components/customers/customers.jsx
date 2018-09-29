@@ -16,7 +16,7 @@ import Label from '../../common/elements/label'
 import Button from '../../common/elements/button'
 import DataTable from '../../common/tables/dataTable'
 import './customers.css'
-import { Bar } from 'react-chartjs-2';
+import { Bar,Line,Pie,HorizontalBar } from 'react-chartjs-2';
 import CustomersTable from './customersTable';
 // import { Switch } from "@blueprintjs/core";
 
@@ -28,21 +28,20 @@ export default class Customers extends Component {
       themeChange: false,
       isLoading: false,
       chartData: {
-        labels: ['Simple Haircut', 'Full Haircut', 'Shave', 'HairGel', 'CleanShave', 'Shave&Haircut'],
+        labels: ['Mangualde', 'Nelas', 'Penalva', 'Mesquitela', 'Canas'],
         datasets: [
           {
-            label: 'Products',
+            label: 'Number of Customers',
             borderCapStyle: 'butt',
             borderJoinStyle: 'miter',
             borderDash: [],
             borderDashOffset: 0.0,
             data: [
-              251,
-              181,
-              211,
-              30,
-              41,
-              98
+              94,
+              34,
+              27,
+              16,
+              13
             ],
             borderWidth: 1,
             hoverBackgroundColor: 'rgba(91, 163, 245,0.4)',
@@ -53,7 +52,56 @@ export default class Customers extends Component {
             borderColor: 'rgba(75,192,192,1)'
           }
         ]
-      }
+      },
+      regData:{
+        labels: ['JAN', 'FEV', 'MAR', 'APR', 'MAY', 'JUN' , 'JUL', 'AGO', 'SET', 'OUT','NOV', 'DEC'],
+        datasets: [
+            {
+                label: 'New Registrations',
+                data: [
+                    5,
+                    2,
+                    3,
+                    1,
+                    0,
+                    3,
+                    2,
+                    5,
+                    // 8,
+                    // 3,
+                    // 1,
+                    // 1,
+                ],
+                borderWidth: 1,
+                hoverBackgroundColor: 'rgba(91, 163, 245,0.4)',
+                hoverBorderColor: 'rgba(91, 163, 245,1)',
+                // hoverBackgroundColor: 'rgba(91, 163, 245,0.4)',
+                // hoverBorderColor: 'rgba(91, 163, 245,1)',
+ //Point options
+ pointRadius: 5,
+ pointBorderColor:'rgba(255, 250, 240,1)',
+ pointBackgroundColor: 'rgba(91, 163, 245,1)',
+ //Hover options
+ pointHoverRadius: 7,
+ pointHoverBorderWidth: 2,
+ pointHoverBackgroundColor: 'rgba(91, 163, 245,1)',
+                hoverBorderWidth: 2,
+                backgroundColor: 'rgba(91, 163, 245,0.6)',
+                borderColor: 'rgba(75,192,192,1)'
+                // borderColor: 'rgba(75,192,192,1)'
+            }
+        ]
+
+        }
+        ,
+        regOptions:{
+          responsive: true,
+                // title: {
+                //     display: true,
+                //     text: 'New Registrations 2018'
+                // },
+                maintainAspectRatio: false
+        }
     };
 
 
@@ -69,7 +117,6 @@ export default class Customers extends Component {
   // }
 
   render() {
-    var dataHeader = ["Um", "Dois", "Tres", "Quatro", "Quinta"]
 
     return (
       <div>
@@ -106,11 +153,10 @@ export default class Customers extends Component {
           {/* <Switch checked={this.state.themeChange} label="Change Theme" onChange={this.handleChangeTheme}/> */}
           <div style={{ borderTop: '1px solid rgb(180, 180, 180)' }} /><br />
           {/* <PageHeader /> */}
-
           <Row>
           <Grid cols="12 9">
           <Row>
-            <Box cols="12 8" title="NEW CUSTOMER" icon="user-plus" type="primary" collapsable solid>
+            <Box cols="12 6" title="NEW CUSTOMER" icon="user-plus" type="primary" collapsable solid>
               <InputBox type="text" label="Name" placeholder="Enter Name" cols="6" />
               <InputBox type="text" label="Phone" placeholder="Enter Phone Number" width="40" />
               <InputBox type="text" label="Birth Date" placeholder="YYYY/MM/DD" cols="6" />
@@ -120,7 +166,18 @@ export default class Customers extends Component {
                 <Button name="Clear Fields" className="btn-add-customer" pullright />
               </div>
             </Box>
-            <Box cols="12 4" title="RECENTLY ADDED" icon="user" type="primary" collapsable>
+            <Box cols="12 6" title="LOCATION STATS" icon="bar-chart" type="primary" collapsable>
+                <HorizontalBar data={this.state.chartData} width={100} height={210} options={{
+                  maintainAspectRatio: false
+                }}
+                />
+            </Box>
+            
+            </Row>
+          </Grid>
+          <Grid cols="12 3">
+            <Row>
+            <Box cols="12 12" title="RECENTLY ADDED" icon="user" type="warning" solid collapsable>
               <ul className="products-list product-list-in-box">
                 <li className="item">
                   <div className="product-img">
@@ -164,10 +221,15 @@ export default class Customers extends Component {
                 {/* /.item */}
               </ul>
             </Box>
-</Row>
-<Row>
+            </Row>
+            </Grid>
+          </Row>
+          
 
-            <Box cols="12 12" icon="edit" title="LIST OF CUSTOMERS" type="primary" collapsable>
+          <Row>
+          <Grid cols="12 9">
+          <Row>
+          <Box cols="12 12" icon="edit" title="LIST OF CUSTOMERS" type="primary" collapsable>
                 <CustomersTable bordered striped/>
 
               {/* <DataTable cols='12' column={dataHeader} /> */}
@@ -175,14 +237,17 @@ export default class Customers extends Component {
             </Box>
 </Row>
 
+<Row>
+            <Box cols="12 6" title="REGISTRATION STATS - [ 2018 ]" icon="bar-chart" type="primary" collapsable>
+              <Line data={this.state.regData} width={200} height={250} options={this.state.regOptions } />
+            </Box>       
+</Row>
+
 
             </Grid>
-
-
-
             <Grid cols="12 3">
             <Row>
-            <Box cols="12 12" title="STATISTICS - 2018" type="primary" icon="tag" collapsable>
+            <Box cols="12 12" title="GENERAL STATS - 2018" type="warning" icon="tag" collapsable>
           
             <BoxHeader title="Best Customer" small="[ Total Income ]"/>
             <Grid cols="12 6">
@@ -218,8 +283,7 @@ export default class Customers extends Component {
             </Box>
             </Row>
             <Row>
-            
-            <Box cols="12 12" title="STATISTICS - ALL TIME" icon="tag" type="primary" collapsable>
+            <Box cols="12 12" title="GENERAL STATS - ALL TIME" icon="tag" type="warning" collapsable>
            
             <BoxHeader title="Best Customer" small="[ Total Income ]"/>
             <Grid cols="12 6">
@@ -251,25 +315,14 @@ export default class Customers extends Component {
 
             </Box>
           </Row>
+
+
+
+          
             </Grid>
 
           </Row>
           {/* <PageHeader title="Additional Information"/>  */}
-         
-          <Row>
-            <Box cols="12 6" title="CUSTOMERS GRAPH" icon="bar-chart" type="primary" collapsable>
-              <div className="chart">
-                <Bar data={this.state.chartData} width={100} height={250} options={{
-                  maintainAspectRatio: false
-                }}
-                />
-              </div>
-
-
-            </Box>
-          </Row>
-
-
 
           <PageHeader />
 

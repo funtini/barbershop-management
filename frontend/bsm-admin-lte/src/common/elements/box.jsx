@@ -4,7 +4,7 @@ import Grid from '../layout/grid'
 export default props => (props.cols?
     <Grid cols={props.cols}>
         <div className={`box box-${props.type} ${props.collapsed ? "collapsed-box" : ''} ${props.solid?"box-solid":''}`}>
-            <div className="box-header with-border">
+        {props.noHeader? null :<div className="box-header with-border">
                 <i className={`fa fa-${props.icon}`}></i><h3 className="box-title">{props.title}</h3>
                 
                 <div className="box-tools pull-right">
@@ -15,7 +15,8 @@ export default props => (props.cols?
                     <button type="button" className="btn btn-box-tool" data-widget="remove"><i className="fa fa-times"></i></button>:null}
                 </div>
             </div>
-            <div className={`box-body ${props.centered ? "text-center" : null}`}>
+        }
+            <div className={`box-body ${props.noPadding?'no-padding':''} ${props.table?'table-responsive':''} ${props.centered ? "text-center" : null}`}>
                 {props.children}
             </div>
             {props.isLoading? <div className="overlay">
@@ -23,8 +24,8 @@ export default props => (props.cols?
             </div>:
         null}  
         </div>
-    </Grid>:<div className={`box box-${props.type} ${props.collapsed ? "collapsed-box" : ''} ${props.solid?"box-solid":''}`}>
-            <div className="box-header with-border">
+    </Grid>:<div className={`box box-${props.type} ${props.collapsed ? "collapsed-box" : ''}  ${props.solid?"box-solid":''}`}>
+            {props.noHeader? null : <div className="box-header with-border">
                 <i className={`fa fa-${props.icon}`}></i><h3 className="box-title">{props.title}</h3>
                 
                 <div className="box-tools pull-right">
@@ -34,7 +35,8 @@ export default props => (props.cols?
                     {props.removable?
                     <button type="button" className="btn btn-box-tool" data-widget="remove"><i className="fa fa-times"></i></button>:null}
                 </div>
-            </div>
+            </div>}
+            
             <div className={`box-body ${props.noPadding?'no-padding':''} ${props.table?'table-responsive':''} ${props.centered ? "text-center" : null}`} >
                 {props.children}
             </div>

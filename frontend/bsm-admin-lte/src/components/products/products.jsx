@@ -2,20 +2,15 @@ import React, { Component } from 'react'
 import ContentHeader from '../../common/template/content/contentHeader';
 import PageHeader from '../../common/template/content/pageHeader'
 import Content from '../../common/template/content/content'
-import ValueBox from '../../common/widget/valueBox'
 import SmallBox from '../../common/widget/smallBox'
 import InfoBox from '../../common/widget/infoBox'
-import SimpleBox from '../../common/widget/simpleBox'
 import Row from '../../common//layout/row'
 import Grid from '../../common//layout/grid'
-import UserInfo from '../../common/widget/userInfo';
 import Box from '../../common/elements/box'
-import InputBox from '../../common/elements/inputBox'
-import Label from '../../common/elements/label'
 import Button from '../../common/elements/button'
-import DataTable from '../../common/tables/dataTable'
 import { Bar, Pie } from 'react-chartjs-2';
 import ProductTable from './productTable';
+import BoxHeader from '../../common/elements/boxHeader'
 import moment from 'moment';
 
 export default class Products extends Component {
@@ -24,7 +19,7 @@ export default class Products extends Component {
         this.state = {
             themeChange: false,
             isLoading: false,
-            chartData: {
+            barChartData: {
                 labels: ['Corte Simples', 'Corte Completo', 'Barba Curta', 'Barba Longa', 'All Extra'],
                 datasets: [
                     {
@@ -45,6 +40,36 @@ export default class Products extends Component {
                         hoverBorderColor: 'rgba(91, 163, 245,1)',
 
                         hoverBorderWidth: 2,
+                        backgroundColor:
+                            'rgba(54, 162, 235, 0.6)',
+
+                        borderColor: 'rgba(75,192,192,1)'
+                    }
+                ]
+            },
+            pieData: {
+                labels: ['Corte Simples', 'Corte Completo', 'Barba Curta', 'Barba Longa', 'All Extra'],
+                datasets: [
+                    {
+                        data: [
+                            251,
+                            181,
+                            211,
+                            41,
+                            98
+                        ],
+                        // borderWidth: 1,
+                        hoverBackgroundColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(153, 50, 204, 1)',
+                        ],
+                        // hoverBackgroundColor: 'rgba(91, 163, 245,0.4)',
+                        // hoverBorderColor: 'rgba(91, 163, 245,1)',
+
+                        hoverBorderWidth: 5,
                         backgroundColor: [
                             'rgba(54, 162, 235, 0.6)',
                             'rgba(75, 192, 192, 0.6)',
@@ -52,9 +77,24 @@ export default class Products extends Component {
                             'rgba(255, 206, 86, 0.6)',
                             'rgba(153, 50, 204, 0.6)',
                         ],
-                        borderColor: 'rgba(75,192,192,1)'
+                        // borderColor: 'rgba(75,192,192,1)'
                     }
                 ]
+
+            },
+            pieOptions: {
+                // title: {
+                //     display: true,
+                //     text: current_time,
+                //     fontSize: 20
+                // },
+                legend: {
+                    display: true,
+                    position: 'right'
+                },
+                maintainAspectRatio: false
+                //dognhut 
+                // cutoutPercentage:50
             }
         };
         this.inputName = React.createRef();
@@ -160,52 +200,53 @@ export default class Products extends Component {
                             </Row>
                             <Row>
                                 <Box cols="12 12" title="PRODUCTS GRAPH" type="primary" collapsable>
-                                    <div className="chart">
-                                        <Bar data={this.state.chartData} width={100} height={250} options={{
-                                            maintainAspectRatio: false
-                                        }}
-                                        />
-                                    </div>
+
+                                    <Bar data={this.state.barChartData} width={100} height={250} options={{
+                                        maintainAspectRatio: false
+                                    }}
+                                    />
+
                                 </Box>
                             </Row>
                         </Grid>
                         <Grid cols="12 6">
                             <br />
                             <Row>
-                                <Box cols="12 12" title="PRODUCTS SALES [%]" type="primary" collapsable>
-                                    <div className="chart">
-                                        <Pie data={this.state.chartData} options={{
-                                            title: {
-                                                display: true,
-                                                text: current_time,
-                                                fontSize: 20
-                                            },
-                                            legend: {
-                                                display: true,
-                                                position: 'right'
-                                            }
-                                        }}
-                                        />
-                                    </div>
+                                <Box cols="12 7" title="PRODUCTS SALES [%]" type="primary" collapsable>
+
+                                    <Pie data={this.state.pieData} options={this.state.pieOptions} width={100} height={260}/>
+
+                                </Box>
+                                <Box cols="12 5" title="STATISTICS" type="warning" collapsable >
+                                <BoxHeader title="Best Extra Product" small="[ Total Sales ]"/>
+                                    <Grid cols="12 6">
+                                    <p className="text-light-blue" style={{fontSize:17}}>Gel Cabelo</p>
+                                    <p className="text-purple">Amaciador Barba</p>
+                                    <p className="text-purple" style={{fontSize:13}}>Produto Cabelo</p>
+                                    <p className="text-purple" style={{fontSize:12}}>Produto Xpto</p>
+                                    <p className="text-purple" style={{fontSize:12}}>Produto Qwerty</p>
+                                    </Grid>
+                                    <Grid cols="12 6">
+                                    <p className="text-light-blue pull-right">12</p>
+                                    <Row/>
+                                    <p className="text-purple pull-right">10</p>
+                                    <Row/>
+                                    <p className="text-purple pull-right">7</p>
+                                    <Row/>
+                                    <p className="text-purple pull-right">5</p>
+                                    <Row/>
+                                    <p className="text-purple pull-right">2</p>
+                                    </Grid>
                                 </Box>
                             </Row>
+                            
                             <Row>
-                                {/* <PageHeader title="Additional Information"/>  */}
-                                <Box cols="12 6" title="STATISTICS" type="primary" collapsable >
-                                    <h5 >h4. Bootstrap heading</h5>
-                                    <p className="text-light-blue">Text light blue to emphasize info (2)</p>
-                                </Box>
-                                <Box cols="12 6" title="STATISTICS" type="primary" collapsable >
-                                    <h5 >h4. Bootstrap heading</h5>
-                                    <p className="text-light-blue">Text light blue to emphasize info (2)</p>
-                                </Box>
-                                <Box cols="12 6" title="STATISTICS" type="primary" collapsable >
-                                    <h5 >h4. Bootstrap heading</h5>
-                                    <p className="text-light-blue">Text light blue to emphasize info (2)</p>
-                                </Box>
-                                <Box cols="12 6" title="STATISTICS" type="primary" collapsable >
-                                    <h5 >h4. Bootstrap heading</h5>
-                                    <p className="text-light-blue">Text light blue to emphasize info (2)</p>
+                            
+                                <Box cols="12 12" title="CURRENT MONTH SOLD PRODUCTS" type="primary" collapsable >
+                                <Bar data={this.state.barChartData} width={100} height={250} options={{
+                                        maintainAspectRatio: false
+                                    }}
+                                    />
                                 </Box>
                             </Row>
                         </Grid>
