@@ -7,8 +7,10 @@ import Row from '../../common//layout/row'
 import Box from '../../common/elements/box'
 import Grid from '../../common//layout/grid'
 import Button from '../../common/elements/button'
-import Calendar from '../../common/eventCalendar/calendar'
+// import Calendar from '../../common/eventCalendar/calendar'
 import { Line } from 'react-chartjs-2';
+
+import './dashboard.css'
 
 
 
@@ -19,9 +21,9 @@ export default class Dashboard extends Component {
             themeChange: false,
             isLoading: false,
             chartData: {
-                labels: ['1', '2', '3', '6', '7', "8", "9",'10', '13', '14', '15'],
+                labels: ['1', '2', '3', '6', '7', "8", "9", '10', '13', '14', '15'],
                 datasets: [
-                    
+
                     {
                         label: 'Income',
                         // fill: false,
@@ -63,10 +65,10 @@ export default class Dashboard extends Component {
                         fill: false,
                         // borderCapStyle: 'butt',
                         // borderJoinStyle: 'miter',
-                         //Line Style
-                         tension: 0,
-                         pointRadius: 0,
-                         borderWidth: 2,
+                        //Line Style
+                        tension: 0,
+                        pointRadius: 0,
+                        borderWidth: 2,
                         // borderDash: [5, 5],
                         // borderDashOffset: 0.0,
                         data: [
@@ -82,9 +84,9 @@ export default class Dashboard extends Component {
                             65,
                             65
                         ],
-              
+
                         backgroundColor: 'rgba(255, 215, 0,0.4)',
-           
+
                         borderColor: 'rgba(218, 165, 32,1)'
                     },
 
@@ -119,7 +121,7 @@ export default class Dashboard extends Component {
 
 
                 }
-               ,
+                ,
                 hover: {
                     mode: 'dataset'
                 },
@@ -155,90 +157,125 @@ export default class Dashboard extends Component {
 
             }
         }
-          
+
     }
 
 
     render() {
-        
+
         return (
-            <div> 
-                <ContentHeader title='Dashboard' small='Today Summary'/>
+            <div>
+                <ContentHeader title='Dashboard' small='Today Summary' />
                 <Content>
-                     <Row>
+                    <Row>
                         <SmallBox cols='12 3' color='aqua' icon='bank'
                             value='6' text='Sales' footerTitle="Average:" footerText="8" />
                         <SmallBox cols='12 3' color='green' icon='euro'
-                            value='55 €' text='Today Income' footerTitle="Average Diff:" footerText="-12%"/>
+                            value='55 €' text='Today Income' footerTitle="Average Diff:" footerText="-12%" />
                         <SmallBox cols='12 3' color='yellow' icon='line-chart'
                             value='65 €' text='Daily Average' footerTitle="Growth last 30 days:" footerText="+5%" />
                         <SmallBox cols='12 3' color='red' icon='calendar-minus-o'
-                            value='12' text='Bookings' footerTitle="Next Booking:" footerText="14h30" progress="50" />            
-                    </Row>   
+                            value='12' text='Bookings' footerTitle="Next Booking:" footerText="14h30" progress="50" />
+                    </Row>
                     <Row>
-                    <Grid cols="12 6">
-                    <Row>
-                    <Box cols="12 12" icon="edit" title="QUICK ACTIONS" type="info" collapsable solid>
-                        <Row>
-                            <Grid cols="12 4">
-                            <div className="text-center">
-                                <Button icon="plus-square-o fa-lg" type="primary" size="xl" style={{ fontSize: '4em', width: '2.5em' }} />
-                                <p className="text-light-blue" style={{ fontSize: '1em',fontFamily:'Georgia, serif'}}>NEW SALE</p>
+                        <Grid cols="12 6">
+                            <Row>
+                            <Grid cols="12 12">
+                                <div className="quick_actions--header">
+                                QUICK ACTIONS
+                                <i className={`icon_actions fa fa-angle-down pull-right`}/>
                                 </div>
-                            </Grid>
-                            <Grid cols="12 4">
-                            <div className="text-center">
-                                <Button icon="calendar-plus-o fa-lg" type="primary" size="xl" style={{ fontSize: '4em', width: '2.5em' }} />
-                                <p className="text-light-blue" style={{ fontSize: '1em', fontFamily:'Georgia, serif' }}>NEW BOOKING</p>
+                                <div className="quick_actions--content">
+                                <Row>
+                                        <Grid cols="12 4">
+                                            <div className="button_container text-center">
+                                            <button type="button" className={`button_action btn btn-default btn-xl`}>
+                                            <i className={`fa fa-usd fa-sm`}/>
+                                            </button>
+                                                <p className="button_text" >NEW SALE</p>
+                                            </div>
+                                        </Grid>
+                                        <Grid cols="12 4">
+                                            <div className="button_container  text-center">
+                                            <button type="button" className={`button_action btn btn-default btn-xl`}>
+                                            <i className={`fa fa-calendar-plus-o fa-sm`}/>
+                                            </button>
+                                                <p className="button_text" >NEW BOOKING</p>
+                                            </div>
+                                        </Grid>
+                                        <Grid cols="12 4">
+                                            <div className="button_container text-center">
+                                            <button type="button" className={`button_action btn btn-default btn-xl`}>
+                                            <i className={`fa fa-user-plus fa-sm`}/>
+                                            </button>
+                                                <p className="button_text">NEW CUSTOMER</p>
+                                            </div>
+                                        </Grid>
+                                    </Row>
                                 </div>
-                            </Grid>
-                            <Grid cols="12 4">
-                            <div className="text-center">
-                                <Button icon="user-plus fa-lg" type="primary" size="xl" style={{ fontSize: '4em', width: '2.5em' }} />
-                                <p className="text-light-blue" style={{ fontSize: '1em',fontFamily:'Georgia, serif'}}>NEW CUSTOMER</p>
-                                </div>
-                            </Grid>
+                                </Grid>
+
+                                {/* <Box cols="12 12" icon="edit" title="QUICK ACTIONS" type="info" collapsable solid>
+                                    <Row>
+                                        <Grid cols="12 4">
+                                            <div className="text-center">
+                                                <Button icon="plus-square-o fa-lg" type="primary" size="xl" style={{ fontSize: '4em', width: '100%', minWidth: '90px' }} />
+                                                <p className="text-light-blue" style={{ fontSize: '1em', fontFamily: 'Georgia, serif' }}>NEW SALE</p>
+                                            </div>
+                                        </Grid>
+                                        <Grid cols="12 4">
+                                            <div className="text-center">
+                                                <Button icon="calendar-plus-o fa-lg" type="primary" size="xl" style={{ fontSize: '4em', width: '100%', minWidth: '90px' }} />
+                                                <p className="text-light-blue" style={{ fontSize: '1em', fontFamily: 'Georgia, serif' }}>NEW BOOKING</p>
+                                            </div>
+                                        </Grid>
+                                        <Grid cols="12 4">
+                                            <div className="text-center">
+                                                <Button icon="user-plus fa-lg" type="primary" size="xl" style={{ fontSize: '4em', width: '100%', minWidth: '90px' }} />
+                                                <p className="text-light-blue" style={{ fontSize: '1em', fontFamily: 'Georgia, serif' }}>NEW CUSTOMER</p>
+                                            </div>
+                                        </Grid>
+                                    </Row>
+                                </Box> */}
+
                             </Row>
-                        </Box>
-                       
-                    </Row>  
+                            <Row>
+                                <Box cols="12 12" title="DAILY INCOME - SEPTEMBER" type="primary" collapsable>
+
+                                    <Line data={this.state.chartData} options={this.state.options} width={100} height={300} />
+
+                                </Box>
+
+                            </Row>
+                        </Grid>
+                        <Grid cols="12 6">
+                            <Row>
+                                <Box cols="12 12" type="info" noPadding noHeader >
+                                    {/* <Calendar height="auto" slotDuration='00:30:00' defaultView='agendaDay'/> */}
+
+                                </Box>
+                            </Row>
+                        </Grid>
+                    </Row>
+
+
+
+
+
                     <Row>
-                        <Box cols="12 12" title="DAILY INCOME - SEPTEMBER" type="primary" collapsable>
-
-                            <Line data={this.state.chartData} options={this.state.options} width={100} height={300} />
-
-                        </Box>
 
                     </Row>
-                    </Grid>
-                    <Grid cols="12 6">
-                    <Row>
-                    <Box cols="12 12"type="info" noPadding noHeader >
-                    <Calendar height="auto" slotDuration='00:30:00' defaultView='agendaDay'/>
-
-                    </Box>
-                    </Row> 
-                    </Grid>
-                    </Row> 
-
-
-                    
 
 
                     <Row>
-                        
+
                     </Row>
-                     
-              
-                    <Row>
-                        
-                    </Row>
-     
 
 
-                    <PageHeader/> 
-              
-                    
+
+                    <PageHeader />
+
+
                 </Content>
             </div>
         )

@@ -6,7 +6,7 @@ import Calen from '../../components/ui/calen'
 import Row from '../../common//layout/row'
 import Grid from '../../common//layout/grid'
 import Box from '../../common/elements/box'
-import AddExternal from '../../components/ui/addExternal'
+// import AddExternal from '../../components/ui/addExternal'
 import './sales.css'
 
 export default class Sales extends Component {
@@ -43,7 +43,7 @@ export default class Sales extends Component {
                 </Row>
                 <Row>
                 <Box cols="12 3" title="Draggable Events" type="primary">
-                <AddExternal/>
+                {/* <AddExternal/> */}
                
                 </Box>
                 </Row>

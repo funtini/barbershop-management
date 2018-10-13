@@ -7,7 +7,8 @@ import Row from '../../../common//layout/row'
 import Box from '../../../common/elements/box'
 import Grid from '../../../common//layout/grid'
 import Button from '../../../common/elements/button'
-import { Line } from 'react-chartjs-2';
+import { Line, Doughnut } from 'react-chartjs-2';
+import './dashboardBusiness.css'
 
 
 
@@ -17,6 +18,27 @@ export default class DashboardBusiness extends Component {
         this.state = {
             themeChange: false,
             isLoading: false,
+            donutData: {
+                labels: [
+                    'Red',
+                    'Green',
+                    'Yellow'
+                ],
+                datasets: [{
+                    data: [300, 50, 100],
+                    backgroundColor: [
+                        '#FF6384',
+                        '#36A2EB',
+                        '#FFCE56'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FF6384',
+                        '#36A2EB',
+                        '#FFCE56'
+                    ]
+                }]
+            },
+
             chartData: {
                 labels: ['January', 'February', 'March', 'April', 'May', "June", "July"],
                 datasets: [
@@ -304,46 +326,47 @@ export default class DashboardBusiness extends Component {
 
 
                     <Row>
-                        <Box cols="12 6" icon="edit" title="QUICK ACTIONS" type="info" collapsable solid>
-                        <Row>
-                            <Grid cols="12 4">
-                            <div className="text-center">
-                                <Button icon="plus-square-o fa-lg" type="primary" size="xl" style={{ fontSize: '4em', width: '2.5em' }} />
-                                <p className="text-light-blue" style={{ fontSize: '1em',fontFamily:'Georgia, serif'}}>NEW SALE</p>
-                                </div>
-                            </Grid>
-                            <Grid cols="12 4">
-                            <div className="text-center">
-                                <Button icon="calendar-plus-o fa-lg" type="primary" size="xl" style={{ fontSize: '4em', width: '2.5em' }} />
-                                <p className="text-light-blue" style={{ fontSize: '1em', fontFamily:'Georgia, serif' }}>NEW BOOKING</p>
-                                </div>
-                            </Grid>
-                            <Grid cols="12 4">
-                            <div className="text-center">
-                                <Button icon="user-plus fa-lg" type="primary" size="xl" style={{ fontSize: '4em', width: '2.5em' }} />
-                                <p className="text-light-blue" style={{ fontSize: '1em',fontFamily:'Georgia, serif'}}>NEW CUSTOMER</p>
-                                </div>
-                            </Grid>
+                        <Grid cols="12 8">
+                            <Row>
+                                <Box cols="12 12" title="INCOME GRAPH" type="primary" icon="line-chart" collapsable>
+
+                                    <Line data={this.state.chartDataLine} options={this.state.optionsLine} width={100} height={350} />
+
+                                </Box>
+
                             </Row>
-                        </Box>
-                        <Box cols="12 6" title="INCOME GRAPH" type="primary" icon="line-chart" collapsable>
+                            <Row>
+                                <Box cols="12 12" title="LINE CHART" type="primary" collapsable>
 
-                            <Line data={this.state.chartDataLine} options={this.state.optionsLine} width={100} height={350} />
+                                    <Line data={this.state.chartData} options={this.state.options} width={100} height={300} />
 
-                        </Box>
+                                </Box>
+
+                            </Row>
+
+                        </Grid>
+                        <Grid cols="12 4">
+                            <Row>
+                                
+                                    <div className="donut_graph">
+                                        <h2 className="donut_title">Top Sales</h2>
+                                        <Doughnut data={this.state.donutData} width={100} height={50} />
+                                    </div>
+
+                            </Row>
+                            <Row>
+                            <div className="donut_graph">
+                                        <h2 className="donut_title">Top Expenses</h2>
+                                        <Doughnut data={this.state.donutData} width={100} height={50} />
+                                    </div>
+                            </Row>
+                        </Grid>
 
                     </Row>
 
 
 
-                    <Row>
-                        <Box cols="12 6" title="LINE CHART" type="primary" collapsable>
 
-                            <Line data={this.state.chartData} options={this.state.options} width={100} height={300} />
-
-                        </Box>
-
-                    </Row>
 
 
                     <PageHeader />
