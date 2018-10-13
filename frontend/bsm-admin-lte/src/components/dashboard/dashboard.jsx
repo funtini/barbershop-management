@@ -7,7 +7,7 @@ import Row from '../../common//layout/row'
 import Box from '../../common/elements/box'
 import Grid from '../../common//layout/grid'
 import Button from '../../common/elements/button'
-// import Calendar from '../../common/eventCalendar/calendar'
+import Calendar from '../../common/eventCalendar/calendar'
 import { Line } from 'react-chartjs-2';
 
 import './dashboard.css'
@@ -251,7 +251,7 @@ export default class Dashboard extends Component {
                         <Grid cols="12 6">
                             <Row>
                                 <Box cols="12 12" type="info" noPadding noHeader >
-                                    {/* <Calendar height="auto" slotDuration='00:30:00' defaultView='agendaDay'/> */}
+                                    <Calendar height="auto" slotDuration='00:30:00' defaultView='agendaDay'/>
 
                                 </Box>
                             </Row>
