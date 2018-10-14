@@ -257,7 +257,7 @@ export default class Dashboard extends Component {
                         <Grid cols="12 6">
                             <Row>
                                 <Box cols="12 8" type="info" noPadding noHeader >
-                                    <Calendar height="auto" slotDuration='00:30:00' defaultView='agendaDay'/>
+                                    <Calendar height="auto" slotDuration='00:30:00' noButtons defaultView='listDay'/>
 
                                 </Box>
                             </Row>

@@ -3,6 +3,13 @@ import './calendar.css'
 import Badge from '../label/badge'
 
 export default class Calen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state ={
+      events: []
+    }
+  }
+
   render() {
     return <div id="calendar"></div>;
   }
@@ -31,10 +38,10 @@ export default class Calen extends React.Component {
           }
         }
       },
-      header: {
-        left: 'prev,next today myCustomButton',
+      header:{
+        left: this.props.noButtons? '' : 'prev,next today myCustomButton',
         center: 'title',
-        right: 'month,agendaWeek,agendaDay,agendaFourDay listWeek listDay, basicWeek, basicDay'
+        right: this.props.noButtons? '' : 'month,agendaWeek,agendaDay,agendaFourDay listWeek listDay, basicWeek, basicDay'
       },
       views: {
         // month: { // name of view
