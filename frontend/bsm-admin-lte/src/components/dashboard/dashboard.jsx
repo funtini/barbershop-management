@@ -10,6 +10,7 @@ import Button from '../../common/elements/button'
 import Calendar from '../../common/eventCalendar/calendar'
 import { Line } from 'react-chartjs-2';
 
+
 import './dashboard.css'
 
 
@@ -242,6 +243,11 @@ export default class Dashboard extends Component {
                             <Row>
                                 <Box cols="12 12" title="DAILY INCOME - SEPTEMBER" type="primary" collapsable>
 
+                                
+
+                                </Box>
+                                <Box cols="12 12" title="DAILY INCOME - SEPTEMBER" type="primary" collapsable>
+
                                     <Line data={this.state.chartData} options={this.state.options} width={100} height={300} />
 
                                 </Box>
@@ -250,7 +256,7 @@ export default class Dashboard extends Component {
                         </Grid>
                         <Grid cols="12 6">
                             <Row>
-                                <Box cols="12 12" type="info" noPadding noHeader >
+                                <Box cols="12 8" type="info" noPadding noHeader >
                                     <Calendar height="auto" slotDuration='00:30:00' defaultView='agendaDay'/>
 
                                 </Box>
