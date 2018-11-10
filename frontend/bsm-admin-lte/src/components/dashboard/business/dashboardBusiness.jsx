@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
+
+//elements
 import ContentHeader from '../../../common/template/content/contentHeader';
 import PageHeader from '../../../common/template/content/pageHeader'
 import Content from '../../../common/template/content/content'
-import SmallBox from '../../../common/widget/smallBox'
+import SmallBox from '../../../common/elements/smallBox'
 import Row from '../../../common//layout/row'
 import Box from '../../../common/elements/box'
 import Grid from '../../../common//layout/grid'
-import Button from '../../../common/elements/button'
+import BoxCard from './../../../common/elements/boxCard'
+
+//libs
 import { Line, Doughnut } from 'react-chartjs-2';
+
+//style
 import './dashboardBusiness.css'
 
 
@@ -347,18 +353,14 @@ export default class DashboardBusiness extends Component {
                         </Grid>
                         <Grid cols="12 4">
                             <Row>
-                                
-                                    <div className="donut_graph">
-                                        <h2 className="donut_title">Top Sales</h2>
-                                        <Doughnut data={this.state.donutData} width={100} height={50} />
-                                    </div>
-
+                                <BoxCard title="Top Sales">
+                                    <Doughnut data={this.state.donutData} width={100} height={50} />
+                                </BoxCard>
                             </Row>
                             <Row>
-                            <div className="donut_graph">
-                                        <h2 className="donut_title">Top Expenses</h2>
-                                        <Doughnut data={this.state.donutData} width={100} height={50} />
-                                    </div>
+                                <BoxCard title="Top Expenses">
+                                    <Doughnut data={this.state.donutData} width={100} height={50} />
+                                </BoxCard>
                             </Row>
                         </Grid>
 

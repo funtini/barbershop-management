@@ -1,3 +1,7 @@
+.content {
+    margin-bottom:3.5rem;
+}
+
 .main-footer {
     position: fixed;
     bottom:0px;
@@ -14,4 +18,174 @@ button {
 
 .logo-lg{
     font-size: 0.7em
+}
+
+/* teste */
+
+.sidebar-menu li>a>.fa-angle-left,
+.sidebar-menu li>a>.pull-right-container>.fa-angle-left {
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin-right: 10px;
+    -webkit-transition: transform .5s ease;
+    -o-transition: transform .5s ease;
+    transition: transform .5s ease;
+}
+
+.sidebar-menu .active>a>.fa-angle-left,
+.sidebar-menu .active>a>.pull-right-container>.fa-angle-left {
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+/*
+Header Navigation Bar
+*/
+.top-menu{
+    float: left;
+    margin: 0;
+    padding:0;
+
+}
+
+.top-menu > li {
+    display: inline-block;
+    margin: 0;
+    cursor: pointer;
+    color: lightcyan;
+    padding: 14px 15px;
+    font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-weight: 600;
+
+}
+
+.top-menu > li:hover{
+    background:#367fa9;
+    border-bottom: 2px solid white;
+    color: white;
+    font-weight: bold;
+}
+
+.top-menu > li > i {
+    display: none;
+}
+
+.top-menu > li:hover > i {
+    display: inline;
+}
+
+.top-menu > li:active{
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+    font-weight: 500;
+}
+
+.navbar-top-left{
+    float: left;
+}
+
+/*
+---------------------------------------
+    Tablet - until 900px (1050px landscape)
+------------------------------------
+*/
+@media (max-width: 900px){
+    
+    .top-menu > li {
+        font-size: 13px;
+    }
+    
+    .hidden-xs{
+        display: none;
+    }
+
+    .navbar-nav>.user-menu .user-image {
+        margin-right: 0;
+    }
+
+    .user-menu > a {
+        height: 50px;
+    }
+
+}
+    
+/*
+--------------------------
+    Tablet - Correction navbar
+--------------------------
+*/
+@media (max-width: 525px){
+
+
+
+.navbar-custom-menu>.navbar-nav>.notifications-menu{
+    display: none;
+}
+.top-menu > li {
+    font-size: 13px;
+}
+
+}
+
+/*
+--------------------------
+    Mobile - until 435px
+--------------------------
+*/
+@media (max-width: 480px){
+    .navbar-custom-menu>.navbar-nav>.user-menu{
+        display: none;
+    }
+
+    .top-menu > li {
+        padding: 15px 10px;
+        font-size: 12px;
+    
+    }
+
+}
+
+
+/* Background colours */
+
+.bg-blue-primary{
+    background: #6394d2;
+    color: white;
+}
+
+.bg-blue-light{
+    background: #57b7d6;
+    color: aliceblue;
+}
+
+.bg-green-primary{
+    background: #47b43a;
+    color: white;
+}
+
+.bg-green-light{
+    background: #88dd7f;
+    color: aliceblue;
+}
+
+.bg-red-primary{
+    background: #b45252;
+    color: white;
+}
+
+.bg-red-light{
+    background: #e59898;
+    color: aliceblue;
+}
+
+.bg-yellow-primary{
+    background: #fbc222;
+    color: white;
+}
+
+.bg-brown-light{
+    background: #bc9529;
+    color: aliceblue;
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ContentHeader from '../../common/template/content/contentHeader';
 import PageHeader from '../../common/template/content/pageHeader'
 import Content from '../../common/template/content/content'
-import SmallBox from '../../common/widget/smallBox'
+import SmallBox from '../../common/elements/smallBox'
 import Row from '../../common//layout/row'
 import Box from '../../common/elements/box'
 import Grid from '../../common//layout/grid'
@@ -19,7 +19,6 @@ export default class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            themeChange: false,
             isLoading: false,
             chartData: {
                 labels: ['1', '2', '3', '6', '7', "8", "9", '10', '13', '14', '15'],
@@ -161,7 +160,6 @@ export default class Dashboard extends Component {
 
     }
 
-
     render() {
 
         return (
@@ -242,8 +240,7 @@ export default class Dashboard extends Component {
                             </Row>
                             <Row>
                                 <Box cols="12 12" title="DAILY INCOME - SEPTEMBER" type="primary" collapsable>
-
-                                
+                                    
 
                                 </Box>
                                 <Box cols="12 12" title="DAILY INCOME - SEPTEMBER" type="primary" collapsable>
@@ -256,8 +253,17 @@ export default class Dashboard extends Component {
                         </Grid>
                         <Grid cols="12 6">
                             <Row>
-                                <Box cols="12 8" type="info" noPadding noHeader >
-                                    <Calendar height="auto" slotDuration='00:30:00' noButtons defaultView='listDay'/>
+                                <Box cols="12 8" type="info" noPadding noHeader>
+                                    <Calendar noButtons 
+                                    height="auto" 
+                                    slotDuration='00:30:00' 
+                                    defaultView='listDay'
+                                    header={{
+                                        left: 'prev,next today',
+                                        center: '',
+                                        right: 'listWeek, listDay'
+                                     }}
+                                    />
 
                                 </Box>
                             </Row>

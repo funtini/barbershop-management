@@ -1,0 +1,111 @@
+/*
+--------------------------
+   General
+--------------------------
+*/
+
+:root {
+    --icon-hover-size: 95px;
+}
+
+
+
+.small-box:hover .icon {
+    font-size: var(--icon-hover-size);
+}
+
+
+
+/*
+--------------------------
+    Desktop - Correction 
+--------------------------
+*/
+@media (max-width: 1250px){
+
+    .small-box .icon{
+        padding-top: 1rem;
+        font-size: 7rem;
+    }
+
+    .small-box:hover .icon {
+        font-size: 8rem;
+    }
+    
+}
+
+/*
+---------------------------------------
+    Tablet - landscape - 1050px
+------------------------------------
+*/
+@media (max-width: 1050px){
+    
+    .small-box h3{
+    
+        font-size: 3rem;
+    }
+
+    .small-box .icon{
+        padding-top: 1.5rem;
+        font-size: 4.5rem;
+    }
+
+    .small-box>.small-box-footer {
+        font-size: 1rem;
+    }
+
+    .small-box:hover .icon {
+        font-size: 5.5rem;
+    }
+
+    .small-box>.inner {
+        max-height: 93.6px;
+    }
+    
+}
+
+/*
+---------------------------------------
+    Tablet - normal - 900px
+------------------------------------
+*/
+@media (max-width: 900px) and (min-width: 768px){
+    
+
+    .small-box .icon{
+        padding-top: 2rem;
+        font-size: 4rem;
+    }
+
+    
+    .small-box p{
+        font-size: 1.2rem;
+    }
+
+    .small-box>.small-box-footer {
+        font-size: 0.8rem;
+    }
+
+    .small-box>.inner {
+        max-height: 89.6px;
+    }
+
+    .lead {
+        font-size: 19px;
+    }
+
+   
+}
+
+
+/*
+---------------------------------------
+    Tablet - normal - 767px
+------------------------------------
+*/
+/* @media (max-width: 767px){
+
+ 
+} */
+

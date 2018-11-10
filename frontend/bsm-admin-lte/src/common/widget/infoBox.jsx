@@ -11,7 +11,7 @@ export default props => (
                 <span className="info-box-text">{props.text}</span>
                 <span className="info-box-number">{props.value}</span>
             </div>
-            <div className="progress">
+            <div className={`progress${props.progress? '': ' blocked'}`}>
             <div className="progress-bar" style={{width:`${props.progress}%`}}></div>
             </div>
             <span className="progress-description" style={{paddingLeft:'1em'}}>

@@ -14,7 +14,7 @@ export default class CurrentReport extends Component {
 
         this.state = {
             chartData: {
-                labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta','Sábado'],
+                labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
                 datasets: [
                     {
                         label: 'Income',

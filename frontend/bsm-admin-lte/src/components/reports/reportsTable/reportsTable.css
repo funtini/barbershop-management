@@ -14,3 +14,74 @@
 .select2 option{
     width: 100%;
 }
+
+.row_expandable{
+    margin: 5px;
+    padding: 5px 15px;
+    /* background: whitesmoke;     */
+    animation: EXPAND 1s;
+    border-left: 0.5px solid gray;
+    font-size: 1.25rem;
+    /* -webkit-transition: height 2s linear 1s; 
+    transition: height 2s linear 1s; */
+    overflow: hidden;
+}
+
+td{
+    min-width: 25px;
+}
+
+.row_standart:hover .icon_expand{
+    display: inline;
+}
+
+.row_standart:hover{
+    background:whitesmoke;
+    cursor: pointer;
+}
+
+.icon_expand{
+    display: none;
+    color: gray;
+    
+}
+
+.row_expandable{
+position: relative;
+}
+
+.row_description_card{
+    position: absolute;
+    top:1rem;
+    text-align: center;
+    right: 5.5rem;
+    width:7.5rem;
+    padding: 0;
+}
+
+.second_card{
+    right:15.5rem;
+}
+
+.row_description_card--header{
+    margin:0;
+    padding: 5px;
+   
+}
+
+.row_description_card--body{
+    margin:0;
+    padding: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+
+@keyframes EXPAND {
+    0% { height: 0px; }
+    /* 10% { height: 40px} */
+    /* 20% { height: 80px} */
+    /* 50% { height: 80px; } */
+    /* 50% { height: 100px } */
+    100% { height: 150px; }
+}

@@ -1,0 +1,87 @@
+.progress-description{
+    padding-left: 1em;
+}
+
+.info-box .blocked {
+    height: 1px;
+}
+
+.info-box {
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+/*
+---------------------------------------
+    Correction desktop - medium sizes
+------------------------------------
+*/
+@media (max-width: 1385px) and (min-width: 767px){
+
+.progress-description{
+    font-size: 13px;
+}
+
+}
+
+/*
+---------------------------------------
+    Correction desktop - small sizes
+------------------------------------
+*/
+@media (max-width: 1285px) and (min-width: 767px){
+    
+    .info-box-text{
+        font-size: 13px;
+    }
+
+    .info-box-number{
+        font-size: 16px;
+    }
+
+    .info-box-icon{
+        width: 30%;
+        font-size: 35px;
+
+    }
+
+    .info-box-content{
+        margin-left: 30%;
+    }
+
+    .progress-description{
+        font-size: 12px;
+    }  
+
+}
+
+/*
+---------------------------------------
+    Correction desktop/tablet transition (landscape)
+------------------------------------
+*/
+@media (max-width: 1124px) and (min-width: 767px){
+
+    .info-box-icon{
+        width: 20%;
+        font-size: 25px;      
+    }
+    
+    .info-box-content{
+        margin-left: 20%;
+    }
+}
+
+
+
+/*
+---------------------------------------
+    Tablet - until 900px (1050px landscape)
+------------------------------------
+*/
+@media (max-width: 900px){
+    
+   
+
+}

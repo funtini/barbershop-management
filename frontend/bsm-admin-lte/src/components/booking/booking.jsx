@@ -5,6 +5,7 @@ import Content from '../../common/template/content/content'
 import Grid from '../../common//layout/grid'
 import InfoBox from '../../common/widget/infoBox'
 import Row from '../../common//layout/row'
+import Tooltip from '../../common/UI/tooltip'
 
 export default class Booking extends Component {
     constructor(props) {
@@ -29,6 +30,12 @@ export default class Booking extends Component {
                 </Grid>
                     </Row>
 
+<div className='container' >
+        <p>Here is a <Tooltip message={'Hello, I am a super cool tooltip'} position={'top'}>tooltip</Tooltip> on top.</p>
+        <p>Here is a <Tooltip message={'Hello, I am a super cool tooltip'} position={'bottom'}>tooltip</Tooltip> on bottom.</p>
+        <p>Here is a <Tooltip message={'Hello, I am a super cool tooltip'} position={'left'}>tooltip</Tooltip> on left.</p>
+        <p>Here is a <Tooltip message={'Hello, I am a super cool tooltip'} position={'right'}>tooltip</Tooltip> on right.</p>
+      </div>
                 </Content>
             </div>
         )

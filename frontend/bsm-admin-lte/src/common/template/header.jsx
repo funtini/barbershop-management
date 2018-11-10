@@ -4,6 +4,7 @@ import HeaderNav from './headerNav';
 import HeaderDropdown from './headerDropdown';
 import DropdownInfo from './dropdownInfo';
 
+
 export default props => (
     <header className='main-header'>
         <a href='/#/' className='logo'>
@@ -15,6 +16,13 @@ export default props => (
         </a>
         <nav className='navbar navbar-static-top'>
             <a href='/#/' className='sidebar-toggle' data-toggle='offcanvas'></a>
+            <div className="navbar-top-left">
+            <ul className="top-menu">
+                <li>NEW SALE</li>
+                <li>NEW CUSTOMER</li>
+                <li>NEW BOOKING</li>
+            </ul>
+            </div>
             <HeaderNav>
             <HeaderDropdown type="notifications-menu" header="You have 10 messages" number="10" badge="warning" icon="bell-o" footer="View All" centered>
                 <DropdownInfo icon="warning" color="yellow" text="Report of July is available to close"/>

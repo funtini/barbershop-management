@@ -38,7 +38,7 @@ export default class Calen extends React.Component {
           }
         }
       },
-      header:{
+      header:this.props.header || {
         left: this.props.noButtons? '' : 'prev,next today myCustomButton',
         center: 'title',
         right: this.props.noButtons? '' : 'month,agendaWeek,agendaDay,agendaFourDay listWeek listDay, basicWeek, basicDay'
@@ -55,7 +55,9 @@ export default class Calen extends React.Component {
         day: {
           // titleFormat: 'DD MMMM'
           // // options apply to basicWeek and agendaWeek views
-          titleFormat: " dddd, D [de] MMMM ",
+          // titleFormat: " dddd, D [de] MMMM ",
+          titleFormat: " D [de] MMMM ",
+          // titleFormat: " [Booking] ",
           columnFormat: "dddd",
         },
         agendaFourDay: {

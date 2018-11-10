@@ -1,13 +1,22 @@
 import React, { Component } from 'react'
+
+//elements
 import ContentHeader from '../../../common/template/content/contentHeader';
-import PageHeader from '../../../common/template/content/pageHeader'
 import Content from '../../../common/template/content/content'
 import Grid from '../../../common//layout/grid'
 import InfoBox from '../../../common/widget/infoBox'
 import Row from '../../../common//layout/row'
 import Box from '../../../common/elements/box'
-import { HorizontalBar } from 'react-chartjs-2';
+import BoxCard from '../../../common/elements/boxCard'
+
+//ui
+import Button from '../../../common/UI/button'
+
+//components
 import ReportsTable from "../reportsTable/reportsTable"
+
+//libs
+import { HorizontalBar } from 'react-chartjs-2';
 
 export default class AllReports extends Component {
     constructor(props) {
@@ -83,18 +92,33 @@ export default class AllReports extends Component {
                         {this.renderTopBoxes()}
                     </Row>
                     <Row>
-                                <Box cols="12 12" title="PRODUCTS GRAPH" type="primary" collapsable>
+                    <Box cols="12 6" title="REPORTS" type="primary" collapsable >
+                                    <ReportsTable cols="12 12" />
+                                </Box>
+                                {/* <Box cols="12 3" title="WEEK DAY INCOME" type="primary" collapsable>
                                     <div className="chart">
                                         <HorizontalBar data={this.state.chartData} width={100} height={250} options={{
                                             maintainAspectRatio: false}}
                                         />
                                     </div>
-                                </Box>
+                                </Box> */}
+                                <BoxCard cols="12 4" title="WEEK DAY INCOME">
+                                    <div className="chart">
+                                        <HorizontalBar data={this.state.chartData} width={100} height={250} options={{
+                                            maintainAspectRatio: false}}
+                                        />
+                                    </div>
+                                </BoxCard>
+                                <BoxCard cols="12 4" title="buttons">
+                                    <Button type="primary">
+                                    ola
+                                    </Button>
+                                </BoxCard>
                             </Row>
                             <Row>
-                                <Box cols="12 12" title="REPORTS" type="primary" collapsable >
-                                    <ReportsTable cols="12 12" striped />
-                                </Box>
+                                {/* <Box cols="12 6" title="REPORTS" type="primary" collapsable >
+                                    <ReportsTable cols="12 12" />
+                                </Box> */}
                             </Row>
 
                 </Content>
