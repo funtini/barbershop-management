@@ -178,71 +178,9 @@ export default class Dashboard extends Component {
                     </Row>
                     <Row>
                         <Grid cols="12 6">
+
                             <Row>
-                            <Grid cols="12 12">
-                                <div className="quick_actions--header">
-                                QUICK ACTIONS
-                                <i className={`icon_actions fa fa-angle-down pull-right`}/>
-                                </div>
-                                <div className="quick_actions--content">
-                                <Row>
-                                        <Grid cols="12 4">
-                                            <div className="button_container text-center">
-                                            <button type="button" className={`button_action btn btn-default btn-xl`}>
-                                            <i className={`fa fa-usd fa-sm`}/>
-                                            </button>
-                                                <p className="button_text" >NEW SALE</p>
-                                            </div>
-                                        </Grid>
-                                        <Grid cols="12 4">
-                                            <div className="button_container  text-center">
-                                            <button type="button" className={`button_action btn btn-default btn-xl`}>
-                                            <i className={`fa fa-calendar-plus-o fa-sm`}/>
-                                            </button>
-                                                <p className="button_text" >NEW BOOKING</p>
-                                            </div>
-                                        </Grid>
-                                        <Grid cols="12 4">
-                                            <div className="button_container text-center">
-                                            <button type="button" className={`button_action btn btn-default btn-xl`}>
-                                            <i className={`fa fa-user-plus fa-sm`}/>
-                                            </button>
-                                                <p className="button_text">NEW CUSTOMER</p>
-                                            </div>
-                                        </Grid>
-                                    </Row>
-                                </div>
-                                </Grid>
 
-                                {/* <Box cols="12 12" icon="edit" title="QUICK ACTIONS" type="info" collapsable solid>
-                                    <Row>
-                                        <Grid cols="12 4">
-                                            <div className="text-center">
-                                                <Button icon="plus-square-o fa-lg" type="primary" size="xl" style={{ fontSize: '4em', width: '100%', minWidth: '90px' }} />
-                                                <p className="text-light-blue" style={{ fontSize: '1em', fontFamily: 'Georgia, serif' }}>NEW SALE</p>
-                                            </div>
-                                        </Grid>
-                                        <Grid cols="12 4">
-                                            <div className="text-center">
-                                                <Button icon="calendar-plus-o fa-lg" type="primary" size="xl" style={{ fontSize: '4em', width: '100%', minWidth: '90px' }} />
-                                                <p className="text-light-blue" style={{ fontSize: '1em', fontFamily: 'Georgia, serif' }}>NEW BOOKING</p>
-                                            </div>
-                                        </Grid>
-                                        <Grid cols="12 4">
-                                            <div className="text-center">
-                                                <Button icon="user-plus fa-lg" type="primary" size="xl" style={{ fontSize: '4em', width: '100%', minWidth: '90px' }} />
-                                                <p className="text-light-blue" style={{ fontSize: '1em', fontFamily: 'Georgia, serif' }}>NEW CUSTOMER</p>
-                                            </div>
-                                        </Grid>
-                                    </Row>
-                                </Box> */}
-
-                            </Row>
-                            <Row>
-                                <Box cols="12 12" title="DAILY INCOME - SEPTEMBER" type="primary" collapsable>
-                                    
-
-                                </Box>
                                 <Box cols="12 12" title="DAILY INCOME - SEPTEMBER" type="primary" collapsable>
 
                                     <Line data={this.state.chartData} options={this.state.options} width={100} height={300} />
@@ -253,16 +191,13 @@ export default class Dashboard extends Component {
                         </Grid>
                         <Grid cols="12 6">
                             <Row>
-                                <Box cols="12 8" type="info" noPadding noHeader>
+
+                                <Box cols="12 8" type="info" noPadding title="SCHEDULE" solid centeredTitle style={{paddingBottom: '50px'}}>
                                     <Calendar noButtons 
                                     height="auto" 
                                     slotDuration='00:30:00' 
                                     defaultView='listDay'
-                                    header={{
-                                        left: 'prev,next today',
-                                        center: '',
-                                        right: 'listWeek, listDay'
-                                     }}
+
                                     />
 
                                 </Box>

@@ -81,6 +81,7 @@ export default class Customers extends Component {
               // 1,
             ],
             borderWidth: 1,
+              labelFontSize: 1,
             hoverBackgroundColor: 'rgba(91, 163, 245,0.4)',
             hoverBorderColor: 'rgba(91, 163, 245,1)',
             // hoverBackgroundColor: 'rgba(91, 163, 245,0.4)',
@@ -104,6 +105,14 @@ export default class Customers extends Component {
       ,
       regOptions: {
         responsive: true,
+          scales: {
+              xAxes: [{
+                  ticks: {
+                      fontSize: 9
+                  }
+              }]
+          }
+      ,
         // title: {
         //     display: true,
         //     text: 'New Registrations 2018'
@@ -147,13 +156,20 @@ export default class Customers extends Component {
           <div style={{ borderTop: '1px solid rgb(180, 180, 180)' }} /><br />
 
           <Row>
-            <Grid cols="12 7">
+            <Grid cols="12 12 7">
               <Row>
-              <BoxCard cols="12 12" title="Top Customer">
-              <div className="doughnut">
-              85
-                </div>
-                                </BoxCard>
+
+                  <Box cols="12 12" icon="edit" title="LIST OF CUSTOMERS" type="primary" collapsable style={{minWidth:'fit-content'}}>
+                      <CustomersTable bordered striped />
+
+                      {/* <DataTable cols='12' column={dataHeader} /> */}
+
+                  </Box>
+
+                      <Box cols="12 12" title="REGISTRATION STATS - [ 2018 ]" icon="bar-chart" type="primary" collapsable>
+                          <Line data={this.state.regData} width={200} height={210} options={this.state.regOptions} />
+                      </Box>
+
           
 
 
@@ -171,7 +187,7 @@ export default class Customers extends Component {
 
               </Row>
             </Grid>
-            <Grid cols="12 5">
+            <Grid cols="12 12 5">
               <Row>
                 <Box cols="12 12" title="LOCATION STATS" icon="bar-chart" type="primary" collapsable>
                   <HorizontalBar data={this.state.chartData} width={100} height={210} options={{
@@ -180,152 +196,154 @@ export default class Customers extends Component {
                   />
                 </Box>
               </Row>
-            </Grid>
-          </Row>
-
-
-          <Row>
-            <Grid cols="12 8">
-              <Row>
-                <Box cols="12 12" icon="edit" title="LIST OF CUSTOMERS" type="primary" collapsable>
-                  <CustomersTable bordered striped />
-
-                  {/* <DataTable cols='12' column={dataHeader} /> */}
-
-                </Box>
-              </Row>
-              <Row>
+                <Row>
                 <Box cols="12 12" title="REGISTRATION STATS - [ 2018 ]" icon="bar-chart" type="primary" collapsable>
-                  <Line data={this.state.regData} width={200} height={210} options={this.state.regOptions} />
+                    <Line data={this.state.regData} width={200} height={210} options={this.state.regOptions} />
                 </Box>
                 </Row>
 
-              <Row>
-                <Box cols="12 12" title="RECENTLY ADDED" icon="user" type="warning" solid collapsable>
-                  <ul className="products-list product-list-in-box">
-                    <li className="item">
-                      <div className="product-img">
-                        <img src="https://mira-mama.com/themes/dor_organick3/assets/img/dorado/avatar_user.jpg" alt="Product Image" />
-                      </div>
-                      <div className="product-info">
-                        <div className="product-title text-blue">António Rodrigues
-              <span className="label label-success pull-right">5h22m</span></div>
-                        <span className="product-description">
+                <Row>
+                    <Box cols="12 12" title="RECENTLY ADDED" icon="user" type="warning" solid collapsable>
+                        <ul className="products-list product-list-in-box">
+                            <li className="item">
+                                <div className="product-img">
+                                    <img src="https://mira-mama.com/themes/dor_organick3/assets/img/dorado/avatar_user.jpg" alt="Product Image" />
+                                </div>
+                                <div className="product-info">
+                                    <div className="product-title text-blue">António Rodrigues
+                                        <span className="label label-success pull-right">5h22m</span></div>
+                                    <span className="product-description">
                           Mangualde
             </span>
-                      </div>
-                    </li>
-                    {/* /.item */}
-                    <li className="item">
-                      <div className="product-img">
-                        <img src="https://mira-mama.com/themes/dor_organick3/assets/img/dorado/avatar_user.jpg" alt="Product Image" />
-                      </div>
-                      <div className="product-info">
-                        <div className="product-title text-blue">Ruben Sarmento
-              <span className="label label-success pull-right">1d</span></div>
-                        <span className="product-description">
+                                </div>
+                            </li>
+                            {/* /.item */}
+                            <li className="item">
+                                <div className="product-img">
+                                    <img src="https://mira-mama.com/themes/dor_organick3/assets/img/dorado/avatar_user.jpg" alt="Product Image" />
+                                </div>
+                                <div className="product-info">
+                                    <div className="product-title text-blue">Ruben Sarmento
+                                        <span className="label label-success pull-right">1d</span></div>
+                                    <span className="product-description">
                           Mangualde
             </span>
-                      </div>
-                    </li>
+                                </div>
+                            </li>
 
-                    {/* /.item */}
-                    <li className="item">
-                      <div className="product-img">
-                        <img src="https://mira-mama.com/themes/dor_organick3/assets/img/dorado/avatar_user.jpg" alt="Product Image" />
-                      </div>
-                      <div className="product-info">
-                        <div className="product-title text-blue">Vitor Dias
-              <span className="label label-success pull-right">2d</span></div>
-                        <span className="product-description">
+                            {/* /.item */}
+                            <li className="item">
+                                <div className="product-img">
+                                    <img src="https://mira-mama.com/themes/dor_organick3/assets/img/dorado/avatar_user.jpg" alt="Product Image" />
+                                </div>
+                                <div className="product-info">
+                                    <div className="product-title text-blue">Vitor Dias
+                                        <span className="label label-success pull-right">2d</span></div>
+                                    <span className="product-description">
                           Nelas
             </span>
-                      </div>
-                    </li>
-                    {/* /.item */}
-                  </ul>
-                </Box>
-              </Row>
-
-
-            </Grid>
-            <Grid cols="12 4">
-              <Row>
-                <Box cols="12 12" title="GENERAL STATS - 2018" type="warning" icon="tag" collapsable>
-
-                  <BoxHeader title="Best Customer" small="[ Total Income ]" />
-                  <Grid cols="12 6">
-                    <p className="text-light-blue" style={{ fontSize: 17 }}>João Dias</p>
-                    <p className="text-purple">Rogerio Matias</p>
-                    <p className="text-purple" style={{ fontSize: 13 }}>Pedro Nuno</p>
-                  </Grid>
-                  <Grid cols="12 6">
-                    <p className="text-light-blue pull-right">104 €</p>
-                    <Row />
-                    <p className="text-purple pull-right">94 €</p>
-                    <Row />
-                    <p className="text-purple pull-right">88 €</p>
-                  </Grid>
-
-
-                  <Row />
-                  <BoxHeader title="Show Up Longest Period" small="[ Last Sale ]" smallTwo="[ Sales ]" />
-                  <Grid cols="12 6">
-                    <p className="text-light-blue" style={{ fontSize: 17 }}>Pedro Pereira</p>
-                    <p className="text-purple">Filipe Sousa</p>
-                    <p className="text-purple" style={{ fontSize: 13 }}>Ruben Filipe</p>
-                  </Grid>
-                  <Grid cols="12 6">
-                    <p className="text-light-blue pull-right">226 dias</p>
-                    <Row />
-                    <p className="text-purple pull-right">191 dias</p>
-                    <Row />
-                    <p className="text-purple pull-right">164 dias</p>
-                  </Grid>
-
-
-                </Box>
-              </Row>
-              <Row>
-                <Box cols="12 12" title="GENERAL STATS - ALL TIME" icon="tag" type="warning" collapsable>
-
-                  <BoxHeader title="Best Customer" small="[ Total Income ]" />
-                  <Grid cols="12 6">
-                    <p className="text-light-blue" style={{ fontSize: 17 }}>João Dias</p>
-                    <p className="text-purple">Rogerio Matias</p>
-                    <p className="text-purple" style={{ fontSize: 13 }}>Vitor Bruno</p>
-                  </Grid>
-                  <Grid cols="12 6">
-                    <p className="text-light-blue pull-right">324 €</p>
-                    <Row />
-                    <p className="text-purple pull-right">294 €</p>
-                    <Row />
-                    <p className="text-purple pull-right">274 €</p>
-                  </Grid>
-                  <Row />
-                  <BoxHeader title="Show Up Longest Period" small="[ Last Sale ]" />
-                  <Grid cols="12 6">
-                    <p className="text-light-blue" style={{ fontSize: 17 }}>Pedro Almeida</p>
-                    <p className="text-purple">Sandro Almeida</p>
-                    <p className="text-purple" style={{ fontSize: 13 }}>Pedro Pereira</p>
-                  </Grid>
-                  <Grid cols="12 6">
-                    <p className="text-light-blue pull-right">526 dias</p>
-                    <Row />
-                    <p className="text-purple pull-right">491 dias</p>
-                    <Row />
-                    <p className="text-purple pull-right">326 dias</p>
-                  </Grid>
-
-                </Box>
-              </Row>
-
-
-
+                                </div>
+                            </li>
+                            {/* /.item */}
+                        </ul>
+                    </Box>
+                </Row>
 
             </Grid>
-
           </Row>
+
+
+          {/*<Row>*/}
+            {/*<Grid cols="12 8">*/}
+              {/*<Row>*/}
+                {/*<Box cols="12 12" icon="edit" title="LIST OF CUSTOMERS" type="primary" collapsable>*/}
+
+
+                {/*</Box>*/}
+              {/*</Row>*/}
+
+
+
+
+
+            {/*</Grid>*/}
+            {/*<Grid cols="12 4">*/}
+              {/*<Row>*/}
+                {/*<Box cols="12 12" title="GENERAL STATS - 2018" type="warning" icon="tag" collapsable>*/}
+
+                  {/*<BoxHeader title="Best Customer" small="[ Total Income ]" />*/}
+                  {/*<Grid cols="12 6">*/}
+                    {/*<p className="text-light-blue" style={{ fontSize: 17 }}>João Dias</p>*/}
+                    {/*<p className="text-purple">Rogerio Matias</p>*/}
+                    {/*<p className="text-purple" style={{ fontSize: 13 }}>Pedro Nuno</p>*/}
+                  {/*</Grid>*/}
+                  {/*<Grid cols="12 6">*/}
+                    {/*<p className="text-light-blue pull-right">104 €</p>*/}
+                    {/*<Row />*/}
+                    {/*<p className="text-purple pull-right">94 €</p>*/}
+                    {/*<Row />*/}
+                    {/*<p className="text-purple pull-right">88 €</p>*/}
+                  {/*</Grid>*/}
+
+
+                  {/*<Row />*/}
+                  {/*<BoxHeader title="Show Up Longest Period" small="[ Last Sale ]" smallTwo="[ Sales ]" />*/}
+                  {/*<Grid cols="12 6">*/}
+                    {/*<p className="text-light-blue" style={{ fontSize: 17 }}>Pedro Pereira</p>*/}
+                    {/*<p className="text-purple">Filipe Sousa</p>*/}
+                    {/*<p className="text-purple" style={{ fontSize: 13 }}>Ruben Filipe</p>*/}
+                  {/*</Grid>*/}
+                  {/*<Grid cols="12 6">*/}
+                    {/*<p className="text-light-blue pull-right">226 dias</p>*/}
+                    {/*<Row />*/}
+                    {/*<p className="text-purple pull-right">191 dias</p>*/}
+                    {/*<Row />*/}
+                    {/*<p className="text-purple pull-right">164 dias</p>*/}
+                  {/*</Grid>*/}
+
+
+                {/*</Box>*/}
+              {/*</Row>*/}
+              {/*<Row>*/}
+                {/*<Box cols="12 12" title="GENERAL STATS - ALL TIME" icon="tag" type="warning" collapsable>*/}
+
+                  {/*<BoxHeader title="Best Customer" small="[ Total Income ]" />*/}
+                  {/*<Grid cols="12 6">*/}
+                    {/*<p className="text-light-blue" style={{ fontSize: 17 }}>João Dias</p>*/}
+                    {/*<p className="text-purple">Rogerio Matias</p>*/}
+                    {/*<p className="text-purple" style={{ fontSize: 13 }}>Vitor Bruno</p>*/}
+                  {/*</Grid>*/}
+                  {/*<Grid cols="12 6">*/}
+                    {/*<p className="text-light-blue pull-right">324 €</p>*/}
+                    {/*<Row />*/}
+                    {/*<p className="text-purple pull-right">294 €</p>*/}
+                    {/*<Row />*/}
+                    {/*<p className="text-purple pull-right">274 €</p>*/}
+                  {/*</Grid>*/}
+                  {/*<Row />*/}
+                  {/*<BoxHeader title="Show Up Longest Period" small="[ Last Sale ]" />*/}
+                  {/*<Grid cols="12 6">*/}
+                    {/*<p className="text-light-blue" style={{ fontSize: 17 }}>Pedro Almeida</p>*/}
+                    {/*<p className="text-purple">Sandro Almeida</p>*/}
+                    {/*<p className="text-purple" style={{ fontSize: 13 }}>Pedro Pereira</p>*/}
+                  {/*</Grid>*/}
+                  {/*<Grid cols="12 6">*/}
+                    {/*<p className="text-light-blue pull-right">526 dias</p>*/}
+                    {/*<Row />*/}
+                    {/*<p className="text-purple pull-right">491 dias</p>*/}
+                    {/*<Row />*/}
+                    {/*<p className="text-purple pull-right">326 dias</p>*/}
+                  {/*</Grid>*/}
+
+                {/*</Box>*/}
+              {/*</Row>*/}
+
+
+
+
+            {/*</Grid>*/}
+
+          {/*</Row>*/}
           {/* <PageHeader title="Additional Information"/>  */}
 
           <PageHeader />

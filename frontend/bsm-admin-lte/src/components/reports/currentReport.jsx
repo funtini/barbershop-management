@@ -81,6 +81,8 @@ export default class CurrentReport extends Component {
                     <Row>
                         {this.renderTopBoxes()}
                     </Row>
+                    <div style={{ borderTop: '1px solid rgb(180, 180, 180)' }} /><br />
+
                     <Row>
                                 <Box cols="12 12" title="PRODUCTS GRAPH" type="primary" collapsable>
                                     <div className="chart">

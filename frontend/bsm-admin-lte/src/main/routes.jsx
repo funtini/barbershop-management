@@ -18,6 +18,7 @@ import More from '../components/ui/more';
 import Forms from '../components/ui/forms';
 import Booking from '../components/booking';
 import DashboardBusiness from '../components/dashboard/business';
+import Statistics from '../components/statistics'
 import Settings from '../components/settings'
 import CurrentReport from '../components/reports'
 import AllReports from '../components/reports/allTime/allReports'
@@ -49,6 +50,7 @@ export default props => (
         <Route path='forms' component={Forms} />
         <Route path='booking' component={Booking} />
         <Route path='settings' component={Settings} />
+        <Route path='statistics' component={Statistics} />
         <Route path='reports/current' component={CurrentReport} />
         <Route path='reports/all' component={AllReports} />
         <Redirect from='*' to='/' />

@@ -1,0 +1,176 @@
+/*
+---------------------------------------
+    GENERAL
+------------------------------------
+*/
+
+.customersTable--body{
+
+}
+
+.customersTable--header{
+
+}
+
+/*
+--------------------------
+    Desktop - Correction
+--------------------------
+*/
+@media (max-width: 1250px) and (min-width: 768px){
+    .dataTables_length{
+        font-size: 12px;
+    }
+    .dataTables_filter{
+        font-size: 12px;
+    }
+
+    .dataTables_info{
+        font-size: 12px;
+    }
+
+    .dataTables_paginate{
+        font-size: 12px;
+    }
+
+    .customersTable--header{
+        font-size: 11px;
+
+    }
+
+    .customersTable--body,
+    .customersTable--body input{
+        font-size: 11px;
+        padding: 0;
+    }
+
+
+}
+
+/*
+---------------------------------------
+    Tablet - landscape - 1050px
+------------------------------------
+*/
+@media (max-width: 1050px) and (min-width: 768px){
+
+    .dataTables_length{
+        font-size: 10px;
+    }
+    .dataTables_filter{
+        font-size: 10px;
+    }
+
+    .dataTables_info{
+        font-size: 10px;
+    }
+
+    .dataTables_paginate{
+        font-size: 10px;
+    }
+
+    .customersTable--header{
+        font-size: 9px;
+
+    }
+
+    .customersTable--body{
+        font-size: 9px;
+    }
+
+}
+
+/*
+---------------------------------------
+    Tablet - normal - 900px
+------------------------------------
+*/
+@media (max-width: 991px) and (min-width: 768px){
+
+    .dataTables_length{
+        font-size: 12px;
+    }
+    .dataTables_filter{
+        font-size: 12px;
+    }
+
+    .dataTables_info{
+        font-size: 12px;
+    }
+
+    .dataTables_paginate{
+        font-size: 12px;
+    }
+
+    .customersTable--header{
+        font-size: 11px;
+
+    }
+
+    .customersTable--body{
+        font-size: 11px;
+    }
+
+}
+
+
+/*
+---------------------------------------
+    Tablet - normal - 767px
+------------------------------------
+*/
+@media (max-width: 767px){
+
+    .dataTables_length{
+        font-size: 10px;
+    }
+    .dataTables_filter{
+        font-size: 10px;
+    }
+
+    .dataTables_info{
+        display: none;
+    }
+
+    .dataTables_paginate{
+        font-size: 10px;
+    }
+
+    .customersTable--header{
+        font-size: 9px;
+    }
+
+    .customersTable--body{
+        font-size: 9px;
+
+    }
+
+}
+
+@media (max-width: 641px){
+
+    .dataTables_length{
+        display: none;
+    }
+
+    .table.dataTable td{
+        min-width: 20px;
+    }
+    /*.dataTables_filter{*/
+        /*font-size: 10px;*/
+    /*}*/
+
+    /*.dataTables_paginate{*/
+        /*font-size: 10px;*/
+    /*}*/
+
+    /*.customersTable--header{*/
+        /*font-size: 9px;*/
+    /*}*/
+
+    /*.customersTable--body{*/
+        /*font-size: 9px;*/
+
+    /*}*/
+
+}

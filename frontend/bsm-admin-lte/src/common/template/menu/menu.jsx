@@ -82,6 +82,8 @@ export default class Menu extends Component {
                         label='Marketing' icon='circle-o' />
                     <MenuItem path='#control'
                         label='Control' icon='circle-o' />
+                    <MenuItem path='#statistics'
+                        label='Statistics' icon='circle-o' />
                 </MenuTree>
                 <MenuTree label='Reports' icon='edit'>
                     <MenuItem path='#reports/current'

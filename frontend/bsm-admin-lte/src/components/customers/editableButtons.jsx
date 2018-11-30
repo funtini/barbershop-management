@@ -40,7 +40,7 @@ export default class EditableButtons extends Component {
 
     render() {
         return (
-        <div>
+        <div style={{ display:'inline-flex' }}>
 
         <Button hide={!this.state.edit} icon="pencil" type="warning" size="xs"  onClick={() => this.handleEditClick()}/>
         <Button hide={this.state.edit} icon="times" type="default" size="xs" onClick={() => this.handleEditClick()} />

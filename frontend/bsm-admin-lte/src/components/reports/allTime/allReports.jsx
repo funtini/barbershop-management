@@ -91,6 +91,8 @@ export default class AllReports extends Component {
                     <Row>
                         {this.renderTopBoxes()}
                     </Row>
+                    <div style={{ borderTop: '1px solid rgb(180, 180, 180)' }} /><br />
+
                     <Row>
                     <Box cols="12 6" title="REPORTS" type="primary" collapsable >
                                     <ReportsTable cols="12 12" />

@@ -2,14 +2,27 @@
     padding-top: 10em;
 }
 
+
+
 .doughnut { 
-    border: 50px solid #f00;
+    border: 30px solid #f00;
     border-radius: 100px;
     height:100px;
     width:100px;
+
     text-align: center;
-    vertical-align: middle
+    box-sizing: content-box;
+    position: relative;
 }
+
+.doughnut--text {
+    position: absolute;
+    top: 30%;
+    left: 35%;
+    font-size: 3rem;
+}
+
+
 
 /* .btn-ola{
     margin-top: 10em;

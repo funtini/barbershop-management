@@ -11,7 +11,7 @@ export default class Calen extends React.Component {
   }
 
   render() {
-    return <div id="calendar"></div>;
+    return <div id="calendar"/>;
   }
   componentDidMount() {
     var date = new Date()
@@ -43,6 +43,8 @@ export default class Calen extends React.Component {
         center: 'title',
         right: this.props.noButtons? '' : 'month,agendaWeek,agendaDay,agendaFourDay listWeek listDay, basicWeek, basicDay'
       },
+
+        titleFormat: '[Hello, World!]',
       views: {
         // month: { // name of view
         //   titleFormat: 'YYYY, MMM, DD'
@@ -57,14 +59,23 @@ export default class Calen extends React.Component {
           // // options apply to basicWeek and agendaWeek views
           // titleFormat: " dddd, D [de] MMMM ",
           titleFormat: " D [de] MMMM ",
-          // titleFormat: " [Booking] ",
+            fontSize: '5px',
+          // titleFormat: " [Statistics] ",
           columnFormat: "dddd",
         },
         agendaFourDay: {
           type: 'agenda',
           duration: { days: 4 },
           buttonText: '4 day'
-        }
+        },
+          listWeek: {
+              type: 'list',
+              buttonText: 'week'
+          },
+          listDay: {
+              type: 'list',
+              buttonText: 'day'
+          }
       },
 
       allDayText: 'TOTAL',

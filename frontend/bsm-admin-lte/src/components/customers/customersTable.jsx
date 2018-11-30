@@ -1,7 +1,11 @@
 import React, { Component } from 'React'
 import Grid from '../../common/layout/grid'
+
+//Components
 import EditableButtons from './editableButtons'
-import ColoredLabel from '../../common/label/coloredLabel'
+
+//Style
+import './customersTable.css';
 
 
 export default class CustomersTable extends Component {
@@ -145,7 +149,7 @@ export default class CustomersTable extends Component {
         return (
             <tr>
                 {this.state.header.map((header) => (
-                    <th className="text-center" key={header.key}>
+                    <th className="customersTable--header text-center" key={header.key}>
                         {header.label}
                     </th>
                 ))}
@@ -156,16 +160,21 @@ export default class CustomersTable extends Component {
     generateRows() {
         return (
             this.state.data.map((row, index) => (
-                <tr className="text-center" key={row.id}>
+                <tr className="customersTable--body text-center" key={row.id}>
                     <td>
-                        <EditableButtons 
+                        <EditableButtons
                         onEditClick={() => this.handleEditClick(index)} 
                         onSaveClick={() =>{this.handleEditClick(index),this.handleSaveClick(row)}} 
                         onRemoveClick={() => {this.handleEditClick(index),this.handleRemoveClick(row)}}
                         /></td>
                     <td >{
                         row.edit ?
-                            <input ref={this.inputName} className="form-control input-text text-center" type="text" defaultValue={row.name} id="name"
+                            <input
+                                ref={this.inputName}
+                                className="form-control input-text text-center"
+                                type="text"
+                                defaultValue={row.name}
+                                id="name"
                                 name="name"  />
                             :
                             row.name
