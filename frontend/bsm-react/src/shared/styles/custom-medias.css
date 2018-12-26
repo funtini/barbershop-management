@@ -1,0 +1,8 @@
+/*
+    Custom media queries
+*/
+
+@custom-media --layout-sm (min-width: 768px);
+@custom-media --layout-md (min-width: 1024px);
+@custom-media --layout-lg (min-width: 1280px);
+@custom-media --layout-xl (min-width: 1440px);
