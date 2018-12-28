@@ -29,6 +29,25 @@
     /* Line Height */
     --text-line-height: 1.2;
 
+    /* Theme Colors */
+    --theme-color-header: black;
+    --theme-color-header-bg: #3c8dbc;
+    --theme-color-background: #ecf0f5;
+    --theme-color-menu: black;
+    --theme-color-menu-bg: #ff851b;
+    --theme-color-footer: #dd4b39;
+    --theme-color-footer-bg: #fff;
+    --theme-color-footer-border: #d2d6de;
+    --theme-color-primary: #3c8dbc;
+    --theme-color-primary-active: #3c8dbc;
+    --theme-color-primary-disable: #3c8dbc;
+    --theme-color-card-1: #3c8dbc;
+    --theme-color-card-2: #3c8dbc;
+    --theme-color-card-3: #3c8dbc;
+    --theme-color-card-4: #3c8dbc;
+    --theme-color-card-5: #3c8dbc;
+
+
     /* Colors */
     --color-primary: #3c8dbc;
     --color-primary-active: #005384;
@@ -81,6 +100,7 @@
 
     /* Transitions */
     --transition-linear-default: 0.3s linear;
+    --transition-ease-in-out-default: 0.3s ease-in-out;
 
     /* Inputs */
     --input-vertical-padding-normal: 12px;

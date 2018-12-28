@@ -39,37 +39,37 @@
 }
 
 .header {
-    background: var(--color-blue-light);
+    background: var(--theme-color-header-bg);
 }
 
 .content {
-    background-color: #ecf0f5;
+    background-color: var(--theme-color-background);
     min-height: 100%;
     z-index: 800;
 }
 .content,
 .footer {
-    -webkit-transition: -webkit-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
-    -moz-transition: -moz-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
-    -o-transition: -o-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
-    transition: transform 0.3s ease-in-out, margin 0.3s ease-in-out;
+    -webkit-transition: -webkit-transform var(--transition-ease-in-out-default), margin var(--transition-ease-in-out-default);
+    -moz-transition: -moz-transform var(--transition-ease-in-out-default), margin var(--transition-ease-in-out-default);
+    -o-transition: -o-transform var(--transition-ease-in-out-default), margin var(--transition-ease-in-out-default);
+    transition: transform var(--transition-ease-in-out-default), margin var(--transition-ease-in-out-default);
     margin-left: 230px;
     z-index: 820;
 
 }
 
 .footer {
-    background: lightgreen;
+    background: var(--theme-color-footer-bg);
     padding: 15px;
-    color: #444;
-    border-top: 1px solid #d2d6de;
+    color: var(--theme-color-footer);
+    border-top: 1px solid var(--theme-color-footer-border);
 }
 
 /* Fixed Layout*/
 
 .sidebar {
     position: fixed;
-    background: lightcoral;
+    background: var(--theme-color-menu-bg);
     top: 0;
     left: 0;
     padding-top: 50px;
