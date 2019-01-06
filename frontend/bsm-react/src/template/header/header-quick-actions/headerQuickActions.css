@@ -1,0 +1,42 @@
+@import '../../../shared/styles/variables.css';
+/*
+OLD CLASSES - NEED REVIEW
+*/
+
+.quickActions {
+    float: left;
+    margin: 0;
+    padding:0;
+}
+
+.quickActions > li {
+    display: inline-block;
+    margin: 0;
+    padding: 0 15px;
+    cursor: pointer;
+    color: lightcyan;
+    font-size: var(--font-size-5);
+    font-family: var(--font-family-main);
+    font-weight: var(--font-weight-medium);
+    line-height: calc( var(--header-height-md) - 1px );
+}
+
+.quickActions > li:hover{
+    background:#367fa9;
+    border-bottom: 2px solid var(--theme-color-header);
+    color: white;
+    font-weight: var(--font-weight-bold);
+}
+
+.quickActions > li > i {
+    display: none;
+}
+
+.quickActions > li:hover > i {
+    display: inline;
+}
+
+.quickActions > li:active{
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+    font-weight: var(--font-weight-main);
+}

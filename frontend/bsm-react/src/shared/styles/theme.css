@@ -28,6 +28,10 @@ body {
     line-height: var(--text-line-height);
 }
 
+*{
+    box-sizing: border-box;
+}
+
 a,
 a:hover,
 a:active,
@@ -37,9 +41,9 @@ a:focus {
     transition: color var(--transition-linear-default);
 }
 
-a:hover{
-    color: var(--color-gray-active)
-}
+/*a:hover{*/
+    /*color: var(--color-gray-active)*/
+/*}*/
 
 b,
 strong {

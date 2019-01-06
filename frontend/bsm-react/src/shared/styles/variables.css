@@ -8,6 +8,7 @@
 :root {
     /* Font Families */
     --font-family-main: 'Source Sans Pro', sans-serif;
+    --font-family-brand: 'Abel', sans-serif;
 
     /* Font Weight */
     --font-weight-ligther: 300;
@@ -24,14 +25,16 @@
     --font-size-6: 15px;
     --font-size-7: 16px;
     --font-size-8: 18px;
-    --font-size-9: 22px;
+    --font-size-9: 20px;
+    --font-size-10: 22px;
 
     /* Line Height */
     --text-line-height: 1.2;
 
     /* Theme Colors */
-    --theme-color-header: black;
-    --theme-color-header-bg: #3c8dbc;
+    --theme-color-header: var(--color-gray-light);
+    --theme-color-header-bg: var(--color-primary);
+    --theme-color-header-bg-hover: var(--color-primary-active);
     --theme-color-background: #ecf0f5;
     --theme-color-menu: black;
     --theme-color-menu-bg: #ff851b;
@@ -49,8 +52,8 @@
 
 
     /* Colors */
-    --color-primary: #3c8dbc;
-    --color-primary-active: #005384;
+    --color-primary: var(--color-blue-light);
+    --color-primary-active: var(--color-blue-light-active);
     --color-black: #111111;
     --color-black-active: #000000;
     --color-gray: #000;
@@ -64,6 +67,7 @@
     --color-yellow-active: #db8b0b;
     --color-aqua: #00c0ef;
     --color-aqua-active: #00a7d0;
+    --color-cyan-light: lightcyan;
     --color-blue: #0073b7;
     --color-blue-active: #005384;
     --color-blue-light: #3c8dbc;
@@ -87,9 +91,12 @@
     --color-modal-background: #d8d8d8;
 
     /* Header */
-    --header-height: 5rem;
-    --header-height-sm: 6.6rem;
-    --header-height-md: 6.6rem;
+    --header-height: 3rem;
+    --header-height-sm: 3rem;
+    --header-height-md: 3rem;
+
+    /* Sidebar */
+    --sidebar-width-md: 230px;
 
     /* Footer */
     --footer-height-sm: 76px;

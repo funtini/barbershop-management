@@ -1,21 +1,29 @@
 import React, { Component } from 'react';
+import { library } from '@fortawesome/fontawesome-svg-core'
 
 // components
 import Layout from './template/layout';
 import changeTheme from './shared/utils/changeTheme';
 import { themeColors } from './shared/utils/changeTheme';
+import DashBoard from './pages/dashboard';
 
 //styles
 import styles from './App.css';
+
+//icons
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faCheckSquare, faCoffee, faBars } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fab, faCheckSquare, faCoffee, faBars);
 
 class App extends Component {
   render() {
     return (
       <div>
           <Layout>
-            I WILL PUT ROUTES HERE
-              <br/>
-              <button onClick={this._handleClick}> Change Theme </button>
+              <DashBoard/>
+              {/*<br/>*/}
+              {/*<button onClick={this._handleClick}> Change Theme </button>*/}
           </Layout>
       </div>
     );
