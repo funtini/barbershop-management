@@ -1,9 +1,9 @@
 import React from 'react';
 
 // template components
-import Header from '../header';
-import SideBar from '../sidebar';
-import Footer from '../footer';
+import Header from 'template/header';
+import SideBar from 'template/sidebar';
+import Footer from 'template/footer';
 
 // styles
 import styles from './layout.css';
