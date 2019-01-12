@@ -19,8 +19,8 @@ class Header extends Component {
                     <span className={ styles.miniLogo }>
                         <b>Bs</b>M</span>
                     <span className={ styles.largeLogo }>
-                        <BarberSvg width={33} height={33} fill='white'/>
-                        <b> BarberShop</b> Management
+                        {/*<BarberSvg width={33} height={33} fill='white'/>*/}
+                        {/*<b> BarberShop</b> Management*/}
                 </span>
                 </a>
 
