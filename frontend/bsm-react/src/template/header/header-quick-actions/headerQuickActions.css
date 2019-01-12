@@ -22,9 +22,9 @@ OLD CLASSES - NEED REVIEW
 }
 
 .quickActions > li:hover{
-    background:#367fa9;
+    background: var(--theme-color-header-bg-hover);
     border-bottom: 2px solid var(--theme-color-header);
-    color: white;
+    color:  var(--theme-color-header-hover);
     font-weight: var(--font-weight-bold);
 }
 

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
 import HeaderQuickActions from './header-quick-actions/headerQuickActions';
+import HeaderNavigation from './header-navigation';
 
 //svg
 import ShaveSvg from '../../shared/images/svg/shave.svg';
@@ -25,14 +26,14 @@ class Header extends Component {
                 </a>
 
                 <nav className={ styles.navBar }>
-                    <a href='/' className={ styles.sidebarToggle }>
+                    <a href='/#' className={ styles.sidebarToggle }>
                     <FontAwesomeIcon icon={'bars'} />
                     </a>
                     <div className={ styles.leftContainer }>
                         <HeaderQuickActions/>
                     </div>
                     <div className={ styles.rightContainer }>
-                        NavBar Top Right
+                        <HeaderNavigation/>
                     </div>
 
                 </nav>
