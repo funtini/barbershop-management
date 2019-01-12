@@ -39,7 +39,6 @@
 }
 
 .header {
-    /*background: var(--theme-color-header-bg);*/
     background: var(--theme-color-header-bg);
     color: var(--theme-color-header);
 }

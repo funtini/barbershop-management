@@ -1,14 +1,52 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+//components
+import LinkButton from '../../../shared/components/buttons/link-button/linkButton'
 
 //styles
 import styles from './headerNavigation.css';
 
-const headerQuickActions = ( props ) => (
-    <ul className={ styles.accountMenu }>
-        <li>NEW SALE</li>
-        <li>NEW CUSTOMER</li>
-        <li>NEW BOOKING</li>
-    </ul>
-);
+class HeaderNavigation extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: false,
+            svgIcons: [],
+        }
+        //state data
+    }
 
-export default headerQuickActions;
+    render(){
+        return(
+            <ul className={styles.navBar}>
+                { this._renderMessages() }
+                { this._renderNotifications() }
+            </ul>
+        )
+    }
+
+    _renderMessages(){
+        return(
+            <li className={ styles.option }>
+                <LinkButton className={ styles.link } onClick={ () => (console.log("CLICK"))}>
+                    <FontAwesomeIcon icon={'envelope'} inverse/>
+                    {/*BADGE*/}
+                </LinkButton>
+            </li>
+        )
+    }
+
+    _renderNotifications(){
+        return(
+            <li className={ styles.option }>
+                <LinkButton className={ styles.link } onClick={ () => (console.log("CLICK"))}>
+                    <FontAwesomeIcon icon={'flag'} />
+                    {/*BADGE*/}
+                </LinkButton>
+            </li>
+        )
+    }
+}
+
+export default HeaderNavigation;

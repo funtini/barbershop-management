@@ -12,9 +12,9 @@ import styles from './App.css';
 
 //icons
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faCheckSquare, faCoffee, faBars } from '@fortawesome/free-solid-svg-icons'
+import { faCheckSquare, faCoffee, faBars, faEnvelope, faFlag } from '@fortawesome/free-solid-svg-icons'
 
-library.add(fab, faCheckSquare, faCoffee, faBars);
+library.add(fab, faCheckSquare, faCoffee, faBars, faEnvelope, faFlag);
 
 class App extends Component {
   render() {

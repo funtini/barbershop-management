@@ -1,0 +1,16 @@
+.linkButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.linkButton:hover,
+.linkButton:active,
+.linkButton:focus {
+    text-decoration: none;
+    outline: none;
+}

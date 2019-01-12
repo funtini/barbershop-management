@@ -33,8 +33,9 @@
 
     /* Theme Colors */
     --theme-color-header: var(--color-gray-light);
+    --theme-color-header-hover: var(--color-white);
     --theme-color-header-bg: var(--color-primary);
-    --theme-color-header-bg-hover: var(--color-primary-active);
+    --theme-color-header-bg-hover: #367fa9;
     --theme-color-background: #ecf0f5;
     --theme-color-menu: black;
     --theme-color-menu-bg: #ff851b;
@@ -56,6 +57,7 @@
     --color-primary-active: var(--color-blue-light-active);
     --color-black: #111111;
     --color-black-active: #000000;
+    --color-white: white;
     --color-gray: #000;
     --color-gray-active: #b5bbc8;
     --color-gray-light: #f7f7f7;
