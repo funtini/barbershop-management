@@ -1,7 +1,7 @@
 import React from 'react'
 
 //styles
-import styles from './contentTitle.css';
+import styles from './ContentTitle.css';
 
 const contentTitle = (props ) => (
     <h2 className={ styles.titleContainer }>

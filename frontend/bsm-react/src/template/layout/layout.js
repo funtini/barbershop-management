@@ -6,7 +6,7 @@ import SideBar from 'template/sidebar';
 import Footer from 'template/footer';
 
 // styles
-import styles from './layout.css';
+import styles from './Layout.css';
 
 const layout = ( props ) => (
     <div className={ styles.wrapper }>

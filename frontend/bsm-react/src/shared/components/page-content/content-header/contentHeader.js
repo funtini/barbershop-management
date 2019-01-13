@@ -4,7 +4,7 @@ import React from 'react'
 import BreadCrumb from './bread-crumb/breadCrumb';
 
 //styles
-import styles from './contentHeader.css';
+import styles from './ContentHeader.css';
 
 const contentHeader = ( props ) => (
     <section className={ styles.contentHeader }>

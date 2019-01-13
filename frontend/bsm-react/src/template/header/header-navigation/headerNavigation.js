@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
-import LinkButton from '../../../shared/components/buttons/link-button/linkButton'
+import LinkButton from 'shared/components/buttons/link-button';
+import Badge from 'shared/components/badge';
 
 //styles
-import styles from './headerNavigation.css';
+import styles from './HeaderNavigation.css';
 
 class HeaderNavigation extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class HeaderNavigation extends Component {
             <li className={ styles.option }>
                 <LinkButton className={ styles.link } onClick={ () => (console.log("CLICK"))}>
                     <FontAwesomeIcon icon={'envelope'} inverse/>
-                    {/*BADGE*/}
+                    <Badge>1</Badge>
                 </LinkButton>
             </li>
         )
