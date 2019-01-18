@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import joinClassNames from 'shared/utils/joinClassNames';
 
 // Components.
@@ -24,12 +24,12 @@ const CSSLoaderOverlay = ({ children, isLoading, withLoader, className, loaderWr
     </div>
 );
 
-// CSSLoaderOverlay.propTypes = {
-//     children: PropTypes.node,
-//     isLoading: PropTypes.bool,
-//     withLoader: PropTypes.bool,
-//     className: PropTypes.string,
-//     loaderWrapperClassName: PropTypes.string,
-// };
+CSSLoaderOverlay.propTypes = {
+    children: PropTypes.node,
+    isLoading: PropTypes.bool,
+    withLoader: PropTypes.bool,
+    className: PropTypes.string,
+    loaderWrapperClassName: PropTypes.string,
+};
 
 export default CSSLoaderOverlay;

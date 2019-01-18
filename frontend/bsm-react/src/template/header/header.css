@@ -33,6 +33,7 @@
     float: left;
     background: transparent none;
     padding: 15px 15px;
+    max-height: var(--header-height-md);
     color: var(--theme-color-header);
 }
 

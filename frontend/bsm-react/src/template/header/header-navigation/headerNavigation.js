@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
-import LinkButton from 'shared/components/buttons/link-button';
-import Badge from 'shared/components/badge';
+import HeaderDropdown from '../header-dropdown/HeaderDropdown';
 
 //styles
 import styles from './HeaderNavigation.css';
@@ -13,41 +11,40 @@ class HeaderNavigation extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            svgIcons: [],
+            //state data
+            reduxData: [
+                {
+                    header: 'Message Box',
+                    footer: 'View More',
+                    icon: 'envelope',
+                    items:['Hello, can you book me a haircut?', 'A new report is ready to view!'],
+                    unread: 1,
+                },
+                {
+                    header: 'Notifications Box',
+                    footer: 'View More',
+                    icon: 'flag',
+                    items: ['Congratulations! Average Income has increased this week to 435€', 'Dont Forget! Some bookings need confirmation!'],
+                    unread: undefined,
+                }
+            ],
         }
-        //state data
     }
 
     render(){
         return(
-            <ul className={styles.navBar}>
-                { this._renderMessages() }
-                { this._renderNotifications() }
+            <ul className={ styles.navBar }>
+                { this.state.reduxData.map(this.renderDropdown) }
             </ul>
         )
     }
 
-    _renderMessages(){
-        return(
-            <li className={ styles.option }>
-                <LinkButton className={ styles.link } onClick={ () => (console.log("CLICK"))}>
-                    <FontAwesomeIcon icon={'envelope'} inverse/>
-                    <Badge>1</Badge>
-                </LinkButton>
-            </li>
-        )
-    }
+    renderDropdown = ({ header, footer, icon, unread, items }, index) => (
+        <HeaderDropdown header={ header } footer={ footer } icon={ icon } className={ styles.option } badge={ unread } key={ index }>
+            { items.map( (item, index) => <li key={ index }>{ item }</li> ) }
+        </HeaderDropdown>
+    );
 
-    _renderNotifications(){
-        return(
-            <li className={ styles.option }>
-                <LinkButton className={ styles.link } onClick={ () => (console.log("CLICK"))}>
-                    <FontAwesomeIcon icon={'flag'} />
-                    {/*BADGE*/}
-                </LinkButton>
-            </li>
-        )
-    }
 }
 
 export default HeaderNavigation;
