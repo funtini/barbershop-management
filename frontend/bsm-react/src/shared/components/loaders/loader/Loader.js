@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import joinClassNames from 'shared/utils/joinClassNames';
 
 //styles
@@ -13,10 +13,10 @@ const Loader = ({ className, bounceClassName }) => (
     </div>
 );
 
-// Loader.propTypes = {
-//     className: PropTypes.string,
-//     bounceClassName: PropTypes.string,
-//     dataTest: PropTypes.string,
-// };
+Loader.propTypes = {
+    className: PropTypes.string,
+    bounceClassName: PropTypes.string,
+    dataTest: PropTypes.string,
+};
 
 export default Loader;
