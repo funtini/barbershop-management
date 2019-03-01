@@ -1,0 +1,9 @@
+{
+	"account": {
+		"month": "sou o mes do report",
+		"year": "sou o ano do report"
+	},
+	"login": {
+		"error": "Invalido"
+	}
+}

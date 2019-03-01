@@ -39,10 +39,10 @@
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.0.6",
     "postcss-safe-parser": "4.0.1",
-    "react": "^16.6.3",
+    "react": "^16.8.2",
     "react-app-polyfill": "^0.1.3",
     "react-dev-utils": "^6.1.1",
-    "react-dom": "^16.6.3",
+    "react-dom": "^16.8.3",
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.0",
@@ -119,7 +119,9 @@
     "@fortawesome/free-regular-svg-icons": "^5.6.3",
     "@fortawesome/free-solid-svg-icons": "^5.6.3",
     "@fortawesome/react-fontawesome": "^0.1.3",
+    "i18next": "^15.0.4",
     "prop-types": "^15.6.2",
+    "react-i18next": "^10.1.2",
     "react-onclickoutside": "^6.7.1",
     "react-svg-loader": "^2.1.0"
   }

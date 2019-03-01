@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 
+import i18n from "i18next";
+import { withTranslation } from 'react-i18next';
+
 //styles
 import styles from './Dashboard.css';
-
 
 class Dashboard extends Component {
     constructor(props) {
@@ -12,13 +14,18 @@ class Dashboard extends Component {
         }
             //state data
         }
-        render () {
 
-    return (
-        <div className={ styles.dashboardWrapper }>
-            <p>DASHBOARD</p>
-        </div>
-    )}
+    render () {
+        const { t } = this.props;
+
+        return (
+            <div className={ styles.dashboardWrapper }>
+                <p>DASHBOARD</p>
+                <p>
+                    {t('pages:dashboard.title')}
+                </p>
+            </div>
+        )}
 }
 
-export default Dashboard;
+export default withTranslation()(Dashboard);

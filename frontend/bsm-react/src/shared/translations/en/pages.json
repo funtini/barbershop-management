@@ -1,0 +1,20 @@
+{
+  "dashboard": {
+    "title": "Olá camaradas"
+  },
+  "sidebar": {
+    "month": "sou o cmoomn",
+    "year": "sou o common"
+  },
+  "header": {
+    "notifications": {
+      "header": "Notifications Box",
+      "footer": "View More"
+    },
+    "messages": {
+      "header": "Message Box",
+      "footer": "View More"
+    },
+    "settings": "sou o common"
+  }
+}
