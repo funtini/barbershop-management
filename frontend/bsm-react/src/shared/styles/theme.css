@@ -38,6 +38,7 @@ a:active,
 a:focus {
     outline: none;
     text-decoration: none;
+    cursor: pointer;
     transition: color var(--transition-linear-default);
 }
 

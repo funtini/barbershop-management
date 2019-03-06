@@ -1,0 +1,71 @@
+.treeView {
+    margin: 0;
+    list-style: none;
+}
+
+.treeView > a {
+    padding: 12px 5px 12px 15px;
+    display: block;
+}
+
+.subMenu {
+    margin: 0;
+    padding: 0;
+    background: var(--theme-color-sub-menu-bg);
+    list-style: none;
+}
+
+.subMenu > li > a {
+    display: block;
+    padding: 5px 5px 5px 20px;
+    font-size: var(--font-size-5);
+    color: var(--theme-color-sub-menu);
+}
+
+.subMenu > li > a:hover {
+    color: var(--theme-color-menu-active);
+}
+
+.icon {
+    width: 2rem;
+    margin-right: 8px;
+}
+
+.arrow {
+    float: right;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin-right: 10px;
+}
+
+.active {
+    padding-left: 12px !important;
+    border-left: 3px solid var(--theme-color-header-bg);
+    color: var(--theme-color-menu-active) !important;
+    background: var(--theme-color-menu-bg-active);
+}
+
+.open {
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    transition: transform ease-in-out 0.6s;
+}
+
+.close {
+    transition: all ease-in-out 0.6s;
+}
+
+.expand {
+    max-height: 500px;
+    overflow: hidden;
+    transition: all ease-in-out 1s;
+}
+
+.collapse {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height ease-in-out 0.4s;
+}

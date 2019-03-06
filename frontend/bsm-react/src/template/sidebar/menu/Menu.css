@@ -1,0 +1,46 @@
+.menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--font-size-6);
+}
+
+.menu a {
+    color: #b8c7ce;
+}
+
+.menu > li {
+    position: relative;
+    margin: 0;
+}
+
+.menu > li:hover > a,
+.menu > li:active > a {
+    color: #fff;
+    background: #1e282c;
+}
+
+.menu > li > a {
+    padding: 12px 5px 12px 15px;
+    display: block;
+}
+
+.open {
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.expand {
+    height: auto;
+    display: block;
+    transition: all ease-in-out 0.5s;
+
+}
+
+.collapse {
+    height: 0;
+    display: none;
+    transition: all ease-in-out 0.5s;
+}

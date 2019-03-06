@@ -37,8 +37,13 @@
     --theme-color-header-bg: var(--color-primary);
     --theme-color-header-bg-hover: #367fa9;
     --theme-color-background: #ecf0f5;
-    --theme-color-menu: black;
-    --theme-color-menu-bg: #ff851b;
+    --theme-color-menu-header: #4b646f;
+    --theme-color-menu-header-bg: #1a2226;
+    --theme-color-menu-active: #fff;
+    --theme-color-menu-bg: #222d32;
+    --theme-color-menu-bg-active: #1e282c;
+    --theme-color-sub-menu: #8aa4af;
+    --theme-color-sub-menu-bg: #2c3b41;
     --theme-color-footer: #dd4b39;
     --theme-color-footer-bg: #fff;
     --theme-color-footer-border: #d2d6de;

@@ -1,0 +1,20 @@
+
+.icon {
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.active {
+    padding-left: 12px !important;
+    border-left: 3px solid var(--theme-color-header-bg);
+    color: var(--theme-color-menu-active) !important;
+    background: var(--theme-color-menu-bg-active);
+}
+
+.label {
+    vertical-align: middle;
+}
+
+.notification {
+
+}

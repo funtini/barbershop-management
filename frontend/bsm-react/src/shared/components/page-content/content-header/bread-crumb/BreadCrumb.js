@@ -1,7 +1,7 @@
 import React from 'react'
 
 //styles
-import styles from './breadCrumb.css';
+import styles from './BreadCrumb.css';
 
 const breadCrumb = ( props ) => (
     <ol className={ styles.breadCrumb }>

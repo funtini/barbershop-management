@@ -1,7 +1,7 @@
 import React from 'react'
 
 //components
-import BreadCrumb from './bread-crumb/breadCrumb';
+import BreadCrumb from './bread-crumb/BreadCrumb';
 
 //styles
 import styles from './ContentHeader.css';
