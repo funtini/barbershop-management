@@ -1,6 +1,10 @@
 {
-	"button": {
-		"month": "sou o cmoomn",
-		"year": "sou o common"
-	}
+  "sidebar": {
+    "month": "sou o cmoomn",
+    "year": "sou o common"
+  },
+  "header": {
+    "notifications": "sou o cmoomn",
+    "settings": "sou o common"
+  }
 }

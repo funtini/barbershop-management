@@ -14,8 +14,10 @@ import styles from './Header.css'
 
 class Header extends Component {
     render() {
+        const { onToggleClick, ...rest } = this.props;
+
         return (
-            <header { ...this.props }>
+            <header { ...rest }>
                 <a href='/' className={ styles.brand }>
                     <span className={ styles.miniLogo }>
                         <b>Bs</b>M</span>
@@ -26,7 +28,7 @@ class Header extends Component {
                 </a>
 
                 <nav className={ styles.navBar }>
-                    <a href='/#' className={ styles.sidebarToggle }>
+                    <a href='/#' className={ styles.sidebarToggle } onClick={ onToggleClick }>
                     <FontAwesomeIcon icon={'bars'} />
                     </a>
                     <div className={ styles.leftContainer }>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { withTranslation } from 'react-i18next';
 
 //components
 import MenuHeader from './menu-header/MenuHeader';
@@ -24,14 +24,33 @@ class Menu extends Component {
     }
 
     render () {
+        const { t } = this.props;
+
         return (
             <ul className={ styles.menu }>
-                <MenuHeader title={ 'MAIN NAVIGATION' }/>
-                <MenuTree label={ 'Dashboard' } icon={'tachometer-alt'} onClick={ this._handleClickMenuItem } selected={ this.state.selected === 'Dashboard' } >
+                <MenuHeader title={ t('menu-header.main-navigation') }/>
+                <MenuTree label={ t('menu-option.dashboard') }
+                          icon={'tachometer-alt'}
+                          onClick={ this._handleClickMenuItem }
+                          selected={ this.state.selected === t('menu-option.dashboard') } >
                     <MenuItem label={ 'Today' } icon={ subMenuIcon }/>
                 </MenuTree>
-                <MenuItem label={ 'Account' } icon={'tachometer-alt'} onClick={ this._handleClickMenuItem } selected={ this.state.selected === 'Account'} />
-                <MenuTree label={ 'Settings' } icon={'tachometer-alt'} onClick={ this._handleClickMenuItem } selected={ this.state.selected === 'Settings' }>
+                <MenuItem label={ t('menu-option.booking') }
+                          icon={'tachometer-alt'}
+                          onClick={ this._handleClickMenuItem }
+                          selected={ this.state.selected === t('menu-option.booking')} />
+                <MenuItem label={ t('menu-option.customers') }
+                          icon={'tachometer-alt'}
+                          onClick={ this._handleClickMenuItem }
+                          selected={ this.state.selected === t('menu-option.customers')} />
+                <MenuItem label={ t('menu-option.products') }
+                          icon={'tachometer-alt'}
+                          onClick={ this._handleClickMenuItem }
+                          selected={ this.state.selected === t('menu-option.products')} />
+                <MenuTree label={ t('menu-option.settings') }
+                          icon={'tachometer-alt'}
+                          onClick={ this._handleClickMenuItem }
+                          selected={ this.state.selected === t('menu-option.settings') }>
                     <MenuItem label={ 'Option 1' } icon={ subMenuIcon }/>
                     <MenuItem label={ 'Option 2' } icon={ subMenuIcon }/>
                     <MenuItem label={ 'Option 3' } icon={ subMenuIcon }/>
@@ -47,4 +66,4 @@ class Menu extends Component {
     }
 }
 
-export default Menu;
+export default withTranslation('sidebar')(Menu);

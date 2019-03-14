@@ -1,10 +1,10 @@
 {
   "sidebar": {
-    "month": "sou o cmoomn",
-    "year": "sou o common"
+    "main-menu": "MAIN MENU",
+    "year": "year"
   },
   "header": {
-    "notifications": "sou o cmoomn",
-    "settings": "sou o common"
+    "notifications": "notifications",
+    "settings": "settings"
   }
 }

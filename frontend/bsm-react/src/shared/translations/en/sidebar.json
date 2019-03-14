@@ -1,0 +1,19 @@
+{
+  "menu-header": {
+    "main-navigation": "MAIN NAVIGATION"
+  },
+  "menu-option": {
+    "dashboard": "Dashboard",
+    "customers": "Customers",
+    "products": "Products",
+    "sales": "Sales",
+    "expenses": "Expenses",
+    "marketing": "Marketing",
+    "statistics": "Statistics",
+    "employers": "Employers",
+    "business": "Business",
+    "booking": "Booking",
+    "settings": "Settings",
+    "reports": "Reports"
+  }
+}

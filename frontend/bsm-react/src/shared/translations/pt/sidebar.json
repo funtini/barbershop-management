@@ -1,0 +1,19 @@
+{
+  "menu-header": {
+    "main-navigation": "MENU PRINCIPAL"
+  },
+  "menu-option": {
+    "dashboard": "Painel",
+    "customers": "Clientes",
+    "products": "Produtos",
+    "sales": "Vendas",
+    "expenses": "Despesas",
+    "marketing": "Marketing",
+    "statistics": "Estatísticas",
+    "employers": "Empregados",
+    "business": "Negócio",
+    "booking": "Marcações",
+    "settings": "Configurações",
+    "reports": "Relatórios"
+  }
+}

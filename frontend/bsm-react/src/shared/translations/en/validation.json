@@ -1,9 +1,9 @@
 {
 	"account": {
-		"month": "sou o mes do report",
-		"year": "sou o ano do report"
+		"role": "Im a role",
+		"description": "im a description"
 	},
 	"login": {
-		"error": "Invalido"
+		"error": "invalid"
 	}
 }

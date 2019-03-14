@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-
-import i18n from "i18next";
+// import i18n from "i18next";
 import { withTranslation } from 'react-i18next';
 
 //styles
@@ -23,6 +22,7 @@ class Dashboard extends Component {
                 <p>DASHBOARD</p>
                 <p>
                     {t('pages:dashboard.title')}
+                    {t('pages:dashboard.subtitle')}
                 </p>
             </div>
         )}

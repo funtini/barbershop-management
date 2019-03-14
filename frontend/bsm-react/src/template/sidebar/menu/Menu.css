@@ -6,7 +6,7 @@
 }
 
 .menu a {
-    color: #b8c7ce;
+    color: var(--theme-color-menu);
 }
 
 .menu > li {
@@ -16,8 +16,10 @@
 
 .menu > li:hover > a,
 .menu > li:active > a {
-    color: #fff;
-    background: #1e282c;
+    color: var(--theme-color-menu-active);
+    background: var(--theme-color-menu-bg-active);
+    border-left: 3px solid var(--theme-color-header-bg);
+    padding-left: 12px;
 }
 
 .menu > li > a {
