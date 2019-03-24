@@ -37,12 +37,11 @@
 .expand {
     height: auto;
     display: block;
-    transition: all ease-in-out 0.5s;
-
+    transition: all var(--transition-ease-in-out-slow);
 }
 
 .collapse {
     height: 0;
     display: none;
-    transition: all ease-in-out 0.5s;
+    transition: all var(--transition-ease-in-out-slow);
 }

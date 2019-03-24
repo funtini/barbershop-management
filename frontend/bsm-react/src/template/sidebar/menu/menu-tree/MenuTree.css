@@ -61,11 +61,11 @@
 .expand {
     max-height: 500px;
     overflow: hidden;
-    transition: all ease-in-out 1s;
+    transition: all var(--transition-sidebar-expand);
 }
 
 .collapse {
     max-height: 0;
     overflow: hidden;
-    transition: max-height ease-in-out 0.4s;
+    transition: max-height var(--transition-sidebar-collapse);
 }

@@ -9,8 +9,6 @@ import buildStore, { history } from './shared/state/buildStore';
 
 // components
 import App from './App';
-// styles
-import './index.css';
 
 const store = buildStore({});
 

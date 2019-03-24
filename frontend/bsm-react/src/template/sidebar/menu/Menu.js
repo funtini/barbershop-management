@@ -10,11 +10,8 @@ import menuOptions from './MenuOptions';
 //styles
 import styles from './Menu.css';
 
-const subMenuIcon = 'circle';
+const subMenuIcon = ["far","circle"];
 
-
-
-//TODO: css animations to variables, make it standard for all animations and dropdown
 class Menu extends Component {
     constructor(props) {
         super(props);

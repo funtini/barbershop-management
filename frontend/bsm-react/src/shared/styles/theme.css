@@ -18,6 +18,8 @@ body {
 }
 
 body {
+    margin: 0;
+    padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: var(--font-family-main);
@@ -48,5 +50,5 @@ a:focus {
 
 b,
 strong {
-    font-family: var(--font-weight-bold);
+    font-weight: var(--font-weight-bold);
 }

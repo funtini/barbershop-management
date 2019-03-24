@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { library } from '@fortawesome/fontawesome-svg-core'
 
 // components
 import Layout from './template/layout';
@@ -7,14 +6,11 @@ import changeTheme from './shared/utils/changeTheme';
 import { themeColors } from './shared/utils/changeTheme';
 import DashBoard from './pages/dashboard';
 
-//styles
-import styles from './App.css';
+// styles
+import './App.css';
 
-//icons
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faCheckSquare, faCoffee, faBars, faEnvelope, faFlag, faAngleLeft, faCircle, faTachometerAlt } from '@fortawesome/free-solid-svg-icons'
-
-library.add(fab, faCheckSquare, faCoffee, faBars, faEnvelope, faFlag, faAngleLeft, faCircle, faTachometerAlt);
+// icons
+import './shared/icons';
 
 class App extends Component {
   render() {

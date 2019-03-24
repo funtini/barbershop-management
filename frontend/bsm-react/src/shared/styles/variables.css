@@ -118,6 +118,8 @@
     --transition-ease-in-out-fast: 0.2s ease-in-out;
     --transition-ease-in-out-default: 0.3s ease-in-out;
     --transition-ease-in-out-slow: 0.5s ease-in-out;
+    --transition-sidebar-expand: 1.2s ease-in-out;
+    --transition-sidebar-collapse: 0.5s ease-in-out;
 
     /* Inputs */
     --input-vertical-padding-normal: 12px;
