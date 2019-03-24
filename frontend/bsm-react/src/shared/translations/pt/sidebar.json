@@ -15,5 +15,25 @@
     "booking": "Marcações",
     "settings": "Configurações",
     "reports": "Relatórios"
+  },
+  "submenu-option": {
+    "dashboard": {
+      "today": "Resumo do dia"
+    },
+    "business": {
+      "employers": "Empregados",
+      "expenses": "Despesas",
+      "marketing": "Marketing",
+      "control": "Simulador",
+      "statistics": "Estatísticas"
+    },
+    "settings": {
+      "general": "Geral"
+    },
+    "reports": {
+      "current-month": "Mensal",
+      "current-year": "Anual",
+      "general": "Resumo Geral"
+    }
   }
 }

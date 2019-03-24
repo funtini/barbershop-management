@@ -15,5 +15,26 @@
     "booking": "Booking",
     "settings": "Settings",
     "reports": "Reports"
+  },
+  "submenu-option": {
+    "dashboard": {
+      "today": "Today Summary"
+    },
+    "business": {
+      "employers": "Employers",
+      "expenses": "Expenses",
+      "marketing": "Marketing",
+      "control": "Control",
+      "statistics": "Statistics"
+    },
+    "booking": "Booking",
+    "settings": {
+      "general": "General"
+    },
+    "reports": {
+      "current-month": "Monthly",
+      "current-year": "Yearly",
+      "general": "Global Summary"
+    }
   }
 }
