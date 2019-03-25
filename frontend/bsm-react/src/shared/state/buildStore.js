@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 
 // reducers
 import counterReducer from './counter';
+import layoutReducer from './layout';
 
 // Create an enhanced history that syncs navigation events with the store.
 export const history = createBrowserHistory();
@@ -19,6 +20,7 @@ export default function buildStore(initialState) {
 
     const rootReducer = (history) => combineReducers({
         count: counterReducer,
+        layout: layoutReducer,
         router: connectRouter(history)
     });
 

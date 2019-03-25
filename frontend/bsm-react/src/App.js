@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { Route, Switch } from 'react-router';
 
 // components
 import Layout from './template/layout';
 import changeTheme from './shared/utils/changeTheme';
 import { themeColors } from './shared/utils/changeTheme';
 import DashBoard from './pages/dashboard';
+import Products from './pages/products';
 
 // styles
 import './App.css';
@@ -17,7 +19,11 @@ class App extends Component {
     return (
       <div>
           <Layout>
-              <DashBoard/>
+              <Switch>
+                  <Route exact path="/" component={ DashBoard } />
+                  <Route path="/products" component={ Products } />
+                  <Route render={() => (<div>NOT FOUND PAGE</div>)} />
+              </Switch>
               {/*<br/>*/}
               {/*<button onClick={this._handleClick}> Change Theme </button>*/}
           </Layout>
