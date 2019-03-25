@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
-import changeTheme from 'shared/utils/changeTheme';
-import { themeColors } from 'shared/utils/changeTheme';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 
-//styles
+// actions
+import { switchTheme } from 'shared/state/layout';
+
+// styles
 import styles from './Dashboard.css';
-import Layout from "../../App";
 
 
 
@@ -16,7 +18,10 @@ class Dashboard extends Component {
             isLoading: false,
         }
             //state data
+        this._handleClick = this._handleClick.bind(this);
         }
+
+
 
     render () {
         const { t } = this.props;
@@ -35,9 +40,15 @@ class Dashboard extends Component {
 
     _handleClick() {
         console.log('clicked me');
-        changeTheme(themeColors.BLACK_WHITE);
+        const { changeTheme } = this.props;
+        changeTheme('BLACK_WHITE');
+        console.log(changeTheme)
 
     }
 }
 
-export default withTranslation()(Dashboard);
+const mapDispatchToProps = (dispatch) => ({
+    changeTheme: (theme) => dispatch(switchTheme(theme))
+});
+
+export default compose(withTranslation(),connect(null,mapDispatchToProps))(Dashboard);

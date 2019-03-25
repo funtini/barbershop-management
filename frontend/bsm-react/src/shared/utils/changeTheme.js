@@ -1,15 +1,19 @@
 export const themeColors = {
     LIGHT_BLUE: {
+        '--color-primary':'--color-blue-light',
+        '--color-primary-active':'--color-gray-active',
         '--theme-color-header-bg' : '--color-blue',
-        '--theme-color-menu-bg' : '--color-orange',
-        '--theme-color-footer-bg' : '--color-yellow',
-        '--theme-color-background' : '--color-olive',
+        '--theme-color-header-bg-hover' : '--color-primary-active',
+        '--theme-color-header-hover':'--color-white',
+        '--theme-color-header':'--color-gray-light',
     },
     BLACK_WHITE: {
+        '--color-primary':'--color-white',
+        '--color-primary-active':'--color-gray-light',
         '--theme-color-header-bg' : '--color-gray-light',
-        '--theme-color-menu-bg' : '--color-gray-active',
-        '--theme-color-footer-bg' : '--color-navy',
-        '--theme-color-background' : '--color-gray-light',
+        '--theme-color-header-bg-hover' : '--color-gray-active',
+        '--theme-color-header-hover':'--color-white',
+        '--theme-color-header':'--color-black',
     }
 };
 

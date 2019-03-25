@@ -14,7 +14,7 @@ OLD CLASSES - NEED REVIEW
     margin: 0;
     padding: 0 15px;
     cursor: pointer;
-    color: lightcyan;
+    color: var(--theme-color-header);
     font-size: var(--font-size-5);
     font-family: var(--font-family-main);
     font-weight: var(--font-weight-medium);
