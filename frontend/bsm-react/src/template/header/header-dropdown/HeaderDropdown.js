@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +12,8 @@ import Badge from "../../../shared/components/badge";
 //styles
 import styles from './HeaderDropdown.css';
 import joinClassNames from "../../../shared/utils/joinClassNames";
+import {withTranslation} from "react-i18next";
+import {getCurrentTheme} from "../../../shared/state/layout/selectors";
 
 class HeaderDropdown extends Component {
     constructor(props) {
@@ -28,12 +32,13 @@ class HeaderDropdown extends Component {
             this.state.isOpen && styles.open,
         );
 
-        const { badge, icon, children, header, footer, className } = this.props;
+        const { badge, icon, children, header, footer, className, theme } = this.props;
+        const iconColor = theme === 'LIGHT_BLUE' ? 'white' : 'black';
 
         return (
             <li className={ className } >
                 <LinkButton className={ styles.toggle } onClick={ () => this._onToggleClick() }>
-                    <FontAwesomeIcon icon={ icon } inverse/>
+                    <FontAwesomeIcon icon={ icon } color={ iconColor } />
                     { badge && <Badge>{ badge }</Badge> }
                 </LinkButton>
                 <div>
@@ -71,8 +76,6 @@ class HeaderDropdown extends Component {
     };
 }
 
-
-
 HeaderDropdown.propTypes = {
     children: PropTypes.node,
     badge: PropTypes.number,
@@ -80,6 +83,11 @@ HeaderDropdown.propTypes = {
     className: PropTypes.string,
     header: PropTypes.string,
     footer: PropTypes.string,
+    theme: PropTypes.string,
 };
 
-export default onClickOutside(HeaderDropdown);
+const mapStateToProps = (state) => ({
+    theme: getCurrentTheme(state),
+});
+
+export default connect(mapStateToProps)(onClickOutside(HeaderDropdown));

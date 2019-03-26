@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import get from 'lodash/get';
 
 //components
 import HeaderQuickActions from './header-quick-actions/HeaderQuickActions';
 import HeaderNavigation from './header-navigation';
+
+//state
+import { getCurrentTheme } from 'shared/state/layout/selectors';
 
 //svg
 import ShaveSvg from '../../shared/images/svg/shave.svg';
@@ -15,7 +19,9 @@ import styles from './Header.css'
 
 class Header extends Component {
     render() {
-        const { onToggleClick, ...rest } = this.props;
+        //TODO: improve this props extraction, to remove dispatch from here
+        const { onToggleClick, theme, dispatch, ...rest } = this.props;
+        const svgColor = theme === 'LIGHT_BLUE' ? 'white' : 'black';
 
         return (
             <header { ...rest }>
@@ -23,7 +29,7 @@ class Header extends Component {
                     <span className={ styles.miniLogo }>
                         <b>Bs</b>M</span>
                     <span className={ styles.largeLogo }>
-                        <BarberSvg width={33} height={33} fill='white'/>
+                        <BarberSvg width={33} height={33} fill={ svgColor }/>
                         <b> BarberShop</b> Management
                 </span>
                 </a>
@@ -46,8 +52,8 @@ class Header extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-
-}
+const mapStateToProps = (state) => ({
+    theme: getCurrentTheme(state),
+});
 
 export default connect(mapStateToProps)(Header);
