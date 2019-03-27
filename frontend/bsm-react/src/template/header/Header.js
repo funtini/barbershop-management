@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { withTranslation } from 'react-i18next';
 import get from 'lodash/get';
+import joinClassNames from 'shared/utils/joinClassNames';
 
 //components
 import HeaderQuickActions from './header-quick-actions/HeaderQuickActions';
 import HeaderNavigation from './header-navigation';
 
 //state
-import { getCurrentTheme } from 'shared/state/layout/selectors';
+import { getCurrentTheme, getSidebarStatus } from 'shared/state/layout/selectors';
 
 //svg
 import ShaveSvg from '../../shared/images/svg/shave.svg';
@@ -16,21 +19,22 @@ import BarberSvg from '../../shared/images/svg/barber.svg';
 
 //styles
 import styles from './Header.css'
+import { expandSidebar } from 'shared/state/layout';
 
 class Header extends Component {
     render() {
-        //TODO: improve this props extraction, to remove dispatch from here
-        const { onToggleClick, theme, dispatch, ...rest } = this.props;
+        const { onToggleClick, theme, className: headerStyle, isCollapsed, t } = this.props;
         const svgColor = theme === 'LIGHT_BLUE' ? 'white' : 'black';
-
+        console.log(isCollapsed)
+//TODO: WORK ON COLLAPSED BRAND
         return (
-            <header { ...rest }>
+            <header className={ headerStyle } >
                 <a href='/' className={ styles.brand }>
                     <span className={ styles.miniLogo }>
-                        <b>Bs</b>M</span>
+                        <b>{ t('brand.short-name') }</b>{ t('brand.short-suffix') }</span>
                     <span className={ styles.largeLogo }>
                         <BarberSvg width={33} height={33} fill={ svgColor }/>
-                        <b> BarberShop</b> Management
+                        <b> { t('brand.name') }</b> { t('brand.suffix') }
                 </span>
                 </a>
 
@@ -54,6 +58,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
     theme: getCurrentTheme(state),
+    isCollapsed: getSidebarStatus(state),
 });
 
-export default connect(mapStateToProps)(Header);
+export default compose(withTranslation(['header']),connect(mapStateToProps))(Header);

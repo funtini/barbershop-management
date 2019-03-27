@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 // template components
 import Header from 'template/header';
@@ -10,6 +11,7 @@ import joinClassNames from 'shared/utils/joinClassNames';
 
 // styles
 import styles from './Layout.css';
+import { expandSidebar } from 'shared/state/layout';
 
 const layout = ( props ) => {
         const [toggle, setToggle] = useState(false);
@@ -18,7 +20,11 @@ const layout = ( props ) => {
 
         return (
             <div className={ styles.wrapper }>
-                    <Header className={ styles.header } onToggleClick={ () => { setToggle(!toggle); _handleToggleClick(); } }/>
+                    <Header className={ styles.header } onToggleClick={ () => {
+                        setToggle(!toggle);
+                        _handleToggleClick();
+                        props.collapseSidebar();
+                    }}/>
                     <SideBar className={ joinClassNames( styles.sidebar, toggle && styles.collapsed )} />
                     <main className={ joinClassNames( styles.content, toggle && styles.expand ) }>
                             <div className={ styles.contentWrapper }>
@@ -32,6 +38,11 @@ const layout = ( props ) => {
 
 const _handleToggleClick = () => (
     console.log("IM CLICKING")
-)
 
-export default layout;
+);
+
+const mapDispatchToProps = (dispatch) => ({
+    collapseSidebar: () => dispatch(expandSidebar())
+});
+
+export default connect(null,mapDispatchToProps)(layout);

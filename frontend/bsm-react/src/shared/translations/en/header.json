@@ -1,0 +1,21 @@
+{
+  "brand": {
+    "name": "BarberShop",
+    "suffix": "Management",
+    "short-name": "Bs",
+    "short-suffix": "M"
+  },
+  "quick-actions": {
+    "sale": "NEW SALE",
+    "customer": "NEW CUSTOMER",
+    "booking": "NEW BOOKING"
+  },
+  "navigation": {
+    "notification": "Notifications Box",
+    "message": "Message Box",
+    "view-more": "View More"
+  },
+  "settings": {
+    "theme": "Theme"
+  }
+}

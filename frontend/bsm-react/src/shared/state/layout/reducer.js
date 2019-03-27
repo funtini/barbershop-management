@@ -11,24 +11,38 @@ const availableThemes = [
 ];
 
 const initialState = {
-    theme: THEME_LIGHT_BLUE
+    theme: THEME_LIGHT_BLUE,
+    sidebar: {
+        collapsed: false,
+    },
 };
 
 const switchTheme = (state, action) => {
     switch (action.payload) {
         case THEME_LIGHT_BLUE:
             changeTheme(themeColors.LIGHT_BLUE);
-            return THEME_LIGHT_BLUE;
+            return {
+                ...state,
+                theme: THEME_LIGHT_BLUE,
+            };
         case THEME_BLACK_WHITE:
             changeTheme(themeColors.BLACK_WHITE);
-            return THEME_BLACK_WHITE;
+            return {
+                ...state,
+                theme: THEME_BLACK_WHITE,
+            };
         default:
             return state;
     }
 };
 
-const expandSidebar = (state, action) => {
-    return state.result-1;
+const switchSidebarStatus = (state) => {
+    return {
+        ...state,
+        sidebar: {
+            collapsed: !state.sidebar.collapsed,
+        }
+    }
 };
 
 const layoutReducer = (state = initialState, action) => {
@@ -36,7 +50,7 @@ const layoutReducer = (state = initialState, action) => {
         case actionTypes.THEME_SWITCH:
             return switchTheme(state, action);
         case actionTypes.SIDEBAR_EXPAND:
-            return expandSidebar(state,action);
+            return switchSidebarStatus(state);
         default:
             return state
     }

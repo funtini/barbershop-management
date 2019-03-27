@@ -19,6 +19,10 @@
     overflow: hidden;
 }
 
+.collapsed {
+    width: var(--sidebar-width-md-collapsed)
+}
+
 .largeLogo {
     display: flex;
     flex-direction: row;
