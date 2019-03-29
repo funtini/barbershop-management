@@ -5,6 +5,7 @@
     padding: 2px 3px;
     border-radius: 3px 3px;
     background: var(--color-red-active);
+    color: white;
     text-align: center;
     font-size: var(--font-size-2);
     font-weight: var(--font-weight-main);

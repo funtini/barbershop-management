@@ -38,7 +38,7 @@ class HeaderDropdown extends Component {
         return (
             <li className={ className } >
                 <LinkButton className={ styles.toggle } onClick={ () => this._onToggleClick() }>
-                    <FontAwesomeIcon icon={ icon } color={ iconColor } />
+                    <FontAwesomeIcon icon={ icon } color={ iconColor } size='lg'  />
                     { badge && <Badge>{ badge }</Badge> }
                 </LinkButton>
                 <div>

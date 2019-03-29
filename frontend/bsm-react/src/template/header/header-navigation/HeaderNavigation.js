@@ -16,14 +16,14 @@ class HeaderNavigation extends Component {
                 {
                     header: 'Message Box',
                     footer: 'View More',
-                    icon: 'envelope',
+                    icon: ['far','envelope'],
                     items:['Hello, can you book me a haircut?', 'A new report is ready to view!'],
                     unread: 1,
                 },
                 {
                     header: 'Notifications Box',
                     footer: 'View More',
-                    icon: 'flag',
+                    icon: ['far','bell'],
                     items: ['Congratulations! Average Income has increased this week to 435€', 'Dont Forget! Some bookings need confirmation!'],
                     unread: undefined,
                 }

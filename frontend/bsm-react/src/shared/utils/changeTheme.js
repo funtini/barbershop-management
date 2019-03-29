@@ -6,14 +6,16 @@ export const themeColors = {
         '--theme-color-header-bg-hover' : '--color-primary-active',
         '--theme-color-header-hover':'--color-white',
         '--theme-color-header':'--color-gray-light',
+        '--theme-color-background':'--color-gray-light',
     },
     BLACK_WHITE: {
         '--color-primary':'--color-white',
         '--color-primary-active':'--color-gray-light',
         '--theme-color-header-bg' : '--color-gray-light',
-        '--theme-color-header-bg-hover' : '--color-gray-active',
+        '--theme-color-header-bg-hover' : '--color-gray-light-active',
         '--theme-color-header-hover':'--color-white',
         '--theme-color-header':'--color-black',
+        '--theme-color-background':'--color-white'
     }
 };
 
