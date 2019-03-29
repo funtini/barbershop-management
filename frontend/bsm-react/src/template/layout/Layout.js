@@ -12,37 +12,33 @@ import joinClassNames from 'shared/utils/joinClassNames';
 // styles
 import styles from './Layout.css';
 import { expandSidebar } from 'shared/state/layout';
+import { getSidebarStatus } from 'shared/state/layout/selectors';
 
 const layout = ( props ) => {
-        const [toggle, setToggle] = useState(false);
+        const { isCollapsed } = props;
 
-        console.log(toggle)
+        console.log(isCollapsed)
 
         return (
             <div className={ styles.wrapper }>
-                    <Header className={ styles.header } onToggleClick={ () => {
-                        setToggle(!toggle);
-                        _handleToggleClick();
-                        props.collapseSidebar();
-                    }}/>
-                    <SideBar className={ joinClassNames( styles.sidebar, toggle && styles.collapsed )} />
-                    <main className={ joinClassNames( styles.content, toggle && styles.expand ) }>
+                    <Header className={ styles.header } onToggleClick={ () => props.collapseSidebar() }/>
+                    <SideBar className={ joinClassNames( styles.sidebar, isCollapsed && styles.collapsed )} />
+                    <main className={ joinClassNames( styles.content, isCollapsed && styles.expand ) }>
                             <div className={ styles.contentWrapper }>
                                     { props.children }
                             </div>
                     </main>
-                    <Footer className={ joinClassNames( styles.footer, toggle && styles.expand) } />
+                    <Footer className={ joinClassNames( styles.footer, isCollapsed && styles.expand) } />
             </div>
         );
-}
-
-const _handleToggleClick = () => (
-    console.log("IM CLICKING")
-
-);
+};
 
 const mapDispatchToProps = (dispatch) => ({
     collapseSidebar: () => dispatch(expandSidebar())
 });
 
-export default connect(null,mapDispatchToProps)(layout);
+const mapStateToProps = (state) => ({
+    isCollapsed: getSidebarStatus(state),
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(layout);

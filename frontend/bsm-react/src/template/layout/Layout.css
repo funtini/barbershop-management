@@ -25,7 +25,6 @@
     transition: transform var(--transition-ease-in-out-default), margin var(--transition-ease-in-out-default);
     margin-left: var(--sidebar-width-md);
     z-index: 820;
-
 }
 
 .footer {
@@ -75,7 +74,7 @@
 }
 
 .expand {
-
+    margin-left: var(--sidebar-width-md-collapsed);
 }
 
 .collapsed {

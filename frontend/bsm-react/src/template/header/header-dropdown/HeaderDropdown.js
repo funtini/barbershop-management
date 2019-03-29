@@ -79,7 +79,7 @@ class HeaderDropdown extends Component {
 HeaderDropdown.propTypes = {
     children: PropTypes.node,
     badge: PropTypes.number,
-    icon: PropTypes.string,
+    icon: PropTypes.array,
     className: PropTypes.string,
     header: PropTypes.string,
     footer: PropTypes.string,

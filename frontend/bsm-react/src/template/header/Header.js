@@ -25,11 +25,11 @@ class Header extends Component {
     render() {
         const { onToggleClick, theme, className: headerStyle, isCollapsed, t } = this.props;
         const svgColor = theme === 'LIGHT_BLUE' ? 'white' : 'black';
-        console.log(isCollapsed)
+        console.log('colla',isCollapsed)
 //TODO: WORK ON COLLAPSED BRAND
         return (
             <header className={ headerStyle } >
-                <a href='/' className={ styles.brand }>
+                <a href='/' className={ joinClassNames(styles.brand, isCollapsed && styles.collapsed ) }>
                     <span className={ styles.miniLogo }>
                         <b>{ t('brand.short-name') }</b>{ t('brand.short-suffix') }</span>
                     <span className={ styles.largeLogo }>
@@ -38,7 +38,7 @@ class Header extends Component {
                 </span>
                 </a>
 
-                <nav className={ styles.navBar }>
+                <nav className={ joinClassNames(styles.navBar, isCollapsed && styles.expand) }>
                     <a href='/#' className={ styles.sidebarToggle } onClick={ onToggleClick }>
                     <FontAwesomeIcon icon={'bars'} />
                     </a>

@@ -5,6 +5,6 @@ export function getCurrentTheme(state) {
 }
 
 export function getSidebarStatus(state) {
-    return get(state, 'layout.theme');
+    return get(state, 'layout.sidebar.collapsed');
 }
 
