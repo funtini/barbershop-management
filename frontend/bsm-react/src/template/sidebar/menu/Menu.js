@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
 //components
@@ -9,6 +11,7 @@ import menuOptions from './MenuOptions';
 
 //styles
 import styles from './Menu.css';
+import { getSidebarStatus } from 'shared/state/layout/selectors';
 
 const subMenuIcon = ["far","circle"];
 
@@ -24,7 +27,7 @@ class Menu extends Component {
     }
 
     render () {
-        const { t } = this.props;
+        const { t, isCollapsed } = this.props;
         const options = menuOptions(t);
 
         return (
@@ -37,10 +40,11 @@ class Menu extends Component {
                                       icon={ option.item.icon }
                                       key={ option.item.label }
                                       onClick={ this._handleClickMenuItem }
+                                      isCollapsed={ isCollapsed }
                                       selected={ this.state.selected === option.item.label } >
                                 {
                                     option.subItems.map((subItem) => (
-                                        <MenuItem label={ subItem.label } icon={ subMenuIcon } key={ subItem.label }/>
+                                        <MenuItem label={ subItem.label } icon={ subMenuIcon } isCollapsed={ isCollapsed } key={ subItem.label }/>
                                     ))
                                 }
                             </MenuTree>
@@ -49,6 +53,7 @@ class Menu extends Component {
                                       icon={ option.item.icon }
                                       key={ option.item.label }
                                       onClick={ this._handleClickMenuItem }
+                                      isCollapsed={ isCollapsed }
                                       selected={ this.state.selected === option.item.label } />
 
                     ))
@@ -64,4 +69,8 @@ class Menu extends Component {
     }
 }
 
-export default withTranslation('sidebar')(Menu);
+const mapStateToProps = (state) => ({
+    isCollapsed: getSidebarStatus(state),
+});
+
+export default compose(withTranslation(['sidebar']),connect(mapStateToProps))(Menu);

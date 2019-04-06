@@ -27,7 +27,7 @@ class MenuTree extends Component {
 
 
     render() {
-        const { path, icon, label, children, ...rest } = this.props;
+        const { path, icon, label, children, isCollapsed } = this.props;
         const { isOpen } = this.state;
         const arrowClass = isOpen ? styles.open : styles.close;
         const subMenuClass = joinClassNames(
@@ -40,7 +40,7 @@ class MenuTree extends Component {
             <li className={ styles.treeView } >
                 <a href={ path }  className={ isOpen ? styles.active : undefined } onClick={ this._handleClick } >
                     <FontAwesomeIcon icon={ icon } className={ styles.icon }/>
-                    <span>{ label }</span>
+                    <span className={ joinClassNames( styles.label, isCollapsed && styles['label-collapsed'] ) }>{ label }</span>
                     <span className={ styles.arrow }>
                 <FontAwesomeIcon icon={'angle-left'} className={ arrowClass } />
           </span>

@@ -3,6 +3,7 @@
     vertical-align: middle;
     margin-right: 8px;
     width: 1.4rem !important;
+    flex: 1 1 0;
 }
 
 .active {
@@ -13,7 +14,13 @@
 }
 
 .label {
-    vertical-align: middle;
+    flex: 1 1 90%;
+}
+
+.label-collapsed {
+    color: green;
+    margin-left: 12px;
+    visibility: hidden;
 }
 
 .notification {

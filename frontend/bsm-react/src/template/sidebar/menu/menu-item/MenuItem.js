@@ -1,17 +1,22 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+//utils
+import joinClassNames from 'shared/utils/joinClassNames';
+
 //styles
 import styles from './MenuItem.css';
 
 //TODO: make active feature for submenus from path compare with exact path or something like that
-const MenuItem = ({ path, icon, label, children, selected, onClick }) => (
+const MenuItem = ({ path, icon, label, children, selected, onClick, isCollapsed }) => (
     <li>
         <a href={ path } className={ selected ? styles.active : undefined } onClick={() =>  onClick && _handleClick(label, onClick) }>
                 <FontAwesomeIcon icon={ icon } className={ styles.icon }/>
-            <span className={ styles.label }>
+
+                <span className={ joinClassNames(styles.label, isCollapsed && styles['label-collapsed']) }>
                 { label }
             </span>
+
             <span className={ styles.notification }>
                 { children }
             </span>

@@ -5,7 +5,18 @@
 
 .treeView > a {
     padding: 12px 5px 12px 15px;
-    display: block;
+    display: flex;
+    flex-flow: row;
+}
+
+.label {
+    flex: 1 1 90%;
+}
+
+.label-collapsed {
+    color: green;
+    margin-left: 12px;
+    visibility: hidden;
 }
 
 .subMenu {
@@ -29,14 +40,13 @@
 .icon {
     width: 1.4rem !important;
     margin-right: 8px;
+    flex: 1 1 0;
 }
 
 .arrow {
-    float: right;
-    width: auto;
-    height: auto;
     padding: 0;
-    margin-right: 10px;
+    margin: 0 10px;
+    flex: 1 1 0;
 }
 
 .active {
