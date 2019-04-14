@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
@@ -29,21 +29,35 @@ class MenuTree extends Component {
     render() {
         const { path, icon, label, children, isCollapsed } = this.props;
         const { isOpen } = this.state;
-        const arrowClass = isOpen ? styles.open : styles.close;
+        const shouldTreeExpand = isOpen && !isCollapsed;
+        const labelClass = joinClassNames(
+            styles.label,
+            isCollapsed && styles['label-collapsed'],
+        );
+        const arrowClass = joinClassNames(
+            isCollapsed && styles['arrow-collapsed'],
+            shouldTreeExpand && styles.open,
+            !shouldTreeExpand && styles.close
+        );
         const subMenuClass = joinClassNames(
             styles.subMenu,
-            isOpen && styles.expand,
-            !isOpen && styles.collapse
+            shouldTreeExpand && styles.expand,
+            !shouldTreeExpand && styles.collapse
+        );
+
+        const menuClass = joinClassNames(
+            shouldTreeExpand && styles.active,
+            isCollapsed && styles.menu,
         );
 
         return (
             <li className={ styles.treeView } >
-                <a href={ path }  className={ isOpen ? styles.active : undefined } onClick={ this._handleClick } >
+                <a href={ path }  className={ menuClass } onClick={ this._handleClick } >
                     <FontAwesomeIcon icon={ icon } className={ styles.icon }/>
-                    <span className={ joinClassNames( styles.label, isCollapsed && styles['label-collapsed'] ) }>{ label }</span>
-                    <span className={ styles.arrow }>
-                <FontAwesomeIcon icon={'angle-left'} className={ arrowClass } />
-          </span>
+                    <span className={ labelClass }>{ label }</span>
+                    <span className={ styles.arrowWrapper }>
+                        <FontAwesomeIcon icon={'angle-left'} className={ arrowClass } />
+                    </span>
                 </a>
                 <ul className={ subMenuClass }>
                     { children }
@@ -53,7 +67,15 @@ class MenuTree extends Component {
     }
 
     _handleClick = () => {
-        this.props.onClick(this.props.label);
+        const { isCollapsed, onClick } = this.props;
+        const { isOpen } = this.state;
+
+        if (isCollapsed){
+
+        }
+
+        onClick(this.props.label, true);
+
         this.setState(prevState => ({
             isOpen: !prevState.isOpen
         }))

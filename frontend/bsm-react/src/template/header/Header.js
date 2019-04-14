@@ -12,6 +12,7 @@ import HeaderNavigation from './header-navigation';
 
 //state
 import { getCurrentTheme, getSidebarStatus } from 'shared/state/layout/selectors';
+import { istBreakpointLessThan } from 'shared/state/viewport/selectors';
 
 //svg
 import ShaveSvg from '../../shared/images/svg/shave.svg';
@@ -23,16 +24,15 @@ import { expandSidebar } from 'shared/state/layout';
 
 class Header extends Component {
     render() {
-        const { onToggleClick, theme, className: headerStyle, isCollapsed, t } = this.props;
+        const { onToggleClick, theme, className: headerStyle, isCollapsed, isMobile, t } = this.props;
         const svgColor = theme === 'LIGHT_BLUE' ? 'white' : 'black';
-        console.log('colla',isCollapsed)
-//TODO: WORK ON COLLAPSED BRAND
+
         return (
             <header className={ headerStyle } >
                 <a href='/' className={ joinClassNames(styles.brand, isCollapsed && styles.collapsed ) }>
-                    <span className={ styles.miniLogo }>
+                    <span className={ !isCollapsed ? styles.miniLogo : '' }>
                         <b>{ t('brand.short-name') }</b>{ t('brand.short-suffix') }</span>
-                    <span className={ styles.largeLogo }>
+                    <span className={ joinClassNames(styles.largeLogo, isCollapsed && styles.miniLogo) }>
                         <BarberSvg width={33} height={33} fill={ svgColor }/>
                         <b> { t('brand.name') }</b> { t('brand.suffix') }
                 </span>
@@ -43,7 +43,7 @@ class Header extends Component {
                     <FontAwesomeIcon icon={'bars'} />
                     </a>
                     <div className={ styles.leftContainer }>
-                        <HeaderQuickActions/>
+                        <HeaderQuickActions isMobile={ isMobile }/>
                     </div>
                     <div className={ styles.rightContainer }>
                         <HeaderNavigation/>
@@ -59,6 +59,8 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
     theme: getCurrentTheme(state),
     isCollapsed: getSidebarStatus(state),
+    isMobile: istBreakpointLessThan(state,'md'),
+    // viewport: ge
 });
 
 export default compose(withTranslation(['header']),connect(mapStateToProps))(Header);

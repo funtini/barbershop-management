@@ -9,6 +9,10 @@ OLD CLASSES - NEED REVIEW
     padding:0;
 }
 
+.quickActions > li:first-child {
+    border-left: 1px solid var(--theme-color-header-bg-hover);
+}
+
 .quickActions > li {
     display: inline-block;
     margin: 0;
@@ -19,6 +23,7 @@ OLD CLASSES - NEED REVIEW
     font-family: var(--font-family-main);
     font-weight: var(--font-weight-medium);
     line-height: calc( var(--header-height-md) - 2px );
+    border-right: 1px solid var(--theme-color-header-bg-hover);
 }
 
 .quickActions > li:hover{

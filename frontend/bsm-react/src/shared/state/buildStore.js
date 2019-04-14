@@ -1,6 +1,7 @@
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
-import { connectRouter, routerMiddleware } from 'connected-react-router'
-import { createBrowserHistory } from 'history'
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory } from 'history';
+import { responsiveStateReducer, responsiveStoreEnhancer, createResponsiveStateReducer } from 'redux-responsive';
 
 // middleware
 import thunk from 'redux-thunk';
@@ -21,7 +22,14 @@ export default function buildStore(initialState) {
     const rootReducer = (history) => combineReducers({
         count: counterReducer,
         layout: layoutReducer,
-        router: connectRouter(history)
+        router: connectRouter(history),
+        viewport: createResponsiveStateReducer({
+            xs: 500,
+            sm: 768,
+            md: 1024,
+            lg: 1280,
+            xl: 1440,
+        }),
     });
 
     // If Redux DevTools Extension is installed use it, otherwise use Redux compose.
@@ -29,12 +37,10 @@ export default function buildStore(initialState) {
         process.env.NODE_ENV === 'development' ?
             window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
-    const store = createStore(
+    return createStore(
         rootReducer(history),
         initialState,
-        composeEnhancers(applyMiddleware(...middlewares))
+        composeEnhancers(responsiveStoreEnhancer, applyMiddleware(...middlewares))
     );
-
-    return store;
 }
 

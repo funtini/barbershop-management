@@ -10,10 +10,11 @@ import styles from './MenuItem.css';
 //TODO: make active feature for submenus from path compare with exact path or something like that
 const MenuItem = ({ path, icon, label, children, selected, onClick, isCollapsed }) => (
     <li>
-        <a href={ path } className={ selected ? styles.active : undefined } onClick={() =>  onClick && _handleClick(label, onClick) }>
-                <FontAwesomeIcon icon={ icon } className={ styles.icon }/>
-
-                <span className={ joinClassNames(styles.label, isCollapsed && styles['label-collapsed']) }>
+        <a href={ path }
+           className={ joinClassNames(selected && styles.active, isCollapsed && styles.menu) }
+           onClick={ () =>  onClick && _handleClick(label, onClick) }>
+            <FontAwesomeIcon icon={ icon } className={ styles.icon }/>
+            <span className={ joinClassNames(styles.label, isCollapsed && styles['label-collapsed']) }>
                 { label }
             </span>
 
@@ -25,7 +26,7 @@ const MenuItem = ({ path, icon, label, children, selected, onClick, isCollapsed 
 );
 
 const _handleClick = (label, onClick) => {
-    onClick(label)
+    onClick(label, false)
 };
 
 export default MenuItem;

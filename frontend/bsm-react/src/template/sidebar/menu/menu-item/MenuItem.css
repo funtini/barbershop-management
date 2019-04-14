@@ -13,12 +13,20 @@
     background: var(--theme-color-menu-bg-active);
 }
 
+.menu:hover .label-collapsed {
+    margin: -4px 12px;
+    padding: 4px;
+    color: white;
+    background: darkslategrey;
+    border-radius: 5px;
+    visibility: visible;
+}
+
 .label {
     flex: 1 1 90%;
 }
 
 .label-collapsed {
-    color: green;
     margin-left: 12px;
     visibility: hidden;
 }

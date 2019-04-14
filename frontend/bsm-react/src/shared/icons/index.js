@@ -19,7 +19,10 @@ import {
     faFlag,
     faAngleLeft,
     faCircle,
-    faTachometerAlt
+    faTachometerAlt,
+    faHandHoldingUsd,
+    faUserPlus,
+    faCalendarPlus,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -42,5 +45,8 @@ library.add(
     faFlag,
     faAngleLeft,
     faCircle,
-    faTachometerAlt
+    faTachometerAlt,
+    faHandHoldingUsd,
+    faUserPlus,
+    faCalendarPlus
 );

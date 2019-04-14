@@ -12,6 +12,7 @@ import menuOptions from './MenuOptions';
 //styles
 import styles from './Menu.css';
 import { getSidebarStatus } from 'shared/state/layout/selectors';
+import { expandSidebar } from 'shared/state/layout';
 
 const subMenuIcon = ["far","circle"];
 
@@ -32,7 +33,7 @@ class Menu extends Component {
 
         return (
             <ul className={ styles.menu }>
-                <MenuHeader title={ t('menu-header.main-navigation') }/>
+                { !isCollapsed && <MenuHeader title={ t('menu-header.main-navigation') }/>}
                 {
                     options && options.map((option)=> (
                         option.subItems ?
@@ -62,15 +63,25 @@ class Menu extends Component {
         )
     }
 
-    _handleClickMenuItem(item) {
+    _handleClickMenuItem(item, isTreeMenu) {
+        const { isCollapsed, collapseSidebar } = this.props;
+
+        if (isCollapsed && isTreeMenu){
+            collapseSidebar();
+        }
+
         this.setState({
             selected: item
         });
     }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+    collapseSidebar: () => dispatch(expandSidebar())
+});
+
 const mapStateToProps = (state) => ({
     isCollapsed: getSidebarStatus(state),
 });
 
-export default compose(withTranslation(['sidebar']),connect(mapStateToProps))(Menu);
+export default compose(withTranslation(['sidebar']),connect(mapStateToProps,mapDispatchToProps))(Menu);

@@ -2,7 +2,7 @@
     Custom media queries
 */
 
-@custom-media --layout-sm (min-width: 768px);
-@custom-media --layout-md (min-width: 1024px);
-@custom-media --layout-lg (min-width: 1280px);
-@custom-media --layout-xl (min-width: 1440px);
+@custom-media --layout-sm (min-width: 768px); /*  tablet */
+@custom-media --layout-md (min-width: 1024px); /*  tablet portrait / desktop small*/
+@custom-media --layout-lg (min-width: 1280px); /*  desktop medium */
+@custom-media --layout-xl (min-width: 1440px); /*  desktop large */
