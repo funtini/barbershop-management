@@ -4,17 +4,24 @@ OLD CLASSES - NEED REVIEW
 */
 
 .quickActions {
-    float: left;
     margin: 0;
     padding:0;
+    display: flex;
 }
 
-.quickActions > li:first-child {
+.mobileButtons > li {
+    border-right: 1px solid var(--theme-color-header-bg-hover);
+}
+
+.mobileButtons > li:first-child {
     border-left: 1px solid var(--theme-color-header-bg-hover);
 }
 
 .quickActions > li {
     display: inline-block;
+    width: 100%;
+    max-width: 80px;
+    text-align: center;
     margin: 0;
     padding: 0 15px;
     cursor: pointer;
@@ -23,7 +30,13 @@ OLD CLASSES - NEED REVIEW
     font-family: var(--font-family-main);
     font-weight: var(--font-weight-medium);
     line-height: calc( var(--header-height-md) - 2px );
-    border-right: 1px solid var(--theme-color-header-bg-hover);
+}
+
+@media (--layout-sm) {
+    .quickActions > li {
+        width: auto;
+        max-width: none;
+    }
 }
 
 .quickActions > li:hover{
@@ -31,6 +44,7 @@ OLD CLASSES - NEED REVIEW
     border-bottom: 2px solid var(--theme-color-header);
     color:  var(--theme-color-header-hover);
     font-weight: var(--font-weight-bold);
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
 }
 
 .quickActions > li > i {
@@ -42,6 +56,6 @@ OLD CLASSES - NEED REVIEW
 }
 
 .quickActions > li:active{
-    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+    box-shadow: 0 0 2px rgba(0,0,0,0.4);
     font-weight: var(--font-weight-main);
 }

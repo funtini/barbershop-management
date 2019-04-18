@@ -1,13 +1,16 @@
-/*@import '../../../shared/styles/variables.css';*/
-
 .navBar {
     margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 .option {
     position: relative;
-    display: inline-block;
+    display: block;
     margin: 0;
     padding: 0;
-    height: 100%;
 }

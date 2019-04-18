@@ -110,6 +110,7 @@
     /* Sidebar */
     --sidebar-width-md: 230px;
     --sidebar-width-md-collapsed: 50px;
+    --sidebar-width-sm-collapsed: 0px;
 
     /* Footer */
     --footer-height-sm: 76px;

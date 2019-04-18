@@ -3,10 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //styles
 import styles from './HeaderQuickActions.css';
+import joinClassNames from 'shared/utils/joinClassNames';
 
 const HeaderQuickActions = ( props ) => (
     props.isMobile ?
-        <ul className={ styles.quickActions }>
+        <ul className={ joinClassNames(styles.quickActions, styles.mobileButtons)}>
             <li><FontAwesomeIcon icon={ 'hand-holding-usd' }/></li>
             <li><FontAwesomeIcon icon={ 'user-plus' }/></li>
             <li><FontAwesomeIcon icon={ 'calendar-plus' }/></li>

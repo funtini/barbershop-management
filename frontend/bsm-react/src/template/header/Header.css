@@ -12,7 +12,7 @@
     font-size: var(--font-size-8);
     line-height: var(--header-height-md);
     text-align: center;
-    width: var(--sidebar-width-md);
+    width: 100%;
     font-family: var(--font-family-brand);
     padding: 0 5px;
     font-weight: var(--font-weight-ligther);
@@ -20,8 +20,20 @@
 }
 
 .collapsed {
-    width: var(--sidebar-width-md-collapsed)
+    width: 100%;
 }
+
+@media (--layout-sm) {
+    .brand {
+        width: var(--sidebar-width-md);
+    }
+
+    .collapsed {
+        width: var(--sidebar-width-md-collapsed)
+    }
+}
+
+
 
 .largeLogo {
     display: flex;
@@ -38,22 +50,44 @@
     -o-transition: margin-left var(--transition-ease-in-out-default);
     transition: margin-left var(--transition-ease-in-out-default);
     margin-bottom: 0;
-    margin-left: var(--sidebar-width-md);
+    margin-left: 0;
     border: none;
     min-height: var(--header-height-md);
     border-radius: 0;
 }
 
+@media (--layout-sm) {
+    .navBar {
+        margin-left: var(--sidebar-width-md);
+    }
+
+    .expand {
+        margin-left: var(--sidebar-width-md-collapsed);
+    }
+}
+
+.navBarActions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .expand {
-    margin-left: var(--sidebar-width-md-collapsed);
+    margin-left: 0;
 }
 
 .sidebarToggle {
     float: left;
     background: transparent none;
-    padding: 15px 15px;
+    padding: 15px 18px;
     max-height: var(--header-height-md);
     color: var(--theme-color-header);
+}
+
+@media (--layout-sm) {
+    .sidebarToggle {
+        padding: 15px 15px;
+    }
 }
 
 .sidebarToggle:hover {
@@ -61,12 +95,18 @@
 }
 
 .leftContainer {
-    float: left;
+    width: 50%;
+}
+
+@media (--layout-sm) {
+    .leftContainer {
+        width: auto;
+    }
 }
 
 .rightContainer {
     display: flex;
-    float: right;
+    width: 30%;
     min-height: var(--header-height-md);
 }
 

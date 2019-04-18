@@ -42,11 +42,13 @@ class Header extends Component {
                     <a href='/#' className={ styles.sidebarToggle } onClick={ onToggleClick }>
                     <FontAwesomeIcon icon={'bars'} />
                     </a>
-                    <div className={ styles.leftContainer }>
-                        <HeaderQuickActions isMobile={ isMobile }/>
-                    </div>
-                    <div className={ styles.rightContainer }>
-                        <HeaderNavigation/>
+                    <div className={ styles.navBarActions }>
+                        <div className={ styles.leftContainer }>
+                            <HeaderQuickActions isMobile={ isMobile }/>
+                        </div>
+                        <div className={ styles.rightContainer }>
+                            <HeaderNavigation/>
+                        </div>
                     </div>
 
                 </nav>

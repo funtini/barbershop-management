@@ -34,8 +34,9 @@ export default function buildStore(initialState) {
 
     // If Redux DevTools Extension is installed use it, otherwise use Redux compose.
     const composeEnhancers =
-        process.env.NODE_ENV === 'development' ?
-            window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
+        typeof window === 'object' && process.env.NODE_ENV === 'development' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+            window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ :
+            compose;
 
     return createStore(
         rootReducer(history),
