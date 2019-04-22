@@ -72,7 +72,7 @@ public class PopulateMockData implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		populateDB(false);
+		populateDB(true);
 
 	}
 	

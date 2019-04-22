@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { listUsers, login, ACCESS_TOKEN } from 'shared/utils/apiClient';
+import { getCookie } from 'shared/utils/cookieUtils';
 
 // actions
 import { switchTheme } from 'shared/state/layout';
@@ -9,23 +11,34 @@ import { switchTheme } from 'shared/state/layout';
 // styles
 import styles from './Dashboard.css';
 
+const values = {
+    usernameOrEmail:'admin@bsm.com',
+    password:'12345'
+};
 
+const loginRequest = Object.assign({}, values);
 
 class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: false,
+            users: [],
         }
             //state data
         this._handleClick = this._handleClick.bind(this);
         }
 
+    componentWillMount() {
+        login({ ...loginRequest })
+            .then(resp => localStorage.setItem(ACCESS_TOKEN, resp.data.accessToken))
+    }
+
 
 
     render () {
         const { t } = this.props;
-
+console.log(this.state.users);
         return (
             <div className={ styles.dashboardWrapper }>
                 <p>DASHBOARD</p>
@@ -33,6 +46,7 @@ class Dashboard extends Component {
                     {t('pages:dashboard.title')}
                     {t('pages:dashboard.subtitle')}
                 </p>
+                { this.state.users && this.state.users.map( user => <p key={user.name}>{ user.name }</p>) }
                 <br/>
                 <button onClick={this._handleClick}> Change Theme </button>
             </div>
@@ -43,6 +57,10 @@ class Dashboard extends Component {
         const { changeTheme } = this.props;
         changeTheme('BLACK_WHITE');
         console.log(changeTheme)
+        const user = getCookie('username');
+        console.log('COOKIE NAME', user)
+
+        listUsers().then(resp => this.setState({ users: resp.data }));
 
     }
 }

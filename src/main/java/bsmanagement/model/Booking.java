@@ -32,7 +32,7 @@ import bsmanagement.dto.rest.BookingRestDTO;
  *
  */
 @Entity
-@Proxy(lazy = false)
+//@Proxy(lazy = false)
 public class Booking implements Comparable<Booking>{
 	
 	@Id

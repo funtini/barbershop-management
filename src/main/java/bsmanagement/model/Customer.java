@@ -30,7 +30,7 @@ import bsmanagement.dto.rest.CustomerRestDTO;
  *
  */
 @Entity
-@Proxy(lazy = false)
+//@Proxy(lazy = false)
 public class Customer {
 	
 	@Id

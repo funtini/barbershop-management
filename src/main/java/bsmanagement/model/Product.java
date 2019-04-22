@@ -34,7 +34,7 @@ import bsmanagement.dto.rest.ProductRestDTO;
  * @author JOAO GOMES
  */
 @Entity
-@Proxy(lazy = false)
+//@Proxy(lazy = false)
 public class Product implements Comparable<Product>{
 
 	

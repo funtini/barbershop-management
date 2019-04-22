@@ -69,10 +69,12 @@ public class User{
 	@ElementCollection
 	@LazyCollection(LazyCollectionOption.FALSE)
 	List<Contract> contracts;
-	@ManyToMany(cascade = CascadeType.PERSIST)
-	@LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+//	@ManyToMany(cascade = CascadeType.PERSIST)
+//	@LazyCollection(LazyCollectionOption.FALSE)
+//    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+@ManyToMany(cascade = {CascadeType.MERGE})
+@LazyCollection(LazyCollectionOption.FALSE)
     private Set<Role> roles = new LinkedHashSet<>();
 	private String username;
 	
