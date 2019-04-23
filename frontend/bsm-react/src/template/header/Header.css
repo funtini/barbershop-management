@@ -46,14 +46,16 @@
 }
 
 .navBar {
+    margin-bottom: 0;
+    margin-left: 0;
+    min-height: var(--header-height-md);
     -webkit-transition: margin-left var(--transition-ease-in-out-default);
     -o-transition: margin-left var(--transition-ease-in-out-default);
     transition: margin-left var(--transition-ease-in-out-default);
-    margin-bottom: 0;
-    margin-left: 0;
-    border: none;
-    min-height: var(--header-height-md);
-    border-radius: 0;
+}
+
+.navBar-shadow {
+    box-shadow: 0 1px 2px var(--theme-color-header-bg-hover);
 }
 
 @media (--layout-sm) {

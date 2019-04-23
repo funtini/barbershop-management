@@ -63,7 +63,7 @@
 @media (--layout-sm) {
     .sidebar {
         padding-top: 50px;
-        overflow: auto;
+        overflow: inherit;
     }
 }
 
@@ -126,6 +126,7 @@
     .collapsed {
         width: var(--sidebar-width-md-collapsed);
         transform: translateX(0);
+        overflow: visible;
     }
 }
 

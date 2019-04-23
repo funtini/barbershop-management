@@ -25,7 +25,13 @@ import { expandSidebar } from 'shared/state/layout';
 class Header extends Component {
     render() {
         const { onToggleClick, theme, className: headerStyle, isCollapsed, isMobile, t } = this.props;
-        const svgColor = theme === 'LIGHT_BLUE' ? 'white' : 'black';
+        const isBlackWhiteTheme = theme === 'BLACK_WHITE';
+        const svgColor = isBlackWhiteTheme ? 'black' : 'white';
+        const navBarClass = joinClassNames(
+            styles.navBar,
+            isCollapsed && styles.expand,
+            isBlackWhiteTheme && styles['navBar-shadow'],
+        );
 
         return (
             <header className={ headerStyle } >
@@ -37,8 +43,7 @@ class Header extends Component {
                         <b> { t('brand.name') }</b> { t('brand.suffix') }
                 </span>
                 </a>
-
-                <nav className={ joinClassNames(styles.navBar, isCollapsed && styles.expand) }>
+                <nav className={ navBarClass }>
                     <a href='/#' className={ styles.sidebarToggle } onClick={ onToggleClick }>
                     <FontAwesomeIcon icon={'bars'} />
                     </a>
@@ -50,9 +55,7 @@ class Header extends Component {
                             <HeaderNavigation/>
                         </div>
                     </div>
-
                 </nav>
-
             </header>
         );
     }
