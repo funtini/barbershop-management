@@ -1,0 +1,25 @@
+.wrapper {
+
+}
+
+.loginBox {
+    margin: 10% auto;
+    width: 400px;
+    border: 1px solid;
+}
+
+.header {
+    text-align: center;
+}
+
+.body {
+    padding: 20px;
+
+}
+
+.title {
+    margin: 0;
+    padding: 0 20px 20px 20px;
+    text-align: center;
+}
+

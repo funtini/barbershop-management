@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import { responsiveStateReducer, responsiveStoreEnhancer, createResponsiveStateReducer } from 'redux-responsive';
+import { reducer as formReducer } from 'redux-form'
 
 // middleware
 import thunk from 'redux-thunk';
@@ -9,6 +10,7 @@ import thunk from 'redux-thunk';
 // reducers
 import counterReducer from './counter';
 import layoutReducer from './layout';
+import accountReducer from './account';
 
 // Create an enhanced history that syncs navigation events with the store.
 export const history = createBrowserHistory();
@@ -21,6 +23,8 @@ export default function buildStore(initialState) {
 
     const rootReducer = (history) => combineReducers({
         count: counterReducer,
+        form: formReducer,
+        account: accountReducer,
         layout: layoutReducer,
         router: connectRouter(history),
         viewport: createResponsiveStateReducer({

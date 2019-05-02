@@ -3,8 +3,6 @@ import { Route, Switch } from 'react-router';
 
 // components
 import Layout from './template/layout';
-import changeTheme from './shared/utils/changeTheme';
-import { themeColors } from './shared/utils/changeTheme';
 import DashBoard from './pages/dashboard';
 import Products from './pages/products';
 
@@ -14,28 +12,31 @@ import './App.css';
 // icons
 import './shared/icons';
 
+// utils
+import PrivateRoute from 'shared/utils/privateRoute';
+
 class App extends Component {
-  render() {
-    return (
-      <div>
-          <Layout>
-              <Switch>
-                  <Route exact path="/" component={ DashBoard } />
-                  <Route path="/products" component={ Products } />
-                  <Route render={() => (<div>NOT FOUND PAGE</div>)} />
-              </Switch>
-              {/*<br/>*/}
-              {/*<button onClick={this._handleClick}> Change Theme </button>*/}
-          </Layout>
-      </div>
-    );
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: true,
+            users: [],
+        }
+    }
 
-  _handleClick() {
-      console.log('clicked me');
-      changeTheme(themeColors.BLACK_WHITE);
-
-  }
+    render() {
+        return (
+            <div>
+                <Layout>
+                    <Switch>
+                        <PrivateRoute exact path="/" component={ DashBoard } />
+                        <PrivateRoute path="/products" component={ Products } />
+                        <PrivateRoute render={() => (<div>NOT FOUND PAGE</div>)} />
+                    </Switch>
+                </Layout>
+            </div>
+        );
+    }
 }
 
 export default App;

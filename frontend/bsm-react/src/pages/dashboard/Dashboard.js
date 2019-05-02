@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { listUsers, login, ACCESS_TOKEN } from 'shared/utils/apiClient';
+import { listUsers, ACCESS_TOKEN } from 'shared/utils/apiClient';
 import { getCookie } from 'shared/utils/cookieUtils';
 
 // actions
 import { switchTheme } from 'shared/state/layout';
+import { login } from 'shared/state/account';
 
 // styles
 import styles from './Dashboard.css';
@@ -30,8 +31,9 @@ class Dashboard extends Component {
         }
 
     componentWillMount() {
-        login({ ...loginRequest })
-            .then(resp => localStorage.setItem(ACCESS_TOKEN, resp.data.accessToken))
+        const { login } = this.props;
+
+        // login({...loginRequest})
     }
 
 
@@ -66,7 +68,8 @@ console.log(this.state.users);
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    changeTheme: (theme) => dispatch(switchTheme(theme))
+    changeTheme: (theme) => dispatch(switchTheme(theme)),
+    login: (values) => dispatch(login(values))
 });
 
 export default compose(withTranslation(),connect(null,mapDispatchToProps))(Dashboard);

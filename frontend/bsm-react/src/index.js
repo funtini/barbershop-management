@@ -9,13 +9,20 @@ import buildStore, { history } from './shared/state/buildStore';
 
 // components
 import App from './App';
+import Login from "./pages/login";
+
+// utils
+import PrivateRoute from './shared/utils/privateRoute';
 
 const store = buildStore({});
 
 ReactDOM.render(
     <Provider store={ store }>
         <ConnectedRouter history={ history }>
-        <App />
+            <Switch>
+                <Route path='/login' component={ Login } />
+                <PrivateRoute path='/' component={ App } />
+            </Switch>
         </ConnectedRouter>
     </Provider>,
     document.getElementById('root')
