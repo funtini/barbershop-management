@@ -36,8 +36,6 @@ class Dashboard extends Component {
         // login({...loginRequest})
     }
 
-
-
     render () {
         const { t } = this.props;
 console.log(this.state.users);

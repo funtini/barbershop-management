@@ -15,8 +15,8 @@ import { getCurrentTheme, getSidebarStatus } from 'shared/state/layout/selectors
 import { istBreakpointLessThan } from 'shared/state/viewport/selectors';
 
 //svg
-import ShaveSvg from '../../shared/images/svg/shave.svg';
-import BarberSvg from '../../shared/images/svg/barber.svg';
+import ShaveSvg from '../../shared/assets/images/svg/shave.svg';
+import BarberSvg from '../../shared/assets/images/svg/barber.svg';
 
 //styles
 import styles from './Header.css'

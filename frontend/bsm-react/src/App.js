@@ -10,7 +10,7 @@ import Products from './pages/products';
 import './App.css';
 
 // icons
-import './shared/icons';
+import './shared/assets/icons';
 
 // utils
 import PrivateRoute from 'shared/utils/privateRoute';

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { Field, reduxForm, formValues } from 'redux-form'
+import { Field, reduxForm, formValues, getFormValues } from 'redux-form'
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
@@ -9,9 +10,14 @@ import LoginForm from './login-form/LoginForm';
 
 // Util
 import joinClassNames from 'shared/utils/joinClassNames';
+import { setCookie } from 'shared/utils/cookieUtils';
+import { ACCESS_TOKEN } from 'shared/utils/apiClient';
 
 // Style
 import styles from './Login.css';
+
+const sessionTime = 0.15;
+const sessionCookieKey = 'sessionTime'
 
 class Login extends Component {
     constructor(props) {
@@ -31,7 +37,7 @@ class Login extends Component {
                         <div className={ styles.title }>
                             Sign in to start your session
                         </div>
-                        <LoginForm handleSubmit={ this._handleSubmit }/>
+                        <LoginForm onSubmit={ this._handleSubmit }/>
                         <a>Forgot Password</a>
                     </div>
                 </div>
@@ -40,7 +46,8 @@ class Login extends Component {
     }
 
     _handleSubmit = (values) => {
-        console.log(values.target)
+        console.log(values)
+        setCookie(ACCESS_TOKEN,'true', 0.015);
         this.props.history.push('/')
     }
 }

@@ -9,7 +9,8 @@ import buildStore, { history } from './shared/state/buildStore';
 
 // components
 import App from './App';
-import Login from "./pages/login";
+import Login from './pages/account/login';
+import LockScreen from './pages/account/lock-screen'
 
 // utils
 import PrivateRoute from './shared/utils/privateRoute';
@@ -21,6 +22,7 @@ ReactDOM.render(
         <ConnectedRouter history={ history }>
             <Switch>
                 <Route path='/login' component={ Login } />
+                <Route path='/lockSession' component={ LockScreen } />
                 <PrivateRoute path='/' component={ App } />
             </Switch>
         </ConnectedRouter>

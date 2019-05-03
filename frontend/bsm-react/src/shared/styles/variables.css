@@ -27,11 +27,16 @@
     --font-size-8: 18px;
     --font-size-9: 20px;
     --font-size-10: 22px;
+    --font-size-11: 25px;
+    --font-size-12: 30px;
+    --font-size-13: 35px;
 
     /* Line Height */
     --text-line-height: 1.2;
 
     /* Theme Colors */
+    --theme-color-lockscreen: var(--color-gray-light-active);
+    --theme-color-lockscreen-bg: var(--color-white);
     --theme-color-header: var(--color-gray-light);
     --theme-color-header-hover: var(--color-white);
     --theme-color-header-bg: var(--color-primary);
