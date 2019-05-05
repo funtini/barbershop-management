@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import userImage from 'shared/assets/images/user.jpg';
 
 // Styles
 import styles from './LockScreen.css';
+
 
 class LockScreen extends Component {
     render() {
@@ -24,6 +26,11 @@ class LockScreen extends Component {
                     <form className={ styles.credentials }>
                         <div className={ styles.formGroup }>
                             <input type={'password'} className={ styles.formControl } placeholder={'password'}/>
+                            <div className={ styles.formButtonWrapper }>
+                                <button className={ styles.button }>
+                                    <FontAwesomeIcon icon={ 'sign-in-alt'} size={'lg'} className={ styles.icon } color={ 'grey'}/>
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>

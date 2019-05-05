@@ -23,6 +23,8 @@ import {
     faHandHoldingUsd,
     faUserPlus,
     faCalendarPlus,
+    faArrowRight,
+    faSignInAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -48,5 +50,7 @@ library.add(
     faTachometerAlt,
     faHandHoldingUsd,
     faUserPlus,
-    faCalendarPlus
+    faCalendarPlus,
+    faArrowRight,
+    faSignInAlt
 );

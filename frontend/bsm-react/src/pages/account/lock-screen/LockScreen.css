@@ -74,19 +74,43 @@
     float: left;
 }
 
+.formControl:focus{
+    outline: none;
+}
+
+.formButtonWrapper {
+    position: relative;
+    display: table-cell;
+    width: 1%;
+    font-size: 0;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.button {
+    padding: 0 10px;
+    background-color: var(--theme-color-lockscreen-bg);
+    border: 0;
+    cursor: pointer;
+}
+
 .helperText {
     display: block;
     margin-top: 5px;
     margin-bottom: 10px;
-    color: #737373;
+    font-size: var(--font-size-5);
+    color: var(--color-gray-dark);
     text-align: center;
 }
 
 .link {
     text-align: center;
+    font-size: var(--font-size-5);
+    color: var(--color-blue-light)
 }
 
 .footer {
     margin-top: 10px;
+    font-size: var(--font-size-5);
     text-align: center;
 }
