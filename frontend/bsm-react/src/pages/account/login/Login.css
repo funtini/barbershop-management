@@ -1,25 +1,38 @@
 .wrapper {
-
+    background: var(--theme-color-lockscreen);
+    height: 100vh;
 }
 
 .loginBox {
-    margin: 10% auto;
+    margin: 0 auto;
+    padding-top: 10%;
     width: 400px;
-    border: 1px solid;
 }
 
 .header {
+    margin-bottom: 30px;
     text-align: center;
+    font-size: var(--font-size-12);
+    font-weight: var(--font-weight-ligther);
+    color: var(--color-gray-dim)
 }
 
 .body {
     padding: 20px;
-
+    background: var(--theme-color-lockscreen-bg);
 }
 
 .title {
     margin: 0;
     padding: 0 20px 20px 20px;
+    font-size: var(--font-size-5);
+    color: var(--color-gray-dark);
     text-align: center;
+}
+
+.forgotPassword {
+    margin-top: 15px;
+    font-size: var(--font-size-4);
+    color: var(--color-blue-light-active);
 }
 

@@ -4,9 +4,12 @@ import { compose } from 'redux';
 import { Field, reduxForm, formValues, getFormValues } from 'redux-form'
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { withTranslation } from 'react-i18next';
 
 // Components
 import LoginForm from './login-form/LoginForm';
+import LinkButton from 'shared/components/buttons/link-button';
 
 // Util
 import joinClassNames from 'shared/utils/joinClassNames';
@@ -27,18 +30,20 @@ class Login extends Component {
     }
 
     render() {
+        const { t } = this.props;
+
         return (
             <div className={ styles.wrapper }>
                 <div className={ styles.loginBox }>
                     <div className={ styles.header }>
-                        <h2> BSManagement</h2>
+                        <b>{ t('brand.name') }</b> { t('brand.suffix') }
                     </div>
                     <div className={ styles.body }>
                         <div className={ styles.title }>
                             Sign in to start your session
                         </div>
                         <LoginForm onSubmit={ this._handleSubmit }/>
-                        <a>Forgot Password</a>
+                        <LinkButton className={ styles.forgotPassword }>I forgot my password</LinkButton>
                     </div>
                 </div>
             </div>
@@ -58,5 +63,5 @@ Login.propTypes = {
 
 
 
-export default withRouter(Login);
+export default withRouter(withTranslation(['header'])(Login));
 
