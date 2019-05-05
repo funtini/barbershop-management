@@ -47,9 +47,9 @@
     --theme-color-menu: var(--color-gray);
     --theme-color-menu-active: var(--color-white);
     --theme-color-menu-bg: #222d32;
-    --theme-color-menu-bg-active: #1e282c;
+    --theme-color-menu-bg-active: var(--color-gray-dim-active);
     --theme-color-sub-menu: var(--color-gray-active);
-    --theme-color-sub-menu-bg: #2c3b41;
+    --theme-color-sub-menu-bg: var(--color-gray-dim);
     --theme-color-footer: #dd4b39;
     --theme-color-footer-bg: var(--color-white);
     --theme-color-footer-border: #d2d6de;
@@ -73,6 +73,8 @@
     --color-white: #fff;
     --color-gray: #b8c7ce;
     --color-gray-active: #8aa4af;
+    --color-gray-dim: #2c3b41;
+    --color-gray-dim-active: #1e282c;
     --color-gray-dark: #585858;
     --color-gray-light: #ecf0f5;
     --color-gray-light-active: #d2d6de;

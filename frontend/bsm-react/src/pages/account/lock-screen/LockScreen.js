@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { withTranslation } from 'react-i18next';
 
 import userImage from 'shared/assets/images/user.jpg';
 
@@ -10,11 +11,13 @@ import styles from './LockScreen.css';
 
 class LockScreen extends Component {
     render() {
+        const { t } = this.props;
+
         return (
             <div className={ styles.lockScreen }>
             <div className={ styles.wrapper }>
                 <div className={ styles.brand }>
-                    BsManagement
+                    <b>{ t('brand.name') }</b> { t('brand.suffix') }
                 </div>
                 <div className={ styles.username }>
                     Pedro Domingos
@@ -54,4 +57,4 @@ LockScreen.propTypes = {
 
 };
 
-export default LockScreen;
+export default withTranslation(['header'])(LockScreen);
