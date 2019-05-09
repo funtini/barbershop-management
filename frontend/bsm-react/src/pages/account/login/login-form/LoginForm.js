@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Field, Form, reduxForm } from 'redux-form'
-import CheckBox from 'shared/components/form/checkbox/Checkbox'
+// import CheckBox from 'shared/components/form/checkbox/Checkbox'
+import CheckBox from 'shared/components/form/redux-form/CheckBox'
 import styles from './LoginForm.css';
 import joinClassNames from 'shared/utils/joinClassNames';
 
@@ -11,23 +12,14 @@ let LoginForm = ( props ) => {
         <form onSubmit={ handleSubmit }>
             <div className={ styles.formGroup }>
                 <Field className={ styles.formControl } name={'Email'} component={'input'} type={'email'} placeholder={'Email'}/>
-                {/*<input className={ styles.formControl } type={'email'} placeholder={'Email'}/>*/}
             </div>
             <div className={ styles.formGroup }>
                 <Field className={ styles.formControl } type={'password'} placeholder={'Password'} name={'Password'} component={'input'}/>
             </div>
             <div className={ styles.formGroup }>
-                <CheckBox id={'rememberMe'} label={'remember me'} labelPosition={'after'} checked={ rememberMe } onChange={ onToggleCheckBox }/>
+                <Field label={'Remember me'} name={'rememberMe'} component={ CheckBox }/>
+                {/*<CheckBox id={'rememberMe'} label={'remember me'} labelPosition={'after'} checked={ rememberMe } onChange={ onToggleCheckBox }/>*/}
             </div>
-
-            {/*<div className={ joinClassNames(styles.formGroup, styles.formActions) }>*/}
-                {/*<div className={ joinClassNames(styles.action, styles.rememberMe) }>*/}
-                    {/*<input className={ styles.checkBox } type={'checkbox'}/>*/}
-                    {/*/!*<label>remember me</label>*!/*/}
-                    {/*<span> remember me</span>*/}
-                {/*</div>*/}
-
-            {/*</div>*/}
             <button className={ joinClassNames(styles.actionButton,styles.formControl) } type='submit'>Sign In</button>
         </form>
     )

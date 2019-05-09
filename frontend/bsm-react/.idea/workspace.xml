@@ -2,25 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="030f74c0-7ac6-409f-98e2-a7ba6ba10a96" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/shared/components/animations/dropdown-transition/DropdownTransition.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/components/animations/dropdown-transition/DropdownTransition.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/components/animations/fade-transition/FadeTransition.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/components/animations/fade-transition/FadeTransition.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/components/form/checkbox/Checkbox.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/components/form/checkbox/Checkbox.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/translations/en/account.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/translations/pt/account.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/components/form/redux-form/CheckBox.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/account/login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/account/login/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/Dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/Dashboard.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/Dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/styles/variables.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/styles/variables.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/template/header/header-dropdown/HeaderDropdown.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/template/header/header-dropdown/HeaderDropdown.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/template/header/header-dropdown/HeaderDropdown.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/template/header/header-dropdown/HeaderDropdown.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/components/loaders/css-loader-overlay/CSSLoaderOverlay.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/loaders/css-loader-overlay/CSSLoaderOverlay.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -39,12 +25,57 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/account/login/Login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
+            <state relative-caret-position="483">
               <caret line="49" column="80" selection-start-line="49" selection-start-column="80" selection-end-line="49" selection-end-column="80" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
                 <element signature="e#396#443#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/shared/components/loaders/css-loader-overlay/CSSLoaderOverlay.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/dashboard/Dashboard.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="368">
+              <caret line="64" column="29" selection-start-line="64" selection-start-column="29" selection-end-line="64" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/shared/components/form/redux-form/CheckBox.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="414">
+              <caret line="18" column="33" lean-forward="true" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/shared/components/loaders/css-loader-overlay/CSSLoaderOverlay.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="276">
+              <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -70,34 +101,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/shared/components/form/checkbox/Checkbox.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
+            <state relative-caret-position="529">
+              <caret line="23" column="32" lean-forward="true" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/dashboard/Dashboard.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="713">
-              <caret line="105" column="10" lean-forward="true" selection-start-line="103" selection-start-column="35" selection-end-line="105" selection-end-column="10" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="19" column="142" selection-start-line="19" selection-start-column="113" selection-end-line="19" selection-end-column="142" />
+            <state relative-caret-position="483">
+              <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
+                <element signature="e#161#226#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,48 +135,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shared/components/animations/dropdown-transition/DropdownTransition.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="11" column="3" lean-forward="true" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/template/header/header-dropdown/HeaderDropdown.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-586">
-              <caret line="33" column="14" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-                <element signature="e#330#393#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shared/styles/variables.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="37" column="42" selection-start-line="37" selection-start-column="42" selection-end-line="37" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="tsconfig.json" />
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -175,8 +161,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/template/header/header-navigation/HeaderNavigation.css" />
-        <option value="$PROJECT_DIR$/src/template/header/header-quick-actions/HeaderQuickActions.js" />
         <option value="$PROJECT_DIR$/src/shared/utils/apiClient.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/template/header/header-quick-actions/HeaderQuickActions.css" />
@@ -216,16 +200,18 @@
         <option value="$PROJECT_DIR$/src/shared/components/animations/fade-in-slide-out/FadeInSlideOut.js" />
         <option value="$PROJECT_DIR$/src/shared/components/animations/fade-transition/FadeTransition.css" />
         <option value="$PROJECT_DIR$/src/shared/components/animations/fade-transition/FadeTransition.js" />
-        <option value="$PROJECT_DIR$/src/pages/dashboard/Dashboard.js" />
         <option value="$PROJECT_DIR$/src/shared/components/animations/dropdown-transition/DropdownTransition.css" />
         <option value="$PROJECT_DIR$/src/template/header/header-dropdown/HeaderDropdown.css" />
         <option value="$PROJECT_DIR$/src/template/header/header-dropdown/HeaderDropdown.js" />
         <option value="$PROJECT_DIR$/src/shared/components/animations/dropdown-transition/DropdownTransition.js" />
         <option value="$PROJECT_DIR$/src/shared/styles/variables.css" />
         <option value="$PROJECT_DIR$/src/pages/account/login/Login.js" />
-        <option value="$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js" />
         <option value="$PROJECT_DIR$/src/shared/components/form/checkbox/Checkbox.js" />
         <option value="$PROJECT_DIR$/src/shared/components/form/checkbox/Checkbox.css" />
+        <option value="$PROJECT_DIR$/src/shared/components/loaders/css-loader-overlay/CSSLoaderOverlay.css" />
+        <option value="$PROJECT_DIR$/src/pages/dashboard/Dashboard.js" />
+        <option value="$PROJECT_DIR$/src/shared/components/form/redux-form/CheckBox.js" />
+        <option value="$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js" />
       </list>
     </option>
   </component>
@@ -341,7 +327,33 @@
               <item name="shared" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="form" type="462c0819:PsiDirectoryNode" />
-              <item name="checkbox" type="462c0819:PsiDirectoryNode" />
+              <item name="redux-form" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="shared" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="loaders" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="shared" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="loaders" type="462c0819:PsiDirectoryNode" />
+              <item name="css-loader-overlay" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="shared" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="loaders" type="462c0819:PsiDirectoryNode" />
+              <item name="loader" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
@@ -475,12 +487,12 @@
       <workItem from="1556645457599" duration="10546000" />
       <workItem from="1556807887450" duration="4906000" />
       <workItem from="1556890263203" duration="16408000" />
-      <workItem from="1557331045230" duration="18112000" />
+      <workItem from="1557331045230" duration="19623000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="277683000" />
+    <option name="totallyTimeSpent" value="279194000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1176" extended-state="6" />
@@ -532,37 +544,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/pages/account/login/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/welcome/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="23" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/welcome/Welcome.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="26" column="32" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/welcome/Welcome.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/template/layout/Layout.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="989">
@@ -858,37 +839,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/dashboard/Dashboard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="713">
-          <caret line="105" column="10" lean-forward="true" selection-start-line="103" selection-start-column="35" selection-end-line="105" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/account/login/Login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="49" column="80" selection-start-line="49" selection-start-column="80" selection-end-line="49" selection-end-column="80" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="e#396#443#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="19" column="142" selection-start-line="19" selection-start-column="113" selection-end-line="19" selection-end-column="142" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
@@ -908,8 +858,74 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/shared/components/form/checkbox/Checkbox.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
+        <state relative-caret-position="529">
+          <caret line="23" column="32" lean-forward="true" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/components/loaders/loader/Loader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/components/loaders/css-loader-overlay/CSSLoaderOverlay.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/components/loaders/css-loader-overlay/CSSLoaderOverlay.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/dashboard/Dashboard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="64" column="29" selection-start-line="64" selection-start-column="29" selection-end-line="64" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/components/form/redux-form/CheckBox.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="18" column="33" lean-forward="true" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/account/login/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="49" column="80" selection-start-line="49" selection-start-column="80" selection-end-line="49" selection-end-column="80" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#396#443#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#161#226#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

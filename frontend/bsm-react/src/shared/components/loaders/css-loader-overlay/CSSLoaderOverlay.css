@@ -10,7 +10,7 @@
     visibility: hidden;
     opacity: 0;
     transition: visibility 0ms 300ms, opacity 300ms;
-    background-color: var(--white);
+    background-color: var(--color-white);
 }
 
 .wrapper {

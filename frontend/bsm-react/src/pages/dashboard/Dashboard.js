@@ -3,6 +3,7 @@ import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import FadeTransition from 'shared/components/animations/fade-transition/FadeTransition'
+import CSSLoaderOverlay from 'shared/components/loaders/css-loader-overlay/CSSLoaderOverlay';
 
 // actions
 import { switchTheme } from 'shared/state/layout';
@@ -51,11 +52,13 @@ class Dashboard extends Component {
 console.log(this.state.users);
         return (
             <div className={ styles.dashboardWrapper }>
+                <CSSLoaderOverlay isLoading={true} withLoader={true}>
                 <p>DASHBOARD</p>
                 <p>
                     {t('pages:dashboard.title')}
                     {t('pages:dashboard.subtitle')}
                 </p>
+                </CSSLoaderOverlay>
                 <div className={ styles.container }>
                     <button className={ styles.container } onClick={this._handleSwitch}>
                         Test Transition
@@ -70,6 +73,7 @@ console.log(this.state.users);
                                 </ul>
                             </div>
                         </FadeTransition>
+
                 </div>
                 { this.state.users && this.state.users.map( user => <p key={user.name}>{ user.name }</p>) }
                 <br/>
