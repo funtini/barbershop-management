@@ -1,0 +1,23 @@
+.dropdownEnter {
+    max-height: 0;
+}
+.dropdownEnter.dropdownEnterActive {
+    max-height: 500px;
+    overflow: hidden;
+    -moz-transition: max-height var(--transition-ease-in-out-slow);
+    -o-transition: max-height var(--transition-ease-in-out-slow);
+    -webkit-transition: max-height var(--transition-ease-in-out-slow);
+    transition: max-height var(--transition-ease-in-out-slow);
+}
+.dropdownExit {
+    max-height: 500px;
+}
+.dropdownExit.dropdownExitActive {
+    max-height: 0;
+    overflow: hidden;
+    visibility: collapse;
+    -moz-transition: all var(--transition-ease-in-out-fast);
+    -o-transition: all var(--transition-ease-in-out-fast);
+    -webkit-transition: all var(--transition-ease-in-out-fast);
+    transition: all var(--transition-ease-in-out-fast);
+}

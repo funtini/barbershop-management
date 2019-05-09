@@ -25,8 +25,13 @@ const sessionCookieKey = 'sessionTime'
 class Login extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isLoading: false,
+            rememberMe: false,
+        }
 
         this._handleSubmit = this._handleSubmit.bind(this);
+        this._handleToggleCheckBox = this._handleToggleCheckBox.bind(this);
     }
 
     render() {
@@ -42,7 +47,7 @@ class Login extends Component {
                         <div className={ styles.title }>
                             Sign in to start your session
                         </div>
-                        <LoginForm onSubmit={ this._handleSubmit }/>
+                        <LoginForm onSubmit={ this._handleSubmit } rememberMe={ this.state.rememberMe } onToggleCheckBox={ this._handleToggleCheckBox }/>
                         <LinkButton className={ styles.forgotPassword }>I forgot my password</LinkButton>
                     </div>
                 </div>
@@ -54,6 +59,12 @@ class Login extends Component {
         console.log(values)
         setCookie(ACCESS_TOKEN,'true', 0.015);
         this.props.history.push('/')
+    }
+
+    _handleToggleCheckBox = () => {
+        this.setState(prevState => ({
+            rememberMe: !prevState.rememberMe
+        }))
     }
 }
 

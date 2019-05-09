@@ -8,7 +8,6 @@
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.4;
-    cursor: pointer;
 }
 
 .formActions {
@@ -16,8 +15,9 @@
     flex-direction: column;
 }
 
-.action {
+.actionButton {
     flex: 0 1 auto;
+    cursor: pointer;
 }
 
 .rememberMe {

@@ -2,18 +2,24 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withTranslation } from "react-i18next";
 import onClickOutside from 'react-onclickoutside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
-import LinkButton from "../../../shared/components/buttons/link-button";
-import Badge from "../../../shared/components/badge";
+import LinkButton from 'shared/components/buttons/link-button';
+import Badge from 'shared/components/badge';
+import DropdownTransition from 'shared/components/animations/dropdown-transition/DropdownTransition'
+
+//utils
+import joinClassNames from 'shared/utils/joinClassNames';
+
+//selectors
+import { getCurrentTheme } from 'shared/state/layout/selectors';
 
 //styles
 import styles from './HeaderDropdown.css';
-import joinClassNames from "../../../shared/utils/joinClassNames";
-import {withTranslation} from "react-i18next";
-import {getCurrentTheme} from "../../../shared/state/layout/selectors";
+
 
 class HeaderDropdown extends Component {
     constructor(props) {
@@ -26,12 +32,6 @@ class HeaderDropdown extends Component {
     }
 
     render() {
-        const dropdownClass = joinClassNames(
-            styles.dropdownWrapper,
-            !this.state.isOpen && styles.collapse,
-            this.state.isOpen && styles.open,
-        );
-
         const { badge, icon, children, header, footer, className, theme } = this.props;
         const iconColor = theme === 'LIGHT_BLUE' ? 'white' : 'black';
 
@@ -41,8 +41,8 @@ class HeaderDropdown extends Component {
                     <FontAwesomeIcon icon={ icon } color={ iconColor } size='lg'  />
                     { badge && <Badge>{ badge }</Badge> }
                 </LinkButton>
-                <div>
-                    <ul className={ dropdownClass }>
+                <DropdownTransition show={ this.state.isOpen } timeout={ 300 }>
+                    <ul className={ styles.dropdownWrapper }>
                         <li className={ styles.header }>
                             { header }
                         </li>
@@ -57,7 +57,7 @@ class HeaderDropdown extends Component {
                             </LinkButton>
                         </li>
                     </ul>
-                </div>
+                </DropdownTransition>
             </li>
         );
     }
@@ -69,7 +69,7 @@ class HeaderDropdown extends Component {
         this.props.enableOnClickOutside();
     }
 
-    handleClickOutside = evt => {
+    handleClickOutside = ( evt ) => {
         this.setState({ isOpen: false });
         this.props.disableOnClickOutside();
         console.log("clicked outside")

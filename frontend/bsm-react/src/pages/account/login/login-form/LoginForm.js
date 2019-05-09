@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Field, Form, reduxForm } from 'redux-form'
+import CheckBox from 'shared/components/form/checkbox/Checkbox'
 import styles from './LoginForm.css';
 import joinClassNames from 'shared/utils/joinClassNames';
 
 let LoginForm = ( props ) => {
-    const { handleSubmit } = props;
+    const { handleSubmit, rememberMe, onToggleCheckBox } = props;
 
     return (
         <form onSubmit={ handleSubmit }>
@@ -15,6 +16,10 @@ let LoginForm = ( props ) => {
             <div className={ styles.formGroup }>
                 <Field className={ styles.formControl } type={'password'} placeholder={'Password'} name={'Password'} component={'input'}/>
             </div>
+            <div className={ styles.formGroup }>
+                <CheckBox id={'rememberMe'} label={'remember me'} labelPosition={'after'} checked={ rememberMe } onChange={ onToggleCheckBox }/>
+            </div>
+
             {/*<div className={ joinClassNames(styles.formGroup, styles.formActions) }>*/}
                 {/*<div className={ joinClassNames(styles.action, styles.rememberMe) }>*/}
                     {/*<input className={ styles.checkBox } type={'checkbox'}/>*/}
@@ -23,7 +28,7 @@ let LoginForm = ( props ) => {
                 {/*</div>*/}
 
             {/*</div>*/}
-            <button className={ joinClassNames(styles.action,styles.formControl) } type='submit'>Sign In</button>
+            <button className={ joinClassNames(styles.actionButton,styles.formControl) } type='submit'>Sign In</button>
         </form>
     )
 };
