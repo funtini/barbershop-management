@@ -1,0 +1,27 @@
+.wrapper {
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+
+.wrapper::before,
+.wrapper::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    height: 2px;
+    transform-origin: top;
+    display: block;
+    background-color: black;
+    border-radius: 2px;
+}
+
+.wrapper::before {
+    transform: rotate(-45deg) translateY(-50%);
+}
+
+.wrapper::after {
+    transform: rotate(45deg) translateY(-50%);
+}

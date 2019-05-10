@@ -1,0 +1,25 @@
+@import "theme.css";
+
+.wrapper {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--color-white);
+    background-color: #222;
+    border-radius: 50%;
+    box-shadow: -1px 1px 1px var(--color-gray);
+}
+
+.cross {
+    width: 13px;
+    height: 13px;
+}
+
+.cross::after,
+.cross::before {
+    height: 2px;
+    background-color: white;
+    border-radius: 4px;
+}

@@ -1,0 +1,88 @@
+.button {
+    min-width: 70px;
+    min-height: 45px;
+    padding: var(--input-padding-normal);
+    display: inline-block;
+    -webkit-appearance: none; /* stylelint-disable-line property-no-vendor-prefix */
+    vertical-align: middle;
+    border: none;
+    background: none;
+    border-radius: 0;
+    color: var(--color-white);
+    font-family: var(--font-family-main);
+    font-size: var(--font-size-5);
+    font-weight: var(--font-weight-main);
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.button:focus {
+    outline: 0;
+}
+
+.hasHover.button:hover,
+.hasHover.button:focus {
+    background: var(--color-gray-dim);
+}
+
+.primary,
+.secondary {
+    background: var(--color-primary-active);
+}
+
+.primary {
+    min-width: 220px;
+}
+
+.secondary {
+    min-width: 125px;
+    min-height: 40px;
+}
+
+.wide {
+    width: 100%;
+}
+
+.unboxed {
+    border: none;
+    background: transparent;
+    color: var(--color-gray);
+}
+
+.hasHover.unboxed:hover,
+.hasHover.unboxed:focus {
+    background: transparent;
+    color: var(--color-black);
+}
+
+.button:disabled,
+.button[disabled],
+.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.button:not(.unboxed):disabled,
+.button[disabled]:not(.unboxed),
+.disabled:not(.unboxed) {
+    opacity: 0.4;
+    background: var(--color-black);
+    cursor: not-allowed;
+}
+
+.outlineButton {
+    border: 1px solid var(--color-black);
+    background: white;
+    color: var(--color-black);
+}
+
+.hasHover.outlineButton:focus,
+.hasHover.outlineButton:hover {
+    border: 1px solid var(--color-gray);
+    background: var(--color-white);
+    color: var(--color-gray);
+}

@@ -1,0 +1,14 @@
+.closeButton {
+    display: inline-block;
+    vertical-align: middle;
+    border: none;
+    background: none;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.closeButton:focus {
+    outline: 0;
+}
