@@ -39,25 +39,25 @@ class Input extends PureComponent {
         const inputId = id || `input-${inputName}`;
         const pattern = type === 'number' ? '[0-9]*' : undefined;
 
-        const wrapperClassName = joinClassNames(styles.wrapper, {
-            [styles.disabled]: disabled,
-            [styles.wrapperError]: !!error,
-            [styles.wide]: !!wide,
-        }, className);
-        const inputWrapperClassName = joinClassNames(styles.inputWrapper, {
-            [styles.disabled]: disabled,
-            [styles.inputWrapperError]: !!error,
-        });
+        const wrapperClassName = joinClassNames(styles.wrapper,
+            disabled && styles.disabled,
+            error && styles.error,
+            wide && styles.wide,
+            className);
+        const inputWrapperClassName = joinClassNames(styles.inputWrapper,
+            disabled && styles.disabled,
+            error && styles.inputWrapperError);
+
         const bottomLineClassName = joinClassNames(styles.bottomLine, {
             [styles.hasValue]: value && value !== '',
         });
         const labelClassName = joinClassNames(styles.label, {
             [styles.hasValue]: value && value !== '',
         });
-        const inputClassName = joinClassNames(styles.input, {
-            [styles.inputError]: !!error,
-            [styles.inputWithButton]: !!buttonLink,
-        });
+        const inputClassName = joinClassNames(styles.input,
+            error && styles.inputError,
+            buttonLink && styles.inputWithButton
+        );
 
         return (
             <div className={ wrapperClassName }>
@@ -75,8 +75,8 @@ class Input extends PureComponent {
                         pattern={ pattern }
                         { ...rest } />
 
-                    { label && <label className={ labelClassName } htmlFor={ inputId }>{ label }</label> }
-                    <div className={ bottomLineClassName } />
+                    {/*{ label && <label className={ labelClassName } htmlFor={ inputId }>{ label }</label> }*/}
+                    {/*<div className={ bottomLineClassName } />*/}
                     { buttonLink && <LinkButton type="submit" className={ styles.buttonLink }>{ buttonLink }</LinkButton> }
                 </div>
                 { this.renderError() }

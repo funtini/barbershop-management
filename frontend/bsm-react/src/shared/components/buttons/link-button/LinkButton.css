@@ -6,6 +6,7 @@
     display: inline;
     margin: 0;
     padding: 0;
+    transition: color var(--transition-linear-default);
 }
 
 .linkButton:hover,
@@ -13,4 +14,6 @@
 .linkButton:focus {
     text-decoration: none;
     outline: none;
+    color: var(--color-navy);
+    /*color: var(--color-blue-active);*/
 }

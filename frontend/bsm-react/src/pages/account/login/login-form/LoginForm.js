@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { Field, Form, reduxForm } from 'redux-form'
-// import CheckBox from 'shared/components/form/checkbox/Checkbox'
-import CheckBox from 'shared/components/form/redux-form/CheckBox'
-import styles from './LoginForm.css';
-import joinClassNames from 'shared/utils/joinClassNames';
+
+// components
+import CheckBox from 'shared/components/form/redux-form/CheckBox';
+import Input from 'shared/components/form/redux-form/Input';
 import Button from 'shared/components/buttons/button/Button';
+
+// utils
+import joinClassNames from 'shared/utils/joinClassNames';
+// style
+import styles from './LoginForm.css';
 
 let LoginForm = ( props ) => {
     const { handleSubmit, rememberMe, onToggleCheckBox } = props;
@@ -12,10 +17,10 @@ let LoginForm = ( props ) => {
     return (
         <form onSubmit={ handleSubmit }>
             <div className={ styles.formGroup }>
-                <Field className={ styles.formControl } name={'Email'} component={'input'} type={'email'} placeholder={'Email'}/>
+                <Field name={'Email'} type={'email'} placeholder={'Email'} component={ Input } wide/>
             </div>
             <div className={ styles.formGroup }>
-                <Field className={ styles.formControl } type={'password'} placeholder={'Password'} name={'Password'} component={'input'}/>
+                <Field name={'Password'} type={'password'} placeholder={'Password'} component={ Input } wide/>
             </div>
             <div className={ styles.formGroup }>
                 <Field label={'Remember me'} name={'rememberMe'} component={ CheckBox }/>
@@ -23,6 +28,7 @@ let LoginForm = ( props ) => {
             </div>
             <Button role={'primary'} wide modifier={'outlineButton'} type={'submit'}>Submit</Button>
             <button className={ joinClassNames(styles.actionButton,styles.formControl) } type='submit'>Sign In</button>
+            <div className={styles.buttonFill}>SKEW FILL</div>
         </form>
     )
 };

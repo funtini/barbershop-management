@@ -136,6 +136,10 @@
     --transition-sidebar-expand: 1.2s ease-in-out;
     --transition-sidebar-collapse: 0.5s ease-in-out;
 
+    /* Forms */
+    --form-height: 34px;
+    --form-letter-space: 0.5px;
+
     /* Checkbox */
     --square-size: 14px;
 

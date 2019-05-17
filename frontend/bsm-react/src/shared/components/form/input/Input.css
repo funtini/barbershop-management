@@ -1,0 +1,76 @@
+.wrapper,
+.input,
+.buttonLink {
+    font-size: var(--font-size-5);
+    /*letter-spacing: 0.5px;*/
+}
+
+.wrapper {
+    position: relative;
+    width: 240px;
+    margin-bottom: 15px;
+}
+
+.wide {
+    width: 100%;
+}
+
+.inputWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input {
+    position: relative;
+    width: 100%;
+    height: var(--form-height);
+    padding: 6px 12px;
+    /*padding: 0;*/
+    /*border: none;*/
+    /*outline: none;*/
+    /*background: none;*/
+}
+
+.inputWithButton {
+    width: 70%;
+}
+
+.buttonLink{
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--color-blue-light);
+}
+
+.error {
+    width: 100%;
+    margin-top: 10px;
+    display: inline-block;
+    color: var(--theme-color-error);
+    font-size: var(--font-size-3);
+    text-align: center;
+    line-height: var(--font-size-3);
+}
+
+.inputError {
+    border: 1px solid var(--theme-color-error);
+}
+
+.disabled {
+    cursor: not-allowed;
+}
+
+.disabled input {
+    /*color: var(--text-color-disabled);*/
+    pointer-events: none;
+}
+
+.disabled .buttonLink {
+    /*color: var(--text-color-disabled);*/
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
