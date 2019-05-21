@@ -18,7 +18,7 @@ const getClassNames = (isLoading, className) =>
         className,
     );
 
-const LoaderButton = ({ role, disabled, isTouchDevice, className, children, isLoading, ...props }) => (
+const LoaderButton = ({ role, disabled, isTouchDevice, className, children, filled, type, isLoading, ...props }) => (
     <Button
         className={ getClassNames(isLoading, className) }
         role={ role }
@@ -26,7 +26,7 @@ const LoaderButton = ({ role, disabled, isTouchDevice, className, children, isLo
         isTouchDevice={ isTouchDevice }
         { ...props }>
         { isLoading && (
-            <Loader className={ styles.loader } />
+            <Loader className={ styles.loader } type={ type } inverseColor={ filled } />
         ) }
         { !isLoading && children }
     </Button>

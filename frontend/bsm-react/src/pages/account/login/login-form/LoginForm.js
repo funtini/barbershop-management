@@ -5,6 +5,7 @@ import { Field, Form, reduxForm } from 'redux-form'
 import CheckBox from 'shared/components/form/redux-form/CheckBox';
 import Input from 'shared/components/form/redux-form/Input';
 import Button from 'shared/components/buttons/button/Button';
+import LoaderButton from 'shared/components/buttons/loader-button/LoaderButton'
 
 // utils
 import joinClassNames from 'shared/utils/joinClassNames';
@@ -31,6 +32,7 @@ let LoginForm = ( props ) => {
             <Button className={ styles.button } role={'primary'} wide gradient modifier={'buttonUnFill'} type={'submit'}>Submit</Button>
             <Button className={ styles.button } role={'unboxed'} wide type={'submit'}>Submit</Button>
             <Button className={ styles.button } role={'primary'} wide type={'submit'}>Submit</Button>
+            <LoaderButton className={ styles.button } filled role={'primary'} wide type={'submit'} isLoading={true}>Submit</LoaderButton>
             <button className={ joinClassNames(styles.actionButton,styles.formControl) } type='submit'>Sign In</button>
         </form>
     )

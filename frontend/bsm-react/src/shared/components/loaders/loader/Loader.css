@@ -16,6 +16,12 @@
     background-color: var(--theme-color-primary);
 }
 
+.bounce1.inverseColor,
+.bounce2.inverseColor,
+.bounce3.inverseColor {
+    background-color: var(--theme-color-primary-filled);
+}
+
 .bounce1 {
     animation-delay: -0.52s;
 }
@@ -53,6 +59,7 @@
     border-color: var(--theme-color-primary) transparent var(--theme-color-primary) transparent;
     animation: dual-ring 1.2s linear infinite;
 }
+
 @keyframes dual-ring {
     0% {
         transform: rotate(0deg);
@@ -60,6 +67,11 @@
     100% {
         transform: rotate(360deg);
     }
+}
+
+.dual-ring.inverseColor:after{
+    border: 4px solid var(--theme-color-primary-filled);
+    border-color: var(--theme-color-primary-filled) transparent var(--theme-color-primary-filled) transparent;
 }
 
 .bars {
@@ -75,6 +87,10 @@
     width: 13px;
     background: var(--theme-color-primary);
     animation: bars 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.bars.inverseColor div {
+    background: var(--theme-color-primary-filled);
 }
 .bars div:nth-child(1) {
     left: 6px;

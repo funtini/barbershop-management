@@ -5,34 +5,34 @@ import joinClassNames from 'shared/utils/joinClassNames';
 //styles
 import styles from './Loader.css';
 
-const Loader = ({ className, bounceClassName, type }) => {
+const Loader = ({ className, bounceClassName, type, inverseColor }) => {
     switch(type) {
         case 'dots':
-            return dotsLoader({ className,bounceClassName });
+            return dotsLoader({ className,bounceClassName, inverseColor });
         case 'dual-ring':
-            return dualRingLoader({ className });
+            return dualRingLoader({ className, inverseColor });
         case 'bars':
-            return barsLoader({ className });
+            return barsLoader({ className, inverseColor });
         default:
-            return dotsLoader({ className,bounceClassName });
+            return dotsLoader({ className,bounceClassName, inverseColor });
     }
 };
 
 
-const dotsLoader = ({ className, bounceClassName }) => (
+const dotsLoader = ({ className, bounceClassName, inverseColor }) => (
     <div className={ joinClassNames(styles.wrapper, className) }>
-        <div className={ joinClassNames(styles.bounce1, bounceClassName) } />
-        <div className={ joinClassNames(styles.bounce2, bounceClassName) } />
-        <div className={ joinClassNames(styles.bounce3, bounceClassName) } />
+        <div className={ joinClassNames(styles.bounce1, bounceClassName, inverseColor && styles.inverseColor) } />
+        <div className={ joinClassNames(styles.bounce2, bounceClassName, inverseColor && styles.inverseColor) } />
+        <div className={ joinClassNames(styles.bounce3, bounceClassName, inverseColor && styles.inverseColor) } />
     </div>
 );
 
-const dualRingLoader = ({ className }) => (
-    <div className={ joinClassNames(styles["dual-ring"], className) }/>
+const dualRingLoader = ({ className, inverseColor }) => (
+    <div className={ joinClassNames(styles["dual-ring"], className, inverseColor && styles.inverseColor) }/>
 );
 
-const barsLoader = ({ className }) => (
-    <div className={ joinClassNames(styles.bars, className) }>
+const barsLoader = ({ className, inverseColor }) => (
+    <div className={ joinClassNames(styles.bars, className, inverseColor && styles.inverseColor) }>
         <div/>
         <div/>
         <div/>
