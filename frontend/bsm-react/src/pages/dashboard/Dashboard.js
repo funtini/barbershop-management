@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import FadeTransition from 'shared/components/animations/fade-transition/FadeTransition'
+
+// components
+import FadeTransition from 'shared/components/animations/fade-transition/FadeTransition';
 import CSSLoaderOverlay from 'shared/components/loaders/css-loader-overlay/CSSLoaderOverlay';
+import Loader from 'shared/components/loaders/loader/Loader';
 
 // actions
 import { switchTheme } from 'shared/state/layout';
@@ -52,8 +55,12 @@ class Dashboard extends Component {
 console.log(this.state.users);
         return (
             <div className={ styles.dashboardWrapper }>
+                <Loader/>
+                <Loader type={'dual-ring'}/>
+                <Loader type={'bars'}/>
                 <CSSLoaderOverlay isLoading={true} withLoader={true}>
                 <p>DASHBOARD</p>
+
                 <p>
                     {t('pages:dashboard.title')}
                     {t('pages:dashboard.subtitle')}

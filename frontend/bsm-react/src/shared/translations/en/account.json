@@ -1,0 +1,20 @@
+{
+  "details": {
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "birth": "Birth Date",
+    "age": "age"
+  },
+  "lockscreen": {
+    "helper": "Enter your password to retrieve your session",
+    "sign-in": "Or sign in as a different user",
+    "copy": "Copyright © 2019",
+    "author": "João Gomes",
+    "rights": "All rights reserved"
+  },
+  "login": {
+    "remember": "I forgot my password",
+    "sign-in-button": "Sign In"
+  }
+}

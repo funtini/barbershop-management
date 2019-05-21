@@ -26,9 +26,12 @@ let LoginForm = ( props ) => {
                 <Field label={'Remember me'} name={'rememberMe'} component={ CheckBox }/>
                 {/*<CheckBox id={'rememberMe'} label={'remember me'} labelPosition={'after'} checked={ rememberMe } onChange={ onToggleCheckBox }/>*/}
             </div>
-            <Button role={'primary'} wide modifier={'outlineButton'} type={'submit'}>Submit</Button>
+            <Button className={ styles.button } role={'primary'} wide modifier={'outlineButton'} type={'submit'}>Submit</Button>
+            <Button className={ styles.button } role={'primary'} wide modifier={'buttonFill'} type={'submit'}>Submit</Button>
+            <Button className={ styles.button } role={'primary'} wide gradient modifier={'buttonUnFill'} type={'submit'}>Submit</Button>
+            <Button className={ styles.button } role={'unboxed'} wide type={'submit'}>Submit</Button>
+            <Button className={ styles.button } role={'primary'} wide type={'submit'}>Submit</Button>
             <button className={ joinClassNames(styles.actionButton,styles.formControl) } type='submit'>Sign In</button>
-            <div className={styles.buttonFill}>SKEW FILL</div>
         </form>
     )
 };

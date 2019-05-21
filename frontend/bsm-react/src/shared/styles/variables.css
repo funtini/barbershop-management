@@ -57,6 +57,7 @@
     --theme-color-primary: var(--color-primary);
     --theme-color-primary-active: var(--color-primary-active);
     --theme-color-primary-disable: #3c8dbc;
+    --theme-color-primary-filled: var(--color-white);
     --theme-color-card-1: #3c8dbc;
     --theme-color-card-2: #3c8dbc;
     --theme-color-card-3: #3c8dbc;

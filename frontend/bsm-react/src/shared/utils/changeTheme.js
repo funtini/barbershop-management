@@ -1,8 +1,9 @@
 export const themeColors = {
     LIGHT_BLUE: {
         '--color-primary':'--color-blue-light',
-        '--color-primary-active':'--color-gray-active',
-        '--theme-color-header-bg' : '--color-blue',
+        '--color-primary-active':'--color-blue-light-active',
+        '--theme-color-primary-filled':'--color-white',
+        '--theme-color-header-bg' : '--color-primary',
         '--theme-color-header-bg-hover' : '--color-primary-active',
         '--theme-color-header-hover':'--color-white',
         '--theme-color-header':'--color-gray-light',
@@ -11,6 +12,7 @@ export const themeColors = {
     BLACK_WHITE: {
         '--color-primary':'--color-white',
         '--color-primary-active':'--color-gray-light',
+        '--theme-color-primary-filled':'--color-gray-dark',
         '--theme-color-header-bg' : '--color-gray-light',
         '--theme-color-header-bg-hover' : '--color-gray-light-active',
         '--theme-color-header-hover':'--color-white',
