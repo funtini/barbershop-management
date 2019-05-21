@@ -11,6 +11,7 @@ import thunk from 'redux-thunk';
 import counterReducer from './counter';
 import layoutReducer from './layout';
 import accountReducer from './account';
+import viewportReducer from './viewport';
 
 // Create an enhanced history that syncs navigation events with the store.
 export const history = createBrowserHistory();
@@ -27,13 +28,7 @@ export default function buildStore(initialState) {
         account: accountReducer,
         layout: layoutReducer,
         router: connectRouter(history),
-        viewport: createResponsiveStateReducer({
-            xs: 500,
-            sm: 768,
-            md: 1024,
-            lg: 1280,
-            xl: 1440,
-        }),
+        viewport: viewportReducer,
     });
 
     // If Redux DevTools Extension is installed use it, otherwise use Redux compose.
