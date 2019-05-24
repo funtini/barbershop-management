@@ -42,6 +42,7 @@ const barsLoader = ({ className, inverseColor }) => (
 Loader.propTypes = {
     className: PropTypes.string,
     bounceClassName: PropTypes.string,
+    inverseColor: PropTypes.bool,
 };
 
 export default Loader;

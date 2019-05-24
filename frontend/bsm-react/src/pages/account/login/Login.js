@@ -47,7 +47,7 @@ class Login extends Component {
                         <div className={ styles.title }>
                             Sign in to start your session
                         </div>
-                        <LoginForm onSubmit={ this._handleSubmit } rememberMe={ this.state.rememberMe } onToggleCheckBox={ this._handleToggleCheckBox }/>
+                        <LoginForm isLoading={this.state.isLoading} onSubmit={ this._handleSubmit } rememberMe={ this.state.rememberMe } onToggleCheckBox={ this._handleToggleCheckBox }/>
                         <LinkButton className={ styles.forgotPassword }>I forgot my password</LinkButton>
                     </div>
                 </div>
@@ -57,8 +57,11 @@ class Login extends Component {
 
     _handleSubmit = (values) => {
         console.log(values)
-        setCookie(ACCESS_TOKEN,'true', 0.015);
-        this.props.history.push('/')
+        // setCookie(ACCESS_TOKEN,'true', 0.015);
+        // this.props.history.push('/')
+        this.setState(prevState => ({
+            isLoading: !prevState.isLoading
+        }))
     }
 
     _handleToggleCheckBox = () => {

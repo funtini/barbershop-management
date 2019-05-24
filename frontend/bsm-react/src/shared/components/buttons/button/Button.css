@@ -158,7 +158,9 @@
 }
 
 .button.withGradient:after {
+
     background: linear-gradient(to right, var(--color-white), var(--theme-color-primary), var(--theme-color-primary-active));
+
 }
 
 

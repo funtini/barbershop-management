@@ -24,7 +24,11 @@ import {
     faUserPlus,
     faCalendarPlus,
     faArrowRight,
-    faSignInAlt
+    faSignInAlt,
+    faCaretSquareRight,
+    faAngleDoubleRight,
+    faSyncAlt,
+    faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -52,5 +56,9 @@ library.add(
     faUserPlus,
     faCalendarPlus,
     faArrowRight,
-    faSignInAlt
+    faSignInAlt,
+    faCaretSquareRight,
+    faAngleDoubleRight,
+    faSyncAlt,
+    faSpinner
 );

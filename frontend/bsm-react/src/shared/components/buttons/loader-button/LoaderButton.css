@@ -17,3 +17,11 @@
     align-items: center;
     background-color: inherit;
 }
+
+.spinner {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+}

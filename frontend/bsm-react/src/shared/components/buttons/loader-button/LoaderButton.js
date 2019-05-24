@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // utils
 import joinClassNames from 'shared/utils/joinClassNames';
@@ -11,6 +12,7 @@ import Loader from 'shared/components/loaders/loader/Loader';
 // Styles.
 import styles from './LoaderButton.css';
 
+
 const getClassNames = (isLoading, className) =>
     joinClassNames(
         styles.wrapper,
@@ -18,16 +20,17 @@ const getClassNames = (isLoading, className) =>
         className,
     );
 
-const LoaderButton = ({ role, disabled, isTouchDevice, className, children, filled, type, isLoading, ...props }) => (
+const LoaderButton = ({ role, disabled, isTouchDevice, className, children, filled, loaderType, isLoading, ...props }) => (
     <Button
         className={ getClassNames(isLoading, className) }
         role={ role }
         disabled={ disabled }
         isTouchDevice={ isTouchDevice }
         { ...props }>
-        { isLoading && (
-            <Loader className={ styles.loader } type={ type } inverseColor={ filled } />
-        ) }
+        { isLoading && ( loaderType ?
+            <Loader className={ styles.loader } type={ loaderType } inverseColor={ filled } /> :
+            <FontAwesomeIcon icon={ 'spinner' } size={'lg'} className={ styles.spinner } spin />
+        )}
         { !isLoading && children }
     </Button>
 );
