@@ -138,7 +138,7 @@
     --transition-sidebar-collapse: 0.5s ease-in-out;
 
     /* Forms */
-    --form-height: 34px;
+    --form-height: 40px;
     --form-letter-space: 0.5px;
 
     /* Checkbox */
@@ -146,7 +146,10 @@
 
     /* Inputs */
     --input-vertical-padding-normal: 12px;
+    --input-vertical-padding-low: 6px;
     --input-horizontal-padding-normal: 20px;
+    --input-horizontal-padding-low: 10px;
     --input-padding-normal: var(--input-vertical-padding-normal) var(--input-horizontal-padding-normal);
+    --input-padding-low: var(--input-vertical-padding-low) var(--input-horizontal-padding-low);
 
 }

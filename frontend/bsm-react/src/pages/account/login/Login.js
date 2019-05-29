@@ -18,9 +18,11 @@ import { ACCESS_TOKEN } from 'shared/utils/apiClient';
 
 // Style
 import styles from './Login.css';
+import {switchTheme} from "../../../shared/state/layout";
+import {login} from "../../../shared/state/account";
 
 const sessionTime = 0.15;
-const sessionCookieKey = 'sessionTime'
+const sessionCookieKey = 'sessionTime';
 
 class Login extends Component {
     constructor(props) {
@@ -28,6 +30,7 @@ class Login extends Component {
         this.state = {
             isLoading: false,
             rememberMe: false,
+            error: undefined,
         }
 
         this._handleSubmit = this._handleSubmit.bind(this);
@@ -47,7 +50,7 @@ class Login extends Component {
                         <div className={ styles.title }>
                             Sign in to start your session
                         </div>
-                        <LoginForm isLoading={this.state.isLoading} onSubmit={ this._handleSubmit } rememberMe={ this.state.rememberMe } onToggleCheckBox={ this._handleToggleCheckBox }/>
+                        <LoginForm err={ this.state.error } isLoading={ this.state.isLoading } onSubmit={ this._handleSubmit } rememberMe={ this.state.rememberMe } onToggleCheckBox={ this._handleToggleCheckBox }/>
                         <LinkButton className={ styles.forgotPassword }>I forgot my password</LinkButton>
                     </div>
                 </div>
@@ -56,12 +59,17 @@ class Login extends Component {
     }
 
     _handleSubmit = (values) => {
-        console.log(values)
+        console.log(values);
         // setCookie(ACCESS_TOKEN,'true', 0.015);
         // this.props.history.push('/')
+        this.props.login(values);
         this.setState(prevState => ({
-            isLoading: !prevState.isLoading
+            isLoading: !prevState.isLoading,
         }))
+
+        this.setState({
+            error: 'OLA'
+        })
     }
 
     _handleToggleCheckBox = () => {
@@ -75,7 +83,9 @@ Login.propTypes = {
 
 };
 
+const mapDispatchToProps = (dispatch) => ({
+    login: (values) => dispatch(login(values))
+});
 
-
-export default withRouter(withTranslation(['header'])(Login));
+export default compose(withRouter,withTranslation(['header']),connect(null,mapDispatchToProps))(Login);
 

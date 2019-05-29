@@ -39,7 +39,7 @@ const loginFail = (error) => {
  */
 export const login = (values) => async (dispatch) => {
     dispatch(loginStart());
-    setCookie('username', values.usernameOrEmail);
+    setCookie('username', values.usernameOrEmail,0.015);
     post('/api/auth/signin', JSON.stringify(values))
         .then(resp => {
             console.log(resp)

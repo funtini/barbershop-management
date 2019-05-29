@@ -1,14 +1,13 @@
 .button {
     position: relative;
     min-width: 70px;
-    min-height: 45px;
+    min-height: var(--form-height);
     width: 100%;
-    padding: var(--input-padding-normal);
-    border: 1px solid var(--color-gray-active);
+    padding: var(--input-padding-low);
+    border: none;
     display: inline-block;
     -webkit-appearance: none; /* stylelint-disable-line property-no-vendor-prefix */
     vertical-align: middle;
-    background: none;
     border-radius: 0;
     font-family: var(--font-family-main);
     font-size: var(--font-size-5);
@@ -24,13 +23,15 @@
             border 1s cubic-bezier(0.19, 1, 0.22, 1),
             color 0.6s cubic-bezier(0.19, 1, 0.22, 1);
     user-select: none;
+    background-color: var(--theme-color-primary);
+    color: var(--theme-color-primary-filled);
 }
 
 .button .mask {
     position: absolute;
     width: 100%;
     height: 100px;
-    background-color: var(--theme-color-primary);
+    background-color: var(--theme-color-primary-filled);
     z-index: 1;
     opacity: .99;
     transform: translate3d(-100%, -50px, 0) rotate3d(0, 0, 1, 45deg);
@@ -40,25 +41,27 @@
 .button .icon {
     display: inline-block;
     transition: all 1.1s cubic-bezier(0.19, 1, 0.22, 1);
+    color: var(--theme-color-primary);
 }
 
 .button:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-color: var(--theme-color-primary);
+    background-color: var(--theme-color-primary);
+    border: none;
     font-weight: var(--font-weight-medium);
-    color: var(--theme-color-primary);
+    color: var(--theme-color-primary-filled);
     box-shadow: 0 0 5px rgba(255, 245, 245, 0.8);
     transition: background 0s, font-weight 0.5s, color 0.5s;
 }
 
 .button:hover .mask {
-    background-color: var(--theme-color-primary);
-    transform: translate3d(40%, -50px, 0) rotate3d(0, 0, 1, 90deg);
+    background-color: var(--theme-color-primary-filled);
+    transform: translate3d(70%, -50px, 0) rotate3d(0, 0, 1, 90deg);
 }
 .button:focus .icon,
 .button:active .icon,
 .button:hover .icon {
     transform: translateX(35px);
+    color: var(--theme-color-primary-filled);
 }
 .button:focus,
 .button:active {
@@ -68,7 +71,7 @@
 }
 
 .icon {
-    color: var(--theme-color-primary-filled);
+    color: var(--theme-color-primary);
     margin: auto;
     position: absolute;
     top: 0;
