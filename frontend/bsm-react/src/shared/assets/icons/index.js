@@ -28,7 +28,11 @@ import {
     faCaretSquareRight,
     faAngleDoubleRight,
     faSyncAlt,
-    faSpinner
+    faSpinner,
+    faCheck,
+    faInfo,
+    faExclamation,
+    faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -60,5 +64,9 @@ library.add(
     faCaretSquareRight,
     faAngleDoubleRight,
     faSyncAlt,
-    faSpinner
+    faSpinner,
+    faCheck,
+    faInfo,
+    faExclamation,
+    faTimes,
 );

@@ -7,9 +7,13 @@ import { withRouter } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withTranslation } from 'react-i18next';
 
+// State
+import { login } from 'shared/state/account';
+
 // Components
 import LoginForm from './login-form/LoginForm';
 import LinkButton from 'shared/components/buttons/link-button';
+import Notification from 'shared/components/notification/Notification';
 
 // Util
 import joinClassNames from 'shared/utils/joinClassNames';
@@ -18,8 +22,7 @@ import { ACCESS_TOKEN } from 'shared/utils/apiClient';
 
 // Style
 import styles from './Login.css';
-import {switchTheme} from "../../../shared/state/layout";
-import {login} from "../../../shared/state/account";
+
 
 const sessionTime = 0.15;
 const sessionCookieKey = 'sessionTime';
@@ -46,6 +49,7 @@ class Login extends Component {
                     <div className={ styles.header }>
                         <b>{ t('brand.name') }</b> { t('brand.suffix') }
                     </div>
+                    <Notification className={ styles.notify } type={'danger'}/>
                     <div className={ styles.body }>
                         <div className={ styles.title }>
                             Sign in to start your session

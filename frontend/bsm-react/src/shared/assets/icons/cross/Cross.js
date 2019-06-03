@@ -6,8 +6,8 @@ import joinClassNames from 'shared/utils/joinClassNames';
 // Styles.
 import styles from './Cross.css';
 
-const Cross = ({ className, ...props }) => (
-    <div className={ joinClassNames(styles.wrapper, className) } { ...props }/>
+const Cross = ({ className, color, ...props }) => (
+    <div className={ joinClassNames(styles.wrapper, className, color && styles[color]) } { ...props }/>
 );
 
 Cross.propTypes = {

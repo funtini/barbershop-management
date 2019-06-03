@@ -25,3 +25,23 @@
 .wrapper::after {
     transform: rotate(45deg) translateY(-50%);
 }
+
+.dark-green::before,
+.dark-green::after {
+    background-color: var(--color-green-active);
+}
+
+.blue::before,
+.blue::after {
+    background-color: var(--color-blue-light-active);
+}
+
+.dark-yellow::before,
+.dark-yellow::after {
+    background-color: var(--color-yellow-active);
+}
+
+.red::before,
+.red::after {
+    background-color: var(--color-red-active);
+}
