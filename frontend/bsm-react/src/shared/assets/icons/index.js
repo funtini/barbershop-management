@@ -32,7 +32,10 @@ import {
     faCheck,
     faInfo,
     faExclamation,
-    faTimes
+    faTimes,
+    faExclamationCircle,
+    faInfoCircle,
+    faExclamationTriangle
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -69,4 +72,7 @@ library.add(
     faInfo,
     faExclamation,
     faTimes,
+    faExclamationCircle,
+    faInfoCircle,
+    faExclamationTriangle,
 );

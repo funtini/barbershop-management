@@ -49,7 +49,9 @@ class Login extends Component {
                     <div className={ styles.header }>
                         <b>{ t('brand.name') }</b> { t('brand.suffix') }
                     </div>
-                    <Notification className={ styles.notify } type={'danger'}/>
+                    <Notification className={ styles.notify } type={'warning'} shouldOpen={ this.state.error } onClose={ this._handleCloseNotification }>
+                        I am a notification
+                    </Notification>
                     <div className={ styles.body }>
                         <div className={ styles.title }>
                             Sign in to start your session
@@ -60,6 +62,13 @@ class Login extends Component {
                 </div>
             </div>
         );
+    }
+
+    _handleCloseNotification = () => {
+        this.setState({
+            error: undefined,
+            }
+        )
     }
 
     _handleSubmit = (values) => {

@@ -1,10 +1,17 @@
 {
-  "sidebar": {
-    "main-menu": "MAIN MENU",
-    "year": "year"
+  "notification": {
+    "warning-title": "Warning",
+    "success-title": "Success",
+    "info-title": "Info",
+    "error-title": "Error"
   },
-  "header": {
-    "notifications": "notifications",
-    "settings": "settings"
+  "buttons": {
+    "yes": "Yes",
+    "no": "No",
+    "ok": "Ok",
+    "confirm": "Confirm",
+    "accept": "Accept",
+    "submit": "Submit",
+    "close": "Close"
   }
 }

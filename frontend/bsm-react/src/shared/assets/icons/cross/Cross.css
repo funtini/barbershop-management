@@ -41,7 +41,50 @@
     background-color: var(--color-yellow-active);
 }
 
-.red::before,
-.red::after {
-    background-color: var(--color-red-active);
+.danger::before,
+.danger::after {
+    background-color: var(--theme-color-danger-disabled);
+}
+
+.danger:hover::before,
+.danger:active::before,
+.danger:active::after,
+.danger:hover::after {
+    background-color: var(--theme-color-danger);
+}
+
+.success::before,
+.success::after {
+    background-color: var(--theme-color-success-disabled);
+}
+
+.success:hover::before,
+.success:active::before,
+.success:active::after,
+.success:hover::after {
+    background-color: var(--theme-color-success);
+}
+
+.warning::before,
+.warning::after {
+    background-color: var(--theme-color-warning-disabled);
+}
+
+.warning:hover::before,
+.warning:active::before,
+.warning:active::after,
+.warning:hover::after {
+    background-color: var(--theme-color-warning);
+}
+
+.info::before,
+.info::after {
+    background-color: var(--theme-color-info-disabled);
+}
+
+.info:hover::before,
+.info:active::before,
+.info:active::after,
+.info:hover::after {
+    background-color: var(--theme-color-info);
 }

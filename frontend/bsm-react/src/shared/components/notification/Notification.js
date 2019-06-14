@@ -1,53 +1,62 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-//components
-import CloseIcon from 'shared/assets/icons/close/Close';
-import CrossIcon from 'shared/assets/icons/cross/Cross';
+// Components
+import FadeTransition from 'shared/components/animations/fade-transition/FadeTransition';
+import NotificationBox from './notification-box/NotificationBox';
 
-//util
-import joinClassNames from 'shared/utils/joinClassNames';
-
-// styles
-import styles from './Notification.css';
-
-const icon = {
-    success: {
-        type:'check',
-        color: 'dark-green',
-        size: '2x',
-    },
-    info: {
-        type: 'info',
-        color: 'blue',
-        size: '2x'
-    },
-    warning: {
-        type: 'exclamation',
-        color: 'dark-yellow',
-        size: '2x'
-    },
-    danger: {
-        type: 'times',
-        color: 'red',
-        size: '2x'
+class Notification extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpen: true,
+        };
+        //state data
+        this._handleClose = this._handleClose.bind(this);
+        this._handleChangeOpenStatus = this._handleChangeOpenStatus.bind(this);
     }
+
+    componentDidUpdate() {
+        const { shouldOpen } = this.props;
+        const { isOpen } = this.state;
+
+        if (shouldOpen && !isOpen){
+            this._handleChangeOpenStatus();
+        }
+    }
+
+
+    render() {
+        const { children, onClose, ...remainingProps } = this.props;
+
+        return(
+            <FadeTransition show={ this.state.isOpen } timeout={ 300 }>
+                <NotificationBox close={ this._handleClose } { ...remainingProps } >
+                    { children }
+                </NotificationBox>
+            </FadeTransition>
+        )
+    }
+
+    _handleChangeOpenStatus(){
+        this.setState((prevState) => ({
+            isOpen: !prevState.isOpen,
+        }));
+    }
+
+    _handleClose(){
+        const { onClose } = this.props;
+
+        this._handleChangeOpenStatus();
+
+        onClose && onClose();
+    }
+}
+
+Notification.propTypes = {
+    children: PropTypes.node,
+    onClose: PropTypes.func,
+    shouldOpen: PropTypes.bool,
 };
-
-
-const Notification = ( { children, className, type, ...rest } ) => (
-    <div className={ joinClassNames(className, styles.notification, type && styles[type]) } { ...rest } >
-        <div className={ styles.icon }>
-            <FontAwesomeIcon icon={ icon[type].type } size={ icon[type].size } color={'white'}/>
-        </div>
-        <div className={ styles.content }>
-            <p className={ styles.type }>Success</p>
-            <p className={ styles.message }>Anyone with access can view your invited visitors.</p>
-        </div>
-        <div className={ styles.close }>
-            <CrossIcon color={ icon[type].color } className={ styles.closeIcon }/>
-        </div>
-    </div>
-);
 
 export default Notification;

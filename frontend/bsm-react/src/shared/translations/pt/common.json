@@ -1,10 +1,17 @@
 {
-  "sidebar": {
-    "month": "sou o cmoomn",
-    "year": "sou o common"
+  "notification": {
+    "warning-title": "Aviso",
+    "success-title": "Sucesso",
+    "info-title": "Info",
+    "error-title": "Erro"
   },
-  "header": {
-    "notifications": "sou o cmoomn",
-    "settings": "sou o common"
+  "buttons": {
+    "yes": "Sim",
+    "no": "Não",
+    "ok": "Ok",
+    "confirm": "Confirmar",
+    "accept": "Aceitar",
+    "submit": "Submeter",
+    "close": "Fechar"
   }
 }
