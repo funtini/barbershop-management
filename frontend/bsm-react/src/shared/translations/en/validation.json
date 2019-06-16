@@ -4,6 +4,6 @@
 		"description": "im a description"
 	},
 	"login": {
-		"error": "invalid"
+		"error": "Invalid Username or Password"
 	}
 }

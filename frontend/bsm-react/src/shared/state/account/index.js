@@ -1,7 +1,10 @@
 import reducer from './reducer';
 
 export {
-    login
+    login,
+    loadUserProfile
 } from './actions';
+
+export * from './selectors';
 
 export default reducer;

@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import { setCookie } from 'shared/utils/cookieUtils';
-import { ACCESS_TOKEN, post, get} from 'shared/utils/apiClient';
+import { ACCESS_TOKEN, post, get } from 'shared/utils/apiClient';
 
 
 /*
@@ -22,8 +22,34 @@ const loginSuccess = (data) => {
 const loginFail = (error) => {
     return {
         type: actionTypes.LOGIN_FAIL,
-        error: error,
+        error:{
+            api: error.response,
+            custom: 'LOGIN FAILED',
+        }
     };
+};
+
+const loadDetailsStart = () => {
+    return {
+        type: actionTypes.LOAD_DETAILS_START,
+    }
+};
+
+const loadDetailsSuccess = (data) => {
+    return {
+        type: actionTypes.LOAD_DETAILS_SUCCESS,
+        payload: data,
+    }
+};
+
+const loadDetailsFail = (error) => {
+    return {
+        type: actionTypes.LOAD_DETAILS_SUCCESS,
+        error:{
+            api: error,
+            custom: 'LOAD USER FAILED',
+        }
+    }
 };
 
 /**
@@ -39,12 +65,10 @@ const loginFail = (error) => {
  */
 export const login = (values) => async (dispatch) => {
     dispatch(loginStart());
-    setCookie('username', values.usernameOrEmail,0.015);
     post('/api/auth/signin', JSON.stringify(values))
         .then(resp => {
-            console.log(resp)
-            console.log(values)
-            localStorage.setItem(ACCESS_TOKEN, resp.data.accessToken)
+            setCookie('username', values.usernameOrEmail,0.002);
+            localStorage.setItem(ACCESS_TOKEN, resp.data.accessToken);
             dispatch(loginSuccess(values.usernameOrEmail))
         })
         .catch(err => {
@@ -52,8 +76,13 @@ export const login = (values) => async (dispatch) => {
         });
 };
 
-// export const userProfile = () => {
-//     get('/api/users/me')
-//         .then(resp => resp.data)
-//         .catch(err => err)
-// }
+export const loadUserProfile = () => async (dispatch) => {
+    dispatch(loadDetailsStart());
+    await get('/api/users/me')
+        .then(resp => {
+            dispatch(loadDetailsSuccess(resp.data))
+        })
+        .catch(err => {
+            dispatch(loadDetailsFail(err))
+        })
+};

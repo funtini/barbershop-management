@@ -2,19 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="030f74c0-7ac6-409f-98e2-a7ba6ba10a96" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/shared/components/notification/notification-box/NotificationBox.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/components/notification/notification-box/NotificationBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../barbershop-management.iml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/state/account/selectors.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/i18n.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/account/login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/account/login/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/assets/icons/cross/Cross.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/assets/icons/cross/Cross.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/assets/icons/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/assets/icons/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/components/notification/Notification.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/notification/Notification.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/components/notification/Notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/components/notification/Notification.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/styles/variables.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/styles/variables.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/translations/en/common.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/translations/en/common.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/translations/pt/common.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/translations/pt/common.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/state/account/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/state/account/actionTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/state/account/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/state/account/actions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/state/account/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/state/account/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/state/account/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/state/account/reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/translations/en/account.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/translations/en/account.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/translations/en/validation.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/translations/en/validation.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/utils/privateRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/utils/privateRoute.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -33,10 +33,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/account/login/Login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="51" column="150" selection-start-line="51" selection-start-column="150" selection-end-line="51" selection-end-column="150" />
+            <state relative-caret-position="432">
+              <caret line="79" column="10" selection-start-line="79" selection-start-column="10" selection-end-line="79" selection-end-column="10" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
+                <element signature="e#391#504#0" expanded="true" />
                 <element signature="e#452#499#0" expanded="true" />
               </folding>
             </state>
@@ -44,10 +45,52 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js">
+        <entry file="file://$PROJECT_DIR$/src/shared/state/account/actions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="38" selection-start-line="38" selection-end-line="38" />
+            <state relative-caret-position="312">
+              <caret line="67" column="4" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#45#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/shared/state/account/reducer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1584">
+              <caret line="72" column="51" selection-start-line="72" selection-start-column="51" selection-end-line="72" selection-end-column="51" />
+              <folding>
+                <element signature="e#0#45#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/shared/state/account/actionTypes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/shared/state/account/selectors.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/App.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="648">
+              <caret line="35" column="25" lean-forward="true" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -56,47 +99,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/i18n.js">
+        <entry file="file://$PROJECT_DIR$/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-216">
-              <folding>
-                <element signature="e#0#27#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shared/components/notification/Notification.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1392">
-              <caret line="58" column="31" selection-start-line="58" selection-start-column="31" selection-end-line="58" selection-end-column="31" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-                <element signature="e#93#182#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/dashboard/Dashboard.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="72" column="84" lean-forward="true" selection-start-line="72" selection-start-column="40" selection-end-line="72" selection-end-column="84" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-                <element signature="e#178#267#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shared/components/notification/notification-box/NotificationBox.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1488">
-              <caret line="62" column="14" lean-forward="true" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
+            <state relative-caret-position="430">
+              <caret line="24" column="41" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="41" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -105,19 +111,32 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/shared/components/notification/notification-box/NotificationBox.css">
+        <entry file="file://$PROJECT_DIR$/src/shared/utils/privateRoute.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="960">
-              <caret line="40" column="21" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
+            <state relative-caret-position="456">
+              <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+                <element signature="e#86#129#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shared/translations/en/common.json">
+        <entry file="file://$PROJECT_DIR$/src/template/layout/Layout.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="6" column="4" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+            <state relative-caret-position="358">
+              <caret line="63" column="34" lean-forward="true" selection-start-line="63" selection-start-column="34" selection-end-line="63" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/shared/state/account/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="96">
+              <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -128,8 +147,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="tsconfig.json" />
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -146,6 +165,10 @@
       <find>withRouter</find>
       <find>withTr</find>
       <find>import { withTranslation } from 'react-i18next';</find>
+      <find>mapState</find>
+      <find>mapDispa</find>
+      <find>mapDIs</find>
+      <find>mapSta</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -154,13 +177,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/shared/translations/en/account.json" />
-        <option value="$PROJECT_DIR$/src/pages/dashboard/Dashboard.css" />
-        <option value="$PROJECT_DIR$/src/shared/components/animations/fade-in-slide-out/FadeInSlideOut.css" />
-        <option value="$PROJECT_DIR$/src/shared/components/animations/fade-in-slide-out/FadeInSlideOut.js" />
-        <option value="$PROJECT_DIR$/src/shared/components/animations/fade-transition/FadeTransition.css" />
-        <option value="$PROJECT_DIR$/src/shared/components/animations/fade-transition/FadeTransition.js" />
-        <option value="$PROJECT_DIR$/src/shared/components/animations/dropdown-transition/DropdownTransition.css" />
         <option value="$PROJECT_DIR$/src/template/header/header-dropdown/HeaderDropdown.css" />
         <option value="$PROJECT_DIR$/src/template/header/header-dropdown/HeaderDropdown.js" />
         <option value="$PROJECT_DIR$/src/shared/components/animations/dropdown-transition/DropdownTransition.js" />
@@ -182,7 +198,6 @@
         <option value="$PROJECT_DIR$/src/shared/components/loaders/loader/Loader.css" />
         <option value="$PROJECT_DIR$/src/shared/components/buttons/button/Button.js" />
         <option value="$PROJECT_DIR$/src/shared/components/buttons/button/Button.css" />
-        <option value="$PROJECT_DIR$/src/shared/utils/privateRoute.js" />
         <option value="$PROJECT_DIR$/src/shared/components/loaders/loader/Loader.js" />
         <option value="$PROJECT_DIR$/src/shared/components/buttons/sign-in-button/SignInButton.js" />
         <option value="$PROJECT_DIR$/src/shared/components/buttons/loader-button/LoaderButton.js" />
@@ -193,8 +208,6 @@
         <option value="$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.css" />
         <option value="$PROJECT_DIR$/src/shared/components/form/input/Input.js" />
         <option value="$PROJECT_DIR$/src/shared/components/buttons/sign-in-button/SignInButton.css" />
-        <option value="$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js" />
-        <option value="$PROJECT_DIR$/src/shared/state/account/actions.js" />
         <option value="$PROJECT_DIR$/src/shared/assets/icons/cross/Cross.css" />
         <option value="$PROJECT_DIR$/src/shared/styles/variables.css" />
         <option value="$PROJECT_DIR$/src/shared/assets/icons/index.js" />
@@ -202,13 +215,23 @@
         <option value="$PROJECT_DIR$/src/shared/translations/en/common.json" />
         <option value="$PROJECT_DIR$/src/shared/translations/pt/common.json" />
         <option value="$PROJECT_DIR$/src/shared/components/notification/notification-box/NotificationBox.js" />
-        <option value="$PROJECT_DIR$/src/pages/account/login/Login.js" />
-        <option value="$PROJECT_DIR$/src/shared/components/notification/Notification.js" />
         <option value="$PROJECT_DIR$/src/shared/components/notification/notification-box/NotificationBox.css" />
+        <option value="$PROJECT_DIR$/src/shared/translations/en/validation.json" />
+        <option value="$PROJECT_DIR$/src/shared/components/notification/Notification.js" />
+        <option value="$PROJECT_DIR$/src/i18n.js" />
+        <option value="$PROJECT_DIR$/src/shared/translations/en/account.json" />
+        <option value="$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js" />
+        <option value="$PROJECT_DIR$/src/shared/state/account/actionTypes.js" />
+        <option value="$PROJECT_DIR$/src/shared/state/account/reducer.js" />
+        <option value="$PROJECT_DIR$/src/shared/state/account/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/account/login/Login.js" />
+        <option value="$PROJECT_DIR$/src/shared/state/account/selectors.js" />
+        <option value="$PROJECT_DIR$/src/shared/state/account/actions.js" />
+        <option value="$PROJECT_DIR$/src/shared/utils/privateRoute.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -265,161 +288,7 @@
               <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
               <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="account" type="462c0819:PsiDirectoryNode" />
-              <item name="login" type="462c0819:PsiDirectoryNode" />
-              <item name="login-form" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="products" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="ui-development-items" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="ui-development-items" type="462c0819:PsiDirectoryNode" />
-              <item name="buttons" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="shared" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="icons" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="icons" type="462c0819:PsiDirectoryNode" />
-              <item name="cross" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="animations" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="animations" type="462c0819:PsiDirectoryNode" />
-              <item name="fade-transition" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="buttons" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="buttons" type="462c0819:PsiDirectoryNode" />
-              <item name="loader-button" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="buttons" type="462c0819:PsiDirectoryNode" />
-              <item name="sign-in-button" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="form" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="form" type="462c0819:PsiDirectoryNode" />
-              <item name="input" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="loaders" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="notification" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="notification" type="462c0819:PsiDirectoryNode" />
-              <item name="notification-box" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
@@ -435,36 +304,6 @@
               <item name="shared" type="462c0819:PsiDirectoryNode" />
               <item name="state" type="462c0819:PsiDirectoryNode" />
               <item name="account" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="styles" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="translations" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="translations" type="462c0819:PsiDirectoryNode" />
-              <item name="en" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-              <item name="translations" type="462c0819:PsiDirectoryNode" />
-              <item name="pt" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
@@ -478,6 +317,13 @@
               <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="template" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bsm-react" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bsm-react" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="template" type="462c0819:PsiDirectoryNode" />
+              <item name="layout" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -588,12 +434,12 @@
       <workItem from="1560202595589" duration="1075000" />
       <workItem from="1560367028008" duration="609000" />
       <workItem from="1560367827230" duration="430000" />
-      <workItem from="1560368463535" duration="6248000" />
+      <workItem from="1560368463535" duration="17544000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="348044000" />
+    <option name="totallyTimeSpent" value="359340000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -620,9 +466,9 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32936078" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32936078" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3288889" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5086888" side_tool="true" weight="0.11594203" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49131122" visible="true" weight="0.22" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49131122" weight="0.22" />
       <window_info anchor="bottom" id="TypeScript" order="11" weight="0.32998884" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -653,82 +499,33 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/shared/components/buttons/close-button/CloseButton.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" column="51" selection-start-line="7" selection-start-column="51" selection-end-line="7" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/assets/icons/close/Close.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/assets/icons/close/Close.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="45" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/components/buttons/close-button/CloseButton.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/state/layout/selectors.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/state/layout/actions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="46" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/state/layout/actionTypes.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/state/layout/reducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="47" column="57" selection-start-line="47" selection-start-column="56" selection-end-line="47" selection-end-column="57" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/state/viewport/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/utils/changeTheme.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="23" column="3" lean-forward="true" selection-start-line="23" selection-start-column="3" selection-end-line="23" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/state/buildStore.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="52" lean-forward="true" selection-start-line="3" selection-start-column="52" selection-end-line="3" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/shared/state/viewport/reducer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
@@ -740,32 +537,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
           <caret line="118" column="47" lean-forward="true" selection-start-line="118" selection-start-column="4" selection-end-line="118" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-345">
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/utils/privateRoute.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="18" column="9" lean-forward="true" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="25" column="22" lean-forward="true" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -853,29 +624,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/state/account/actions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="47" column="27" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/state/account/index.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/state/account/reducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1058">
-          <caret line="48" column="35" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/ui-development-items/buttons/buttons.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
@@ -947,16 +695,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/components/notification/Notification.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/translations/en/validation.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/shared/translations/pt/account.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -967,32 +705,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/i18n.js">
+    <entry file="file://$PROJECT_DIR$/src/shared/components/notification/notification-box/NotificationBox.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-216">
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="960">
+          <caret line="40" column="21" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/components/notification/Notification.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/dashboard/Dashboard.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
+        <state relative-caret-position="336">
           <caret line="72" column="84" lean-forward="true" selection-start-line="72" selection-start-column="40" selection-end-line="72" selection-end-column="84" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
             <element signature="e#178#267#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1004,42 +740,194 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/account/login/Login.js">
+    <entry file="file://$PROJECT_DIR$/src/shared/state/layout/actions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="51" column="150" selection-start-line="51" selection-start-column="150" selection-end-line="51" selection-end-column="150" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="e#452#499#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="46" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/components/notification/Notification.js">
+    <entry file="file://$PROJECT_DIR$/src/shared/state/layout/selectors.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1392">
-          <caret line="58" column="31" selection-start-line="58" selection-start-column="31" selection-end-line="58" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#93#182#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="96">
+          <caret line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/template/header/header-dropdown/HeaderDropdown.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="622">
+          <caret line="89" column="20" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/shared/components/notification/notification-box/NotificationBox.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1488">
-          <caret line="62" column="14" lean-forward="true" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
+        <state relative-caret-position="718">
+          <caret line="66" column="15" selection-start-line="66" selection-start-column="15" selection-end-line="66" selection-end-column="15" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared/components/notification/notification-box/NotificationBox.css">
+    <entry file="file://$PROJECT_DIR$/src/shared/translations/en/validation.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="40" column="21" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
+        <state relative-caret-position="144">
+          <caret line="6" column="46" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/i18n.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="32" column="22" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+            <element signature="e#103#163#0" expanded="true" />
+            <element signature="e#550#610#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/translations/en/account.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="17" column="31" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/account/login/login-form/LoginForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#175#241#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/components/notification/Notification.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="32" column="15" lean-forward="true" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
+          <folding>
+            <element signature="e#93#182#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/utils/apiClient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/state/serverInitialState.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/state/buildStore.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="29" column="28" lean-forward="true" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#79#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="35" column="25" lean-forward="true" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="24" column="41" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/state/account/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/state/account/reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1584">
+          <caret line="72" column="51" selection-start-line="72" selection-start-column="51" selection-end-line="72" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/state/account/selectors.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/account/login/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="79" column="10" selection-start-line="79" selection-start-column="10" selection-end-line="79" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#391#504#0" expanded="true" />
+            <element signature="e#452#499#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/state/account/actions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="67" column="4" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/state/account/actionTypes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/template/layout/Layout.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="63" column="34" lean-forward="true" selection-start-line="63" selection-start-column="34" selection-end-line="63" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared/utils/privateRoute.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#86#129#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

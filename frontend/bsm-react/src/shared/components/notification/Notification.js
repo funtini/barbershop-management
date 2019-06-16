@@ -16,6 +16,16 @@ class Notification extends Component {
         this._handleChangeOpenStatus = this._handleChangeOpenStatus.bind(this);
     }
 
+    componentWillMount() {
+        const { shouldOpen } = this.props;
+
+        if (shouldOpen !== undefined && !shouldOpen) {
+            this.setState({
+                isOpen: false,
+            })
+        }
+    }
+
     componentDidUpdate() {
         const { shouldOpen } = this.props;
         const { isOpen } = this.state;

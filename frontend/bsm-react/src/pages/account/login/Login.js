@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { Field, reduxForm, formValues, getFormValues } from 'redux-form'
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withTranslation } from 'react-i18next';
 
 // State
-import { login } from 'shared/state/account';
+import { login, loadUserProfile, getErrors, getUser, getUserDetails, isUserAuthenticated, isLoading } from 'shared/state/account';
+import { istBreakpointLessThan } from 'shared/state/viewport/selectors';
 
 // Components
 import LoginForm from './login-form/LoginForm';
@@ -17,31 +16,24 @@ import Notification from 'shared/components/notification/Notification';
 
 // Util
 import joinClassNames from 'shared/utils/joinClassNames';
-import { setCookie } from 'shared/utils/cookieUtils';
-import { ACCESS_TOKEN } from 'shared/utils/apiClient';
 
 // Style
 import styles from './Login.css';
-
-
-const sessionTime = 0.15;
-const sessionCookieKey = 'sessionTime';
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false,
             rememberMe: false,
-            error: undefined,
-        }
+            openNotification: false,
+        };
 
         this._handleSubmit = this._handleSubmit.bind(this);
         this._handleToggleCheckBox = this._handleToggleCheckBox.bind(this);
     }
 
     render() {
-        const { t } = this.props;
+        const { t, isLoading, error } = this.props;
 
         return (
             <div className={ styles.wrapper }>
@@ -49,15 +41,24 @@ class Login extends Component {
                     <div className={ styles.header }>
                         <b>{ t('brand.name') }</b> { t('brand.suffix') }
                     </div>
-                    <Notification className={ styles.notify } type={'warning'} shouldOpen={ this.state.error } onClose={ this._handleCloseNotification }>
-                        I am a notification
-                    </Notification>
+                    {
+                        error &&
+                      <Notification
+                          className={ styles.notify }
+                          type={'danger'}
+                          shouldOpen={ this.state.openNotification }
+                          onClose={ this._handleCloseNotification }>
+                            { t('validation:login.error') }
+                        </Notification>
+                    }
                     <div className={ styles.body }>
                         <div className={ styles.title }>
-                            Sign in to start your session
+                            { t('account:login.sign-in-title') }
                         </div>
-                        <LoginForm err={ this.state.error } isLoading={ this.state.isLoading } onSubmit={ this._handleSubmit } rememberMe={ this.state.rememberMe } onToggleCheckBox={ this._handleToggleCheckBox }/>
-                        <LinkButton className={ styles.forgotPassword }>I forgot my password</LinkButton>
+                        <LoginForm err={ this.state.error } isLoading={ isLoading } onSubmit={ this._handleSubmit } rememberMe={ this.state.rememberMe } onToggleCheckBox={ this._handleToggleCheckBox }/>
+                        <LinkButton className={ styles.forgotPassword }>
+                            { t('account:login.forgot-password') }
+                        </LinkButton>
                     </div>
                 </div>
             </div>
@@ -66,24 +67,19 @@ class Login extends Component {
 
     _handleCloseNotification = () => {
         this.setState({
-            error: undefined,
+            openNotification: false,
             }
         )
-    }
+    };
 
     _handleSubmit = (values) => {
-        console.log(values);
-        // setCookie(ACCESS_TOKEN,'true', 0.015);
-        // this.props.history.push('/')
         this.props.login(values);
-        this.setState(prevState => ({
-            isLoading: !prevState.isLoading,
-        }))
-
         this.setState({
-            error: 'OLA'
-        })
-    }
+                openNotification: true,
+            }
+        );
+        this.props.history.push('/')
+    };
 
     _handleToggleCheckBox = () => {
         this.setState(prevState => ({
@@ -96,9 +92,20 @@ Login.propTypes = {
 
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    login: (values) => dispatch(login(values))
+const mapStateToProps = (state) => ({
+    user: getUser(state),
+    details: getUserDetails(state),
+    isLoading: isLoading(state),
+    error: getErrors(state),
+    isAuthenticated: isUserAuthenticated(state),
+    isMobile: istBreakpointLessThan(state,'md'),
+    // viewport: ge
 });
 
-export default compose(withRouter,withTranslation(['header']),connect(null,mapDispatchToProps))(Login);
+const mapDispatchToProps = (dispatch) => ({
+    login: (values) => dispatch(login(values)),
+    loadUser: () => dispatch(loadUserProfile())
+});
+
+export default compose(withRouter,withTranslation(['header','validation','account']),connect(mapStateToProps,mapDispatchToProps))(Login);
 

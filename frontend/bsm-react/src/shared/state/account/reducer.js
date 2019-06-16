@@ -22,16 +22,16 @@ const loginStartLoad = (state) => {
 };
 
 const loginSuccessLoad = (state, action) => {
-    console.log(action)
     return {
         ...state,
         isLoading: false,
         isAuthenticated: true,
         user: action.payload,
+        error: undefined,
     }
 };
 
-const loginFailLoad = (state, action) => {
+const loginFail = (state, action) => {
     return {
         ...state,
         isLoading: false,
@@ -39,14 +39,44 @@ const loginFailLoad = (state, action) => {
     }
 };
 
+const loadDetailsStart = (state) => {
+    return {
+        ...state,
+        isLoading: true,
+    }
+};
+
+const loadDetailsSuccess = (state,action) => {
+    return {
+        ...state,
+        isLoading: false,
+        details: action.payload,
+    }
+};
+
+const loadDetailsFail = (state,action) => {
+    return {
+        ...state,
+        isLoading: false,
+        error: action.error
+    }
+};
+
+
 const accountReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.LOGIN_START:
             return loginStartLoad(state);
         case actionTypes.LOGIN_FAIL:
-            return loginFailLoad(state, action);
+            return loginFail(state, action);
         case actionTypes.LOGIN_SUCCESS:
             return loginSuccessLoad(state, action);
+        case actionTypes.LOAD_DETAILS_START:
+            return loadDetailsStart(state);
+        case actionTypes.LOAD_DETAILS_FAIL:
+            return loadDetailsFail(state, action);
+        case actionTypes.LOAD_DETAILS_SUCCESS:
+            return loadDetailsSuccess(state, action);
         default:
             return state
     }
