@@ -24,7 +24,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "browserify-css": "^0.12.0",
-    "chart.js": "^2.7.2",
+    "chart.js": "^2.9.4",
     "css-loader": "0.26.1",
     "datatables.net": "^1.10.19",
     "datatables.net-bs": "^1.10.19",
